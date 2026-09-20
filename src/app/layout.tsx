@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import CartDrawer from "@/components/cart/CartDrawer";
+import { CartProvider } from "@/context/CartContext";
+import { MessageCircle } from "lucide-react";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -15,8 +19,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AURA - Luxury Fine Jewellery",
-  description: "Experience the epitome of luxury fine jewellery.",
+  title: "AURA | Moissanite Solitaire Rings & Fine Jewelry",
+  description: "Discover certified VVS1 D-Color Moissanite solitaire rings, eternity bands, and bespoke fine jewelry. 100% Lifetime Buyback, GRA certified, and free insured delivery across India.",
 };
 
 export default function RootLayout({
@@ -26,11 +30,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
-      <body className="min-h-full flex flex-col font-sans">
-        <Header />
-        <main className="flex-grow pt-20">
-          {children}
-        </main>
+      <body className="min-h-screen flex flex-col font-sans bg-[#FDFBF7] text-[#18181B] selection:bg-[#D4AF37] selection:text-white">
+        <CartProvider>
+          <Header />
+          <CartDrawer />
+          <main className="flex-grow pt-[115px]">
+            {children}
+          </main>
+          <Footer />
+
+          {/* Floating WhatsApp Concierge Widget */}
+          <a
+            href="https://wa.me/919999999999?text=Hello%20AURA%20Jewelry%20Team!%20I%20would%20like%20to%20inquire%20about%20a%20Moissanite%20Ring."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fixed bottom-6 right-6 z-40 bg-[#064E3B] hover:bg-[#043327] text-[#D4AF37] hover:text-white p-3.5 rounded-full shadow-2xl border border-[#D4AF37]/50 flex items-center justify-center transition-all duration-300 hover:scale-110 group cursor-pointer"
+            aria-label="WhatsApp Concierge"
+          >
+            <MessageCircle className="w-6 h-6 fill-current" />
+            <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out font-sans text-xs font-bold uppercase tracking-wider pl-0 group-hover:pl-2">
+              WhatsApp Concierge
+            </span>
+          </a>
+        </CartProvider>
       </body>
     </html>
   );

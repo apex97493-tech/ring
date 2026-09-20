@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useMemo, use } from 'react';
-import { getProductsByCategory, SHAPES, Product } from '@/lib/data';
+import React, { useState, useMemo } from 'react';
+import { products, SHAPES } from '@/lib/data';
 import ProductCard from '@/components/products/ProductCard';
 import ShapeFilterBar from '@/components/sections/ShapeFilterBar';
 import MoissaniteComparison from '@/components/sections/MoissaniteComparison';
@@ -11,47 +11,14 @@ import ReviewsSection from '@/components/sections/ReviewsSection';
 import FaqSection from '@/components/sections/FaqSection';
 import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
 import { Sparkles, ShieldCheck, Truck, Award } from 'lucide-react';
-import Link from 'next/link';
 
-export default function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = use(params);
-  const slug = resolvedParams.slug;
-  const rawProducts = getProductsByCategory(slug);
-
+export default function ShopPage() {
   const [selectedShape, setSelectedShape] = useState<string>('all');
   const [selectedMetal, setSelectedMetal] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('featured');
 
-  const categoryTitles: Record<string, { title: string; subtitle: string }> = {
-    rings: {
-      title: 'Moissanite Solitaire Rings',
-      subtitle: 'Discover handcrafted solitaire engagement and promise rings featuring GRA-certified D-Color VVS1 Moissanite stones.',
-    },
-    band: {
-      title: 'Moissanite Eternity & Wedding Bands',
-      subtitle: 'Continuous 360-degree sparkle designed to stack seamlessly with your solitaire ring.',
-    },
-    'ring-set': {
-      title: 'Bridal Stacks & Tiara Rings',
-      subtitle: 'Contoured crown and tiara bands engineered to frame oval, pear, and round solitaires.',
-    },
-    pendant: {
-      title: 'Solitaire Moissanite Pendants',
-      subtitle: 'Effortless brilliance suspended on Italian 925 Silver and 18K Solid Gold chains.',
-    },
-    earrings: {
-      title: 'Moissanite Stud & Drop Earrings',
-      subtitle: 'Daily wear luxury featuring comfort screw-backs and certified VVS1 center stones.',
-    },
-  };
-
-  const currentCategory = categoryTitles[slug] || {
-    title: `${slug.charAt(0).toUpperCase() + slug.slice(1)} Collection`,
-    subtitle: 'Meticulously handcrafted in pure 925 Sterling Silver & BIS Hallmarked Solid Gold.',
-  };
-
   const filteredProducts = useMemo(() => {
-    return rawProducts
+    return products
       .filter((p) => {
         const matchesShape = selectedShape === 'all' || p.shape === selectedShape;
         const matchesMetal =
@@ -65,26 +32,26 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
         if (sortBy === 'rating') return b.rating - a.rating;
         return 0;
       });
-  }, [rawProducts, selectedShape, selectedMetal, sortBy]);
+  }, [selectedShape, selectedMetal, sortBy]);
 
   return (
     <div className="w-full min-h-screen bg-[#FDFBF7]">
-      {/* Category Hero Banner */}
-      <section className="bg-[#18181B] text-[#FDFBF7] py-16 md:py-20 border-b border-[#D4AF37]/30 text-center relative overflow-hidden">
+      {/* Shop Hero */}
+      <section className="bg-[#022C22] text-[#FDFBF7] py-16 md:py-20 border-b border-[#D4AF37]/30 text-center relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] rounded-full text-[11px] font-sans font-bold tracking-widest uppercase mb-4">
             <Sparkles className="w-3.5 h-3.5" />
-            Woke Exclusive Collection
+            Complete Fine Jewelry Atelier
           </div>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white">
-            {currentCategory.title}
+            The Royal Moissanite Collection
           </h1>
-          <div className="w-20 h-[1.5px] bg-[#B89035] mx-auto mb-6" />
-          <p className="font-sans text-sm sm:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed mb-6">
-            {currentCategory.subtitle}
+          <div className="w-20 h-[1.5px] bg-[#D4AF37] mx-auto mb-6" />
+          <p className="font-sans text-sm sm:text-base text-[#FDFBF7]/80 max-w-2xl mx-auto leading-relaxed mb-6">
+            Handcrafted with individual GRA lab certification, ethical VVS1 D-Color center stones, and 100% lifetime buyback assurance.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-sans text-gray-300">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-sans text-[#F3E5AB]">
             <span className="flex items-center gap-1">
               <Award className="w-4 h-4 text-[#D4AF37]" /> GRA Lab Certified
             </span>
@@ -92,7 +59,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
               <ShieldCheck className="w-4 h-4 text-[#D4AF37]" /> 100% Lifetime Buyback
             </span>
             <span className="flex items-center gap-1">
-              <Truck className="w-4 h-4 text-[#059669]" /> Free Insured Delivery
+              <Truck className="w-4 h-4 text-[#34D399]" /> Free Insured Delivery
             </span>
           </div>
         </div>
@@ -101,13 +68,12 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
       {/* Shape filter chips */}
       <ShapeFilterBar selectedShape={selectedShape} onSelectShape={setSelectedShape} />
 
-      {/* Products Grid Section */}
+      {/* Grid */}
       <section className="py-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Filter bar */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-6 border-b border-[#E8E5DF] gap-4">
           <div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#18181B]">
-              {selectedShape === 'all' ? 'All Designs' : `${selectedShape} Cut`}
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#022C22]">
+              {selectedShape === 'all' ? 'All Jewelry Designs' : `${selectedShape} Cut Jewels`}
             </h2>
             <p className="font-sans text-xs text-gray-500 mt-1">
               Showing {filteredProducts.length} certified jewelry pieces
@@ -118,7 +84,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
             <select
               value={selectedMetal}
               onChange={(e) => setSelectedMetal(e.target.value)}
-              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#18181B] focus:outline-none focus:border-[#B89035]"
+              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37]"
             >
               <option value="all">All Metals</option>
               <option value="Silver">925 Sterling Silver</option>
@@ -129,7 +95,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#18181B] focus:outline-none focus:border-[#B89035]"
+              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37]"
             >
               <option value="featured">Featured</option>
               <option value="price-low">Price: Low to High</option>
@@ -139,33 +105,14 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
           </div>
         </div>
 
-        {/* Grid */}
-        {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {filteredProducts.map((prod) => (
-              <ProductCard key={prod.id} product={prod} />
-            ))}
-          </div>
-        ) : (
-          <div className="py-20 text-center bg-white rounded-2xl border border-[#E8E5DF]">
-            <p className="font-serif text-2xl text-[#18181B] mb-2">No matching products found</p>
-            <p className="font-sans text-xs text-gray-500 mb-6">
-              Try switching your stone shape or metal filter.
-            </p>
-            <button
-              onClick={() => {
-                setSelectedShape('all');
-                setSelectedMetal('all');
-              }}
-              className="px-6 py-2.5 bg-[#18181B] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-widest rounded-lg"
-            >
-              Reset Filters
-            </button>
-          </div>
-        )}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          {filteredProducts.map((prod) => (
+            <ProductCard key={prod.id} product={prod} />
+          ))}
+        </div>
       </section>
 
-      {/* The Signature Woke Educational Bottom Suite */}
+      {/* Educational & Trust suite */}
       <MoissaniteComparison />
       <WhyChooseUs />
       <RingSizeGuide />
