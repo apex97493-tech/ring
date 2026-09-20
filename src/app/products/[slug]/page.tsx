@@ -94,10 +94,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       </div>
 
       {/* Main Product Container */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <section className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 py-6 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
           {/* Left: Gallery Showcase */}
-          <div className="lg:col-span-7 flex flex-col gap-4">
+          <div className="lg:col-span-7 flex flex-col gap-3 sm:gap-4">
             <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-[#F7F5F0] border border-[#E8E5DF] shadow-md">
               <motion.img
                 key={activeImageIdx + activeVariant.metal}
@@ -166,7 +166,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
           </div>
 
           {/* Right: Customization & Buy Box */}
-          <div className="lg:col-span-5 bg-white p-6 sm:p-8 rounded-3xl border border-[#E8E5DF] shadow-luxury sticky top-28">
+          <div className="lg:col-span-5 bg-white p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#E8E5DF] shadow-luxury sticky top-28">
             {/* Reviews snippet */}
             <div className="flex items-center gap-2 mb-2 text-amber-500 text-xs font-sans">
               <div className="flex">
@@ -423,14 +423,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       </section>
 
       {/* Related Products Carousel */}
-      <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-[#E8E5DF]">
-        <h2 className="font-serif text-3xl font-bold text-center text-[#18181B] mb-2">
+      <section className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 py-10 sm:py-16 border-t border-[#E8E5DF]">
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold text-center text-[#18181B] mb-1.5 sm:mb-2">
           You May Also Adore
         </h2>
-        <p className="font-sans text-xs text-gray-500 text-center mb-10 uppercase tracking-widest">
+        <p className="font-sans text-[11px] sm:text-xs text-gray-500 text-center mb-6 sm:mb-10 uppercase tracking-widest">
           Complementary Stacking Bands & Solitaires
         </p>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-6">
           {relatedProducts.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}

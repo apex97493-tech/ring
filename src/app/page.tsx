@@ -153,36 +153,36 @@ export default function Home() {
             {slides[currentSlide].type === 'hero' ? (
               // SLIDE 1: Royal Emerald Shape with 3D Levitating & Rotating Ring
               <div className="relative w-full h-full flex items-center pt-8 sm:pt-12 bg-[#FDFBF7]">
-                {/* Massive Royal Emerald Circle Backdrop */}
-                <div className="absolute top-1/2 left-1/2 lg:left-[68%] -translate-y-1/2 -translate-x-1/2 lg:-translate-x-0 w-[140vw] h-[140vw] sm:w-[120vw] sm:h-[120vw] lg:w-[88vw] lg:h-[88vw] bg-[#064E3B] rounded-full z-0 pointer-events-none shadow-[inset_0_0_120px_rgba(0,0,0,0.6)]" />
+                {/* Royal Emerald Circle Backdrop */}
+                <div className="absolute top-1/2 left-1/2 lg:left-[68%] -translate-y-1/2 -translate-x-1/2 lg:-translate-x-0 w-[100vw] h-[100vw] sm:w-[120vw] sm:h-[120vw] lg:w-[88vw] lg:h-[88vw] bg-[#064E3B] rounded-full z-0 pointer-events-none shadow-[inset_0_0_120px_rgba(0,0,0,0.6)]" />
 
                 <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between">
                   {/* Left: Editorial Text Content */}
                   <div className="w-full lg:w-1/2 flex flex-col justify-center mb-8 lg:mb-0 text-center lg:text-left">
-                    <div className="inline-flex items-center gap-2 self-center lg:self-start px-3.5 py-1 bg-[#064E3B]/10 border border-[#064E3B]/30 text-[#064E3B] rounded-full text-[10px] sm:text-xs font-sans font-bold tracking-[0.25em] uppercase mb-4 sm:mb-6">
+                    <div className="inline-flex items-center gap-2 self-center lg:self-start px-3 py-1 bg-[#064E3B]/10 border border-[#064E3B]/30 text-[#064E3B] rounded-full text-[10px] sm:text-xs font-sans font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-3 sm:mb-6">
                       <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
                       Royal Heritage Atelier
                     </div>
 
-                    <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-[#022C22] mb-4 sm:mb-6 leading-[1.05] tracking-tight">
+                    <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl lg:text-8xl text-[#022C22] mb-3 sm:mb-6 leading-[1.1] sm:leading-[1.05] tracking-tight">
                       A Legacy in <br />
                       <span className="text-[#D4AF37] italic font-light">Every Carat.</span>
                     </h1>
 
-                    <p className="font-serif text-lg sm:text-xl text-[#022C22]/80 mb-8 sm:mb-10 font-medium max-w-md mx-auto lg:mx-0 leading-relaxed">
+                    <p className="font-serif text-sm sm:text-xl text-[#022C22]/80 mb-6 sm:mb-10 font-medium max-w-md mx-auto lg:mx-0 leading-relaxed">
                       Discover ethical VVS1 D-Color Moissanite that outshines natural diamonds with 2.4x more fire. Handcrafted in BIS Hallmarked Gold & 925 Sterling Silver.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
                       <a
                         href="#collection"
-                        className="inline-block bg-[#022C22] text-[#D4AF37] px-10 sm:px-12 py-4 sm:py-5 font-sans text-[11px] font-bold tracking-[0.25em] uppercase hover:bg-[#D4AF37] hover:text-[#022C22] transition-colors shadow-royal border border-[#D4AF37]/40 text-center"
+                        className="w-full sm:w-auto inline-block bg-[#022C22] text-[#D4AF37] px-8 sm:px-12 py-3.5 sm:py-5 font-sans text-[11px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase hover:bg-[#D4AF37] hover:text-[#022C22] transition-colors shadow-royal border border-[#D4AF37]/40 text-center"
                       >
                         Explore Solitaires
                       </a>
                       <a
                         href="#comparison"
-                        className="inline-block bg-transparent text-[#022C22] border border-[#022C22]/30 px-8 py-4 sm:py-5 font-sans text-[11px] font-bold tracking-[0.25em] uppercase hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors text-center"
+                        className="w-full sm:w-auto inline-block bg-transparent text-[#022C22] border border-[#022C22]/30 px-6 sm:px-8 py-3.5 sm:py-5 font-sans text-[11px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors text-center"
                       >
                         Moissanite Guide
                       </a>
@@ -193,12 +193,12 @@ export default function Home() {
                   <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end">
                     <motion.div
                       animate={{
-                        y: [0, -25, 0],
+                        y: [0, -18, 0],
                         rotateY: [0, 8, -8, 0],
                         rotateZ: [0, -1.5, 1.5, 0],
                       }}
                       transition={{ repeat: Infinity, duration: 8, ease: 'easeInOut' }}
-                      className="relative w-full max-w-[420px] sm:max-w-[480px] aspect-square flex items-center justify-center"
+                      className="relative w-full max-w-[320px] sm:max-w-[480px] aspect-square flex items-center justify-center"
                     >
                       <img
                         src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200&auto=format&fit=crop"
@@ -303,21 +303,21 @@ export default function Home() {
       {/* ============================================================ */}
       {/* 2. CURATED COLLECTIONS SHOWCASE (PREVIOUS POPULAR SECTION)   */}
       {/* ============================================================ */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#FDFBF7]">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="font-sans text-xs font-bold tracking-[0.25em] text-[#064E3B] uppercase mb-2">
+      <section className="py-10 sm:py-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 bg-[#FDFBF7]">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14">
+          <p className="font-sans text-[11px] sm:text-xs font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#064E3B] uppercase mb-1.5 sm:mb-2">
             The Emerald Archive
           </p>
-          <h2 className="font-serif text-3xl sm:text-5xl text-[#022C22] mb-3 italic">
+          <h2 className="font-serif text-2xl sm:text-5xl text-[#022C22] mb-2 sm:mb-3 italic">
             Curated Collections
           </h2>
-          <div className="w-16 h-[1.5px] bg-[#D4AF37] mx-auto mb-4" />
+          <div className="w-12 sm:w-16 h-[1.5px] bg-[#D4AF37] mx-auto mb-3 sm:mb-4" />
           <p className="font-sans text-xs sm:text-sm text-gray-600">
             Explore bespoke categories engineered to capture light with mathematical perfection.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-8">
           {collections.map((cat) => (
             <Link
               href={`/category/${cat.slug}`}
@@ -351,30 +351,30 @@ export default function Home() {
       {/* ============================================================ */}
       {/* 4. HIGH-CONVERTING MOISSANITE COLLECTION GRID                */}
       {/* ============================================================ */}
-      <section id="collection" className="py-12 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="collection" className="py-8 sm:py-12 max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 w-full max-w-full overflow-hidden">
         {/* Title & Filter Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-6 border-b border-[#E8E5DF] gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-[#E8E5DF] gap-3 sm:gap-4">
           <div>
-            <div className="flex items-center gap-2 mb-1 text-[#064E3B] font-sans text-xs font-bold uppercase tracking-wider">
+            <div className="flex items-center gap-1.5 mb-1 text-[#064E3B] font-sans text-[11px] sm:text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
               <span>GRA Certified VVS1 D-Color Jewels</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#022C22] tracking-tight">
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#022C22] tracking-tight">
               {selectedShape === 'all'
                 ? 'Featured Solitaire Rings'
                 : `${selectedShape} Cut Moissanite Solitaires`}
             </h2>
-            <p className="font-sans text-xs sm:text-sm text-gray-500 mt-1">
+            <p className="font-sans text-xs sm:text-sm text-gray-500 mt-0.5">
               Showing {filteredProducts.length} certified jewelry creations
             </p>
           </div>
 
           {/* Filter & Sort Controls */}
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <select
               value={selectedMetal}
               onChange={(e) => setSelectedMetal(e.target.value)}
-              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] cursor-pointer shadow-xs"
+              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] cursor-pointer shadow-xs"
             >
               <option value="all">All Metals</option>
               <option value="Silver">925 Sterling Silver</option>
@@ -385,9 +385,9 @@ export default function Home() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] cursor-pointer shadow-xs"
+              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] cursor-pointer shadow-xs"
             >
-              <option value="featured">Featured / Bestsellers</option>
+              <option value="featured">Featured</option>
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
               <option value="rating">Highest Rated</option>
@@ -395,8 +395,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        {/* Product Grid: gap-2 on mobile so both columns fit seamlessly within 412px */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 w-full max-w-full">
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

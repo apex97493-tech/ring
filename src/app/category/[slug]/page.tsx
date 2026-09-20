@@ -102,23 +102,23 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
       <ShapeFilterBar selectedShape={selectedShape} onSelectShape={setSelectedShape} />
 
       {/* Products Grid Section */}
-      <section className="py-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-6 sm:py-10 max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8">
         {/* Filter bar */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-6 border-b border-[#E8E5DF] gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-[#E8E5DF] gap-3 sm:gap-4">
           <div>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#18181B]">
               {selectedShape === 'all' ? 'All Designs' : `${selectedShape} Cut`}
             </h2>
-            <p className="font-sans text-xs text-gray-500 mt-1">
+            <p className="font-sans text-xs text-gray-500 mt-0.5">
               Showing {filteredProducts.length} certified jewelry pieces
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <select
               value={selectedMetal}
               onChange={(e) => setSelectedMetal(e.target.value)}
-              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#18181B] focus:outline-none focus:border-[#B89035]"
+              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#18181B] focus:outline-none focus:border-[#B89035]"
             >
               <option value="all">All Metals</option>
               <option value="Silver">925 Sterling Silver</option>
@@ -129,7 +129,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#18181B] focus:outline-none focus:border-[#B89035]"
+              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#18181B] focus:outline-none focus:border-[#B89035]"
             >
               <option value="featured">Featured</option>
               <option value="price-low">Price: Low to High</option>
@@ -141,7 +141,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
 
         {/* Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 w-full max-w-full">
             {filteredProducts.map((prod) => (
               <ProductCard key={prod.id} product={prod} />
             ))}

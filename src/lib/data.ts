@@ -69,14 +69,14 @@ export const products: Product[] = [
     metal: '925 Sterling Silver',
     readyToShip: true,
     variants: [
-      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop' },
-      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop' },
-      { metal: '18K Rose Gold Plated', colorCode: '#FB7185', image: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop' },
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: '/images/ai_ring1_front.jpg' },
+      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: '/images/ai_ring1_side.jpg' },
+      { metal: '18K Rose Gold Plated', colorCode: '#FB7185', image: '/images/ai_ring1_hand.jpg' },
     ],
     images: [
-      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop',
+      '/images/ai_ring1_front.jpg',
+      '/images/ai_ring1_side.jpg',
+      '/images/ai_ring1_hand.jpg',
       'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop'
     ],
     description: 'The Celeste Oval Solitaire is the crown jewel of our Woke Luxury collection. Featuring a breathtaking 2.00 CT Oval Cut D-Color Moissanite center stone held in a refined 4-prong claw setting. Delivers 2.4x the fire and brilliance of a natural mined diamond at a fraction of the investment.',
@@ -143,13 +143,14 @@ export const products: Product[] = [
     metal: '18K Yellow Gold Plated',
     readyToShip: true,
     variants: [
-      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop' },
-      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop' },
-      { metal: '18K Rose Gold Plated', colorCode: '#FB7185', image: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop' },
+      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: '/images/ai_ring2_front.jpg' },
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: '/images/ai_ring2_side.jpg' },
+      { metal: '18K Rose Gold Plated', colorCode: '#FB7185', image: '/images/ai_ring2_hand.jpg' },
     ],
     images: [
-      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
+      '/images/ai_ring2_front.jpg',
+      '/images/ai_ring2_side.jpg',
+      '/images/ai_ring2_hand.jpg',
       'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop'
     ],
     description: 'Understated vintage opulence. The Hall-of-Mirrors reflection of this 2.50 CT Emerald Cut Moissanite is complemented by a delicate hidden pavé halo underneath the basket that catches the eye from side profile angles.',
@@ -179,13 +180,13 @@ export const products: Product[] = [
     metal: '925 Sterling Silver',
     readyToShip: true,
     variants: [
-      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop' },
-      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop' },
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: '/images/ai_ring1_side.jpg' },
+      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: '/images/ai_ring2_front.jpg' },
     ],
     images: [
-      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop'
+      '/images/ai_ring1_side.jpg',
+      '/images/ai_ring2_front.jpg',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop'
     ],
     description: 'A showstopping statement ring. The 3.00 CT Radiant Cut combines the elegant silhouette of an emerald cut with the intense sparkle of a round brilliant, perched on a French-pavé encrusted band.',
     features: [
@@ -214,13 +215,14 @@ export const products: Product[] = [
     metal: '18K Rose Gold Plated',
     readyToShip: true,
     variants: [
-      { metal: '18K Rose Gold Plated', colorCode: '#FB7185', image: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop' },
-      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop' },
-      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop' },
+      { metal: '18K Rose Gold Plated', colorCode: '#FB7185', image: '/images/ai_ring1_hand.jpg' },
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: '/images/ai_ring1_front.jpg' },
+      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: '/images/ai_ring1_side.jpg' },
     ],
     images: [
-      'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
+      '/images/ai_ring1_hand.jpg',
+      '/images/ai_ring1_front.jpg',
+      '/images/ai_ring1_side.jpg',
       'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop'
     ],
     description: 'Flattering, elongating, and dramatically feminine. The Elara Pear Drop features a protective V-tip chevron prong that shields the delicate tip of the pear while maximizing stone visibility.',
@@ -255,7 +257,7 @@ export const products: Product[] = [
     ],
     images: [
       'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
+      '/images/ai_ring3_side.jpg',
       'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop'
     ],
     description: 'A harmonious blend of old-world charm and modern brilliance. Pillow-soft rounded corners with an elongated ratio that looks exceptionally flattering on any hand.',
@@ -285,12 +287,12 @@ export const products: Product[] = [
     metal: '925 Sterling Silver',
     readyToShip: true,
     variants: [
-      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop' },
-      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop' },
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: '/images/ai_ring1_front.jpg' },
+      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: '/images/ai_ring1_side.jpg' },
     ],
     images: [
-      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop',
+      '/images/ai_ring1_front.jpg',
+      '/images/ai_ring1_side.jpg',
       'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop'
     ],
     description: 'Crisp geometric lines meeting explosive sparkle. The 4 corner chevron prongs shield the edges of this 2.00 CT Princess Cut while letting pure light pass through.',
@@ -321,11 +323,11 @@ export const products: Product[] = [
     readyToShip: true,
     variants: [
       { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop' },
-      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop' },
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: '/images/ai_ring2_hand.jpg' },
     ],
     images: [
       'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
+      '/images/ai_ring2_hand.jpg',
       'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop'
     ],
     description: 'A silhouette favored by royal dynasties. The Marquise cut boasts the largest surface area per carat of any diamond cut, giving the illusion of a monumental center stone.',
@@ -355,13 +357,14 @@ export const products: Product[] = [
     metal: '925 Sterling Silver',
     readyToShip: true,
     variants: [
-      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop' },
-      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop' },
-      { metal: '18K Rose Gold Plated', colorCode: '#FB7185', image: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop' },
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: '/images/ai_ring3_front.jpg' },
+      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: '/images/ai_ring3_side.jpg' },
+      { metal: '18K Rose Gold Plated', colorCode: '#FB7185', image: '/images/ai_ring3_hand.jpg' },
     ],
     images: [
-      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop',
+      '/images/ai_ring3_front.jpg',
+      '/images/ai_ring3_side.jpg',
+      '/images/ai_ring3_hand.jpg',
       'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop'
     ],
     description: 'An unbroken circle of pure light. Features 22 hand-set 3.0mm D-Color VVS1 Moissanite stones in a seamless 4-prong low profile setting. Perfect for stacking with your solitaire.',

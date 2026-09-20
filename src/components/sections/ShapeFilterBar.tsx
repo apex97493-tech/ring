@@ -79,15 +79,15 @@ export default function ShapeFilterBar({
   onSelectShape: (shape: string) => void;
 }) {
   return (
-    <div className="w-full py-5 border-y border-[#E8E5DF] bg-[#F7F5F0]/80 mb-10 overflow-x-auto no-scrollbar">
-      <div className="max-w-[1440px] mx-auto px-4 flex items-center justify-start md:justify-center gap-2.5 sm:gap-3.5 min-w-max">
+    <div className="w-full max-w-full py-3 sm:py-5 border-y border-[#E8E5DF] bg-[#F7F5F0]/80 mb-6 sm:mb-10 overflow-x-auto no-scrollbar">
+      <div className="max-w-[1440px] mx-auto px-3 sm:px-4 flex items-center justify-start md:justify-center gap-2 sm:gap-3.5 min-w-max">
         {SHAPES.map((shape) => {
           const isSelected = selectedShape === shape.value;
           return (
             <button
               key={shape.value}
               onClick={() => onSelectShape(shape.value)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full font-sans text-xs font-semibold tracking-wider uppercase transition-all select-none cursor-pointer ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-sans text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-all select-none cursor-pointer ${
                 isSelected
                   ? 'bg-[#D4AF37] text-[#022C22] shadow-md scale-105 border border-[#B89035]'
                   : 'bg-white text-[#27272A] border border-[#E8E5DF] hover:border-[#D4AF37] hover:text-[#022C22]'
