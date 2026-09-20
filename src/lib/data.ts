@@ -17,7 +17,13 @@ const categoryStyles: Record<string, string[]> = {
   rings: ['Halo', 'Solitaire', 'Three-Stone', 'Vintage', 'Pavé', 'Bezel', 'Tension', 'Channel', 'Twist', 'Infinity'],
   necklaces: ['Pendant', 'Tennis', 'Choker', 'Lariat', 'Station', 'Collar', 'Rivière', 'Y-Drop', 'Halo', 'Lock'],
   earrings: ['Studs', 'Drop', 'Hoop', 'Chandelier', 'Cluster', 'Huggie', 'Dangle', 'Teardrop', 'Halo', 'Threader'],
-  bracelets: ['Tennis', 'Bangle', 'Cuff', 'Chain', 'Charm', 'Link', 'Slider', 'Bolo', 'Line', 'Wrap']
+  bracelets: ['Tennis', 'Bangle', 'Cuff', 'Chain', 'Charm', 'Link', 'Slider', 'Bolo', 'Line', 'Wrap'],
+  band: ['Eternity', 'Wedding', 'Curved', 'Braided', 'Plain'],
+  'lesbian-ring': ['Matching', 'Interlocking', 'Symbol', 'Minimalist', 'Engraved'],
+  pendant: ['Solitaire', 'Heart', 'Cross', 'Initial', 'Locket'],
+  'nose-ring': ['Stud', 'Hoop', 'Septum', 'Clicker', 'L-Shape'],
+  'belly-rings': ['Curved Barbell', 'Dangle', 'Reverse', 'Shield', 'Spiral'],
+  'ring-set': ['Bridal', 'Stackable', 'Matching', 'Duo', 'Trio']
 };
 
 let globalImageCounter = 1;
@@ -44,37 +50,17 @@ function generateProducts(category: string, count: number): Product[] {
       `https://loremflickr.com/800/800/jewelry,${keyword}?lock=${globalImageCounter++}`,
       `https://loremflickr.com/800/800/jewelry,${keyword}?lock=${globalImageCounter++}`
     ];
+    // Use the sliced images from the user's uploaded screenshot for all rings
+    if (category === 'rings') {
+      finalImages = [
+        `/images/sliced_${i % 16}.jpg`,
+        `/images/sliced_${(i + 1) % 16}.jpg`,
+        `/images/sliced_${(i + 2) % 16}.jpg`
+      ];
+    }
+
     let finalName = name;
     let finalStone = stone;
-    
-    // Use the custom AI generated Signature rings for the top 3 spots
-    if (category === 'rings') {
-      if (i === 0) {
-        finalName = `The Signature Rose Gold Diamond Solitaire`;
-        finalStone = 'Diamond';
-        finalImages = [
-          '/images/ai_ring1_front.jpg',
-          '/images/ai_ring1_hand.jpg',
-          '/images/ai_ring1_side.jpg'
-        ];
-      } else if (i === 1) {
-        finalName = `The Imperial Platinum Emerald Ring`;
-        finalStone = 'Emerald';
-        finalImages = [
-          '/images/ai_ring2_front.jpg',
-          '/images/ai_ring2_hand.jpg',
-          '/images/ai_ring2_side.jpg'
-        ];
-      } else if (i === 2) {
-        finalName = `The Vintage Gold Sapphire Halo Ring`;
-        finalStone = 'Blue Sapphire';
-        finalImages = [
-          '/images/ai_ring3_front.jpg',
-          '/images/ai_ring3_hand.jpg',
-          '/images/ai_ring3_side.jpg'
-        ];
-      }
-    }
 
     const finalSlug = finalName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
@@ -97,9 +83,15 @@ function generateProducts(category: string, count: number): Product[] {
 // Generate exactly 20 products for each of the 4 categories (80 total)
 export const products: Product[] = [
   ...generateProducts('rings', 20),
-  ...generateProducts('necklaces', 20),
+  ...generateProducts('band', 20),
+  ...generateProducts('lesbian-ring', 20),
+  ...generateProducts('pendant', 20),
   ...generateProducts('earrings', 20),
-  ...generateProducts('bracelets', 20)
+  ...generateProducts('necklaces', 20),
+  ...generateProducts('bracelets', 20),
+  ...generateProducts('nose-ring', 20),
+  ...generateProducts('belly-rings', 20),
+  ...generateProducts('ring-set', 20)
 ];
 
 export function getProductsByCategory(category: string): Product[] {

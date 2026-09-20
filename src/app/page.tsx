@@ -197,14 +197,20 @@ export default function Home() {
         <h2 className="font-serif text-4xl text-center text-[var(--color-brand-emerald-dark)] mb-4 italic">Curated Collections</h2>
         <div className="w-16 h-[1px] bg-[var(--color-brand-gold)] mx-auto mb-16"></div>
         
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {[
             { name: 'Rings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=bottom' },
             { name: 'Necklaces', img: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=600&auto=format&fit=crop' },
             { name: 'Earrings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=top' },
-            { name: 'Bracelets', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=left' }
+            { name: 'Bracelets', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=left' },
+            { name: 'Band', img: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=600&auto=format&fit=crop' },
+            { name: 'Lesbian Ring', img: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=600&auto=format&fit=crop' },
+            { name: 'Pendant', img: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=600&auto=format&fit=crop' },
+            { name: 'Nose Ring', img: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=600&auto=format&fit=crop' },
+            { name: 'Belly Rings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop' },
+            { name: 'Ring Set', img: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=600&auto=format&fit=crop' }
           ].map((cat) => (
-            <Link href={`/category/${cat.name.toLowerCase()}`} key={cat.name} className="group cursor-pointer block">
+            <Link href={`/category/${cat.name.toLowerCase().replace(/ /g, '-')}`} key={cat.name} className="group cursor-pointer block">
               <div className="relative aspect-[3/4] overflow-hidden bg-[var(--color-brand-emerald-dark)] mb-6 border border-[var(--color-brand-gold)]/20 shadow-lg">
                 <img 
                   src={cat.img} 
