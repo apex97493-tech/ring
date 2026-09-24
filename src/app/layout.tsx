@@ -39,17 +39,17 @@ export default function RootLayout({
           </main>
           <Footer />
 
-          {/* Floating WhatsApp Concierge Widget - responsive sizing */}
+          {/* Floating WhatsApp Support Widget - responsive sizing */}
           <a
             href="https://wa.me/919999999999?text=Hello%20AURA%20Jewelry%20Team!%20I%20would%20like%20to%20inquire%20about%20a%20Moissanite%20Ring."
             target="_blank"
             rel="noopener noreferrer"
             className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 bg-[#064E3B] hover:bg-[#043327] text-[#D4AF37] hover:text-white p-3 sm:p-3.5 rounded-full shadow-2xl border border-[#D4AF37]/50 flex items-center justify-center transition-all duration-300 hover:scale-110 group cursor-pointer"
-            aria-label="WhatsApp Concierge"
+            aria-label="Chat on WhatsApp"
           >
             <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />
             <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out font-sans text-xs font-bold uppercase tracking-wider pl-0 group-hover:pl-2">
-              WhatsApp Concierge
+              Chat on WhatsApp
             </span>
           </a>
         </CartProvider>

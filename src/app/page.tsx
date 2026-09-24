@@ -161,7 +161,7 @@ export default function Home() {
                   <div className="w-full lg:w-1/2 flex flex-col justify-center mb-8 lg:mb-0 text-center lg:text-left">
                     <div className="inline-flex items-center gap-2 self-center lg:self-start px-3 py-1 bg-[#064E3B]/10 border border-[#064E3B]/30 text-[#064E3B] rounded-full text-[10px] sm:text-xs font-sans font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-3 sm:mb-6">
                       <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-                      Royal Heritage Atelier
+                      Royal Heritage Collection
                     </div>
 
                     <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl lg:text-8xl text-[#022C22] mb-3 sm:mb-6 leading-[1.1] sm:leading-[1.05] tracking-tight">
@@ -306,7 +306,7 @@ export default function Home() {
       <section className="py-10 sm:py-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 bg-[#FDFBF7]">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14">
           <p className="font-sans text-[11px] sm:text-xs font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#064E3B] uppercase mb-1.5 sm:mb-2">
-            The Emerald Archive
+            Signature Collections
           </p>
           <h2 className="font-serif text-2xl sm:text-5xl text-[#022C22] mb-2 sm:mb-3 italic">
             Curated Collections
@@ -421,7 +421,7 @@ export default function Home() {
       {/* Frequently Asked Questions Accordion */}
       <FaqSection />
 
-      {/* Bespoke Custom CAD Atelier & WhatsApp Concierge */}
+      {/* Bespoke Custom CAD Studio & WhatsApp Support */}
       <CustomJewelryBanner />
     </div>
   );

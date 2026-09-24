@@ -13,7 +13,7 @@ const reviews = [
     title: 'Outshines my natural diamond engagement ring!',
     content: 'I ordered the Celeste Oval 2.00 CT in 18K Yellow Gold. The brilliance and fire under sunlight are mindblowing. My jeweler friend tested it with his diamond tester and it beeped positive immediately! GRA certificate was in the box. 10/10 recommend.',
     ringName: 'The Celeste Oval Solitaire Moissanite Ring',
-    image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=400&auto=format&fit=crop',
+    image: '/images/ai_ring1_front.jpg',
   },
   {
     id: 2,

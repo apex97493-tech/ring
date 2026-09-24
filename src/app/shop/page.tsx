@@ -41,7 +41,7 @@ export default function ShopPage() {
         <div className="max-w-4xl mx-auto px-4 relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] rounded-full text-[11px] font-sans font-bold tracking-widest uppercase mb-4">
             <Sparkles className="w-3.5 h-3.5" />
-            Complete Fine Jewelry Atelier
+            Complete Fine Jewelry Collection
           </div>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white">
             The Royal Moissanite Collection

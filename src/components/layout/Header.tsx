@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ShoppingBag, Heart, Menu, X, PhoneCall } from 'lucide-react';
+import { Search, ShoppingBag, Heart, Menu, X, PhoneCall, MessageCircle } from 'lucide-react';
 import AnnouncementBar from './AnnouncementBar';
 import { useCart } from '@/context/CartContext';
 import { products } from '@/lib/data';
@@ -49,23 +49,22 @@ export default function Header() {
                 <span className="font-serif text-xl sm:text-2xl lg:text-3xl tracking-[0.2em] sm:tracking-[0.25em] font-bold text-[#D4AF37] group-hover:text-white transition-colors uppercase">
                   AURA
                 </span>
-                <span className="font-sans text-[7.5px] sm:text-[9px] tracking-[0.28em] sm:tracking-[0.35em] text-[#F3E5AB]/90 uppercase font-semibold -mt-0.5 sm:-mt-1">
-                  Royal Moissanite Atelier
+                <span className="font-sans text-[7.5px] sm:text-[9px] tracking-[0.22em] sm:tracking-[0.28em] text-[#F3E5AB]/90 uppercase font-semibold -mt-0.5 sm:-mt-1">
+                  Royal Moissanite & Fine Jewelry
                 </span>
               </Link>
             </div>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center space-x-7 xl:space-x-8">
+            <nav className="hidden lg:flex items-center space-x-6 xl:space-x-7">
               {[
                 { name: 'Shop All', href: '/shop' },
                 { name: 'Solitaire Rings', href: '/category/rings' },
                 { name: 'Eternity Bands', href: '/category/band' },
                 { name: 'Ring Stacks', href: '/category/ring-set' },
-                { name: 'Pendants', href: '/category/pendant' },
-                { name: 'Earrings', href: '/category/earrings' },
                 { name: 'Why Moissanite', href: '/#comparison' },
                 { name: 'Ring Size Guide', href: '/#size-guide' },
+                { name: 'Contact Us', href: '/contact' },
               ].map((item) => (
                 <Link
                   key={item.name}
@@ -80,15 +79,15 @@ export default function Header() {
 
             {/* Right Action Icons */}
             <div className="flex items-center space-x-3 sm:space-x-5">
-              {/* WhatsApp Concierge - hidden on mobile (handled by floating button) */}
+              {/* WhatsApp Support - hidden on mobile (handled by floating button) */}
               <a
                 href="https://wa.me/919999999999?text=Hello!%20I%20am%20interested%20in%20custom%20Moissanite%20Jewelry."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden xl:flex items-center gap-1.5 px-3.5 py-1.5 text-[11px] font-sans font-bold tracking-wider text-[#022C22] bg-[#D4AF37] hover:bg-[#F3E5AB] rounded-full transition-colors shadow-sm"
               >
-                <PhoneCall className="w-3.5 h-3.5" />
-                <span>Concierge</span>
+                <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                <span>WhatsApp</span>
               </a>
 
               {/* Search Button */}
@@ -252,7 +251,7 @@ export default function Header() {
                       AURA
                     </span>
                     <p className="font-sans text-[8.5px] tracking-widest text-[#F3E5AB] uppercase font-semibold">
-                      Royal Moissanite Atelier
+                      Royal Moissanite & Fine Jewelry
                     </p>
                   </div>
                   <button
@@ -273,7 +272,7 @@ export default function Header() {
                     { name: 'Moissanite Stud Earrings', href: '/category/earrings', count: 'Daily Wear' },
                     { name: 'Moissanite vs Diamond Guide', href: '/#comparison', count: 'Guide' },
                     { name: 'Interactive Ring Sizer', href: '/#size-guide', count: 'Tool' },
-                    { name: 'Client Reviews & FAQs', href: '/#faqs', count: 'Help' },
+                    { name: 'Contact Us & Store Location', href: '/contact', count: 'Help' },
                   ].map((item) => (
                     <Link
                       key={item.name}
