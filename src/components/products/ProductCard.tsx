@@ -47,12 +47,18 @@ export default function ProductCard({ product }: { product: Product }) {
       >
         {/* Image Showcase Container */}
         <div className="relative aspect-square w-full rounded-lg sm:rounded-xl overflow-hidden bg-[#F7F5F0] mb-2 sm:mb-2.5">
-          {/* Badge */}
-          {product.badge && (
-            <span className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 z-10 bg-[#022C22] text-[#D4AF37] font-sans text-[8px] sm:text-[9px] font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded shadow-xs uppercase">
-              {product.badge}
-            </span>
-          )}
+          {/* Badge & Shipping Guarantee */}
+          <div className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 z-10 flex flex-col gap-1 items-start">
+            {product.badge ? (
+              <span className="bg-[#022C22] text-[#D4AF37] font-sans text-[8px] sm:text-[9px] font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded shadow-xs uppercase">
+                {product.badge}
+              </span>
+            ) : (
+              <span className="bg-white/90 backdrop-blur-xs text-[#064E3B] font-sans text-[8px] sm:text-[9px] font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded shadow-xs uppercase border border-[#E8E5DF]">
+                ✨ Ready to Ship
+              </span>
+            )}
+          </div>
 
           {/* Wishlist Heart Button */}
           <button

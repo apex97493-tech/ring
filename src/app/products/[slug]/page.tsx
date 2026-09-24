@@ -21,6 +21,8 @@ import {
 import { getProductBySlug, products, METALS } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
 import ProductCard from '@/components/products/ProductCard';
+import MobileStickyBuyBar from '@/components/products/MobileStickyBuyBar';
+import RingStackBuilder from '@/components/products/RingStackBuilder';
 import MoissaniteComparison from '@/components/sections/MoissaniteComparison';
 import WhyChooseUs from '@/components/sections/WhyChooseUs';
 import RingSizeGuide from '@/components/sections/RingSizeGuide';
@@ -188,16 +190,34 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
             </p>
 
             {/* Price Row */}
-            <div className="flex items-baseline gap-3 mb-6 pb-6 border-b border-[#E8E5DF]">
-              <span className="font-sans text-3xl font-bold text-[#064E3B]">
-                ₹{product.price.toLocaleString('en-IN')}
-              </span>
-              <span className="font-sans text-base text-gray-400 line-through">
-                ₹{product.originalPrice.toLocaleString('en-IN')}
-              </span>
-              <span className="font-sans text-xs font-bold text-[#059669] bg-[#ECFDF5] px-2.5 py-1 rounded-full">
-                {discountPercent}% OFF
-              </span>
+            <div className="mb-6 pb-6 border-b border-[#E8E5DF]">
+              <div className="flex items-baseline gap-3 mb-3">
+                <span className="font-sans text-3xl font-bold text-[#064E3B]">
+                  ₹{product.price.toLocaleString('en-IN')}
+                </span>
+                <span className="font-sans text-base text-gray-400 line-through">
+                  ₹{product.originalPrice.toLocaleString('en-IN')}
+                </span>
+                <span className="font-sans text-xs font-bold text-[#059669] bg-[#ECFDF5] px-2.5 py-1 rounded-full">
+                  {discountPercent}% OFF
+                </span>
+              </div>
+
+              {/* Minimalist Trust & Certification Badges */}
+              <div className="flex flex-wrap items-center gap-2 font-sans text-[11px] text-gray-600">
+                <span className="inline-flex items-center gap-1 bg-[#F7F5F0] border border-[#E8E5DF] px-2.5 py-1 rounded-full">
+                  <Award className="w-3.5 h-3.5 text-[#B89035]" />
+                  <span>GRA Certificate Included</span>
+                </span>
+                <span className="inline-flex items-center gap-1 bg-[#F7F5F0] border border-[#E8E5DF] px-2.5 py-1 rounded-full">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#064E3B]" />
+                  <span>Lifetime Brilliance Warranty</span>
+                </span>
+                <span className="inline-flex items-center gap-1 bg-[#F7F5F0] border border-[#E8E5DF] px-2.5 py-1 rounded-full">
+                  <Truck className="w-3.5 h-3.5 text-[#059669]" />
+                  <span>Free Insured Air Shipping</span>
+                </span>
+              </div>
             </div>
 
             {/* Metal Swatch Selection */}
@@ -315,6 +335,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                 Dispatched in 24-48 hrs • <strong>Free Express Air Shipping</strong>
               </span>
             </div>
+
+            {/* Complete The Royal Stack (Inspired by Minimalist Jewels) */}
+            <RingStackBuilder product={product} selectedMetal={activeVariant.metal} />
           </div>
         </div>
       </section>
@@ -444,6 +467,18 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       <ReviewsSection />
       <FaqSection />
       <CustomJewelryBanner />
+
+      {/* Floating Mobile Sticky Add to Bag / WhatsApp Bar (Inspired by Minimalist Jewels) */}
+      <MobileStickyBuyBar
+        product={product}
+        selectedMetal={activeVariant.metal}
+        selectedSize={selectedSize}
+        selectedCarat={selectedCarat}
+        activeImage={allImages[0]}
+        onAddToCart={handleAddToCart}
+        onWhatsAppOrder={handleWhatsAppOrder}
+        isAdded={isAdded}
+      />
     </div>
   );
 }

@@ -16,6 +16,8 @@ import { products, SHAPES } from '@/lib/data';
 import ProductCard from '@/components/products/ProductCard';
 import ShapeFilterBar from '@/components/sections/ShapeFilterBar';
 import MoissaniteComparison from '@/components/sections/MoissaniteComparison';
+import InteractiveSparkleSlider from '@/components/sections/InteractiveSparkleSlider';
+import CutPersonalityGuide from '@/components/sections/CutPersonalityGuide';
 import WhyChooseUs from '@/components/sections/WhyChooseUs';
 import RingSizeGuide from '@/components/sections/RingSizeGuide';
 import ReviewsSection from '@/components/sections/ReviewsSection';
@@ -331,6 +333,11 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
+      {/* 2.5 STONE CUT & PERSONALITY STORYTELLING GUIDE               */}
+      {/* ============================================================ */}
+      <CutPersonalityGuide />
+
+      {/* ============================================================ */}
       {/* 3. SHAPE FILTER BAR                                         */}
       {/* ============================================================ */}
       <ShapeFilterBar selectedShape={selectedShape} onSelectShape={setSelectedShape} />
@@ -393,6 +400,9 @@ export default function Home() {
       {/* ============================================================ */}
       {/* 5. THE SIGNATURE WOKE EDUCATIONAL & TRUST BOTTOM SECTIONS    */}
       {/* ============================================================ */}
+      {/* Interactive Sparkle Drag Slider */}
+      <InteractiveSparkleSlider />
+
       {/* Deep Moissanite vs Diamond vs CZ Comparison Matrix */}
       <MoissaniteComparison />
 
