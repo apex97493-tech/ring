@@ -27,7 +27,7 @@ const faqs = [
   {
     question: 'Can I order a custom design or custom ring size?',
     answer:
-      'Absolutely! We specialize in bespoke bridal jewelry. If you have a specific CAD design, family heirloom inspiration, or custom ring size (below US 4 or above US 10), simply tap our WhatsApp Concierge button to consult directly with our 3D master artisans.',
+      'Absolutely! We specialize in bespoke bridal jewelry. If you have a specific CAD design, family heirloom inspiration, or custom ring size (below US 4 or above US 10), simply tap our WhatsApp Support button to consult directly with our 3D master artisans.',
   },
   {
     question: 'How long does shipping take and is the package insured?',

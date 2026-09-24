@@ -171,34 +171,46 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Store & Concierge */}
+          {/* Col 4: Store & Contact */}
           <div>
             <h5 className="font-serif text-base font-bold text-[#D4AF37] uppercase tracking-wider mb-4">
-              Atelier & Contact
+              Contact & Store
             </h5>
             <ul className="space-y-3 text-gray-400">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#D4AF37] flex-shrink-0 mt-0.5" />
-                <span>Jewelry Atelier, Bandra West, Mumbai, Maharashtra 400050</span>
+                <span>Flagship Jewelry Studio, Bandra West, Mumbai, Maharashtra 400050</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#D4AF37] flex-shrink-0" />
-                <span>+91 99999 99999 (WhatsApp Concierge)</span>
+                <a href="tel:+919999999999" className="hover:text-white transition-colors">
+                  +91 99999 99999 (Call & WhatsApp)
+                </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#D4AF37] flex-shrink-0" />
-                <span>care@aurajewelry.com</span>
+                <a href="mailto:care@aurajewelry.com" className="hover:text-white transition-colors">
+                  care@aurajewelry.com
+                </a>
+              </li>
+              <li className="pt-1">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#D4AF37] hover:text-[#F3E5AB] transition-colors uppercase tracking-wider"
+                >
+                  Get In Touch & Visit Store →
+                </Link>
               </li>
               <li className="pt-2 flex gap-4 text-gray-400 text-xs">
-                <a href="#" className="hover:text-[#D4AF37] flex items-center gap-1">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1">
                   <span>Instagram</span>
                 </a>
                 <span>•</span>
-                <a href="#" className="hover:text-[#D4AF37] flex items-center gap-1">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1">
                   <span>Facebook</span>
                 </a>
                 <span>•</span>
-                <a href="#" className="hover:text-[#D4AF37] flex items-center gap-1">
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1">
                   <span>YouTube</span>
                 </a>
               </li>
@@ -208,7 +220,7 @@ export default function Footer() {
 
         {/* Bottom Bar with Payment Gateways */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-gray-500">
-          <p>© 2026 AURA Fine Jewelry Atelier. All Rights Reserved. Crafted for eternal sparkle.</p>
+          <p>© 2026 AURA Royal Moissanite Jewelry. All Rights Reserved. Crafted for eternal sparkle.</p>
 
           <div className="flex items-center gap-3">
             <span className="text-[10px] uppercase tracking-wider text-gray-400">

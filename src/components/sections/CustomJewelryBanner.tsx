@@ -14,7 +14,7 @@ export default function CustomJewelryBanner() {
           <div className="max-w-2xl text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] rounded-full text-xs font-sans font-bold tracking-widest uppercase mb-4">
               <Sparkles className="w-3.5 h-3.5" />
-              Bespoke Custom Atelier
+              Bespoke Custom Jewelry Studio
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4 text-white">
               Have a Dream Design in Mind? <br />
