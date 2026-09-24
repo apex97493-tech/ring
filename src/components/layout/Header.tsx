@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, ShoppingBag, Heart, Menu, X, PhoneCall } from 'lucide-react';
+import { Search, ShoppingBag, Heart, Menu, X, PhoneCall, ChevronDown } from 'lucide-react';
 import AnnouncementBar from './AnnouncementBar';
+import ShapeMegaMenu from './ShapeMegaMenu';
 import { useCart } from '@/context/CartContext';
 import { products } from '@/lib/data';
 
@@ -12,6 +13,7 @@ export default function Header() {
   const { totalItems, setIsCartOpen, wishlist } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isShapeMenuOpen, setIsShapeMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   const searchResults = searchQuery.trim()
@@ -57,15 +59,37 @@ export default function Header() {
 
             {/* Desktop Navigation Links */}
             <nav className="hidden lg:flex items-center space-x-7 xl:space-x-8">
+              <div 
+                className="relative py-2"
+                onMouseEnter={() => setIsShapeMenuOpen(true)}
+                onMouseLeave={() => setIsShapeMenuOpen(false)}
+              >
+                <button
+                  className="font-sans flex items-center gap-1 text-[11px] xl:text-[12px] font-semibold tracking-[0.15em] text-[#FDFBF7]/90 hover:text-[#D4AF37] transition-colors uppercase relative group cursor-default"
+                >
+                  Shop By Shape
+                  <ChevronDown className="w-3 h-3" />
+                  <span className={`absolute -bottom-2 left-0 h-[1.5px] bg-[#D4AF37] transition-all duration-300 ${isShapeMenuOpen ? 'w-full' : 'w-0'}`}></span>
+                </button>
+                <ShapeMegaMenu 
+                  isOpen={isShapeMenuOpen} 
+                  onMouseEnter={() => setIsShapeMenuOpen(true)}
+                  onMouseLeave={() => setIsShapeMenuOpen(false)}
+                />
+              </div>
+
               {[
                 { name: 'Shop All', href: '/shop' },
-                { name: 'Solitaire Rings', href: '/category/rings' },
-                { name: 'Eternity Bands', href: '/category/band' },
-                { name: 'Ring Stacks', href: '/category/ring-set' },
-                { name: 'Pendants', href: '/category/pendant' },
+                { name: 'Rings', href: '/category/rings' },
+                { name: 'Band', href: '/category/band' },
+                { name: 'Lesbian Ring', href: '/category/lesbian-ring' },
+                { name: 'Pendant', href: '/category/pendant' },
                 { name: 'Earrings', href: '/category/earrings' },
-                { name: 'Why Moissanite', href: '/#comparison' },
-                { name: 'Ring Size Guide', href: '/#size-guide' },
+                { name: 'Necklace', href: '/category/necklace' },
+                { name: 'Bracelet', href: '/category/bracelet' },
+                { name: 'Nose Ring', href: '/category/nose-ring' },
+                { name: 'Belly Rings', href: '/category/belly-rings' },
+                { name: 'Ring Set', href: '/category/ring-set' },
               ].map((item) => (
                 <Link
                   key={item.name}
@@ -73,7 +97,7 @@ export default function Header() {
                   className="font-sans text-[11px] xl:text-[12px] font-semibold tracking-[0.15em] text-[#FDFBF7]/90 hover:text-[#D4AF37] transition-colors uppercase relative group py-2"
                 >
                   {item.name}
-                  <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-2 left-0 w-0 h-[1.5px] bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               ))}
             </nav>
@@ -266,11 +290,16 @@ export default function Header() {
                 <nav className="p-5 space-y-3.5">
                   {[
                     { name: 'Shop All Jewelry', href: '/shop', count: 'Explore' },
-                    { name: 'Moissanite Solitaire Rings', href: '/category/rings', count: 'Bestsellers' },
-                    { name: 'Eternity Bands', href: '/category/band', count: 'Classic' },
-                    { name: 'Ring Stacks & Tiara', href: '/category/ring-set', count: 'Trending' },
-                    { name: 'Solitaire Pendants', href: '/category/pendant', count: 'Gifting' },
-                    { name: 'Moissanite Stud Earrings', href: '/category/earrings', count: 'Daily Wear' },
+                    { name: 'Rings', href: '/category/rings', count: 'Bestsellers' },
+                    { name: 'Band', href: '/category/band', count: 'Classic' },
+                    { name: 'Lesbian Ring', href: '/category/lesbian-ring', count: 'Trending' },
+                    { name: 'Pendant', href: '/category/pendant', count: 'Gifting' },
+                    { name: 'Earrings', href: '/category/earrings', count: 'Daily Wear' },
+                    { name: 'Necklace', href: '/category/necklace', count: 'New' },
+                    { name: 'Bracelet', href: '/category/bracelet', count: 'Essentials' },
+                    { name: 'Nose Ring', href: '/category/nose-ring', count: 'Trendy' },
+                    { name: 'Belly Rings', href: '/category/belly-rings', count: 'Trendy' },
+                    { name: 'Ring Set', href: '/category/ring-set', count: 'Trending' },
                     { name: 'Moissanite vs Diamond Guide', href: '/#comparison', count: 'Guide' },
                     { name: 'Interactive Ring Sizer', href: '/#size-guide', count: 'Tool' },
                     { name: 'Client Reviews & FAQs', href: '/#faqs', count: 'Help' },

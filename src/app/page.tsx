@@ -31,18 +31,6 @@ const slides = [
     id: 1,
     type: 'promo',
     image:
-      'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=2000&auto=format&fit=crop',
-    titleTop: 'Buy',
-    titleMain: 'One',
-    subtitle: 'Get Jewellery Worth',
-    highlightPrefix: '10,999',
-    highlightSuffix: 'Free',
-    description: 'Complimentary Solid Silver Pendant on First Purchase',
-  },
-  {
-    id: 2,
-    type: 'promo',
-    image:
       'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=2000&auto=format&fit=crop',
     titleTop: 'New',
     titleMain: 'Arrivals',
@@ -52,7 +40,7 @@ const slides = [
     description: 'VVS1 D-Color Moissanite Solitaires',
   },
   {
-    id: 3,
+    id: 2,
     type: 'promo',
     image:
       'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2000&auto=format&fit=crop',
@@ -63,34 +51,24 @@ const slides = [
     highlightSuffix: 'Ring',
     description: 'Consult Directly With Master Artisans On WhatsApp',
   },
+  {
+    id: 3,
+    type: 'full-image',
+    image: '/images/diamond_shapes_banner.jpg',
+  },
 ];
 
 const collections = [
-  {
-    name: 'Solitaire Rings',
-    slug: 'rings',
-    img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop',
-  },
-  {
-    name: 'Eternity Bands',
-    slug: 'band',
-    img: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=600&auto=format&fit=crop',
-  },
-  {
-    name: 'Ring Stacks',
-    slug: 'ring-set',
-    img: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=600&auto=format&fit=crop',
-  },
-  {
-    name: 'Pendants',
-    slug: 'pendant',
-    img: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=600&auto=format&fit=crop',
-  },
-  {
-    name: 'Stud Earrings',
-    slug: 'earrings',
-    img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=top',
-  },
+  { name: 'Rings', slug: 'rings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Band', slug: 'band', img: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Lesbian Ring', slug: 'lesbian-ring', img: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Pendant', slug: 'pendant', img: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Earrings', slug: 'earrings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=top' },
+  { name: 'Necklace', slug: 'necklace', img: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Bracelet', slug: 'bracelet', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=left' },
+  { name: 'Nose Ring', slug: 'nose-ring', img: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Belly Rings', slug: 'belly-rings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Ring Set', slug: 'ring-set', img: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=600&auto=format&fit=crop' },
 ];
 
 export default function Home() {
@@ -209,8 +187,17 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            ) : slides[currentSlide].type === 'full-image' ? (
+              // SLIDE 4: Full Image Banner
+              <div className="relative w-full h-full flex items-center justify-center cursor-pointer overflow-hidden bg-black">
+                <img
+                  src={slides[currentSlide].image}
+                  alt="Banner"
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
             ) : (
-              // SLIDE 2, 3, 4: Promotional Emerald-Themed Slides
+              // SLIDE 2, 3: Promotional Emerald-Themed Slides
               <div className="relative w-full h-full bg-[#022C22]">
                 <div className="absolute inset-0 z-0">
                   <img
