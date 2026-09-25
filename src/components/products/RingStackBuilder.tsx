@@ -44,7 +44,7 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
           slug: 'curved-tiara-band',
           price: bandPrice,
           originalPrice: 10999,
-          badge: 'Stacking Band',
+          badge: 'LIMITED EDITION',
         },
         quantity: 1,
         selectedMetal,

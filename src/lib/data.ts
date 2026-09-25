@@ -18,7 +18,7 @@ export type Product = {
   colorGrade: string;
   cut: string;
   certification: string;
-  badge?: 'BESTSELLER' | 'VVS1 D-COLOR' | 'LIMITED EDITION' | '50% OFF' | 'NEW ARRIVAL';
+  badge?: 'BESTSELLER' | 'VVS1 D-COLOR' | 'LIMITED EDITION' | '50% OFF' | 'NEW ARRIVAL' | 'STACKING BAND' | string;
   rating: number;
   reviewsCount: number;
   metal: string;
@@ -476,6 +476,112 @@ export const products: Product[] = [
       'Certified Dual GRA Certificates (One Per Earring)',
       '100% Skin Safe & Nickel-Free',
       'Daily Wear & Shower Safe'
+    ]
+  },
+  {
+    id: 'moi-13',
+    name: 'The Aurelia Art Deco Vintage Milgrain Ring',
+    slug: 'aurelia-art-deco-vintage-milgrain-ring',
+    category: 'rings',
+    shape: 'Emerald',
+    price: 4499,
+    originalPrice: 8999,
+    carat: '2.50 CT',
+    clarity: 'VVS1',
+    colorGrade: 'D Color (Colorless)',
+    cut: 'Art Deco Step Cut Emerald',
+    certification: 'GRA Certified with Authenticity Card',
+    badge: 'NEW ARRIVAL',
+    rating: 5.0,
+    reviewsCount: 89,
+    metal: '925 Sterling Silver',
+    readyToShip: true,
+    variants: [
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop' },
+      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop' },
+      { metal: '18K Rose Gold Plated', colorCode: '#FB7185', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop' },
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop',
+    ],
+    description: 'Inspired by the Gatsby era, the Aurelia combines a 2.50 CT step-cut Emerald Moissanite with hand-applied vintage milgrain beading and an intricate gallery. A true heirloom piece outshining standard market designs.',
+    features: [
+      'Hand-Carved Antique Milgrain Edging',
+      'Architectural 4-Prong Corner Basket',
+      'GRA Certificate & Serial Inscription Included',
+      'Lifetime Stone Brilliance & Setting Warranty'
+    ]
+  },
+  {
+    id: 'moi-14',
+    name: 'The Ivy Botanical Twig & Leaf Ring',
+    slug: 'ivy-botanical-twig-leaf-ring',
+    category: 'rings',
+    shape: 'Pear',
+    price: 3899,
+    originalPrice: 7799,
+    carat: '2.00 CT',
+    clarity: 'VVS1',
+    colorGrade: 'D Color (Colorless)',
+    cut: 'Brilliant Pear Teardrop',
+    certification: 'GRA Certified with Authenticity Card',
+    badge: 'BESTSELLER',
+    rating: 4.95,
+    reviewsCount: 142,
+    metal: '925 Sterling Silver',
+    readyToShip: true,
+    variants: [
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop' },
+      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop' },
+      { metal: '18K Rose Gold Plated', colorCode: '#FB7185', image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop' },
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop',
+    ],
+    description: 'An organic poetry on your hand. A 2.00 CT Pear Cut D-Color Moissanite nestled amidst hand-sculpted botanical vines and shimmering micropave leaf accents. Designed for the romantic, nature-inspired soul.',
+    features: [
+      'Hand-Sculpted Organic Vine Band',
+      'Reinforced V-End Tip Protection for Pear Cut',
+      'Comfort-Fit 2.0mm Solid Shank',
+      'GRA Certificate & Embossed Presentation Box'
+    ]
+  },
+  {
+    id: 'moi-15',
+    name: 'The Elysian Toi et Moi Dual Gemstone Ring',
+    slug: 'elysian-toi-et-moi-dual-gemstone-ring',
+    category: 'rings',
+    shape: 'Oval',
+    price: 4999,
+    originalPrice: 9999,
+    carat: '3.00 CTW (1.5ct Pear + 1.5ct Emerald)',
+    clarity: 'VVS1',
+    colorGrade: 'D Color (Colorless)',
+    cut: 'Dual Fancy Cut Harmony',
+    certification: 'GRA Certified with Authenticity Card',
+    badge: 'LIMITED EDITION',
+    rating: 5.0,
+    reviewsCount: 76,
+    metal: '925 Sterling Silver',
+    readyToShip: true,
+    variants: [
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop' },
+      { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop' },
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop',
+    ],
+    description: 'French for "You and Me". Two distinct soulmate stones — an Emerald cut and a Pear cut Moissanite — tilted gracefully side-by-side on an open bypass band. High celebrity and royal favorite.',
+    features: [
+      'Twin Dual-Stone Prong Architecture',
+      'Ergonomic Open Bypass Shank',
+      'Two Individual GRA Lab Reports Included',
+      'Lifetime Prong Tightening & Cleaning Coverage'
     ]
   }
 ];

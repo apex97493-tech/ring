@@ -38,15 +38,45 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [wishlist, setWishlist] = useState<string[]>([]);
 
-  // Load from localStorage on mount
+  // Load from localStorage on mount with strict schema validation
   useEffect(() => {
     try {
       const savedCart = localStorage.getItem('aurora_cart');
-      if (savedCart) setCart(JSON.parse(savedCart));
+      if (savedCart) {
+        const parsed = JSON.parse(savedCart);
+        if (Array.isArray(parsed)) {
+          // Validate structure of each cart item to avoid injection / corrupt data
+          const validItems = parsed.filter(
+            (item) =>
+              item &&
+              typeof item === 'object' &&
+              typeof item.id === 'string' &&
+              typeof item.price === 'number' &&
+              item.price > 0 &&
+              typeof item.quantity === 'number' &&
+              item.quantity > 0 &&
+              item.product &&
+              typeof item.product.id === 'string'
+          ).map((item) => ({
+            ...item,
+            quantity: Math.min(Math.max(1, Math.floor(item.quantity)), 20),
+            engravingText: typeof item.engravingText === 'string'
+              ? item.engravingText.replace(/<[^>]*>?/gm, '').slice(0, 30)
+              : undefined,
+          }));
+          setCart(validItems);
+        }
+      }
+
       const savedWishlist = localStorage.getItem('aurora_wishlist');
-      if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
+      if (savedWishlist) {
+        const parsedWishlist = JSON.parse(savedWishlist);
+        if (Array.isArray(parsedWishlist)) {
+          setWishlist(parsedWishlist.filter((id) => typeof id === 'string'));
+        }
+      }
     } catch (e) {
-      console.error(e);
+      console.error('Storage validation error handled safely:', e);
     }
   }, []);
 
@@ -68,16 +98,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [wishlist]);
 
   const addToCart = (item: Omit<CartItem, 'id'>) => {
-    const uniqueId = `${item.product.id}-${item.selectedMetal}-${item.selectedSize}-${item.selectedCarat}-${item.engravingText || ''}`;
+    // Sanitize any input engraving text
+    const cleanEngraving = item.engravingText
+      ? item.engravingText.replace(/<[^>]*>?/gm, '').slice(0, 30)
+      : undefined;
+
+    const safeQty = Math.min(Math.max(1, Math.floor(item.quantity || 1)), 20);
+    const uniqueId = `${item.product.id}-${item.selectedMetal}-${item.selectedSize}-${item.selectedCarat}-${cleanEngraving || ''}`;
     
     setCart((prev) => {
       const existing = prev.find((i) => i.id === uniqueId);
       if (existing) {
         return prev.map((i) =>
-          i.id === uniqueId ? { ...i, quantity: i.quantity + item.quantity } : i
+          i.id === uniqueId ? { ...i, quantity: Math.min(i.quantity + safeQty, 20) } : i
         );
       }
-      return [...prev, { ...item, id: uniqueId }];
+      return [...prev, { ...item, quantity: safeQty, engravingText: cleanEngraving, id: uniqueId }];
     });
 
     setIsCartOpen(true);
@@ -92,8 +128,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       removeFromCart(id);
       return;
     }
+    const safeQty = Math.min(Math.max(1, Math.floor(qty)), 20);
     setCart((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, quantity: qty } : i))
+      prev.map((i) => (i.id === id ? { ...i, quantity: safeQty } : i))
     );
   };
 

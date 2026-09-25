@@ -74,10 +74,20 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   };
 
   const handleWhatsAppOrder = () => {
-    const text = `*ORDER INQUIRY: ${product.name.toUpperCase()}*%0A• Metal: ${activeVariant.metal}%0A• Carat: ${selectedCarat}%0A• Ring Size: US ${selectedSize}%0A${
-      engraving ? `• Engraving: "${engraving}"%0A` : ''
-    }• Price: ₹${product.price.toLocaleString('en-IN')}%0A%0APlease assist me with payment & delivery details!`;
-    window.open(`https://wa.me/919999999999?text=${text}`, '_blank');
+    const cleanEngraving = engraving.replace(/<[^>]*>?/gm, '').replace(/[\r\n]+/g, ' ').slice(0, 30);
+    const message = [
+      `*ORDER INQUIRY: ${product.name.toUpperCase()}*`,
+      `• Metal: ${activeVariant.metal}`,
+      `• Carat: ${selectedCarat}`,
+      `• Ring Size: US ${selectedSize}`,
+      cleanEngraving ? `• Engraving: "${cleanEngraving}"` : '',
+      `• Price: ₹${product.price.toLocaleString('en-IN')}`,
+      '',
+      'Please assist me with payment & delivery details!',
+    ].filter(Boolean).join('\n');
+
+    const encoded = encodeURIComponent(message);
+    window.open(`https://wa.me/919999999999?text=${encoded}`, '_blank', 'noopener,noreferrer');
   };
 
   const relatedProducts = products.filter((p) => p.id !== product.id).slice(0, 4);

@@ -23,6 +23,9 @@ import RingSizeGuide from '@/components/sections/RingSizeGuide';
 import ReviewsSection from '@/components/sections/ReviewsSection';
 import FaqSection from '@/components/sections/FaqSection';
 import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
+import CustomDesignStudio from '@/components/sections/CustomDesignStudio';
+import UnboxingExperience from '@/components/sections/UnboxingExperience';
+import MetalPurityGuide from '@/components/sections/MetalPurityGuide';
 
 const slides = [
   {
@@ -398,6 +401,11 @@ export default function Home() {
       </section>
 
       {/* ============================================================ */}
+      {/* 4.5 BESPOKE CUSTOM ATELIER / PINTEREST CAD STUDIO            */}
+      {/* ============================================================ */}
+      <CustomDesignStudio />
+
+      {/* ============================================================ */}
       {/* 5. THE SIGNATURE WOKE EDUCATIONAL & TRUST BOTTOM SECTIONS    */}
       {/* ============================================================ */}
       {/* Interactive Sparkle Drag Slider */}
@@ -406,8 +414,14 @@ export default function Home() {
       {/* Deep Moissanite vs Diamond vs CZ Comparison Matrix */}
       <MoissaniteComparison />
 
+      {/* Precious Metal & Karat Hallmarking Standards */}
+      <MetalPurityGuide />
+
       {/* Why Choose Us / 6 Trust Guarantees */}
       <WhyChooseUs />
+
+      {/* The Royal Unboxing Presentation Suite */}
+      <UnboxingExperience />
 
       {/* Interactive Ring Size & Carat Visualizer Simulator */}
       <RingSizeGuide />

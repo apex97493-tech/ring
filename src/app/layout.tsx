@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SecurityTrustBar from "@/components/sections/SecurityTrustBar";
 import CartDrawer from "@/components/cart/CartDrawer";
 import { CartProvider } from "@/context/CartContext";
 import { MessageCircle } from "lucide-react";
@@ -37,6 +38,7 @@ export default function RootLayout({
           <main className="flex-grow pt-[84px] md:pt-[112px] overflow-x-hidden w-full max-w-full">
             {children}
           </main>
+          <SecurityTrustBar />
           <Footer />
 
           {/* Floating WhatsApp Support Widget - responsive sizing */}
