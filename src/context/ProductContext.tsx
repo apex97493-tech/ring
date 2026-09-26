@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { products as defaultProducts, Product } from '@/lib/data';
+import { products as defaultProducts, Product, findMatchingProduct } from '@/lib/data';
 
 interface ProductContextType {
   products: Product[];
@@ -152,7 +152,7 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
 
   const getProductBySlug = useCallback(
     (slug: string): Product | undefined => {
-      return products.find((p) => p.slug === slug);
+      return findMatchingProduct(products, slug);
     },
     [products]
   );

@@ -12,7 +12,7 @@
     "colorGrade": "D Color (Colorless)",
     "cut": "Oval Brilliant Cut",
     "certification": "GRA Certified with Authenticity Card",
-    "badge": "NEW ARRIVAL",
+    "badge": "LIMITED EDITION",
     "rating": 5,
     "reviewsCount": 12,
     "metal": "925 Sterling Silver",
@@ -26,7 +26,7 @@
       {
         "metal": "925 Sterling Silver",
         "colorCode": "#E2E8F0",
-        "image": "/uploads/1790429964219-t104n-il_1588xn.8131666057_96co.jpg"
+        "image": "/uploads/1790429964254-c82qo-il_1588xn.8092194546_ttiy.jpg"
       },
       {
         "metal": "14k Yellow Gold",
@@ -40,17 +40,17 @@
       }
     ],
     "images": [
-      "/uploads/1790429964219-t104n-il_1588xn.8131666057_96co.jpg",
+      "/uploads/1790429964254-c82qo-il_1588xn.8092194546_ttiy.jpg",
       "/uploads/1790429964223-v166u-il_1588xn.8139998137_fipo.jpg",
       "/uploads/1790429964225-lu0sn-il_1588xn.8092092672_qmzi.jpg",
       "/uploads/1790429964228-v1jag-il_1588xn.8139998275_8950.jpg",
       "/uploads/1790429964230-9qmrx-il_1588xn.8092092666_jii7.jpg",
       "/uploads/1790429964233-w81hd-il_1588xn.8139998265_jel4.jpg",
       "/uploads/1790429964235-wg6tt-il_1588xn.8092092422_im9h.jpg",
+      "/uploads/1790429964219-t104n-il_1588xn.8131666057_96co.jpg",
       "/uploads/1790429964238-xyx56-il_1588xn.8092092452_d92d.jpg",
       "/uploads/1790429964241-q2hcq-il_1588xn.8139998097_p63m.jpg",
-      "/uploads/1790429964247-35nnt-il_1588xn.8092092438_ownj.jpg",
-      "/uploads/1790429964254-c82qo-il_1588xn.8092194546_ttiy.jpg"
+      "/uploads/1790429964247-35nnt-il_1588xn.8092092438_ownj.jpg"
     ],
     "description": "Handcrafted with passion by master artisans in India, this vintage-inspired Oval Cut Rose Quartz ring captures timeless romantic allure. An ethereal blush-pink oval center gemstone is held securely in an artisan prong setting, flanked by shimmering round brilliant accent stones on a comfort-fit solid band.\n\nDesigned for everyday elegance and milestone moments, each ring is cast in certified premium metal with exceptional luster and durability. Arrives ready to gift inside our illuminated signature luxury box.",
     "features": [
@@ -59,7 +59,13 @@
       "Laser-Inscribed Authenticity Serial Code",
       "Solid Comfort-Fit Shank",
       "Arrives in Luxury Velvet Gift Box"
-    ]
+    ],
+    "sku": "AUR-OVAL-925-287",
+    "stockStatus": "in_stock",
+    "stockQuantity": 10,
+    "metaTitle": "Oval cut Rose Quartz Engagemnet ring 14k solid gold | AURA Fine Jewelry",
+    "metaDescription": "Handcrafted with passion by master artisans in India, this vintage-inspired Oval Cut Rose Quartz ring captures timeless romantic allure. An ethereal blush-",
+    "isFeatured": true
   },
   {
     "id": "moi-01",

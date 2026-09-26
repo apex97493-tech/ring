@@ -42,17 +42,13 @@ import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params);
-  const { getProductBySlug, products } = useProducts();
+  const { getProductBySlug, products, isLoading } = useProducts();
   const product = getProductBySlug(resolvedParams.slug);
-
-  if (!product) {
-    notFound();
-  }
 
   const { addToCart, isWishlisted, toggleWishlist } = useCart();
 
   const [activeVariantIdx, setActiveVariantIdx] = useState(0);
-  const [selectedCarat, setSelectedCarat] = useState(product.carat);
+  const [selectedCarat, setSelectedCarat] = useState(product?.carat || '2.00 CT');
   const [selectedSize, setSelectedSize] = useState('6');
   const [engraving, setEngraving] = useState('');
   const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false);
@@ -63,6 +59,30 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const [pinCheckMsg, setPinCheckMsg] = useState('');
   const [activeTab, setActiveTab] = useState<'details' | 'specs' | 'certificate'>('details');
   const [isAdded, setIsAdded] = useState(false);
+
+  // Sync selected carat if product loads asynchronously
+  React.useEffect(() => {
+    if (product?.carat) {
+      setSelectedCarat(product.carat);
+    }
+  }, [product?.carat]);
+
+  // If products are still being fetched from the server/storage and product is not ready yet
+  if (isLoading && !product) {
+    return (
+      <div className="min-h-screen bg-[#FDFBF7] pt-28 pb-20 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-12 h-12 rounded-full border-2 border-[#D4AF37] border-t-transparent animate-spin mx-auto" />
+          <h2 className="font-serif text-lg text-[#022C22] font-bold">Unlocking AURA Vault...</h2>
+          <p className="text-xs text-gray-500 font-sans">Retrieving gemstone specifications & high-res angles</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    notFound();
+  }
 
   const activeVariant = product.variants[activeVariantIdx] || product.variants[0];
   const allImages = [activeVariant.image, ...product.images.filter((i) => i !== activeVariant.image)];
