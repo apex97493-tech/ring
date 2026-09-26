@@ -12,7 +12,8 @@ import {
   Truck,
   ArrowRight,
 } from 'lucide-react';
-import { products, SHAPES } from '@/lib/data';
+import { SHAPES } from '@/lib/data';
+import { useProducts } from '@/context/ProductContext';
 import ProductCard from '@/components/products/ProductCard';
 import ShapeFilterBar from '@/components/sections/ShapeFilterBar';
 import MoissaniteComparison from '@/components/sections/MoissaniteComparison';
@@ -77,6 +78,7 @@ const collections = [
 ];
 
 export default function Home() {
+  const { products } = useProducts();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedShape, setSelectedShape] = useState<string>('all');
   const [selectedMetal, setSelectedMetal] = useState<string>('all');

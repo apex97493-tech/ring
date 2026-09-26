@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useMemo, use } from 'react';
-import { getProductsByCategory, SHAPES, Product } from '@/lib/data';
+import { SHAPES, Product } from '@/lib/data';
+import { useProducts } from '@/context/ProductContext';
 import ProductCard from '@/components/products/ProductCard';
 import ShapeFilterBar from '@/components/sections/ShapeFilterBar';
 import MoissaniteComparison from '@/components/sections/MoissaniteComparison';
@@ -16,6 +17,7 @@ import Link from 'next/link';
 export default function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params);
   const slug = resolvedParams.slug;
+  const { getProductsByCategory } = useProducts();
   const rawProducts = getProductsByCategory(slug);
 
   const [selectedShape, setSelectedShape] = useState<string>('all');

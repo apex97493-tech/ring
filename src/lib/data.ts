@@ -27,6 +27,17 @@ export type Product = {
   description: string;
   features: string[];
   readyToShip: boolean;
+  primaryGemstone?: string;
+  secondaryGemstone?: string;
+  ringStyle?: string;
+  occasion?: string;
+  deliveryTime?: string;
+  sku?: string;
+  stockStatus?: 'in_stock' | 'made_to_order' | 'low_stock' | 'out_of_stock' | string;
+  stockQuantity?: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  isFeatured?: boolean;
 };
 
 export const SHAPES = [
@@ -68,6 +79,11 @@ export const products: Product[] = [
     reviewsCount: 184,
     metal: '925 Sterling Silver',
     readyToShip: true,
+    primaryGemstone: 'GRA Moissanite (Diamond Alternative)',
+    secondaryGemstone: 'Round Brilliant CZ / Lab Diamonds',
+    ringStyle: 'Art Deco / Royal Solitaire',
+    occasion: 'Engagement, Wedding, Anniversary Gift',
+    deliveryTime: '4-7 Days Free Express Air Delivery',
     variants: [
       { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: '/images/ai_ring1_front.jpg' },
       { metal: '18K Yellow Gold Plated', colorCode: '#EAB308', image: '/images/ai_ring1_side.jpg' },
@@ -77,7 +93,13 @@ export const products: Product[] = [
       '/images/ai_ring1_front.jpg',
       '/images/ai_ring1_side.jpg',
       '/images/ai_ring1_hand.jpg',
-      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop',
+      '/images/diamond_front.png',
     ],
     description: 'The Celeste Oval Solitaire is the crown jewel of our Woke Luxury collection. Featuring a breathtaking 2.00 CT Oval Cut D-Color Moissanite center stone held in a refined 4-prong claw setting. Delivers 2.4x the fire and brilliance of a natural mined diamond at a fraction of the investment.',
     features: [
@@ -582,6 +604,56 @@ export const products: Product[] = [
       'Ergonomic Open Bypass Shank',
       'Two Individual GRA Lab Reports Included',
       'Lifetime Prong Tightening & Cleaning Coverage'
+    ]
+  },
+  {
+    id: 'moi-16',
+    name: 'Oval Cut Rose Quartz Engagement Ring, 14k Solid Gold Ring, Vintage Diamond Accent Ring',
+    slug: 'oval-cut-rose-quartz-engagement-ring-14k-solid-gold',
+    category: 'rings',
+    shape: 'Oval',
+    price: 4007,
+    originalPrice: 8015,
+    carat: '2.50 CT',
+    clarity: 'Translucent Natural Blush',
+    colorGrade: 'Blush Pink',
+    cut: 'Facetted Oval Brilliant',
+    certification: 'Artisan Authenticity Certificate & Velvet Box',
+    badge: 'RARE FIND',
+    rating: 4.9,
+    reviewsCount: 538,
+    metal: '14k Solid Gold',
+    readyToShip: true,
+    primaryGemstone: 'Natural Rose Quartz',
+    secondaryGemstone: 'Round Brilliant CZ Diamonds',
+    ringStyle: 'Art Deco / Vintage Solitaire',
+    occasion: 'Engagement, Anniversary Gift, Valentine',
+    deliveryTime: '4-7 Days Free Express Delivery',
+    variants: [
+      { metal: '14k Yellow Gold', colorCode: '#CA8A04', image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop' },
+      { metal: '14k Rose Gold', colorCode: '#FB7185', image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop' },
+      { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop' },
+      { metal: '14k White Gold', colorCode: '#F1F5F9', image: '/images/ai_ring1_front.jpg' },
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop',
+      '/images/ai_ring1_front.jpg',
+      '/images/ai_ring1_side.jpg',
+      '/images/ai_ring1_hand.jpg',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop',
+      '/images/diamond_front.png',
+    ],
+    description: 'Oval Cut Rose Quartz Engagement Ring, 14k Solid Gold Ring, Vintage Diamond Accent Ring, Anniversary Gift Ring. Handcrafted with love by our master artisans in Rajasthan, India. Features an ethereal blush pink oval gemstone accented by dainty round brilliant sparklers on a slender gold band.',
+    features: [
+      'Handmade in Rajasthan, India by Master Artisans',
+      'Primary Gemstone: Natural Rose Quartz with Vintage Oval Facets',
+      'Complimentary Custom Inner Laser Engraving',
+      'Arrives in Deluxe Velvet Ring Box with Certificate',
+      'Available in US Ring Sizes 4 to 12 with Free Resizing Support'
     ]
   }
 ];

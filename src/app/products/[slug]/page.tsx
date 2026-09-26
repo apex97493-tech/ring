@@ -15,12 +15,22 @@ import {
   Ruler,
   Award,
   ChevronDown,
+  ChevronUp,
   Heart,
   Check,
+  MapPin,
+  Clock,
+  Gem,
+  Store,
+  CheckCircle2,
+  HelpCircle,
+  Package,
 } from 'lucide-react';
-import { getProductBySlug, products, METALS } from '@/lib/data';
+import { METALS } from '@/lib/data';
+import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
 import ProductCard from '@/components/products/ProductCard';
+import ProductImageGallery from '@/components/products/ProductImageGallery';
 import MobileStickyBuyBar from '@/components/products/MobileStickyBuyBar';
 import RingStackBuilder from '@/components/products/RingStackBuilder';
 import MoissaniteComparison from '@/components/sections/MoissaniteComparison';
@@ -32,6 +42,7 @@ import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = use(params);
+  const { getProductBySlug, products } = useProducts();
   const product = getProductBySlug(resolvedParams.slug);
 
   if (!product) {
@@ -41,22 +52,67 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const { addToCart, isWishlisted, toggleWishlist } = useCart();
 
   const [activeVariantIdx, setActiveVariantIdx] = useState(0);
-  const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [selectedCarat, setSelectedCarat] = useState(product.carat);
   const [selectedSize, setSelectedSize] = useState('6');
   const [engraving, setEngraving] = useState('');
+  const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false);
+  const [isFollowingShop, setIsFollowingShop] = useState(false);
+  const [isItemDetailsOpen, setIsItemDetailsOpen] = useState(true);
+  const [isDeliveryPolicyOpen, setIsDeliveryPolicyOpen] = useState(true);
+  const [pinCode, setPinCode] = useState('110001');
+  const [pinCheckMsg, setPinCheckMsg] = useState('');
   const [activeTab, setActiveTab] = useState<'details' | 'specs' | 'certificate'>('details');
   const [isAdded, setIsAdded] = useState(false);
 
   const activeVariant = product.variants[activeVariantIdx] || product.variants[0];
   const allImages = [activeVariant.image, ...product.images.filter((i) => i !== activeVariant.image)];
 
-  const sizes = ['4', '5', '6', '7', '8', '9', '10'];
+  const sizes = ['4', '5', '6', '7', '8', '9', '10', '11', '12'];
   const caratOptions = ['1.50 CT', '2.00 CT', '2.50 CT', '3.00 CT'];
 
   const discountPercent = Math.round(
     ((product.originalPrice - product.price) / product.originalPrice) * 100
   );
+
+  const descriptionParagraphs = React.useMemo(() => {
+    if (!product.description) return [];
+    const cleaned = product.description
+      .replace(/thanks for visiting foreverjewellstudio/gi, 'Thank you for choosing AURA Fine Jewelry')
+      .replace(/foreverjewellstudio/gi, 'AURA Fine Jewelry')
+      .replace(/important\*:-?/gi, '')
+      .replace(/\*{1,5}/g, '');
+
+    const lines = cleaned.split(/\n+/).map((l) => l.trim()).filter(Boolean);
+    const narrative: string[] = [];
+
+    for (const line of lines) {
+      const isRawSpec = /^(Primary Gemstone|Secondary Gemstone|Cut\/Shape|Color|Clarity|Jewelry Type|Metal|Method|Personalization|Occasion|Style|Ring Size|Country of Manufacture|Standard Delivery|Speed Delivery):/i.test(line);
+      if (!isRawSpec) {
+        narrative.push(line);
+      }
+    }
+
+    return narrative.length > 0 ? narrative : [product.description];
+  }, [product.description]);
+
+  const getEstimatedDelivery = () => {
+    const today = new Date();
+    const start = new Date(today);
+    start.setDate(today.getDate() + 4);
+    const end = new Date(today);
+    end.setDate(today.getDate() + 7);
+    const opt: Intl.DateTimeFormatOptions = { day: '2-digit', month: 'short' };
+    return `${start.toLocaleDateString('en-IN', opt)} - ${end.toLocaleDateString('en-IN', opt)}`;
+  };
+
+  const handlePinCheck = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (pinCode.trim().length === 6) {
+      setPinCheckMsg(`✓ Free Express Insured Air Delivery to ${pinCode} available! Dispatched in 24 hrs.`);
+    } else {
+      setPinCheckMsg('Please enter a valid 6-digit Indian PIN code.');
+    }
+  };
 
   const handleAddToCart = () => {
     addToCart({
@@ -94,82 +150,46 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="w-full min-h-screen bg-[#FDFBF7]">
-      {/* Breadcrumb */}
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-4 text-xs font-sans text-gray-500 flex items-center gap-2">
-        <Link href="/" className="hover:text-black">Home</Link>
-        <span>/</span>
-        <Link href={`/category/${product.category}`} className="hover:text-black capitalize">
-          {product.category}
-        </Link>
-        <span>/</span>
-        <span className="text-[#18181B] font-medium truncate">{product.name}</span>
+      {/* Breadcrumb (Etsy Style) */}
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs font-sans text-gray-500 flex items-center gap-1.5 overflow-x-auto whitespace-nowrap">
+        <Link href="/" className="hover:text-black">Homepage</Link>
+        <span>&rsaquo;</span>
+        <Link href="/shop" className="hover:text-black">Jewellery</Link>
+        <span>&rsaquo;</span>
+        <Link href="/category/rings" className="hover:text-black">Rings</Link>
+        <span>&rsaquo;</span>
+        <Link href="/shop" className="hover:text-black">Wedding & Engagement</Link>
+        <span>&rsaquo;</span>
+        <span className="text-[#18181B] font-medium truncate max-w-[280px] sm:max-w-none">{product.name}</span>
       </div>
 
       {/* Main Product Container */}
-      <section className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 py-6 lg:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-start">
-          {/* Left: Gallery Showcase */}
-          <div className="lg:col-span-7 flex flex-col gap-3 sm:gap-4">
-            <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-[#F7F5F0] border border-[#E8E5DF] shadow-md">
-              <motion.img
-                key={activeImageIdx + activeVariant.metal}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.4 }}
-                src={allImages[activeImageIdx] || allImages[0]}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-
-              {product.badge && (
-                <span className="absolute top-4 left-4 bg-[#18181B] text-[#D4AF37] font-sans text-[10px] font-bold tracking-widest px-3 py-1 rounded-sm shadow-md uppercase">
-                  {product.badge}
-                </span>
-              )}
-
-              <button
-                onClick={() => toggleWishlist(product.id)}
-                className={`absolute top-4 right-4 p-3 rounded-full shadow-md backdrop-blur-md transition-all ${
-                  isWishlisted(product.id)
-                    ? 'bg-rose-50 text-rose-500'
-                    : 'bg-white/90 text-gray-700 hover:text-[#B89035]'
-                }`}
-                aria-label="Wishlist"
-              >
-                <Heart className="w-5 h-5" fill={isWishlisted(product.id) ? 'currentColor' : 'none'} />
-              </button>
-            </div>
-
-            {/* Thumbnail Navigation */}
-            <div className="flex gap-3 justify-center sm:justify-start overflow-x-auto pb-2">
-              {allImages.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveImageIdx(idx)}
-                  className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 bg-white flex-shrink-0 transition-all ${
-                    activeImageIdx === idx
-                      ? 'border-[#B89035] scale-105 shadow-md'
-                      : 'border-transparent opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
+      <section className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 py-4 lg:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          {/* ================================================================= */}
+          {/* LEFT: ETSY-STYLE VERTICAL 10+ MULTI-PHOTO GALLERY SHOWCASE (7 COLS) */}
+          {/* ================================================================= */}
+          <div className="lg:col-span-7 flex flex-col gap-6">
+            <ProductImageGallery
+              images={allImages}
+              productName={product.name}
+              productId={product.id}
+              badge={product.badge}
+            />
 
             {/* Trust highlights under gallery */}
-            <div className="grid grid-cols-3 gap-3 pt-6 border-t border-[#E8E5DF] text-center font-sans text-xs">
-              <div className="p-3 bg-white rounded-xl border border-[#E8E5DF]">
+            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-[#E8E5DF] text-center font-sans text-xs">
+              <div className="p-3 bg-white rounded-xl border border-[#E8E5DF] shadow-xs">
                 <Award className="w-5 h-5 text-[#B89035] mx-auto mb-1" />
                 <span className="font-bold text-[#18181B] block">GRA Certified</span>
                 <span className="text-[10px] text-gray-500">Report & Warranty Card</span>
               </div>
-              <div className="p-3 bg-white rounded-xl border border-[#E8E5DF]">
+              <div className="p-3 bg-white rounded-xl border border-[#E8E5DF] shadow-xs">
                 <ShieldCheck className="w-5 h-5 text-[#064E3B] mx-auto mb-1" />
                 <span className="font-bold text-[#18181B] block">100% Buyback</span>
                 <span className="text-[10px] text-gray-500">Lifetime Upgrade Value</span>
               </div>
-              <div className="p-3 bg-white rounded-xl border border-[#E8E5DF]">
+              <div className="p-3 bg-white rounded-xl border border-[#E8E5DF] shadow-xs">
                 <Truck className="w-5 h-5 text-[#059669] mx-auto mb-1" />
                 <span className="font-bold text-[#18181B] block">Insured Delivery</span>
                 <span className="text-[10px] text-gray-500">Tamper-Proof Box</span>
@@ -177,177 +197,428 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
             </div>
           </div>
 
-          {/* Right: Customization & Buy Box */}
-          <div className="lg:col-span-5 bg-white p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-[#E8E5DF] shadow-luxury sticky top-28">
-            {/* Reviews snippet */}
-            <div className="flex items-center gap-2 mb-2 text-amber-500 text-xs font-sans">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
-              <span className="font-bold text-gray-800">{product.rating}</span>
-              <span className="text-gray-400">({product.reviewsCount} customer reviews)</span>
-            </div>
-
-            {/* Title */}
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#18181B] mb-2 leading-tight">
+          {/* ================================================================= */}
+          {/* RIGHT: BUY BOX + ETSY SELLER CREDENTIALS + HIGHLIGHTS (5 COLS)     */}
+          {/* ================================================================= */}
+          <div className="lg:col-span-5 bg-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl border border-[#E8E5DF] shadow-luxury">
+            {/* Title & Headline (Etsy Style) */}
+            <h1 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B] mb-2 leading-snug">
               {product.name}
             </h1>
 
-            <p className="font-sans text-xs text-gray-500 mb-4 uppercase tracking-wider">
-              {product.shape} Cut • {product.carat} • {product.clarity} • {product.colorGrade}
-            </p>
-
-            {/* Price Row */}
-            <div className="mb-6 pb-6 border-b border-[#E8E5DF]">
-              <div className="flex items-baseline gap-3 mb-3">
-                <span className="font-sans text-3xl font-bold text-[#064E3B]">
-                  ₹{product.price.toLocaleString('en-IN')}
-                </span>
-                <span className="font-sans text-base text-gray-400 line-through">
-                  ₹{product.originalPrice.toLocaleString('en-IN')}
-                </span>
-                <span className="font-sans text-xs font-bold text-[#059669] bg-[#ECFDF5] px-2.5 py-1 rounded-full">
-                  {discountPercent}% OFF
-                </span>
-              </div>
-
-              {/* Minimalist Trust & Certification Badges */}
-              <div className="flex flex-wrap items-center gap-2 font-sans text-[11px] text-gray-600">
-                <span className="inline-flex items-center gap-1 bg-[#F7F5F0] border border-[#E8E5DF] px-2.5 py-1 rounded-full">
-                  <Award className="w-3.5 h-3.5 text-[#B89035]" />
-                  <span>GRA Certificate Included</span>
-                </span>
-                <span className="inline-flex items-center gap-1 bg-[#F7F5F0] border border-[#E8E5DF] px-2.5 py-1 rounded-full">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#064E3B]" />
-                  <span>Lifetime Brilliance Warranty</span>
-                </span>
-                <span className="inline-flex items-center gap-1 bg-[#F7F5F0] border border-[#E8E5DF] px-2.5 py-1 rounded-full">
-                  <Truck className="w-3.5 h-3.5 text-[#059669]" />
-                  <span>Free Insured Air Shipping</span>
-                </span>
-              </div>
+            {/* Rare find tag */}
+            <div className="flex items-center gap-2 mb-3">
+              <span className="font-sans text-xs font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">
+                Rare find
+              </span>
+              <span className="font-sans text-xs text-gray-500">
+                • High in demand — Handcrafted in limited batches
+              </span>
             </div>
 
-            {/* Metal Swatch Selection */}
-            <div className="mb-6">
-              <label className="block font-sans text-xs font-bold text-[#18181B] tracking-wider uppercase mb-2.5">
-                Metal Type: <span className="text-[#8C6A1F]">{activeVariant.metal}</span>
-              </label>
-              <div className="flex flex-wrap gap-2.5">
-                {product.variants.map((v, idx) => (
-                  <button
-                    key={v.metal}
-                    onClick={() => {
-                      setActiveVariantIdx(idx);
-                      setActiveImageIdx(0);
-                    }}
-                    className={`flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-sans transition-all cursor-pointer ${
-                      activeVariantIdx === idx
-                        ? 'border-[#B89035] bg-[#F4E8C1]/30 font-bold text-[#18181B] ring-2 ring-[#B89035]/40'
-                        : 'border-[#E8E5DF] bg-[#FDFBF7] text-gray-700 hover:border-gray-400'
-                    }`}
-                  >
-                    <span
-                      className="w-4 h-4 rounded-full border border-black/20"
-                      style={{ backgroundColor: v.colorCode }}
-                    />
-                    <span>{v.metal}</span>
-                  </button>
-                ))}
+            {/* Price Row (Etsy Format) */}
+            <div className="mb-4 pb-4 border-b border-[#E8E5DF]">
+              <div className="flex items-baseline gap-2.5">
+                <span className="font-sans text-sm font-semibold text-gray-600">Now</span>
+                <span className="font-sans text-3xl font-bold text-[#18181B]">
+                  ₹{product.price.toLocaleString('en-IN')}+
+                </span>
+                <span className="font-sans text-sm text-gray-400 line-through">
+                  ₹{product.originalPrice.toLocaleString('en-IN')}+
+                </span>
               </div>
+              <div className="flex items-center gap-2 mt-1 text-xs font-sans">
+                <span className="text-emerald-700 font-bold">{discountPercent}% off</span>
+                <span className="text-gray-400">•</span>
+                <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-emerald-600" /> Sale ends today
+                </span>
+              </div>
+              <p className="text-[11px] text-gray-500 mt-1">
+                Local taxes included (where applicable) • Free Luxury Velvet Gift Box
+              </p>
             </div>
 
-            {/* Carat & Ring Size */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
-              {/* Carat */}
-              <div>
-                <label className="block font-sans text-xs font-bold text-[#18181B] tracking-wider uppercase mb-2">
-                  Carat Size:
-                </label>
-                <select
-                  value={selectedCarat}
-                  onChange={(e) => setSelectedCarat(e.target.value)}
-                  className="w-full bg-[#FDFBF7] border border-[#E8E5DF] rounded-xl p-3 text-xs font-sans focus:outline-none focus:border-[#B89035] font-semibold"
-                >
-                  {caratOptions.map((c) => (
-                    <option key={c} value={c}>{c}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Ring Size */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <label className="font-sans text-xs font-bold text-[#18181B] tracking-wider uppercase">
-                    Ring Size:
-                  </label>
-                  <a href="#size-guide" className="font-sans text-[10px] text-[#8C6A1F] underline flex items-center gap-0.5">
-                    <Ruler className="w-3 h-3" /> Size Guide
-                  </a>
+            {/* ============================================================= */}
+            {/* ETSY SELLER / ARTISAN STUDIO BADGE (Direct Match to Etsy Screenshot 1 & 2) */}
+            {/* ============================================================= */}
+            <div className="bg-[#FAF8F5] border border-[#E8E5DF] rounded-2xl p-4 mb-5">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-[#022C22] text-[#D4AF37] border-2 border-[#D4AF37]/50 flex items-center justify-center font-serif text-lg font-bold shadow-sm flex-shrink-0">
+                    S
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="font-sans text-xs font-bold text-gray-900">By Santosh & AURA Atelier</span>
+                      <span className="font-sans text-[10px] bg-amber-100 text-amber-900 font-bold px-1.5 py-0.2 rounded">
+                        Star Seller
+                      </span>
+                    </div>
+                    <p className="font-sans text-[11px] text-gray-500">
+                      foreverjewellstudio • Rajasthan & Surat, India
+                    </p>
+                    <div className="flex items-center gap-1.5 font-sans text-xs text-amber-600 mt-0.5">
+                      <span className="font-bold">4.9</span>
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
+                        ))}
+                      </div>
+                      <span className="text-gray-500 text-[11px]">(538 reviews • 1.9k sales)</span>
+                    </div>
+                  </div>
                 </div>
-                <select
-                  value={selectedSize}
-                  onChange={(e) => setSelectedSize(e.target.value)}
-                  className="w-full bg-[#FDFBF7] border border-[#E8E5DF] rounded-xl p-3 text-xs font-sans focus:outline-none focus:border-[#B89035] font-semibold"
+
+                <button
+                  type="button"
+                  onClick={() => setIsFollowingShop(!isFollowingShop)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer flex-shrink-0 ${
+                    isFollowingShop
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                      : 'bg-white hover:bg-gray-100 text-gray-800 border-gray-300'
+                  }`}
                 >
-                  {sizes.map((s) => (
-                    <option key={s} value={s}>US Size {s}</option>
-                  ))}
-                </select>
+                  {isFollowingShop ? '✓ Following' : '+ Follow shop'}
+                </button>
+              </div>
+
+              <div className="mt-3 pt-3 border-t border-[#E8E5DF] flex items-center justify-between text-[11px] font-sans text-gray-600">
+                <span className="flex items-center gap-1 text-emerald-700">
+                  <Clock className="w-3.5 h-3.5" /> Typically responds within 1 hour
+                </span>
+                <button
+                  type="button"
+                  onClick={handleWhatsAppOrder}
+                  className="font-semibold text-[#064E3B] hover:text-[#043327] underline flex items-center gap-1 cursor-pointer"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-[#059669]" /> Message seller
+                </button>
               </div>
             </div>
 
-            {/* Custom Engraving */}
-            <div className="mb-6 bg-[#F7F5F0] p-3.5 rounded-xl border border-[#E8E5DF]">
-              <label className="block font-sans text-xs font-semibold text-[#18181B] mb-1">
-                Complimentary Inner Laser Engraving:
-              </label>
-              <input
-                type="text"
-                maxLength={15}
-                placeholder="e.g. Forever & Always (Max 15 chars)"
-                value={engraving}
-                onChange={(e) => setEngraving(e.target.value)}
-                className="w-full bg-white border border-[#E8E5DF] rounded-lg px-3 py-2 text-xs font-sans focus:outline-none focus:border-[#B89035]"
-              />
+            {/* Dispatch & Delivery Guarantee Pill (Etsy Style) */}
+            <div className="space-y-1.5 mb-5 font-sans text-xs">
+              <div className="flex items-center gap-2 text-gray-700">
+                <MapPin className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
+                <span><strong>Dispatched from India</strong> (Jaipur & Surat Artisan Workshop)</span>
+              </div>
+              <div className="flex items-center gap-2 text-emerald-800 bg-emerald-50/80 p-2.5 rounded-xl border border-emerald-200">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                <span>
+                  <strong>Arrives soon!</strong> Get it by <strong>{getEstimatedDelivery()}</strong> if you order today
+                </span>
+              </div>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="space-y-3">
+            {/* Band colour dropdown (Etsy Style) */}
+            <div className="mb-4">
+              <label className="block font-sans text-xs font-semibold text-gray-800 mb-1.5">
+                Band colour:
+              </label>
+              <select
+                value={activeVariantIdx}
+                onChange={(e) => setActiveVariantIdx(Number(e.target.value))}
+                className="w-full bg-[#FAF8F5] border border-[#D5D1C9] hover:border-black rounded-xl p-3 text-xs font-sans text-gray-800 focus:outline-none focus:ring-1 focus:ring-black cursor-pointer font-medium"
+              >
+                {product.variants.map((v, idx) => (
+                  <option key={v.metal} value={idx}>
+                    {v.metal}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Ring size dropdown (Etsy Style) */}
+            <div className="mb-4">
+              <div className="flex justify-between items-center mb-1.5">
+                <label className="font-sans text-xs font-semibold text-gray-800">
+                  Ring size:
+                </label>
+                <a href="#size-guide" className="font-sans text-[11px] text-[#8C6A1F] underline flex items-center gap-0.5">
+                  <Ruler className="w-3 h-3" /> Size Guide
+                </a>
+              </div>
+              <select
+                value={selectedSize}
+                onChange={(e) => setSelectedSize(e.target.value)}
+                className="w-full bg-[#FAF8F5] border border-[#D5D1C9] hover:border-black rounded-xl p-3 text-xs font-sans text-gray-800 focus:outline-none focus:ring-1 focus:ring-black cursor-pointer font-medium"
+              >
+                {sizes.map((s) => (
+                  <option key={s} value={s}>
+                    US {s} (Resize available on request)
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Add Personalisation (Etsy Style Collapsible) */}
+            <div className="mb-5 border border-[#E8E5DF] rounded-xl overflow-hidden bg-[#FAF8F5]">
+              <button
+                type="button"
+                onClick={() => setIsPersonalizationOpen(!isPersonalizationOpen)}
+                className="w-full px-3.5 py-2.5 text-left text-xs font-sans font-semibold text-gray-800 hover:text-black flex items-center justify-between cursor-pointer"
+              >
+                <span className="flex items-center gap-1.5">
+                  <span className="text-base text-gray-500 font-normal">+</span> Add personalisation <span className="text-gray-400 font-normal">(optional)</span>
+                </span>
+                <span className="text-xs text-gray-400">{isPersonalizationOpen ? '▲' : '▼'}</span>
+              </button>
+
+              {isPersonalizationOpen && (
+                <div className="p-3.5 border-t border-[#E8E5DF] bg-white text-xs font-sans space-y-2">
+                  <p className="text-gray-500 text-[11px]">
+                    Enter inside ring engraving (Name, Date, or Secret Symbol). Up to 15 characters complimentary.
+                  </p>
+                  <input
+                    type="text"
+                    maxLength={15}
+                    placeholder="e.g. Forever & Always"
+                    value={engraving}
+                    onChange={(e) => setEngraving(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-black"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* CTA Buttons (Etsy Dark Solid Button + WhatsApp) */}
+            <div className="space-y-2.5 mb-6">
               <button
                 onClick={handleAddToCart}
-                className="w-full py-4 bg-[#18181B] hover:bg-[#B89035] text-[#D4AF37] hover:text-white font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3.5 bg-[#222222] hover:bg-[#000000] text-white font-sans text-sm font-bold tracking-wide rounded-full transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 {isAdded ? (
-                  <span className="flex items-center gap-1.5 text-emerald-400">
-                    <Check className="w-4 h-4" /> Added to Shopping Bag!
+                  <span className="flex items-center gap-1.5 text-emerald-300">
+                    <Check className="w-4 h-4" /> Added to cart!
                   </span>
                 ) : (
-                  'Add to Shopping Bag'
+                  'Add to cart'
                 )}
               </button>
 
               <button
                 onClick={handleWhatsAppOrder}
-                className="w-full py-3.5 bg-[#064E3B] hover:bg-[#043327] text-white font-sans text-xs font-bold tracking-widest uppercase transition-colors rounded-xl flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                className="w-full py-3 bg-[#064E3B] hover:bg-[#043327] text-white font-sans text-xs font-bold tracking-wider uppercase transition-colors rounded-full flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
                 <MessageCircle className="w-4 h-4 text-[#34D399]" />
                 Buy Instantly via WhatsApp
               </button>
             </div>
 
-            {/* Delivery Estimator */}
-            <div className="mt-6 pt-4 border-t border-gray-100 flex items-center gap-2 text-xs font-sans text-gray-600">
-              <Truck className="w-4 h-4 text-[#059669]" />
-              <span>
-                Dispatched in 24-48 hrs • <strong>Free Express Air Shipping</strong>
-              </span>
+            {/* ============================================================= */}
+            {/* ETSY ACCORDION 1: ITEM DETAILS (Direct Match to Etsy Screenshot 2) */}
+            {/* ============================================================= */}
+            <div className="border-t border-[#E8E5DF] pt-4 mb-4">
+              <button
+                type="button"
+                onClick={() => setIsItemDetailsOpen(!isItemDetailsOpen)}
+                className="w-full flex items-center justify-between py-2 text-left text-sm font-bold text-gray-900 cursor-pointer"
+              >
+                <span>Item details</span>
+                {isItemDetailsOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </button>
+
+              {isItemDetailsOpen && (
+                <div className="pt-3 pb-2 text-xs font-sans text-gray-700 space-y-4">
+                  {/* Highlights section */}
+                  <div className="space-y-2.5 bg-[#F9F7F3] p-3.5 rounded-xl border border-[#E8E5DF]">
+                    <span className="font-bold text-gray-900 block text-[11px] uppercase tracking-wider">
+                      Highlights
+                    </span>
+                    <div className="flex items-center gap-2.5">
+                      <Store className="w-4 h-4 text-[#064E3B] flex-shrink-0" />
+                      <span>Delivery from a small business in India</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Sparkles className="w-4 h-4 text-[#D4AF37] flex-shrink-0" />
+                      <span>Materials: Rose gold, Silver, Stone, White gold, Yellow gold</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Gem className="w-4 h-4 text-rose-500 flex-shrink-0" />
+                      <span>Gemstone: {product.primaryGemstone || 'GRA Moissanite (Diamond Alternative)'}</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <span className="w-3.5 h-3.5 rounded-full bg-rose-200 border border-rose-400 flex-shrink-0 inline-block" />
+                      <span>Gem colour: {product.colorGrade}</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <Award className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                      <span>Style: {product.ringStyle || 'Art Deco / Royal Solitaire'}</span>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                      <span>Made to Order & Handcrafted</span>
+                    </div>
+                  </div>
+
+                  {/* Detailed Description & Craftsmanship Narrative */}
+                  <div className="space-y-3.5 border-t border-[#E8E5DF] pt-3.5">
+                    <div className="flex items-center gap-2">
+                      <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      <span className="font-bold text-gray-900 text-[11px] uppercase tracking-wider">
+                        About This Piece
+                      </span>
+                    </div>
+
+                    <div className="space-y-2.5 text-[13px] font-sans text-gray-700 leading-relaxed">
+                      {descriptionParagraphs.map((para, idx) => (
+                        <p key={idx} className="text-gray-700">
+                          {para}
+                        </p>
+                      ))}
+                    </div>
+
+                    {/* Luxury Perks Badges */}
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <div className="flex items-center gap-2 p-2 bg-[#F9F7F3] rounded-lg border border-[#E8E5DF]/70 text-[11px] text-gray-800 font-medium">
+                        <Package className="w-3.5 h-3.5 text-[#064E3B] flex-shrink-0" />
+                        <span>Luxury Velvet Box</span>
+                      </div>
+                      <div className="flex items-center gap-2 p-2 bg-[#F9F7F3] rounded-lg border border-[#E8E5DF]/70 text-[11px] text-gray-800 font-medium">
+                        <Ruler className="w-3.5 h-3.5 text-[#064E3B] flex-shrink-0" />
+                        <span>Free Custom Sizing</span>
+                      </div>
+                      <div className="flex items-center gap-2 p-2 bg-[#F9F7F3] rounded-lg border border-[#E8E5DF]/70 text-[11px] text-gray-800 font-medium">
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#064E3B] flex-shrink-0" />
+                        <span>Authenticity Card</span>
+                      </div>
+                      <div className="flex items-center gap-2 p-2 bg-[#F9F7F3] rounded-lg border border-[#E8E5DF]/70 text-[11px] text-gray-800 font-medium">
+                        <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] flex-shrink-0" />
+                        <span>Lifetime Brilliance</span>
+                      </div>
+                    </div>
+
+                    {/* Detailed Specifications Table */}
+                    <div className="pt-2">
+                      <span className="font-bold text-gray-900 block text-[11px] uppercase tracking-wider mb-2">
+                        Specifications & Craftsmanship
+                      </span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-[11px] text-gray-700">
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Primary Gemstone:</span>
+                          <span className="font-semibold text-gray-900">{product.primaryGemstone || 'Moissanite'}</span>
+                        </div>
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Cut / Shape:</span>
+                          <span className="font-semibold text-gray-900">{product.shape} Brilliant Cut</span>
+                        </div>
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Color Grade:</span>
+                          <span className="font-semibold text-gray-900">{product.colorGrade}</span>
+                        </div>
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Clarity:</span>
+                          <span className="font-semibold text-gray-900">{product.clarity}</span>
+                        </div>
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Secondary Gemstone:</span>
+                          <span className="font-semibold text-gray-900">{product.secondaryGemstone || 'CZ Diamond Accents'}</span>
+                        </div>
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Band Metal:</span>
+                          <span className="font-semibold text-gray-900">{activeVariant.metal}</span>
+                        </div>
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Jewelry Style:</span>
+                          <span className="font-semibold text-gray-900">{product.ringStyle || 'Art Deco Solitaire'}</span>
+                        </div>
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Occasion:</span>
+                          <span className="font-semibold text-gray-900">{product.occasion || 'Engagement / Anniversary'}</span>
+                        </div>
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Personalization:</span>
+                          <span className="font-semibold text-emerald-700">Free Laser Engraving</span>
+                        </div>
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Ring Size Range:</span>
+                          <span className="font-semibold text-gray-900">US 4 to US 12 (Custom resize free)</span>
+                        </div>
+                        <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                          <span className="text-gray-500">Method:</span>
+                          <span className="font-semibold text-gray-900">100% Handcrafted in India</span>
+                        </div>
+                        {product.sku && (
+                          <div className="flex items-center justify-between py-1 border-b border-gray-100">
+                            <span className="text-gray-500">Vault SKU:</span>
+                            <span className="font-mono text-gray-900 text-[10px]">{product.sku}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Complete The Royal Stack (Inspired by Minimalist Jewels) */}
-            <RingStackBuilder product={product} selectedMetal={activeVariant.metal} />
+            {/* ============================================================= */}
+            {/* ETSY ACCORDION 2: DELIVERY & RETURN POLICIES (Etsy Screenshot 3) */}
+            {/* ============================================================= */}
+            <div className="border-t border-[#E8E5DF] pt-4 mb-4">
+              <button
+                type="button"
+                onClick={() => setIsDeliveryPolicyOpen(!isDeliveryPolicyOpen)}
+                className="w-full flex items-center justify-between py-2 text-left text-sm font-bold text-gray-900 cursor-pointer"
+              >
+                <span>Delivery and return policies</span>
+                {isDeliveryPolicyOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </button>
+
+              {isDeliveryPolicyOpen && (
+                <div className="pt-3 pb-2 text-xs font-sans text-gray-700 space-y-3">
+                  <div className="flex items-center gap-2.5">
+                    <Clock className="w-4 h-4 text-gray-600 flex-shrink-0" />
+                    <span>Order today to get by <strong>{getEstimatedDelivery()}</strong></span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <RefreshCcw className="w-4 h-4 text-gray-600 flex-shrink-0" />
+                    <span>Returns & exchanges: 30-Day Hassle-Free Replacement & Lifetime Brilliance Guarantee</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Truck className="w-4 h-4 text-[#059669] flex-shrink-0" />
+                    <span>Free express insured delivery across India & worldwide</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <MapPin className="w-4 h-4 text-gray-600 flex-shrink-0" />
+                    <span>Sent from: Jaipur & Surat, Rajasthan, India</span>
+                  </div>
+
+                  {/* PIN Code Delivery Checker */}
+                  <form onSubmit={handlePinCheck} className="pt-2">
+                    <label className="block text-[11px] font-semibold text-gray-700 mb-1">
+                      Deliver to India (Check your PIN code):
+                    </label>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        maxLength={6}
+                        value={pinCode}
+                        onChange={(e) => setPinCode(e.target.value.replace(/\D/g, ''))}
+                        placeholder="e.g. 110001"
+                        className="w-28 border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-black font-mono"
+                      />
+                      <button
+                        type="submit"
+                        className="px-3 py-1.5 bg-[#FAF8F5] hover:bg-gray-100 border border-gray-300 text-gray-800 rounded-lg text-xs font-semibold cursor-pointer"
+                      >
+                        Check
+                      </button>
+                    </div>
+                    {pinCheckMsg && (
+                      <p className="mt-1.5 text-[11px] text-emerald-700 font-medium">
+                        {pinCheckMsg}
+                      </p>
+                    )}
+                  </form>
+                </div>
+              )}
+            </div>
+
+            {/* Complete The Royal Stack */}
+            <div className="pt-4 border-t border-[#E8E5DF]">
+              <RingStackBuilder product={product} selectedMetal={activeVariant.metal} />
+            </div>
           </div>
         </div>
       </section>
@@ -392,7 +663,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
           {/* Tab Content */}
           {activeTab === 'details' && (
             <div className="bg-white p-8 rounded-2xl border border-[#E8E5DF] shadow-xs leading-relaxed space-y-4 font-sans text-sm text-gray-700">
-              <p>{product.description}</p>
+              <div className="space-y-3">
+                {descriptionParagraphs.map((para, idx) => (
+                  <p key={idx} className="leading-relaxed text-gray-700">
+                    {para}
+                  </p>
+                ))}
+              </div>
               <h4 className="font-serif text-lg font-bold text-[#18181B] pt-2">
                 Signature Craftsmanship Highlights:
               </h4>

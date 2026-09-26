@@ -9,14 +9,25 @@ import QuickViewModal from './QuickViewModal';
 
 export default function ProductCard({ product }: { product: Product }) {
   const { isWishlisted, toggleWishlist, addToCart } = useCart();
-  const [selectedVariantIdx, setSelectedVariantIdx] = useState(0);
+  const [selectedVariantIdx, setSelectedVariantIdx] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isAddedToast, setIsAddedToast] = useState(false);
 
-  const activeVariant = product.variants[selectedVariantIdx] || product.variants[0];
-  const primaryImage = activeVariant?.image || product.images[0];
-  const secondaryImage = product.images[1] || product.images[0];
+  const activeVariant = selectedVariantIdx !== null && product.variants?.[selectedVariantIdx]
+    ? product.variants[selectedVariantIdx]
+    : product.variants?.[0];
+
+  // ALWAYS show product.images[0] by default so the real product photo is seen first!
+  // Only if the user explicitly clicked a metal swatch dot, switch to that variant's image.
+  const primaryImage = (selectedVariantIdx !== null && activeVariant?.image && !activeVariant.image.includes('ai_ring1'))
+    ? activeVariant.image
+    : (product.images?.[0] || activeVariant?.image || '/images/ai_ring1_front.jpg');
+
+  // Hover image: if product has a second photo (same product angle 2), show it; otherwise keep showing primaryImage!
+  const hoverImage = (product.images && product.images.length > 1 && product.images[1] !== primaryImage)
+    ? product.images[1]
+    : primaryImage;
 
   const discountPercent = Math.round(
     ((product.originalPrice - product.price) / product.originalPrice) * 100
@@ -28,7 +39,7 @@ export default function ProductCard({ product }: { product: Product }) {
     addToCart({
       product,
       quantity: 1,
-      selectedMetal: activeVariant.metal,
+      selectedMetal: activeVariant?.metal || product.metal || '925 Sterling Silver',
       selectedSize: '6',
       selectedCarat: product.carat,
       price: product.price,
@@ -83,12 +94,12 @@ export default function ProductCard({ product }: { product: Product }) {
           {/* Product Image */}
           <Link href={`/products/${product.slug}`} className="block w-full h-full">
             <img
-              src={isHovered ? secondaryImage : primaryImage}
+              src={isHovered ? hoverImage : primaryImage}
               alt={product.name}
               loading="lazy"
               onError={(e) => {
                 // Fallback image if remote url fails
-                e.currentTarget.src = '/images/ai_ring1_front.jpg';
+                e.currentTarget.src = product.images?.[0] || '/images/ai_ring1_front.jpg';
               }}
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
@@ -121,7 +132,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 }}
                 title={v.metal}
                 className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full border transition-all ${
-                  selectedVariantIdx === idx
+                  (selectedVariantIdx === idx || (selectedVariantIdx === null && idx === 0))
                     ? 'ring-1.5 ring-[#D4AF37] ring-offset-1 border-black/30 scale-105'
                     : 'border-black/20 hover:scale-110'
                 }`}
@@ -191,7 +202,7 @@ export default function ProductCard({ product }: { product: Product }) {
       {isQuickViewOpen && (
         <QuickViewModal
           product={product}
-          initialVariantIdx={selectedVariantIdx}
+          initialVariantIdx={selectedVariantIdx ?? 0}
           onClose={() => setIsQuickViewOpen(false)}
         />
       )}

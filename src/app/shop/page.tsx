@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { products, SHAPES } from '@/lib/data';
+import { SHAPES } from '@/lib/data';
+import { useProducts } from '@/context/ProductContext';
 import ProductCard from '@/components/products/ProductCard';
 import ShapeFilterBar from '@/components/sections/ShapeFilterBar';
 import MoissaniteComparison from '@/components/sections/MoissaniteComparison';
@@ -13,6 +14,7 @@ import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
 import { Sparkles, ShieldCheck, Truck, Award } from 'lucide-react';
 
 export default function ShopPage() {
+  const { products } = useProducts();
   const [selectedShape, setSelectedShape] = useState<string>('all');
   const [selectedMetal, setSelectedMetal] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('featured');
