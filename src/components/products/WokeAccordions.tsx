@@ -84,9 +84,27 @@ export default function WokeAccordions({ product, selectedMetal, selectedCarat }
                 </div>
 
                 {product.description && (
-                  <p className="pt-2 text-gray-600 border-t border-gray-100">
-                    {product.description}
-                  </p>
+                  <div className="pt-3 border-t border-gray-100 space-y-2">
+                    {product.description.split('\n').filter(line => line.trim()).map((line, idx) => (
+                      <p key={idx} className="text-gray-700 leading-relaxed text-sm">
+                        {line.trim()}
+                      </p>
+                    ))}
+                  </div>
+                )}
+
+                {product.features && product.features.length > 0 && (
+                  <div className="pt-3 border-t border-gray-100">
+                    <p className="font-semibold text-[#18181B] text-sm mb-2">What&apos;s Included:</p>
+                    <ul className="space-y-1.5">
+                      {product.features.map((f, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
+                          <span className="text-[#8C6A1F] mt-0.5 flex-shrink-0">✦</span>
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
 
                 <div className="pt-2 flex items-center gap-2 text-emerald-800 font-medium text-xs">
