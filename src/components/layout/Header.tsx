@@ -47,73 +47,57 @@ export default function Header() {
 
             {/* Brand Logo */}
             <div className="flex-1 lg:flex-initial flex items-center justify-center lg:justify-start">
-              <Link href="/" className="group flex flex-col items-center lg:items-start">
-                <span className="font-serif text-xl sm:text-2xl lg:text-3xl tracking-[0.2em] sm:tracking-[0.25em] font-bold text-[#D4AF37] group-hover:text-white transition-colors uppercase">
-                  AURA
-                </span>
-                <span className="font-sans text-[7.5px] sm:text-[9px] tracking-[0.22em] sm:tracking-[0.28em] text-[#F3E5AB]/90 uppercase font-semibold -mt-0.5 sm:-mt-1">
-                  Royal Moissanite & Fine Jewelry
+              <Link href="/" className="group flex items-center">
+                <span className="font-serif italic text-[24px] sm:text-[32px] lg:text-[38px] font-bold text-[#D4AF37] group-hover:text-white transition-colors tracking-wide">
+                  ForeverJewellStudio
                 </span>
               </Link>
             </div>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:gap-x-5 xl:gap-x-6">
-              <div 
-                className="relative py-2 hidden xl:block"
-                onMouseEnter={() => setIsShapeMenuOpen(true)}
-                onMouseLeave={() => setIsShapeMenuOpen(false)}
-              >
-                <button
-                  className="font-sans flex items-center gap-1 text-[11px] xl:text-[12px] font-semibold tracking-[0.15em] text-[#FDFBF7]/90 hover:text-[#D4AF37] transition-colors uppercase relative group cursor-default"
-                >
-                  Shop By Shape
-                  <ChevronDown className="w-3 h-3" />
-                  <span className={`absolute -bottom-2 left-0 h-[1.5px] bg-[#D4AF37] transition-all duration-300 ${isShapeMenuOpen ? 'w-full' : 'w-0'}`}></span>
-                </button>
-                <ShapeMegaMenu 
-                  isOpen={isShapeMenuOpen} 
-                  onMouseEnter={() => setIsShapeMenuOpen(true)}
-                  onMouseLeave={() => setIsShapeMenuOpen(false)}
-                />
-              </div>
-
+            <nav className="hidden lg:flex flex-nowrap items-center justify-center gap-x-8 xl:gap-x-12">
               {[
-                { name: 'Shop All', href: '/shop' },
-                { name: 'Rings', href: '/category/rings' },
-                { name: 'Band', href: '/category/band' },
-                { name: 'Lesbian Ring', href: '/category/lesbian-ring' },
-                { name: 'Pendant', href: '/category/pendant' },
-                { name: 'Earrings', href: '/category/earrings' },
-                { name: 'Necklace', href: '/category/necklace' },
-                { name: 'Bracelet', href: '/category/bracelet' },
-                { name: 'Nose', href: '/category/nose-ring' },
-                { name: 'Belly', href: '/category/belly-rings' },
-                { name: 'Sets', href: '/category/ring-set' },
+                { name: 'Home', href: '/' },
                 { name: 'Contact', href: '/contact' },
+                { name: 'Help', href: '/#faqs' },
               ].map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="font-sans text-[11px] xl:text-[12px] font-semibold tracking-[0.15em] text-[#FDFBF7]/90 hover:text-[#D4AF37] transition-colors uppercase relative group py-2"
+                  className="font-serif italic text-[16px] xl:text-[20px] font-medium tracking-[0.05em] text-[#FDFBF7] hover:text-[#D4AF37] transition-colors relative group py-2"
                 >
                   {item.name}
-                  <span className="absolute -bottom-2 left-0 w-0 h-[1.5px] bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               ))}
             </nav>
 
             {/* Right Action Icons */}
             <div className="flex items-center space-x-3 sm:space-x-5">
-              {/* WhatsApp Support - hidden on mobile (handled by floating button) */}
+              {/* WhatsApp Support */}
               <a
                 href="https://wa.me/919999999999?text=Hello!%20I%20am%20interested%20in%20custom%20Moissanite%20Jewelry."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden xl:flex items-center gap-1.5 px-3.5 py-1.5 text-[11px] font-sans font-bold tracking-wider text-[#022C22] bg-[#D4AF37] hover:bg-[#F3E5AB] rounded-full transition-colors shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 text-[10px] sm:text-[11px] font-sans font-bold tracking-wider text-[#022C22] bg-[#D4AF37] hover:bg-[#F3E5AB] rounded-full transition-colors shadow-sm"
               >
                 <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                <span>WhatsApp</span>
+                <span className="hidden sm:inline">WhatsApp</span>
+              </a>
+
+
+              {/* Etsy Shop Button */}
+              <a
+                href="https://www.etsy.com/shop/foreverjewellstudio?section_id=59060242"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#FDFBF7] hover:text-[#D4AF37] transition-colors p-1 flex items-center justify-center group"
+                aria-label="Visit our Etsy Shop"
+                title="Visit our Etsy Shop"
+              >
+                <div className="bg-[#F1641E] text-white px-2.5 h-6 flex items-center justify-center rounded shadow-sm group-hover:shadow-md transition-all group-hover:scale-105">
+                  <span className="font-serif font-bold text-[12px] leading-none tracking-wide">Etsy</span>
+                </div>
               </a>
 
               {/* Search Button */}
@@ -233,12 +217,12 @@ export default function Header() {
                             {prod.name}
                           </h4>
                           <p className="font-sans text-[11px] text-gray-500">
-                            {prod.shape} Cut • {prod.carat}
+                            {prod.shape} Cut â€¢ {prod.carat}
                           </p>
                         </div>
                         <div className="text-right">
                           <span className="font-sans text-xs sm:text-sm font-bold text-[#064E3B]">
-                            ₹{prod.price.toLocaleString('en-IN')}
+                            â‚¹{prod.price.toLocaleString('en-IN')}
                           </span>
                         </div>
                       </Link>
@@ -274,7 +258,7 @@ export default function Header() {
                 <div className="flex items-center justify-between p-5 border-b border-[#D4AF37]/20">
                   <div>
                     <span className="font-serif text-2xl font-bold tracking-widest text-[#D4AF37] uppercase">
-                      AURA
+                      ForeverJewellStudio
                     </span>
                     <p className="font-sans text-[8.5px] tracking-widest text-[#F3E5AB] uppercase font-semibold">
                       Royal Moissanite & Fine Jewelry
@@ -332,7 +316,7 @@ export default function Header() {
                   Chat on WhatsApp
                 </a>
                 <p className="text-center font-sans text-[10px] text-gray-400">
-                  Mon - Sat • 10:00 AM - 8:00 PM IST
+                  Mon - Sat â€¢ 10:00 AM - 8:00 PM IST
                 </p>
               </div>
             </motion.div>

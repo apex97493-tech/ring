@@ -22,9 +22,11 @@ export default function Footer() {
         {/* Newsletter & Brand Spotlight */}
         <div className="pb-12 border-b border-[#27272A] grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div>
-            <span className="font-serif text-3xl font-bold tracking-widest text-[#D4AF37] uppercase">
-              AURA
-            </span>
+            <div className="flex flex-col items-start leading-[0.9] mb-4">
+              <span className="font-serif italic text-[36px] sm:text-[44px] tracking-wide font-bold text-[#D4AF37]">
+                ForeverJewellStudio
+              </span>
+            </div>
             <p className="font-sans text-xs tracking-[0.25em] text-gray-400 uppercase mt-1 mb-4 font-semibold">
               Woke Moissanite & Fine Jewelry
             </p>
@@ -36,7 +38,7 @@ export default function Footer() {
           <div className="bg-[#27272A]/60 p-6 rounded-2xl border border-[#D4AF37]/20">
             <h4 className="font-serif text-lg font-bold text-white mb-2 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-              Join the AURA Circle & Get 10% Off
+              Join the ForeverJewellStudio Circle & Get 10% Off
             </h4>
             <p className="font-sans text-xs text-gray-400 mb-4">
               Receive secret drop access, bespoke ring customization discounts, and care guides.
@@ -44,7 +46,7 @@ export default function Footer() {
 
             {subscribed ? (
               <div className="p-3 bg-[#064E3B] text-[#D4AF37] text-xs font-sans rounded-xl font-bold">
-                Welcome to the AURA Circle. Use code <strong>WOKE10</strong> at checkout for 10% off.
+                Welcome to the ForeverJewellStudio Circle. Use code <strong>WOKE10</strong> at checkout for 10% off.
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-2">
@@ -189,8 +191,8 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#D4AF37] flex-shrink-0" />
-                <a href="mailto:care@aurajewelry.com" className="hover:text-white transition-colors">
-                  care@aurajewelry.com
+                <a href="mailto:care@ForeverJewellStudiojewelry.com" className="hover:text-white transition-colors">
+                  care@ForeverJewellStudiojewelry.com
                 </a>
               </li>
               <li className="pt-1">
@@ -198,20 +200,28 @@ export default function Footer() {
                   href="/contact"
                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#D4AF37] hover:text-[#F3E5AB] transition-colors uppercase tracking-wider"
                 >
-                  Get In Touch & Visit Store →
+                  Get In Touch & Visit Store â†’
                 </Link>
               </li>
               <li className="pt-2 flex gap-4 text-gray-400 text-xs">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1">
-                  <span>Instagram</span>
+                <a href="https://www.instagram.com/foreverjewellstudio/" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1 transition-colors group" title="Visit our Instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                  </svg>
                 </a>
-                <span>•</span>
+                <span>â€¢</span>
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1">
                   <span>Facebook</span>
                 </a>
-                <span>•</span>
+                <span>â€¢</span>
                 <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1">
                   <span>YouTube</span>
+                </a>
+                <span>â€¢</span>
+                <a href="https://www.etsy.com/shop/foreverjewellstudio?section_id=59060242" target="_blank" rel="noopener noreferrer" className="hover:text-[#F1641E] flex items-center gap-1 font-serif font-bold tracking-tight">
+                  <span>Etsy</span>
                 </a>
               </li>
             </ul>
@@ -220,7 +230,7 @@ export default function Footer() {
 
         {/* Bottom Bar with Payment Gateways */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-gray-500">
-          <p>© 2026 AURA Royal Moissanite Jewelry. All Rights Reserved. Crafted for eternal sparkle.</p>
+          <p>Â© 2026 ForeverJewellStudio Royal Moissanite Jewelry. All Rights Reserved. Crafted for eternal sparkle.</p>
 
           <div className="flex items-center gap-3">
             <span className="text-[10px] uppercase tracking-wider text-gray-400">
