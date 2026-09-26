@@ -64,6 +64,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               ? item.engravingText.replace(/<[^>]*>?/gm, '').slice(0, 30)
               : undefined,
           }));
+          // eslint-disable-next-line react-hooks/set-state-in-effect
           setCart(validItems);
         }
       }

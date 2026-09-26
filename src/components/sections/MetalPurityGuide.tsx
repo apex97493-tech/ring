@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { ShieldCheck, Check, Sparkles, AlertCircle } from 'lucide-react';
@@ -9,7 +9,7 @@ const METALS_INFO = [
     stamp: 'STAMP: 925',
     tag: 'Accessible Luxury',
     purity: '92.5% Pure Solid Silver',
-    finish: 'Heavy 2.5µm Rhodium / 18K Gold Vermeil Dip',
+    finish: 'Heavy 2.5Âµm Rhodium / 18K Gold Vermeil Dip',
     skinSafe: '100% Nickel-Free & Hypoallergenic',
     durability: 'High (Shower & Daily Safe with Gentle Care)',
     recommendation: 'Perfect for daily elegance, anniversary gifts, and travel rings.',
@@ -65,7 +65,7 @@ export default function MetalPurityGuide() {
           </h2>
           <div className="w-16 h-[1.5px] bg-[#D4AF37] mx-auto mb-4" />
           <p className="font-sans text-xs sm:text-sm text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            We never use cheap brass, copper, or hollow bands. Every AURA ring is cast in solid precious metal with official assay hallmark stamps and an unbending <strong>1.8mm–2.0mm comfort-fit thickness guarantee</strong>.
+            We never use cheap brass, copper, or hollow bands. Every ForeverJewellStudio ring is cast in solid precious metal with official assay hallmark stamps and an unbending <strong>1.8mmâ€“2.0mm comfort-fit thickness guarantee</strong>.
           </p>
         </div>
 
@@ -126,10 +126,10 @@ export default function MetalPurityGuide() {
             </div>
             <div>
               <h4 className="font-serif text-base sm:text-lg font-bold text-[#FDFBF7]">
-                The Anti-Bending Band Guarantee (1.8mm–2.0mm Minimum)
+                The Anti-Bending Band Guarantee (1.8mmâ€“2.0mm Minimum)
               </h4>
               <p className="font-sans text-xs text-gray-300 mt-0.5">
-                Generic online marketplace sellers cut silver and gold costs by making shanks under 1.2mm, causing rings to bend easily. Every AURA ring has a heavy, reinforced comfort-fit shank engineered for lifetime wear.
+                Generic online marketplace sellers cut silver and gold costs by making shanks under 1.2mm, causing rings to bend easily. Every ForeverJewellStudio ring has a heavy, reinforced comfort-fit shank engineered for lifetime wear.
               </p>
             </div>
           </div>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,16 +17,16 @@ const SILHOUETTES = [
   { id: 'solitaire', name: 'Royal Solitaire', desc: 'Timeless high-elevation claw basket' },
   { id: 'vintage', name: 'Art Deco Milgrain', desc: 'Antique beaded edging with filigree' },
   { id: 'botanical', name: 'Botanical Twig & Leaf', desc: 'Hand-sculpted organic nature vines' },
-  { id: 'hidden-halo', name: 'Hidden Diamond Halo', desc: 'Secret collar of pavé diamonds' },
+  { id: 'hidden-halo', name: 'Hidden Diamond Halo', desc: 'Secret collar of pavÃ© diamonds' },
   { id: 'toi-et-moi', name: 'Toi et Moi (Two-Stone)', desc: 'Dual complementary gemstone bypass' },
 ];
 
 const STONE_CUTS = [
-  { id: 'Oval', name: 'Modern Oval', icon: '✨' },
-  { id: 'Emerald', name: 'Royal Emerald', icon: '💎' },
-  { id: 'Round', name: 'Round Brilliant', icon: '👑' },
-  { id: 'Pear', name: 'Teardrop Pear', icon: '💧' },
-  { id: 'Cushion', name: 'Crushed-Ice Cushion', icon: '🧊' },
+  { id: 'Oval', name: 'Modern Oval', icon: 'âœ¨' },
+  { id: 'Emerald', name: 'Royal Emerald', icon: 'ðŸ’Ž' },
+  { id: 'Round', name: 'Round Brilliant', icon: 'ðŸ‘‘' },
+  { id: 'Pear', name: 'Teardrop Pear', icon: 'ðŸ’§' },
+  { id: 'Cushion', name: 'Crushed-Ice Cushion', icon: 'ðŸ§Š' },
 ];
 
 const METALS_LIST = [
@@ -52,12 +52,12 @@ export default function CustomDesignStudio() {
       .slice(0, 200);
 
     const message = [
-      '*BESPOKE CUSTOM JEWELRY INQUIRY (AURA ATELIER)*',
+      '*BESPOKE CUSTOM JEWELRY INQUIRY (ForeverJewellStudio ATELIER)*',
       '',
-      `• Setting Silhouette: ${selectedSilhouette.name}`,
-      `• Center Stone: ${selectedCut.name} (${selectedCarat} Moissanite)`,
-      `• Precious Metal: ${selectedMetal.name}`,
-      sanitizedNotes ? `• Custom Request / Pinterest Idea: "${sanitizedNotes}"` : '',
+      `â€¢ Setting Silhouette: ${selectedSilhouette.name}`,
+      `â€¢ Center Stone: ${selectedCut.name} (${selectedCarat} Moissanite)`,
+      `â€¢ Precious Metal: ${selectedMetal.name}`,
+      sanitizedNotes ? `â€¢ Custom Request / Pinterest Idea: "${sanitizedNotes}"` : '',
       '',
       '*I would like a complimentary 3D CAD render and price quotation!*',
     ].filter(Boolean).join('\n');
@@ -187,7 +187,7 @@ export default function CustomDesignStudio() {
                       <span className="font-sans text-xs text-white">{m.name}</span>
                     </div>
                     <span className="font-sans text-xs font-bold text-[#D4AF37]">
-                      Starts ₹{m.basePrice.toLocaleString('en-IN')}
+                      Starts â‚¹{m.basePrice.toLocaleString('en-IN')}
                     </span>
                   </div>
                 ))}
@@ -243,7 +243,7 @@ export default function CustomDesignStudio() {
               <div className="flex justify-between py-1.5 border-b border-white/10">
                 <span className="text-gray-300">Handcrafting Timeline:</span>
                 <span className="text-white flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-[#D4AF37]" /> 7–10 Business Days
+                  <Clock className="w-3.5 h-3.5 text-[#D4AF37]" /> 7â€“10 Business Days
                 </span>
               </div>
             </div>
@@ -255,7 +255,7 @@ export default function CustomDesignStudio() {
               </span>
               <div className="flex items-baseline gap-2">
                 <span className="font-serif text-3xl font-bold text-[#D4AF37]">
-                  ₹{selectedMetal.basePrice.toLocaleString('en-IN')}
+                  â‚¹{selectedMetal.basePrice.toLocaleString('en-IN')}
                 </span>
                 <span className="font-sans text-xs text-gray-300">
                   (Includes Ring Box & Insured Shipping)

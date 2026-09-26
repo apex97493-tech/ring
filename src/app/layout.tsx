@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
@@ -21,7 +21,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AURA | Moissanite Solitaire Rings & Fine Jewelry",
+  title: "ForeverJewellStudio | Moissanite Solitaire Rings & Fine Jewelry",
   description: "Discover certified VVS1 D-Color Moissanite solitaire rings, eternity bands, and bespoke fine jewelry. 100% Lifetime Buyback, GRA certified, and free insured delivery across India.",
 };
 
@@ -45,7 +45,7 @@ export default function RootLayout({
 
             {/* Floating WhatsApp Support Widget - responsive sizing */}
             <a
-              href="https://wa.me/919999999999?text=Hello%20AURA%20Jewelry%20Team!%20I%20would%20like%20to%20inquire%20about%20a%20Moissanite%20Ring."
+              href="https://wa.me/919999999999?text=Hello%20ForeverJewellStudio%20Jewelry%20Team!%20I%20would%20like%20to%20inquire%20about%20a%20Moissanite%20Ring."
               target="_blank"
               rel="noopener noreferrer"
               className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 bg-[#064E3B] hover:bg-[#043327] text-[#D4AF37] hover:text-white p-3 sm:p-3.5 rounded-full shadow-2xl border border-[#D4AF37]/50 flex items-center justify-center transition-all duration-300 hover:scale-110 group cursor-pointer"

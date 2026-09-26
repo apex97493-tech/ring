@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Package, Award, Sparkles, Shield, Gift, EyeOff, CheckCircle2 } from 'lucide-react';
@@ -53,7 +53,7 @@ export default function UnboxingExperience() {
           </h2>
           <div className="w-16 h-[1.5px] bg-[#D4AF37] mx-auto mb-4" />
           <p className="font-sans text-xs sm:text-sm text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            While generic marketplace sellers ship jewelry in plain plastic envelopes, every AURA creation arrives in our signature museum-grade presentation suite.
+            While generic marketplace sellers ship jewelry in plain plastic envelopes, every ForeverJewellStudio creation arrives in our signature museum-grade presentation suite.
           </p>
         </div>
 

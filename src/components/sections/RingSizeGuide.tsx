@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState } from 'react';
 import { Ruler, Sparkles, Hand, HelpCircle } from 'lucide-react';
@@ -221,7 +221,7 @@ export default function RingSizeGuide() {
               <div className="flex items-center gap-3">
                 <HelpCircle className="w-6 h-6 text-[#8C6A1F] flex-shrink-0" />
                 <p className="font-sans text-xs text-gray-600">
-                  Unsure of your exact size? Order your estimated size with peace of mind — we provide <strong>1 Free Doorstep Resizing</strong> on all orders!
+                  Unsure of your exact size? Order your estimated size with peace of mind â€” we provide <strong>1 Free Doorstep Resizing</strong> on all orders!
                 </p>
               </div>
             </div>

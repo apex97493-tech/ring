@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import { Sparkles, MessageCircle, Send, ShieldCheck, ArrowRight } from 'lucide-react';
@@ -30,9 +30,9 @@ export default function CustomJewelryBanner() {
               <span className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-[#D4AF37]" /> Free 3D CAD Preview
               </span>
-              <span>•</span>
+              <span>â€¢</span>
               <span>Laser-Engraved Personalization</span>
-              <span>•</span>
+              <span>â€¢</span>
               <span>Direct Master Jeweler Access</span>
             </div>
           </div>
@@ -49,7 +49,7 @@ export default function CustomJewelryBanner() {
             </a>
 
             <a
-              href="mailto:contact@aurajewelry.com"
+              href="mailto:contact@ForeverJewellStudiojewelry.com"
               className="px-8 py-4 bg-transparent border border-[#D4AF37]/50 hover:bg-[#D4AF37]/10 text-[#D4AF37] font-sans text-xs font-bold tracking-widest uppercase rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               Email Us CAD Files <ArrowRight className="w-4 h-4" />
