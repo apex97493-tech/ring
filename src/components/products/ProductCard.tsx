@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -66,7 +66,7 @@ export default function ProductCard({ product }: { product: Product }) {
               </span>
             ) : (
               <span className="bg-white/90 backdrop-blur-xs text-[#064E3B] font-sans text-[8px] sm:text-[9px] font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded shadow-xs uppercase border border-[#E8E5DF]">
-                âœ¨ Ready to Ship
+                ✨ Ready to Ship
               </span>
             )}
           </div>
@@ -154,16 +154,16 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Specs / Carat Tag */}
         <p className="font-sans text-[10px] sm:text-[11px] text-gray-500 mb-1.5 truncate min-w-0">
-          {product.carat} â€¢ {product.clarity}
+          {product.carat} • {product.clarity}
         </p>
 
         {/* Pricing Row: Cleanly wrapped for small phone screens */}
         <div className="flex items-baseline gap-1 sm:gap-1.5 flex-wrap mb-1.5 min-w-0 w-full">
           <span className="font-sans text-xs sm:text-sm md:text-base font-bold text-[#064E3B]">
-            â‚¹{product.price.toLocaleString('en-IN')}
+            ₹{product.price.toLocaleString('en-IN')}
           </span>
           <span className="font-sans text-[10px] sm:text-xs text-gray-400 line-through">
-            â‚¹{product.originalPrice.toLocaleString('en-IN')}
+            ₹{product.originalPrice.toLocaleString('en-IN')}
           </span>
           <span className="font-sans text-[9px] sm:text-[10px] font-bold text-[#059669]">
             {discountPercent}% OFF

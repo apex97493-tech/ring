@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -116,10 +116,10 @@ export default function QuickViewModal({
               {/* Price */}
               <div className="flex items-baseline gap-3 mb-6">
                 <span className="font-sans text-2xl font-bold text-[#064E3B]">
-                  â‚¹{product.price.toLocaleString('en-IN')}
+                  ₹{product.price.toLocaleString('en-IN')}
                 </span>
                 <span className="font-sans text-sm text-gray-400 line-through">
-                  â‚¹{product.originalPrice.toLocaleString('en-IN')}
+                  ₹{product.originalPrice.toLocaleString('en-IN')}
                 </span>
                 <span className="font-sans text-xs font-bold text-[#059669]">
                   (50% OFF Limited Offer)
@@ -234,7 +234,7 @@ export default function QuickViewModal({
                 <span className="flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#B89035]" /> GRA Certified
                 </span>
-                <span>â€¢</span>
+                <span>•</span>
                 <span className="flex items-center gap-1">
                   <Truck className="w-3.5 h-3.5 text-[#059669]" /> Free Insured Shipping
                 </span>

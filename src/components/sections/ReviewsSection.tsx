@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { Star, CheckCircle, ShieldCheck } from 'lucide-react';
@@ -9,7 +9,7 @@ const reviews = [
     author: 'Ananya Sharma',
     city: 'Mumbai, Maharashtra',
     rating: 5,
-    date: 'Verified Buyer â€¢ 3 days ago',
+    date: 'Verified Buyer • 3 days ago',
     title: 'Outshines my natural diamond engagement ring!',
     content: 'I ordered the Celeste Oval 2.00 CT in 18K Yellow Gold. The brilliance and fire under sunlight are mindblowing. My jeweler friend tested it with his diamond tester and it beeped positive immediately! GRA certificate was in the box. 10/10 recommend.',
     ringName: 'The Celeste Oval Solitaire Moissanite Ring',
@@ -20,7 +20,7 @@ const reviews = [
     author: 'Rohan & Priya Mehta',
     city: 'Bengaluru, Karnataka',
     rating: 5,
-    date: 'Verified Buyer â€¢ 1 week ago',
+    date: 'Verified Buyer • 1 week ago',
     title: 'The best anniversary gift ever. Saved thousands of dollars.',
     content: 'We compared real diamonds at Tanishq vs this 2.50 CT Emerald cut ring. The clarity is flawless (pure VVS1 colorless). The packaging was luxurious with a rich velvet box. Super fast insured delivery to Bangalore.',
     ringName: 'The Royal Emerald-Cut Solitaire with Hidden Halo',
@@ -31,8 +31,8 @@ const reviews = [
     author: 'Sneha Patel',
     city: 'Ahmedabad, Gujarat',
     rating: 5,
-    date: 'Verified Buyer â€¢ 2 weeks ago',
-    title: 'Stacking it with the Tiara band â€” looks like a $10,000 ring set!',
+    date: 'Verified Buyer • 2 weeks ago',
+    title: 'Stacking it with the Tiara band — looks like a $10,000 ring set!',
     content: 'Obsessed with the sparkle. I wear it everyday in the shower, gym, and office without worrying about losing a multi-lakh diamond. Zero tarnishing or discoloration on the 925 silver finish.',
     ringName: 'The Crown Round Brilliant Solitaire Ring',
     image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=400&auto=format&fit=crop',
@@ -94,7 +94,7 @@ export default function ReviewsSection() {
 
                 {/* Review text */}
                 <h4 className="font-serif text-lg font-bold text-[#18181B] mb-2 leading-snug">
-                  &quot;{rev.title}&quot;
+                  "{rev.title}"
                 </h4>
                 <p className="font-sans text-xs text-gray-600 leading-relaxed mb-6">
                   {rev.content}

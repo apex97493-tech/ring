@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -68,10 +68,10 @@ export default function MobileStickyBuyBar({
                 </p>
                 <div className="flex items-baseline gap-1 mt-0.5">
                   <span className="font-sans text-xs font-bold text-[#064E3B]">
-                    â‚¹{product.price.toLocaleString('en-IN')}
+                    ₹{product.price.toLocaleString('en-IN')}
                   </span>
                   <span className="font-sans text-[9px] text-gray-500 uppercase">
-                    â€¢ {selectedMetal.split(' ')[0]}
+                    • {selectedMetal.split(' ')[0]}
                   </span>
                 </div>
               </div>

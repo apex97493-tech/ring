@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
@@ -9,16 +9,6 @@ export default function InteractiveSparkleSlider() {
   const [activeLighting, setActiveLighting] = useState<'sunlight' | 'indoor'>('sunlight');
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [containerWidth, setContainerWidth] = useState<number | '100%'>('100%');
-
-  React.useEffect(() => {
-    if (!containerRef.current) return;
-    const observer = new ResizeObserver((entries) => {
-      setContainerWidth(entries[0].contentRect.width);
-    });
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
 
   const handleMove = useCallback((clientX: number) => {
     if (!containerRef.current) return;
@@ -57,7 +47,7 @@ export default function InteractiveSparkleSlider() {
             Drag to Compare: Diamond vs. Moissanite
           </h2>
           <p className="font-sans text-xs sm:text-sm text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            Experience the optical science yourself. Slide back and forth to see how ForeverJewellStudio Moissanite produces 2.4x higher rainbow fire and scintillation than a mined diamond.
+            Experience the optical science yourself. Slide back and forth to see how AURA Moissanite produces 2.4x higher rainbow fire and scintillation than a mined diamond.
           </p>
 
           {/* Lighting Mode Selector */}
@@ -100,7 +90,7 @@ export default function InteractiveSparkleSlider() {
             onTouchEnd={() => setIsDragging(false)}
             className="relative h-[360px] sm:h-[480px] md:h-[540px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 border-[#D4AF37]/40 cursor-ew-resize select-none bg-black"
           >
-            {/* RIGHT SIDE / BACKGROUND (ForeverJewellStudio MOISSANITE) */}
+            {/* RIGHT SIDE / BACKGROUND (AURA MOISSANITE) */}
             <div className="absolute inset-0 w-full h-full">
               <img
                 src={
@@ -108,7 +98,7 @@ export default function InteractiveSparkleSlider() {
                     ? 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=1200&auto=format&fit=crop'
                     : 'https://images.unsplash.com/photo-1598560917505-59a3ad559071?q=80&w=1200&auto=format&fit=crop'
                 }
-                alt="ForeverJewellStudio Royal Moissanite Fire"
+                alt="AURA Royal Moissanite Fire"
                 className="w-full h-full object-cover brightness-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
@@ -116,13 +106,13 @@ export default function InteractiveSparkleSlider() {
               {/* Moissanite Label & Specs (Right Side) */}
               <div className="absolute top-4 right-4 sm:top-6 sm:right-6 text-right z-10 pointer-events-none">
                 <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#064E3B]/90 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/50 rounded-full font-sans text-[10px] sm:text-xs font-bold tracking-widest uppercase shadow-lg">
-                  <Flame className="w-3 h-3 text-amber-400" /> ForeverJewellStudio Moissanite (VVS1 D)
+                  <Flame className="w-3 h-3 text-amber-400" /> AURA Moissanite (VVS1 D)
                 </span>
                 <p className="text-white text-xs sm:text-sm font-sans mt-1.5 drop-shadow-md">
-                  <strong>2.69 Brilliance Index</strong> â€¢ 2.4x Higher Rainbow Fire
+                  <strong>2.69 Brilliance Index</strong> • 2.4x Higher Rainbow Fire
                 </p>
                 <p className="text-emerald-300 font-bold text-xs sm:text-base font-sans drop-shadow-md">
-                  From â‚¹24,900 <span className="text-[10px] text-gray-300 font-normal">(Ethical & Conflict-Free)</span>
+                  From ₹24,900 <span className="text-[10px] text-gray-300 font-normal">(Ethical & Conflict-Free)</span>
                 </p>
               </div>
             </div>
@@ -134,7 +124,7 @@ export default function InteractiveSparkleSlider() {
             >
               <div
                 className="absolute inset-0"
-                style={{ width: containerWidth }}
+                style={{ width: containerRef.current?.clientWidth || '100%' }}
               >
                 <img
                   src={
@@ -153,10 +143,10 @@ export default function InteractiveSparkleSlider() {
                     Traditional Mined Diamond
                   </span>
                   <p className="text-white text-xs sm:text-sm font-sans mt-1.5 drop-shadow-md">
-                    <strong>2.42 Brilliance Index</strong> â€¢ Standard White Light
+                    <strong>2.42 Brilliance Index</strong> • Standard White Light
                   </p>
                   <p className="text-gray-300 font-bold text-xs sm:text-base font-sans drop-shadow-md">
-                    â‚¹3,50,000+ <span className="text-[10px] text-gray-400 font-normal">(High Markup & Mining)</span>
+                    ₹3,50,000+ <span className="text-[10px] text-gray-400 font-normal">(High Markup & Mining)</span>
                   </p>
                 </div>
               </div>

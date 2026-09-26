@@ -1,761 +1,2414 @@
 [
   {
-    "id": "moi-01",
-    "name": "The Celeste Oval Solitaire Moissanite Ring",
-    "slug": "celeste-oval-solitaire-moissanite-ring",
+    "id": "fjws-4512524434",
+    "name": "Garnet Hexagon and Pink Sapphire Baguette Ring Solid Gold or Silver, Art Deco Statement Ring",
+    "slug": "garnet-hexagon-and-pink-sapphire-baguette-ring-solid-gold-or-524434",
     "category": "rings",
-    "shape": "Oval",
-    "price": 3499,
-    "originalPrice": 6999,
+    "shape": "Hexagon",
+    "price": 6261,
+    "originalPrice": 12522,
     "carat": "2.00 CT",
     "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Excellent Oval Brilliant",
+    "colorGrade": "D Color",
+    "cut": "Hexagon Brilliant Cut",
     "certification": "GRA Certified with Authenticity Card",
     "badge": "BESTSELLER",
-    "rating": 4.9,
-    "reviewsCount": 184,
+    "rating": 4.8,
+    "reviewsCount": 45,
     "metal": "925 Sterling Silver",
-    "readyToShip": true,
-    "primaryGemstone": "GRA Moissanite (Diamond Alternative)",
-    "secondaryGemstone": "Round Brilliant CZ / Lab Diamonds",
-    "ringStyle": "Art Deco / Royal Solitaire",
-    "occasion": "Engagement, Wedding, Anniversary Gift",
-    "deliveryTime": "4-7 Days Free Express Air Delivery",
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "/images/ai_ring1_front.jpg"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "/images/ai_ring1_side.jpg"
-      },
-      {
-        "metal": "18K Rose Gold Plated",
-        "colorCode": "#FB7185",
-        "image": "/images/ai_ring1_hand.jpg"
-      }
-    ],
+    "primaryGemstone": "Sapphire",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Hexagon Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-524434",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Sapphire (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
     "images": [
-      "/images/ai_ring1_front.jpg",
-      "/images/ai_ring1_side.jpg",
-      "/images/ai_ring1_hand.jpg",
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop",
-      "/images/diamond_front.png"
+      "/uploads/etsy_4512524434_img1.jpg",
+      "/uploads/etsy_4512524434_img2.jpg",
+      "/uploads/etsy_4512524434_img3.jpg"
     ],
-    "description": "The Celeste Oval Solitaire is the crown jewel of our Woke Luxury collection. Featuring a breathtaking 2.00 CT Oval Cut D-Color Moissanite center stone held in a refined 4-prong claw setting. Delivers 2.4x the fire and brilliance of a natural mined diamond at a fraction of the investment.",
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Garnet Hexagon and Pink Sapphire Baguette Ring Solid Gold or Silver, Art Deco Statement Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
     "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
       "Passes Standard Diamond Thermal Testers",
-      "GRA Certificate & Warranty Card Included",
-      "Hypoallergenic & Anti-Tarnish Rhodium Polish",
-      "100% Lifetime Buyback & Exchange Guarantee",
-      "Complimentary Velvet Ring Box & Certificate Holder"
-    ]
-  },
-  {
-    "id": "moi-02",
-    "name": "The Crown Round Brilliant Solitaire Ring",
-    "slug": "crown-round-brilliant-solitaire-ring",
-    "category": "rings",
-    "shape": "Round",
-    "price": 2999,
-    "originalPrice": 5999,
-    "carat": "1.50 CT",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Hearts & Arrows Ideal Cut",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "VVS1 D-COLOR",
-    "rating": 5,
-    "reviewsCount": 230,
-    "metal": "925 Sterling Silver",
+      "3-5 Days Free Express Delivery Across India"
+    ],
     "readyToShip": true,
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "18K Rose Gold Plated",
-        "colorCode": "#FB7185",
-        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop"
-      }
-    ],
-    "images": [
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "An enduring classic. The Crown Solitaire features an iconic 6-prong cathedral setting that elevates the 1.50 Carat Round Brilliant Moissanite to capture maximum ambient light for unmatched rainbow scintillation.",
-    "features": [
-      "Hearts and Arrows Optical Symmetry",
-      "Laser-Inscribed Unique GRA Serial Number",
-      "Solid 925 Silver Base with 3-Micron Gold/Platinum Dip",
-      "Free 15-Day Hassle-Free Returns & Resizing"
-    ]
-  },
-  {
-    "id": "moi-03",
-    "name": "The Royal Emerald-Cut Solitaire with Hidden Halo",
-    "slug": "royal-emerald-cut-solitaire-hidden-halo",
-    "category": "rings",
-    "shape": "Emerald",
-    "price": 3999,
-    "originalPrice": 7999,
-    "carat": "2.50 CT",
-    "clarity": "VVS1 (Eye Clean Step Cut)",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Step Cut Rectangular Emerald",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "BESTSELLER",
-    "rating": 4.85,
-    "reviewsCount": 97,
-    "metal": "18K Yellow Gold Plated",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "/images/ai_ring2_front.jpg"
-      },
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "/images/ai_ring2_side.jpg"
-      },
-      {
-        "metal": "18K Rose Gold Plated",
-        "colorCode": "#FB7185",
-        "image": "/images/ai_ring2_hand.jpg"
-      }
-    ],
-    "images": [
-      "/images/ai_ring2_front.jpg",
-      "/images/ai_ring2_side.jpg",
-      "/images/ai_ring2_hand.jpg",
-      "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "Understated vintage opulence. The Hall-of-Mirrors reflection of this 2.50 CT Emerald Cut Moissanite is complemented by a delicate hidden pavé halo underneath the basket that catches the eye from side profile angles.",
-    "features": [
-      "Hidden Pavé Micro-Moissanite Halo",
-      "Slender 1.8mm Comfort Fit Band",
-      "High-Grade Corrosion Resistant Finish",
-      "Complimentary Custom Laser Engraving"
-    ]
-  },
-  {
-    "id": "moi-04",
-    "name": "The Lumina Radiant Cut Pavé Band Ring",
-    "slug": "lumina-radiant-cut-pave-band-ring",
-    "category": "rings",
-    "shape": "Radiant",
-    "price": 4299,
-    "originalPrice": 8499,
-    "carat": "3.00 CT",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Crushed Ice Radiant Cut",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "LIMITED EDITION",
-    "rating": 4.95,
-    "reviewsCount": 142,
-    "metal": "925 Sterling Silver",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "/images/ai_ring1_side.jpg"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "/images/ai_ring2_front.jpg"
-      }
-    ],
-    "images": [
-      "/images/ai_ring1_side.jpg",
-      "/images/ai_ring2_front.jpg",
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "A showstopping statement ring. The 3.00 CT Radiant Cut combines the elegant silhouette of an emerald cut with the intense sparkle of a round brilliant, perched on a French-pavé encrusted band.",
-    "features": [
-      "Crushed Ice Faceting for Maximum Fire",
-      "French-Pavé Half Eternity Band",
-      "Reinforced Platinum-Prong Setting",
-      "100% Conflict-Free Lab Grown"
-    ]
-  },
-  {
-    "id": "moi-05",
-    "name": "The Elara Pear Drop Moissanite Solitaire",
-    "slug": "elara-pear-drop-moissanite-solitaire",
-    "category": "rings",
-    "shape": "Pear",
-    "price": 3199,
-    "originalPrice": 6399,
-    "carat": "1.80 CT",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Modified Pear Brilliant",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "50% OFF",
-    "rating": 4.88,
-    "reviewsCount": 76,
-    "metal": "18K Rose Gold Plated",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "18K Rose Gold Plated",
-        "colorCode": "#FB7185",
-        "image": "/images/ai_ring1_hand.jpg"
-      },
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "/images/ai_ring1_front.jpg"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "/images/ai_ring1_side.jpg"
-      }
-    ],
-    "images": [
-      "/images/ai_ring1_hand.jpg",
-      "/images/ai_ring1_front.jpg",
-      "/images/ai_ring1_side.jpg",
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "Flattering, elongating, and dramatically feminine. The Elara Pear Drop features a protective V-tip chevron prong that shields the delicate tip of the pear while maximizing stone visibility.",
-    "features": [
-      "Finger-Elongating Teardrop Proportion",
-      "V-Prong Reinforced Tip Protection",
-      "Ultra-Smooth Comfort Shank",
-      "Certificate of Authenticity with QR Verification"
-    ]
-  },
-  {
-    "id": "moi-06",
-    "name": "The Aurelia Cushion Cut Vintage Solitaire",
-    "slug": "aurelia-cushion-cut-vintage-solitaire",
-    "category": "rings",
-    "shape": "Cushion",
-    "price": 3699,
-    "originalPrice": 7299,
-    "carat": "2.00 CT",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Elongated Cushion Brilliant",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "NEW ARRIVAL",
-    "rating": 4.92,
-    "reviewsCount": 64,
-    "metal": "925 Sterling Silver",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop"
-      }
-    ],
-    "images": [
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop",
-      "/images/ai_ring3_side.jpg",
-      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "A harmonious blend of old-world charm and modern brilliance. Pillow-soft rounded corners with an elongated ratio that looks exceptionally flattering on any hand.",
-    "features": [
-      "1.15 Elongated Cushion Ratio",
-      "Vintage Milgrain Gallery Work",
-      "Certified D-Color VVS1 Moissanite",
-      "Lifetime Polish & Prong Inspection Free"
-    ]
-  },
-  {
-    "id": "moi-07",
-    "name": "The Victoria Princess Cut Solitaire Ring",
-    "slug": "victoria-princess-cut-solitaire-ring",
-    "category": "rings",
-    "shape": "Princess",
-    "price": 3399,
-    "originalPrice": 6799,
-    "carat": "2.00 CT",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Square Modified Brilliant",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "BESTSELLER",
-    "rating": 4.89,
-    "reviewsCount": 112,
-    "metal": "925 Sterling Silver",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "/images/ai_ring1_front.jpg"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "/images/ai_ring1_side.jpg"
-      }
-    ],
-    "images": [
-      "/images/ai_ring1_front.jpg",
-      "/images/ai_ring1_side.jpg",
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "Crisp geometric lines meeting explosive sparkle. The 4 corner chevron prongs shield the edges of this 2.00 CT Princess Cut while letting pure light pass through.",
-    "features": [
-      "Sharp 90-Degree Geometric Angles",
-      "Reinforced V-Corner Prongs",
-      "High-Polish Mirror Finish Band",
-      "Full GRA Lab Report Included"
-    ]
-  },
-  {
-    "id": "moi-08",
-    "name": "The Siren Marquise Vintage Solitaire",
-    "slug": "siren-marquise-vintage-solitaire",
-    "category": "rings",
-    "shape": "Marquise",
-    "price": 3799,
-    "originalPrice": 7599,
-    "carat": "2.20 CT",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Marquise Brilliant",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "LIMITED EDITION",
-    "rating": 4.96,
-    "reviewsCount": 88,
-    "metal": "18K Yellow Gold Plated",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "/images/ai_ring2_hand.jpg"
-      }
-    ],
-    "images": [
-      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop",
-      "/images/ai_ring2_hand.jpg",
-      "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "A silhouette favored by royal dynasties. The Marquise cut boasts the largest surface area per carat of any diamond cut, giving the illusion of a monumental center stone.",
-    "features": [
-      "Maximum Carat Surface Spread",
-      "Twin Protective End Caps",
-      "Ultra-Comfort Tapered Band",
-      "100% Lifetime Buyback Policy"
-    ]
-  },
-  {
-    "id": "moi-09",
-    "name": "The Eternity Moissanite Tennis Band",
-    "slug": "eternity-moissanite-tennis-band",
-    "category": "band",
-    "shape": "Round",
-    "price": 2499,
-    "originalPrice": 4999,
-    "carat": "3.50 CT Total",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Full Eternity Round Brilliant",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "BESTSELLER",
-    "rating": 4.97,
-    "reviewsCount": 310,
-    "metal": "925 Sterling Silver",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "/images/ai_ring3_front.jpg"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "/images/ai_ring3_side.jpg"
-      },
-      {
-        "metal": "18K Rose Gold Plated",
-        "colorCode": "#FB7185",
-        "image": "/images/ai_ring3_hand.jpg"
-      }
-    ],
-    "images": [
-      "/images/ai_ring3_front.jpg",
-      "/images/ai_ring3_side.jpg",
-      "/images/ai_ring3_hand.jpg",
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "An unbroken circle of pure light. Features 22 hand-set 3.0mm D-Color VVS1 Moissanite stones in a seamless 4-prong low profile setting. Perfect for stacking with your solitaire.",
-    "features": [
-      "Full 360-Degree Continuous Sparkle",
-      "Individually Checked & Graded Stones",
-      "Comfort-Fit Beveled Inner Edge",
-      "Stackable with all Solitaire Rings"
-    ]
-  },
-  {
-    "id": "moi-10",
-    "name": "The Stacking Curved Chevron Tiara Band",
-    "slug": "stacking-curved-chevron-tiara-band",
-    "category": "ring-set",
-    "shape": "Round",
-    "price": 1899,
-    "originalPrice": 3799,
-    "carat": "0.80 CT Total",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Round & Marquise Accent Cluster",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "HOT",
-    "rating": 4.91,
-    "reviewsCount": 155,
-    "metal": "18K Yellow Gold Plated",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop"
-      }
-    ],
-    "images": [
-      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "Designed specifically to nest seamlessly around oval, pear, and round solitaires like a royal crown tiara.",
-    "features": [
-      "Contoured Deep Dip for Solitaire Stones",
-      "Marquise & Round Cluster Arrangement",
-      "Stands Stunning on Its Own or in a Stack",
-      "Anti-Scratch Protective Barrier"
-    ]
-  },
-  {
-    "id": "moi-11",
-    "name": "The Solitaire Moissanite Pendant Necklace",
-    "slug": "solitaire-moissanite-pendant-necklace",
-    "category": "pendant",
-    "shape": "Round",
-    "price": 2799,
-    "originalPrice": 5599,
-    "carat": "2.00 CT",
-    "clarity": "VVS1",
-    "colorGrade": "D Color",
-    "cut": "Round Brilliant",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "BESTSELLER",
-    "rating": 4.94,
-    "reviewsCount": 168,
-    "metal": "925 Sterling Silver",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop"
-      }
-    ],
-    "images": [
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "Effortless luxury for your neckline. An authentic 2.00 CT D-Color Moissanite suspended on an adjustable Italian box chain that catches light with every breath.",
-    "features": [
-      "Includes 16-18 Inch Adjustable Italian Chain",
-      "4-Prong Basket for Maximum Luminescence",
-      "Spring Ring Lock with Stamp Certificate",
-      "100% Sweat & Waterproof Rhodium Plating"
-    ]
-  },
-  {
-    "id": "moi-12",
-    "name": "The Classic Moissanite Stud Earrings (Pair)",
-    "slug": "classic-moissanite-stud-earrings-pair",
-    "category": "earrings",
-    "shape": "Round",
-    "price": 2999,
-    "originalPrice": 5999,
-    "carat": "2.00 CTW (1.0ct each)",
-    "clarity": "VVS1",
-    "colorGrade": "D Color",
-    "cut": "Ideal Cut Round Brilliant",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "BESTSELLER",
-    "rating": 4.98,
-    "reviewsCount": 420,
-    "metal": "925 Sterling Silver",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop"
-      }
-    ],
-    "images": [
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "The definitive daily luxury earring pair. 1 Carat D-Color VVS1 Moissanite per ear, fitted with secure screw-backs so you never worry about losing them.",
-    "features": [
-      "Comfort-Fit Secure Screw Backs",
-      "Certified Dual GRA Certificates (One Per Earring)",
-      "100% Skin Safe & Nickel-Free",
-      "Daily Wear & Shower Safe"
-    ]
-  },
-  {
-    "id": "moi-13",
-    "name": "The Aurelia Art Deco Vintage Milgrain Ring",
-    "slug": "aurelia-art-deco-vintage-milgrain-ring",
-    "category": "rings",
-    "shape": "Emerald",
-    "price": 4499,
-    "originalPrice": 8999,
-    "carat": "2.50 CT",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Art Deco Step Cut Emerald",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "NEW ARRIVAL",
-    "rating": 5,
-    "reviewsCount": 89,
-    "metal": "925 Sterling Silver",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "18K Rose Gold Plated",
-        "colorCode": "#FB7185",
-        "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop"
-      }
-    ],
-    "images": [
-      "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "Inspired by the Gatsby era, the Aurelia combines a 2.50 CT step-cut Emerald Moissanite with hand-applied vintage milgrain beading and an intricate gallery. A true heirloom piece outshining standard market designs.",
-    "features": [
-      "Hand-Carved Antique Milgrain Edging",
-      "Architectural 4-Prong Corner Basket",
-      "GRA Certificate & Serial Inscription Included",
-      "Lifetime Stone Brilliance & Setting Warranty"
-    ]
-  },
-  {
-    "id": "moi-14",
-    "name": "The Ivy Botanical Twig & Leaf Ring",
-    "slug": "ivy-botanical-twig-leaf-ring",
-    "category": "rings",
-    "shape": "Pear",
-    "price": 3899,
-    "originalPrice": 7799,
-    "carat": "2.00 CT",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Brilliant Pear Teardrop",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "BESTSELLER",
-    "rating": 4.95,
-    "reviewsCount": 142,
-    "metal": "925 Sterling Silver",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "18K Rose Gold Plated",
-        "colorCode": "#FB7185",
-        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop"
-      }
-    ],
-    "images": [
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "An organic poetry on your hand. A 2.00 CT Pear Cut D-Color Moissanite nestled amidst hand-sculpted botanical vines and shimmering micropave leaf accents. Designed for the romantic, nature-inspired soul.",
-    "features": [
-      "Hand-Sculpted Organic Vine Band",
-      "Reinforced V-End Tip Protection for Pear Cut",
-      "Comfort-Fit 2.0mm Solid Shank",
-      "GRA Certificate & Embossed Presentation Box"
-    ]
-  },
-  {
-    "id": "moi-15",
-    "name": "The Elysian Toi et Moi Dual Gemstone Ring",
-    "slug": "elysian-toi-et-moi-dual-gemstone-ring",
-    "category": "rings",
-    "shape": "Oval",
-    "price": 4999,
-    "originalPrice": 9999,
-    "carat": "3.00 CTW (1.5ct Pear + 1.5ct Emerald)",
-    "clarity": "VVS1",
-    "colorGrade": "D Color (Colorless)",
-    "cut": "Dual Fancy Cut Harmony",
-    "certification": "GRA Certified with Authenticity Card",
-    "badge": "LIMITED EDITION",
-    "rating": 5,
-    "reviewsCount": 76,
-    "metal": "925 Sterling Silver",
-    "readyToShip": true,
-    "variants": [
-      {
-        "metal": "925 Sterling Silver",
-        "colorCode": "#E2E8F0",
-        "image": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop"
-      },
-      {
-        "metal": "18K Yellow Gold Plated",
-        "colorCode": "#EAB308",
-        "image": "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop"
-      }
-    ],
-    "images": [
-      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop"
-    ],
-    "description": "French for \"You and Me\". Two distinct soulmate stones — an Emerald cut and a Pear cut Moissanite — tilted gracefully side-by-side on an open bypass band. High celebrity and royal favorite.",
-    "features": [
-      "Twin Dual-Stone Prong Architecture",
-      "Ergonomic Open Bypass Shank",
-      "Two Individual GRA Lab Reports Included",
-      "Lifetime Prong Tightening & Cleaning Coverage"
-    ]
-  },
-  {
-    "id": "moi-16",
-    "name": "Oval Cut Rose Quartz Engagement Ring, 14k Solid Gold Ring, Vintage Diamond Accent Ring",
-    "slug": "oval-cut-rose-quartz-engagement-ring-14k-solid-gold",
-    "category": "rings",
-    "shape": "Oval",
-    "price": 4007,
-    "originalPrice": 8015,
-    "carat": "2.50 CT",
-    "clarity": "Translucent Natural Blush",
-    "colorGrade": "Blush Pink",
-    "cut": "Facetted Oval Brilliant",
-    "certification": "Artisan Authenticity Certificate & Velvet Box",
-    "badge": "RARE FIND",
-    "rating": 4.9,
-    "reviewsCount": 538,
-    "metal": "14k Solid Gold",
-    "readyToShip": true,
-    "primaryGemstone": "Natural Rose Quartz",
-    "secondaryGemstone": "Round Brilliant CZ Diamonds",
-    "ringStyle": "Art Deco / Vintage Solitaire",
-    "occasion": "Engagement, Anniversary Gift, Valentine",
-    "deliveryTime": "4-7 Days Free Express Delivery",
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": true,
     "variants": [
       {
         "metal": "14k Yellow Gold",
         "colorCode": "#CA8A04",
-        "image": "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop"
+        "image": "/uploads/etsy_4512524434_img1.jpg"
       },
       {
         "metal": "14k Rose Gold",
         "colorCode": "#FB7185",
-        "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop"
+        "image": "/uploads/etsy_4512524434_img2.jpg"
       },
       {
         "metal": "925 Sterling Silver",
         "colorCode": "#E2E8F0",
-        "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop"
+        "image": "/uploads/etsy_4512524434_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4512517618",
+    "name": "Radiant Cut Moissanite Engagement Ring Bezel Set Gold Solitaire Ring",
+    "slug": "radiant-cut-moissanite-engagement-ring-bezel-set-gold-solita-517618",
+    "category": "rings",
+    "shape": "Radiant",
+    "price": 4057,
+    "originalPrice": 8114,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Radiant Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "BESTSELLER",
+    "rating": 4.9,
+    "reviewsCount": 62,
+    "metal": "14k Gold Plated",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Radiant Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-517618",
+    "grossWeight": "3.5G",
+    "karatage": "14k Gold Plated",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4512517618_img1.jpg",
+      "/uploads/etsy_4512517618_img2.jpg",
+      "/uploads/etsy_4512517618_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Radiant Cut Moissanite Engagement Ring Bezel Set Gold Solitaire Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": true,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4512517618_img1.jpg"
       },
       {
-        "metal": "14k White Gold",
-        "colorCode": "#F1F5F9",
-        "image": "/images/ai_ring1_front.jpg"
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4512517618_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4512517618_img3.jpg"
       }
-    ],
+    ]
+  },
+  {
+    "id": "fjws-4582242777",
+    "name": "Oval Cut Rose Quartz Engagement Ring, 14k Solid Gold Ring, Vintage Diamond Accent Ring",
+    "slug": "oval-cut-rose-quartz-engagement-ring-14k-solid-gold-ring-vin-242777",
+    "category": "rings",
+    "shape": "Oval",
+    "price": 4007,
+    "originalPrice": 8014,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Oval Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "BESTSELLER",
+    "rating": 5.0,
+    "reviewsCount": 79,
+    "metal": "14k Solid Gold",
+    "primaryGemstone": "Rose Quartz",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Oval Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-242777",
+    "grossWeight": "3.5G",
+    "karatage": "14k Solid Gold",
+    "diamondType": "Rose Quartz (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
     "images": [
-      "https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop",
-      "/images/ai_ring1_front.jpg",
-      "/images/ai_ring1_side.jpg",
-      "/images/ai_ring1_hand.jpg",
-      "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=800&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=800&auto=format&fit=crop",
-      "/images/diamond_front.png"
+      "/uploads/etsy_4582242777_img1.jpg",
+      "/uploads/etsy_4582242777_img2.jpg",
+      "/uploads/etsy_4582242777_img3.jpg"
     ],
-    "description": "Oval Cut Rose Quartz Engagement Ring, 14k Solid Gold Ring, Vintage Diamond Accent Ring, Anniversary Gift Ring. Handcrafted with love by our master artisans in Rajasthan, India. Features an ethereal blush pink oval gemstone accented by dainty round brilliant sparklers on a slender gold band.",
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Oval Cut Rose Quartz Engagement Ring, 14k Solid Gold Ring, Vintage Diamond Accent Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
     "features": [
-      "Handmade in Rajasthan, India by Master Artisans",
-      "Primary Gemstone: Natural Rose Quartz with Vintage Oval Facets",
-      "Complimentary Custom Inner Laser Engraving",
-      "Arrives in Deluxe Velvet Ring Box with Certificate",
-      "Available in US Ring Sizes 4 to 12 with Free Resizing Support"
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": true,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4582242777_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4582242777_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4582242777_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4582254728",
+    "name": "Oval Black Onyx Ring, Moissanite Accent Engagement Ring, Vintage Gold Statement Ring",
+    "slug": "oval-black-onyx-ring-moissanite-accent-engagement-ring-vinta-254728",
+    "category": "rings",
+    "shape": "Oval",
+    "price": 5009,
+    "originalPrice": 10018,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Oval Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.8,
+    "reviewsCount": 96,
+    "metal": "14k Gold Plated",
+    "primaryGemstone": "Black Onyx",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Oval Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-254728",
+    "grossWeight": "3.5G",
+    "karatage": "14k Gold Plated",
+    "diamondType": "Black Onyx (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4582254728_img1.jpg",
+      "/uploads/etsy_4582254728_img2.jpg",
+      "/uploads/etsy_4582254728_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Oval Black Onyx Ring, Moissanite Accent Engagement Ring, Vintage Gold Statement Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": true,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4582254728_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4582254728_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4582254728_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4582231925",
+    "name": "Elegant Oval Malachite Bezel Set Engagement Ring, 14K Gold Malachite Solitaire Ring",
+    "slug": "elegant-oval-malachite-bezel-set-engagement-ring-14k-gold-ma-231925",
+    "category": "rings",
+    "shape": "Oval",
+    "price": 4107,
+    "originalPrice": 8214,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Oval Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.9,
+    "reviewsCount": 113,
+    "metal": "14k Solid Gold",
+    "primaryGemstone": "Malachite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Oval Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-231925",
+    "grossWeight": "3.5G",
+    "karatage": "14k Solid Gold",
+    "diamondType": "Malachite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4582231925_img1.jpg",
+      "/uploads/etsy_4582231925_img2.jpg",
+      "/uploads/etsy_4582231925_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Elegant Oval Malachite Bezel Set Engagement Ring, 14K Gold Malachite Solitaire Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": true,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4582231925_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4582231925_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4582231925_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4581018221",
+    "name": "2.50ct Elongated Cushion Cut Moissanite Ring, 14K Gold Cushion Cut Solitaire Ring",
+    "slug": "2-50ct-elongated-cushion-cut-moissanite-ring-14k-gold-cushio-018221",
+    "category": "rings",
+    "shape": "Cushion",
+    "price": 4258,
+    "originalPrice": 8516,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Cushion Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "BESTSELLER",
+    "rating": 5.0,
+    "reviewsCount": 130,
+    "metal": "14k Solid Gold",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Cushion Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-018221",
+    "grossWeight": "3.5G",
+    "karatage": "14k Solid Gold",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4581018221_img1.jpg",
+      "/uploads/etsy_4581018221_img2.jpg",
+      "/uploads/etsy_4581018221_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. 2.50ct Elongated Cushion Cut Moissanite Ring, 14K Gold Cushion Cut Solitaire Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": true,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4581018221_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4581018221_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4581018221_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4581569462",
+    "name": "Crescent Moon Malachite Ring, Gold Celestial Ring, Green Stone Ring, Malachite Ring",
+    "slug": "crescent-moon-malachite-ring-gold-celestial-ring-green-stone-569462",
+    "category": "rings",
+    "shape": "Round",
+    "price": 4508,
+    "originalPrice": 9016,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Round Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.8,
+    "reviewsCount": 147,
+    "metal": "14k Gold Plated",
+    "primaryGemstone": "Malachite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Round Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-569462",
+    "grossWeight": "3.5G",
+    "karatage": "14k Gold Plated",
+    "diamondType": "Malachite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4581569462_img1.jpg",
+      "/uploads/etsy_4581569462_img2.jpg",
+      "/uploads/etsy_4581569462_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Crescent Moon Malachite Ring, Gold Celestial Ring, Green Stone Ring, Malachite Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4581569462_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4581569462_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4581569462_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4581567484",
+    "name": "14K Solid Gold Malachite with Moissanite Ring, Vintage Hexagon Green Gemstone Ring",
+    "slug": "14k-solid-gold-malachite-with-moissanite-ring-vintage-hexago-567484",
+    "category": "rings",
+    "shape": "Hexagon",
+    "price": 5510,
+    "originalPrice": 11020,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Hexagon Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "50% OFF",
+    "rating": 4.9,
+    "reviewsCount": 164,
+    "metal": "14k Solid Gold",
+    "primaryGemstone": "Malachite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Hexagon Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-567484",
+    "grossWeight": "3.5G",
+    "karatage": "14k Solid Gold",
+    "diamondType": "Malachite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4581567484_img1.jpg",
+      "/uploads/etsy_4581567484_img2.jpg",
+      "/uploads/etsy_4581567484_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. 14K Solid Gold Malachite with Moissanite Ring, Vintage Hexagon Green Gemstone Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4581567484_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4581567484_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4581567484_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4581565280",
+    "name": "Natural Malachite Marquise Cut Ring, Half Bezel 14k Rose Gold Ring, Promise Ring",
+    "slug": "natural-malachite-marquise-cut-ring-half-bezel-14k-rose-gold-565280",
+    "category": "rings",
+    "shape": "Marquise",
+    "price": 4308,
+    "originalPrice": 8616,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Marquise Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 5.0,
+    "reviewsCount": 181,
+    "metal": "14k Rose Gold Plated",
+    "primaryGemstone": "Malachite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Marquise Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-565280",
+    "grossWeight": "3.5G",
+    "karatage": "14k Rose Gold Plated",
+    "diamondType": "Malachite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4581565280_img1.jpg",
+      "/uploads/etsy_4581565280_img2.jpg",
+      "/uploads/etsy_4581565280_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Natural Malachite Marquise Cut Ring, Half Bezel 14k Rose Gold Ring, Promise Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4581565280_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4581565280_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4581565280_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4581555690",
+    "name": "Green Onyx Engagement Ring, Moissanite Halo Ring, Vintage Oval Cut Gold Statement Ring",
+    "slug": "green-onyx-engagement-ring-moissanite-halo-ring-vintage-oval-555690",
+    "category": "rings",
+    "shape": "Oval",
+    "price": 5009,
+    "originalPrice": 10018,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Oval Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.8,
+    "reviewsCount": 198,
+    "metal": "14k Gold Plated",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Oval Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-555690",
+    "grossWeight": "3.5G",
+    "karatage": "14k Gold Plated",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4581555690_img1.jpg",
+      "/uploads/etsy_4581555690_img2.jpg",
+      "/uploads/etsy_4581555690_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Green Onyx Engagement Ring, Moissanite Halo Ring, Vintage Oval Cut Gold Statement Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4581555690_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4581555690_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4581555690_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4581527793",
+    "name": "Personalized Birthstone Ring, 18K Gold, Baguette Birthstone Ring, Two Stone Custom Ring",
+    "slug": "personalized-birthstone-ring-18k-gold-baguette-birthstone-ri-527793",
+    "category": "rings",
+    "shape": "Round",
+    "price": 4508,
+    "originalPrice": 9016,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Round Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "NEW ARRIVAL",
+    "rating": 4.9,
+    "reviewsCount": 215,
+    "metal": "18k Gold Plated",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Round Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-527793",
+    "grossWeight": "3.5G",
+    "karatage": "18k Gold Plated",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4581527793_img1.jpg",
+      "/uploads/etsy_4581527793_img2.jpg",
+      "/uploads/etsy_4581527793_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Personalized Birthstone Ring, 18K Gold, Baguette Birthstone Ring, Two Stone Custom Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4581527793_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4581527793_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4581527793_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4516296623",
+    "name": "Venus De Milo Eyes Ring, Aphrodite Eyes Ring, Goddess Venus Ring, Greek Mythology Ring",
+    "slug": "venus-de-milo-eyes-ring-aphrodite-eyes-ring-goddess-venus-ri-296623",
+    "category": "rings",
+    "shape": "Round",
+    "price": 4759,
+    "originalPrice": 9518,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Round Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 5.0,
+    "reviewsCount": 232,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Round Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-296623",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4516296623_img1.jpg",
+      "/uploads/etsy_4516296623_img2.jpg",
+      "/uploads/etsy_4516296623_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Venus De Milo Eyes Ring, Aphrodite Eyes Ring, Goddess Venus Ring, Greek Mythology Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4516296623_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4516296623_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4516296623_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4563453438",
+    "name": "Round Moissanite Leaf Engagement Ring, Sterling Silver Vine Band, Nature Inspired Bridal Ring",
+    "slug": "round-moissanite-leaf-engagement-ring-sterling-silver-vine-b-453438",
+    "category": "rings",
+    "shape": "Round",
+    "price": 4909,
+    "originalPrice": 9818,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Round Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.8,
+    "reviewsCount": 249,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Round Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-453438",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4563453438_img1.jpg",
+      "/uploads/etsy_4563453438_img2.jpg",
+      "/uploads/etsy_4563453438_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Round Moissanite Leaf Engagement Ring, Sterling Silver Vine Band, Nature Inspired Bridal Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4563453438_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4563453438_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4563453438_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4581012935",
+    "name": "Oval Lab Grown Diamond Ring, Solid Gold Pinky Ring, Minimalist Wedding Jewelry, Promise Ring",
+    "slug": "oval-lab-grown-diamond-ring-solid-gold-pinky-ring-minimalist-012935",
+    "category": "rings",
+    "shape": "Oval",
+    "price": 4107,
+    "originalPrice": 8214,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Oval Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.9,
+    "reviewsCount": 266,
+    "metal": "14k Gold Plated",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Oval Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-012935",
+    "grossWeight": "3.5G",
+    "karatage": "14k Gold Plated",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4581012935_img1.jpg",
+      "/uploads/etsy_4581012935_img2.jpg",
+      "/uploads/etsy_4581012935_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Oval Lab Grown Diamond Ring, Solid Gold Pinky Ring, Minimalist Wedding Jewelry, Promise Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4581012935_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4581012935_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4581012935_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4576624415",
+    "name": "Emerald Cut Green Teal Sapphire Ring, Engagement & Wedding Gemstone Ring",
+    "slug": "emerald-cut-green-teal-sapphire-ring-engagement-wedding-gems-624415",
+    "category": "rings",
+    "shape": "Emerald",
+    "price": 5911,
+    "originalPrice": 11822,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Emerald Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "50% OFF",
+    "rating": 5.0,
+    "reviewsCount": 283,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Sapphire",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Emerald Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-624415",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Sapphire (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4576624415_img1.jpg",
+      "/uploads/etsy_4576624415_img2.jpg",
+      "/uploads/etsy_4576624415_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Emerald Cut Green Teal Sapphire Ring, Engagement & Wedding Gemstone Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4576624415_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4576624415_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4576624415_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4580293133",
+    "name": "Marquise Sapphire Yellow Gold Ring, Vintage Blue Gemstone Cluster Wedding Ring",
+    "slug": "marquise-sapphire-yellow-gold-ring-vintage-blue-gemstone-clu-293133",
+    "category": "rings",
+    "shape": "Marquise",
+    "price": 4608,
+    "originalPrice": 9216,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Marquise Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "BESTSELLER",
+    "rating": 4.8,
+    "reviewsCount": 300,
+    "metal": "14k Gold Plated",
+    "primaryGemstone": "Sapphire",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Marquise Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-293133",
+    "grossWeight": "3.5G",
+    "karatage": "14k Gold Plated",
+    "diamondType": "Sapphire (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4580293133_img1.jpg",
+      "/uploads/etsy_4580293133_img2.jpg",
+      "/uploads/etsy_4580293133_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Marquise Sapphire Yellow Gold Ring, Vintage Blue Gemstone Cluster Wedding Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4580293133_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4580293133_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4580293133_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4580277179",
+    "name": "Rose Gold Open Wedding Band, Solid Gold Gap Engagement Ring, Marquise Stackable Ring",
+    "slug": "rose-gold-open-wedding-band-solid-gold-gap-engagement-ring-m-277179",
+    "category": "rings",
+    "shape": "Marquise",
+    "price": 4909,
+    "originalPrice": 9818,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Marquise Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.9,
+    "reviewsCount": 317,
+    "metal": "14k Rose Gold Plated",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Marquise Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-277179",
+    "grossWeight": "3.5G",
+    "karatage": "14k Rose Gold Plated",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4580277179_img1.jpg",
+      "/uploads/etsy_4580277179_img2.jpg",
+      "/uploads/etsy_4580277179_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Rose Gold Open Wedding Band, Solid Gold Gap Engagement Ring, Marquise Stackable Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4580277179_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4580277179_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4580277179_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4580287314",
+    "name": "Oval Moissanite Eternity Band Ring, Full Eternity Wedding Band, Bezel Set Anniversary Ring",
+    "slug": "oval-moissanite-eternity-band-ring-full-eternity-wedding-ban-287314",
+    "category": "rings",
+    "shape": "Oval",
+    "price": 5009,
+    "originalPrice": 10018,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Oval Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 5.0,
+    "reviewsCount": 334,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Oval Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-287314",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4580287314_img1.jpg",
+      "/uploads/etsy_4580287314_img2.jpg",
+      "/uploads/etsy_4580287314_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Oval Moissanite Eternity Band Ring, Full Eternity Wedding Band, Bezel Set Anniversary Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4580287314_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4580287314_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4580287314_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4515622892",
+    "name": "Dainty Marquise Cut Rose Quartz Ring, Minimalist Rose Ring, 925 Sterling Silver",
+    "slug": "dainty-marquise-cut-rose-quartz-ring-minimalist-rose-ring-92-622892",
+    "category": "rings",
+    "shape": "Marquise",
+    "price": 4308,
+    "originalPrice": 8616,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Marquise Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.8,
+    "reviewsCount": 351,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Rose Quartz",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Marquise Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-622892",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Rose Quartz (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4515622892_img1.jpg",
+      "/uploads/etsy_4515622892_img2.jpg",
+      "/uploads/etsy_4515622892_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Dainty Marquise Cut Rose Quartz Ring, Minimalist Rose Ring, 925 Sterling Silver. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4515622892_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4515622892_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4515622892_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4575555879",
+    "name": "Moissanite Signet Ring, Yellow Gold, Emerald Horizontal Gemstone Ring, 925 Sterling Silver",
+    "slug": "moissanite-signet-ring-yellow-gold-emerald-horizontal-gemsto-555879",
+    "category": "rings",
+    "shape": "Round",
+    "price": 4909,
+    "originalPrice": 9818,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Round Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.9,
+    "reviewsCount": 368,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Round Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-555879",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4575555879_img1.jpg",
+      "/uploads/etsy_4575555879_img2.jpg",
+      "/uploads/etsy_4575555879_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Moissanite Signet Ring, Yellow Gold, Emerald Horizontal Gemstone Ring, 925 Sterling Silver. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4575555879_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4575555879_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4575555879_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4559851298",
+    "name": "Oval Cut Moissanite Wide Band Solitaire Engagement Ring, Diamond Ring, Promise Ring",
+    "slug": "oval-cut-moissanite-wide-band-solitaire-engagement-ring-diam-851298",
+    "category": "rings",
+    "shape": "Oval",
+    "price": 5009,
+    "originalPrice": 10018,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Oval Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "BESTSELLER",
+    "rating": 5.0,
+    "reviewsCount": 385,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Oval Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-851298",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4559851298_img1.jpg",
+      "/uploads/etsy_4559851298_img2.jpg",
+      "/uploads/etsy_4559851298_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Oval Cut Moissanite Wide Band Solitaire Engagement Ring, Diamond Ring, Promise Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4559851298_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4559851298_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4559851298_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4527196335",
+    "name": "Toi Et Moi Ring, 14K Solid Gold, Oval Sapphire and Pear Cut Ruby Engagement Ring",
+    "slug": "toi-et-moi-ring-14k-solid-gold-oval-sapphire-and-pear-cut-ru-196335",
+    "category": "rings",
+    "shape": "Pear",
+    "price": 6011,
+    "originalPrice": 12022,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Pear Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "LIMITED EDITION",
+    "rating": 4.8,
+    "reviewsCount": 402,
+    "metal": "14k Solid Gold",
+    "primaryGemstone": "Sapphire",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Pear Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-196335",
+    "grossWeight": "3.5G",
+    "karatage": "14k Solid Gold",
+    "diamondType": "Sapphire (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4527196335_img1.jpg",
+      "/uploads/etsy_4527196335_img2.jpg",
+      "/uploads/etsy_4527196335_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Toi Et Moi Ring, 14K Solid Gold, Oval Sapphire and Pear Cut Ruby Engagement Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4527196335_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4527196335_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4527196335_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4520614290",
+    "name": "Oval Cut Blue Sapphire Engagement Ring, Art Deco Leaf Ring, September Birthstone",
+    "slug": "oval-cut-blue-sapphire-engagement-ring-art-deco-leaf-ring-se-614290",
+    "category": "rings",
+    "shape": "Oval",
+    "price": 5610,
+    "originalPrice": 11220,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Oval Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "NEW ARRIVAL",
+    "rating": 4.9,
+    "reviewsCount": 419,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Sapphire",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Oval Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-614290",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Sapphire (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4520614290_img1.jpg",
+      "/uploads/etsy_4520614290_img2.jpg",
+      "/uploads/etsy_4520614290_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Oval Cut Blue Sapphire Engagement Ring, Art Deco Leaf Ring, September Birthstone. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4520614290_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4520614290_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4520614290_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4574605185",
+    "name": "14k Gold Marquise Engagement Ring, Simulated Diamond Ring, Wedding Ring, Travel Ring",
+    "slug": "14k-gold-marquise-engagement-ring-simulated-diamond-ring-wed-605185",
+    "category": "rings",
+    "shape": "Marquise",
+    "price": 5009,
+    "originalPrice": 10018,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Marquise Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 5.0,
+    "reviewsCount": 436,
+    "metal": "14k Solid Gold",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Marquise Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-605185",
+    "grossWeight": "3.5G",
+    "karatage": "14k Solid Gold",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4574605185_img1.jpg",
+      "/uploads/etsy_4574605185_img2.jpg",
+      "/uploads/etsy_4574605185_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. 14k Gold Marquise Engagement Ring, Simulated Diamond Ring, Wedding Ring, Travel Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4574605185_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4574605185_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4574605185_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4576945739",
+    "name": "Champagne Moissanite Engagement Ring Cushion Cut Solitaire in Yellow Gold, Promise Ring",
+    "slug": "champagne-moissanite-engagement-ring-cushion-cut-solitaire-i-945739",
+    "category": "rings",
+    "shape": "Cushion",
+    "price": 4408,
+    "originalPrice": 8816,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Cushion Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.8,
+    "reviewsCount": 53,
+    "metal": "14k Gold Plated",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Cushion Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-945739",
+    "grossWeight": "3.5G",
+    "karatage": "14k Gold Plated",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4576945739_img1.jpg",
+      "/uploads/etsy_4576945739_img2.jpg",
+      "/uploads/etsy_4576945739_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Champagne Moissanite Engagement Ring Cushion Cut Solitaire in Yellow Gold, Promise Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4576945739_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4576945739_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4576945739_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4576948201",
+    "name": "Unique Elongated Cushion Cut Moissanite Engagement Ring, Vintage Cushion Cut Solitaire",
+    "slug": "unique-elongated-cushion-cut-moissanite-engagement-ring-vint-948201",
+    "category": "rings",
+    "shape": "Cushion",
+    "price": 4258,
+    "originalPrice": 8516,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Cushion Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "LIMITED EDITION",
+    "rating": 4.9,
+    "reviewsCount": 70,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Cushion Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-948201",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4576948201_img1.jpg",
+      "/uploads/etsy_4576948201_img2.jpg",
+      "/uploads/etsy_4576948201_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Unique Elongated Cushion Cut Moissanite Engagement Ring, Vintage Cushion Cut Solitaire. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4576948201_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4576948201_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4576948201_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4576646738",
+    "name": "Natural Inspired Ring, 6mm Round Cut London Blue Topaz Engagement Ring, Leaf Ring",
+    "slug": "natural-inspired-ring-6mm-round-cut-london-blue-topaz-engage-646738",
+    "category": "rings",
+    "shape": "Round",
+    "price": 4508,
+    "originalPrice": 9016,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Round Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 5.0,
+    "reviewsCount": 87,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Topaz",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Round Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-646738",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Topaz (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4576646738_img1.jpg",
+      "/uploads/etsy_4576646738_img2.jpg",
+      "/uploads/etsy_4576646738_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Natural Inspired Ring, 6mm Round Cut London Blue Topaz Engagement Ring, Leaf Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4576646738_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4576646738_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4576646738_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4576618399",
+    "name": "Sterling Silver Vintage 18K Opal Ring Gold, Dainty Opal Engagement Ring, October Birthstone",
+    "slug": "sterling-silver-vintage-18k-opal-ring-gold-dainty-opal-engag-618399",
+    "category": "rings",
+    "shape": "Round",
+    "price": 5260,
+    "originalPrice": 10520,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Round Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "NEW ARRIVAL",
+    "rating": 4.8,
+    "reviewsCount": 104,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Opal",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Round Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-618399",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Opal (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4576618399_img1.jpg",
+      "/uploads/etsy_4576618399_img2.jpg",
+      "/uploads/etsy_4576618399_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Sterling Silver Vintage 18K Opal Ring Gold, Dainty Opal Engagement Ring, October Birthstone. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4576618399_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4576618399_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4576618399_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4576613509",
+    "name": "Gold Opal Ring, October Birthstone, Adjustable Gold Open Band Ring with Double Opals",
+    "slug": "gold-opal-ring-october-birthstone-adjustable-gold-open-band-613509",
+    "category": "rings",
+    "shape": "Round",
+    "price": 4608,
+    "originalPrice": 9216,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Round Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "NEW ARRIVAL",
+    "rating": 4.9,
+    "reviewsCount": 121,
+    "metal": "14k Gold Plated",
+    "primaryGemstone": "Opal",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Round Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-613509",
+    "grossWeight": "3.5G",
+    "karatage": "14k Gold Plated",
+    "diamondType": "Opal (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4576613509_img1.jpg",
+      "/uploads/etsy_4576613509_img2.jpg",
+      "/uploads/etsy_4576613509_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Gold Opal Ring, October Birthstone, Adjustable Gold Open Band Ring with Double Opals. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4576613509_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4576613509_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4576613509_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4575565234",
+    "name": "Emerald Cut Engagement Ring in 14k Solid Gold, 1.50 CT Garnet Ring, Art Deco Gold Promise Ring",
+    "slug": "emerald-cut-engagement-ring-in-14k-solid-gold-1-50-ct-garnet-565234",
+    "category": "rings",
+    "shape": "Emerald",
+    "price": 5009,
+    "originalPrice": 10018,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Emerald Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 5.0,
+    "reviewsCount": 138,
+    "metal": "14k Solid Gold",
+    "primaryGemstone": "Garnet",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Emerald Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-565234",
+    "grossWeight": "3.5G",
+    "karatage": "14k Solid Gold",
+    "diamondType": "Garnet (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4575565234_img1.jpg",
+      "/uploads/etsy_4575565234_img2.jpg",
+      "/uploads/etsy_4575565234_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Emerald Cut Engagement Ring in 14k Solid Gold, 1.50 CT Garnet Ring, Art Deco Gold Promise Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4575565234_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4575565234_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4575565234_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4558001559",
+    "name": "Lapis Lazuli Ring, Blue Gemstone Band, Sterling Silver Eternity Ring, Stackable Boho Jewelry",
+    "slug": "lapis-lazuli-ring-blue-gemstone-band-sterling-silver-eternit-001559",
+    "category": "rings",
+    "shape": "Round",
+    "price": 5610,
+    "originalPrice": 11220,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Round Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "BESTSELLER",
+    "rating": 4.8,
+    "reviewsCount": 155,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Lapis Lazuli",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Round Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-001559",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Lapis Lazuli (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4558001559_img1.jpg",
+      "/uploads/etsy_4558001559_img2.jpg",
+      "/uploads/etsy_4558001559_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Lapis Lazuli Ring, Blue Gemstone Band, Sterling Silver Eternity Ring, Stackable Boho Jewelry. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4558001559_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4558001559_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4558001559_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4522682939",
+    "name": "14K Solid Gold Moss Agate with Moissanite Ring, Hexagon Gemstone Ring, Promise Ring",
+    "slug": "14k-solid-gold-moss-agate-with-moissanite-ring-hexagon-gemst-682939",
+    "category": "rings",
+    "shape": "Hexagon",
+    "price": 4558,
+    "originalPrice": 9116,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Hexagon Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.9,
+    "reviewsCount": 172,
+    "metal": "14k Solid Gold",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Hexagon Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-682939",
+    "grossWeight": "3.5G",
+    "karatage": "14k Solid Gold",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4522682939_img1.jpg",
+      "/uploads/etsy_4522682939_img2.jpg",
+      "/uploads/etsy_4522682939_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. 14K Solid Gold Moss Agate with Moissanite Ring, Hexagon Gemstone Ring, Promise Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4522682939_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4522682939_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4522682939_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4527185846",
+    "name": "Green Onyx Engagement Ring, Oval Cut 3 Stone Ring, May Birthstone Ring, Dainty Ring",
+    "slug": "green-onyx-engagement-ring-oval-cut-3-stone-ring-may-birthst-185846",
+    "category": "rings",
+    "shape": "Oval",
+    "price": 4508,
+    "originalPrice": 9016,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Oval Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "NEW ARRIVAL",
+    "rating": 5.0,
+    "reviewsCount": 189,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Onyx",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Oval Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-185846",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Onyx (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4527185846_img1.jpg",
+      "/uploads/etsy_4527185846_img2.jpg",
+      "/uploads/etsy_4527185846_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Green Onyx Engagement Ring, Oval Cut 3 Stone Ring, May Birthstone Ring, Dainty Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4527185846_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4527185846_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4527185846_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4514456821",
+    "name": "2CT Emerald Cut Moissanite Engagement Ring, Hidden Halo, Claw Prong, Bridal Wedding Ring",
+    "slug": "2ct-emerald-cut-moissanite-engagement-ring-hidden-halo-claw-456821",
+    "category": "rings",
+    "shape": "Emerald",
+    "price": 4859,
+    "originalPrice": 9718,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Emerald Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": null,
+    "rating": 4.8,
+    "reviewsCount": 206,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Emerald Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-456821",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4514456821_img1.jpg",
+      "/uploads/etsy_4514456821_img2.jpg",
+      "/uploads/etsy_4514456821_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. 2CT Emerald Cut Moissanite Engagement Ring, Hidden Halo, Claw Prong, Bridal Wedding Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4514456821_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4514456821_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4514456821_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4522222080",
+    "name": "14k Gold Sculptural Couple Art Deco Ring, Romantic Fine Jewelry Gift, Unique Design Ring",
+    "slug": "14k-gold-sculptural-couple-art-deco-ring-romantic-fine-jewel-222080",
+    "category": "rings",
+    "shape": "Round",
+    "price": 5510,
+    "originalPrice": 11020,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Round Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "LIMITED EDITION",
+    "rating": 4.9,
+    "reviewsCount": 223,
+    "metal": "14k Solid Gold",
+    "primaryGemstone": "Moissanite",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Round Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-222080",
+    "grossWeight": "3.5G",
+    "karatage": "14k Solid Gold",
+    "diamondType": "Moissanite (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4522222080_img1.jpg",
+      "/uploads/etsy_4522222080_img2.jpg",
+      "/uploads/etsy_4522222080_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. 14k Gold Sculptural Couple Art Deco Ring, Romantic Fine Jewelry Gift, Unique Design Ring. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4522222080_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4522222080_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4522222080_img3.jpg"
+      }
+    ]
+  },
+  {
+    "id": "fjws-4516208711",
+    "name": "Natural Moonstone Ring, Emerald Cut Moonstone Engagement Ring, Sterling Silver Bridal Jewelry",
+    "slug": "natural-moonstone-ring-emerald-cut-moonstone-engagement-ring-208711",
+    "category": "rings",
+    "shape": "Emerald",
+    "price": 4508,
+    "originalPrice": 9016,
+    "carat": "2.00 CT",
+    "clarity": "VVS1",
+    "colorGrade": "D Color",
+    "cut": "Emerald Brilliant Cut",
+    "certification": "GRA Certified with Authenticity Card",
+    "badge": "BESTSELLER",
+    "rating": 5.0,
+    "reviewsCount": 240,
+    "metal": "925 Sterling Silver",
+    "primaryGemstone": "Moonstone",
+    "secondaryGemstone": "GRA Certified Moissanite Accents",
+    "ringStyle": "Emerald Solitaire",
+    "occasion": "Engagement, Anniversary, Promise Ring",
+    "sku": "FJS-208711",
+    "grossWeight": "3.5G",
+    "karatage": "925 Sterling Silver",
+    "diamondType": "Moonstone (GRA Certified)",
+    "diamondColor": "D-Colorless / Natural Gem Hue",
+    "diamondClarity": "VVS1",
+    "settingStyle": "Artisan Prong / Bezel Setting",
+    "images": [
+      "/uploads/etsy_4516208711_img1.jpg",
+      "/uploads/etsy_4516208711_img2.jpg",
+      "/uploads/etsy_4516208711_img3.jpg"
+    ],
+    "description": "Handcrafted with passion by master artisans at foreverjewellstudio in Jaipur, India. Natural Moonstone Ring, Emerald Cut Moonstone Engagement Ring, Sterling Silver Bridal Jewelry. Each piece is crafted to perfection with premium certified metals and genuine gemstones. Available in multiple metal options. Arrives gift-ready in our signature luxury jewelry box.",
+    "features": [
+      "Handcrafted by master artisans at foreverjewellstudio, Jaipur India",
+      "GRA Certified with Authenticity Card & Warranty",
+      "Arrives in Signature Luxury Ring Box",
+      "925 Sterling Silver / 14K Gold options available",
+      "Passes Standard Diamond Thermal Testers",
+      "3-5 Days Free Express Delivery Across India"
+    ],
+    "readyToShip": true,
+    "deliveryTime": "3-5 Days Free Express Air Delivery",
+    "prepaidDiscountNote": "₹300 OFF on prepaid orders",
+    "bespokeNotice": "BESPOKE! SHIPS IN 2-3 WEEKS!",
+    "stockStatus": "in_stock",
+    "stockQuantity": 12,
+    "isFeatured": false,
+    "variants": [
+      {
+        "metal": "14k Yellow Gold",
+        "colorCode": "#CA8A04",
+        "image": "/uploads/etsy_4516208711_img1.jpg"
+      },
+      {
+        "metal": "14k Rose Gold",
+        "colorCode": "#FB7185",
+        "image": "/uploads/etsy_4516208711_img2.jpg"
+      },
+      {
+        "metal": "925 Sterling Silver",
+        "colorCode": "#E2E8F0",
+        "image": "/uploads/etsy_4516208711_img3.jpg"
+      }
     ]
   }
 ]

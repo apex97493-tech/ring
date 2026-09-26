@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
@@ -48,7 +48,7 @@ import { useProducts } from '@/context/ProductContext';
 import ProductCard from '@/components/products/ProductCard';
 import ProductImageGallery from '@/components/products/ProductImageGallery';
 
-const PASSCODE = 'ForeverJewellStudio2026';
+const PASSCODE = 'aura2026';
 
 const EMPTY_PRODUCT: Product = {
   id: '',
@@ -141,7 +141,7 @@ export default function AdminBurgerPage() {
   const [toastMessage, setToastMessage] = useState<string>('');
 
   useEffect(() => {
-    const sessionAuth = sessionStorage.getItem('ForeverJewellStudio_admin_auth');
+    const sessionAuth = sessionStorage.getItem('aura_admin_auth');
     if (sessionAuth === 'true') {
       setIsAuthenticated(true);
     }
@@ -151,7 +151,7 @@ export default function AdminBurgerPage() {
     e.preventDefault();
     if (enteredPin === PASSCODE) {
       setIsAuthenticated(true);
-      sessionStorage.setItem('ForeverJewellStudio_admin_auth', 'true');
+      sessionStorage.setItem('aura_admin_auth', 'true');
       setPinError('');
     } else {
       setPinError('Incorrect Master PIN. Please try again.');
@@ -160,7 +160,7 @@ export default function AdminBurgerPage() {
 
   const handleLock = () => {
     setIsAuthenticated(false);
-    sessionStorage.removeItem('ForeverJewellStudio_admin_auth');
+    sessionStorage.removeItem('aura_admin_auth');
     setEnteredPin('');
   };
 
@@ -176,7 +176,7 @@ export default function AdminBurgerPage() {
       sku: p.sku || `AUR-${(p.shape || 'RNG').toUpperCase()}-${p.id.replace(/[^0-9]/g, '').slice(-4) || '001'}`,
       stockStatus: p.stockStatus || (p.readyToShip ? 'in_stock' : 'made_to_order'),
       stockQuantity: p.stockQuantity ?? 10,
-      metaTitle: p.metaTitle || `${p.name} | ForeverJewellStudio Fine Jewelry`,
+      metaTitle: p.metaTitle || `${p.name} | AURA Fine Jewelry`,
       metaDescription: p.metaDescription || (p.description ? p.description.slice(0, 155) : ''),
       isFeatured: p.isFeatured ?? (p.badge === 'BESTSELLER'),
       grossWeight: p.grossWeight || '3.75G',
@@ -241,11 +241,11 @@ export default function AdminBurgerPage() {
     const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(products, null, 2));
     const downloadAnchor = document.createElement('a');
     downloadAnchor.setAttribute('href', dataStr);
-    downloadAnchor.setAttribute('download', `ForeverJewellStudio_store_catalog_${new Date().toISOString().slice(0, 10)}.json`);
+    downloadAnchor.setAttribute('download', `aura_store_catalog_${new Date().toISOString().slice(0, 10)}.json`);
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     downloadAnchor.remove();
-    showToast('ðŸ“¥ Downloaded complete store catalog JSON backup!');
+    showToast('📥 Downloaded complete store catalog JSON backup!');
   };
 
   // Clean raw congested text into luxury formatted paragraphs
@@ -254,8 +254,8 @@ export default function AdminBurgerPage() {
     let text = formData.description;
 
     text = text
-      .replace(/thanks for visiting foreverjewellstudio/gi, 'Thank you for choosing ForeverJewellStudio Fine Jewelry')
-      .replace(/foreverjewellstudio/gi, 'ForeverJewellStudio Fine Jewelry')
+      .replace(/thanks for visiting foreverjewellstudio/gi, 'Thank you for choosing AURA Fine Jewelry')
+      .replace(/foreverjewellstudio/gi, 'AURA Fine Jewelry')
       .replace(/important\*:-?/gi, '')
       .replace(/\*{1,5}/g, '');
 
@@ -268,7 +268,7 @@ export default function AdminBurgerPage() {
       if (!isRawSpec) {
         narrative.push(line);
       } else if (line.toLowerCase().includes('handmade') || line.toLowerCase().includes('comfort') || line.toLowerCase().includes('box')) {
-        extractedFeatures.push(line.replace(/^[â€¢\*\-\s]+/, ''));
+        extractedFeatures.push(line.replace(/^[•\*\-\s]+/, ''));
       }
     }
 
@@ -278,7 +278,7 @@ export default function AdminBurgerPage() {
       description: cleanedNarrative || prev.description,
       features: extractedFeatures.length > 0 ? Array.from(new Set([...prev.features, ...extractedFeatures])) : prev.features,
     }));
-    showToast('âœ¨ Cleaned description into formatted luxury paragraphs!');
+    showToast('✨ Cleaned description into formatted luxury paragraphs!');
   };
 
   // Apply rich luxury story presets
@@ -358,7 +358,7 @@ export default function AdminBurgerPage() {
             variants: prev.variants.map((v, i) => i === 0 && !v.image ? { ...v, image: data.urls[0] } : v),
           };
         });
-        showToast(`âœ“ Added ${data.urls.length} photo${data.urls.length > 1 ? 's' : ''} from your device!`);
+        showToast(`✓ Added ${data.urls.length} photo${data.urls.length > 1 ? 's' : ''} from your device!`);
       } else {
         // Fallback: local FileReader Base64
         const dataUrls: string[] = [];
@@ -374,7 +374,7 @@ export default function AdminBurgerPage() {
           ...prev,
           images: [...(prev.images || []), ...dataUrls],
         }));
-        showToast(`âœ“ Loaded ${dataUrls.length} photo${dataUrls.length > 1 ? 's' : ''} from your device!`);
+        showToast(`✓ Loaded ${dataUrls.length} photo${dataUrls.length > 1 ? 's' : ''} from your device!`);
       }
     } catch (err) {
       console.error('Upload error, using local FileReader fallback:', err);
@@ -391,7 +391,7 @@ export default function AdminBurgerPage() {
         ...prev,
         images: [...(prev.images || []), ...dataUrls],
       }));
-      showToast(`âœ“ Loaded ${dataUrls.length} photo${dataUrls.length > 1 ? 's' : ''} from your device!`);
+      showToast(`✓ Loaded ${dataUrls.length} photo${dataUrls.length > 1 ? 's' : ''} from your device!`);
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) {
@@ -544,7 +544,7 @@ export default function AdminBurgerPage() {
       sku: finalSku,
       stockStatus: formData.stockStatus || (formData.readyToShip ? 'in_stock' : 'made_to_order'),
       stockQuantity: Number(formData.stockQuantity) || 10,
-      metaTitle: formData.metaTitle || `${formData.name} | ForeverJewellStudio Fine Jewelry`,
+      metaTitle: formData.metaTitle || `${formData.name} | AURA Fine Jewelry`,
       metaDescription: formData.metaDescription || (formData.description ? formData.description.slice(0, 155) : ''),
       isFeatured: formData.isFeatured ?? (formData.badge === 'BESTSELLER'),
       price: Number(formData.price) || 2999,
@@ -557,11 +557,11 @@ export default function AdminBurgerPage() {
 
     if (isNewListing) {
       await addProduct(productToSave);
-      showToast(`ðŸŽ‰ "${productToSave.name}" published live to store!`);
+      showToast(`🎉 "${productToSave.name}" published live to store!`);
       setIsNewListing(false);
     } else {
       await updateProduct(productToSave);
-      showToast(`âœ“ "${productToSave.name}" updated successfully!`);
+      showToast(`✓ "${productToSave.name}" updated successfully!`);
     }
   };
 
@@ -604,7 +604,7 @@ export default function AdminBurgerPage() {
             Official Store Portal
           </span>
           <h1 className="font-serif text-2xl font-bold text-white mb-2">
-            ForeverJewellStudio Atelier Vault
+            AURA Atelier Vault
           </h1>
           <p className="text-xs text-gray-300 mb-6">
             Enter your administrative master passcode to manage products and store catalog.
@@ -642,7 +642,7 @@ export default function AdminBurgerPage() {
             <Link href="/" className="hover:text-white flex items-center gap-1">
               <ArrowLeft className="w-3.5 h-3.5" /> Back to Store
             </Link>
-            <span className="font-mono text-[10px] text-[#D4AF37]/70">Default PIN: ForeverJewellStudio2026</span>
+            <span className="font-mono text-[10px] text-[#D4AF37]/70">Default PIN: aura2026</span>
           </div>
         </div>
       </div>
@@ -678,10 +678,10 @@ export default function AdminBurgerPage() {
             </div>
             <div>
               <h1 className="font-serif text-sm font-bold text-white tracking-wide">
-                ForeverJewellStudio Atelier â€¢ Product Manager
+                AURA Atelier • Product Manager
               </h1>
               <p className="text-[10px] text-[#D4AF37] font-mono">
-                Admin Control Room â€¢ {products.length} Products Live
+                Admin Control Room • {products.length} Products Live
               </p>
             </div>
           </div>
@@ -739,7 +739,7 @@ export default function AdminBurgerPage() {
               <FolderOpen className="w-4 h-4 text-[#D4AF37]" />
               <span>Catalog ({filteredProducts.length} Rings)</span>
               <span className="text-[10px] text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-full font-semibold">
-                {isMobileCatalogOpen ? 'â–² Collapse' : 'â–¼ Browse Products'}
+                {isMobileCatalogOpen ? '▲ Collapse' : '▼ Browse Products'}
               </span>
             </button>
             <span className="text-[11px] text-gray-400 font-mono">
@@ -781,7 +781,7 @@ export default function AdminBurgerPage() {
               {/* Items Counter & Per-Page Selector */}
               <div className="flex items-center justify-between text-[11px] text-gray-400 pt-1">
                 <span>
-                  Showing {filteredProducts.length > 0 ? `${startIndex}â€“${endIndex}` : 0} of {filteredProducts.length} items
+                  Showing {filteredProducts.length > 0 ? `${startIndex}–${endIndex}` : 0} of {filteredProducts.length} items
                 </span>
                 <div className="flex items-center gap-1.5">
                   <span className="text-[10px]">Show:</span>
@@ -841,10 +841,10 @@ export default function AdminBurgerPage() {
                         </div>
                         <div className="flex items-baseline gap-2 mt-0.5">
                           <span className="font-sans text-xs font-bold text-emerald-400">
-                            â‚¹{p.price.toLocaleString('en-IN')}
+                            ₹{p.price.toLocaleString('en-IN')}
                           </span>
                           <span className="font-sans text-[10px] text-gray-400">
-                            â€¢ {p.images?.length || 0} photos â€¢ {p.shape}
+                            • {p.images?.length || 0} photos • {p.shape}
                           </span>
                         </div>
                       </div>
@@ -919,7 +919,7 @@ export default function AdminBurgerPage() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-sans text-[10px] font-bold uppercase tracking-widest text-[#D4AF37]">
-                  {isNewListing ? 'âœ¨ Adding New Product' : `âœï¸ Editing: ${formData.id}`}
+                  {isNewListing ? '✨ Adding New Product' : `✏️ Editing: ${formData.id}`}
                 </span>
                 <span className="bg-emerald-950 text-emerald-300 text-[10px] px-2 py-0.5 rounded border border-emerald-700">
                   {formData.readyToShip ? 'Ready to Ship' : 'Made to Order'}
@@ -1057,7 +1057,7 @@ export default function AdminBurgerPage() {
               onClick={() => setViewMode(viewMode === 'tabs' ? 'all' : 'tabs')}
               className="px-3 py-1.5 bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white text-[11px] font-semibold rounded-lg border border-white/10 transition-colors ml-auto cursor-pointer"
             >
-              {viewMode === 'tabs' ? 'ðŸ“œ View All Sections' : 'ðŸ“‘ Tabbed View'}
+              {viewMode === 'tabs' ? '📜 View All Sections' : '📑 Tabbed View'}
             </button>
           </div>
 
@@ -1132,7 +1132,7 @@ export default function AdminBurgerPage() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-bold text-gray-200">
-                    Current Photos ({formData.images.length}) â€” Click &lsquo;Set as Cover&rsquo; or delete anytime:
+                    Current Photos ({formData.images.length}) — Click &lsquo;Set as Cover&rsquo; or delete anytime:
                   </span>
                   <button
                     type="button"
@@ -1175,7 +1175,7 @@ export default function AdminBurgerPage() {
                               : 'bg-black/80 text-gray-300'
                           }`}
                         >
-                          {idx === 0 ? 'â˜… Primary Cover' : `#${idx + 1}`}
+                          {idx === 0 ? '★ Primary Cover' : `#${idx + 1}`}
                         </span>
 
                         {/* Hover Overlay Controls */}
@@ -1307,15 +1307,9 @@ export default function AdminBurgerPage() {
                       className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     >
                       <option value="rings">Rings</option>
-                      <option value="band">Band</option>
-                      <option value="lesbian-ring">Lesbian Ring</option>
-                      <option value="pendant">Pendant</option>
                       <option value="earrings">Earrings</option>
-                      <option value="necklace">Necklace</option>
-                      <option value="bracelet">Bracelet</option>
-                      <option value="nose-ring">Nose Ring</option>
-                      <option value="belly-rings">Belly Rings</option>
-                      <option value="ring-set">Ring Set</option>
+                      <option value="necklaces">Necklaces</option>
+                      <option value="bracelets">Bracelets</option>
                     </select>
                   </div>
 
@@ -1579,7 +1573,7 @@ export default function AdminBurgerPage() {
                 </h3>
                 {formData.originalPrice > formData.price && (
                   <span className="bg-emerald-500/20 text-emerald-400 font-bold px-2.5 py-1 rounded-full text-[11px] border border-emerald-500/40">
-                    {Math.round(((formData.originalPrice - formData.price) / formData.originalPrice) * 100)}% OFF (Saves â‚¹{(formData.originalPrice - formData.price).toLocaleString('en-IN')})
+                    {Math.round(((formData.originalPrice - formData.price) / formData.originalPrice) * 100)}% OFF (Saves ₹{(formData.originalPrice - formData.price).toLocaleString('en-IN')})
                   </span>
                 )}
               </div>
@@ -1588,7 +1582,7 @@ export default function AdminBurgerPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-gray-300 mb-1">
-                    Selling Price (â‚¹) *
+                    Selling Price (₹) *
                   </label>
                   <input
                     type="number"
@@ -1603,7 +1597,7 @@ export default function AdminBurgerPage() {
 
                 <div>
                   <label className="block text-xs font-semibold text-gray-300 mb-1">
-                    Original MRP (â‚¹) (Strike-through price)
+                    Original MRP (₹) (Strike-through price)
                   </label>
                   <input
                     type="number"
@@ -1629,7 +1623,7 @@ export default function AdminBurgerPage() {
                       onClick={handleGenerateSku}
                       className="text-[10px] text-[#D4AF37] hover:underline cursor-pointer"
                     >
-                      âš¡ Auto-Gen
+                      ⚡ Auto-Gen
                     </button>
                   </div>
                   <input
@@ -1656,10 +1650,10 @@ export default function AdminBurgerPage() {
                     }
                     className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                   >
-                    <option value="in_stock" className="bg-[#032019]">ðŸŸ¢ In Stock (Ready to Ship)</option>
-                    <option value="made_to_order" className="bg-[#032019]">ðŸ”µ Made to Order (3-5 Days)</option>
-                    <option value="low_stock" className="bg-[#032019]">ðŸŸ  Low Stock Warning</option>
-                    <option value="out_of_stock" className="bg-[#032019]">ðŸ”´ Out of Stock</option>
+                    <option value="in_stock" className="bg-[#032019]">🟢 In Stock (Ready to Ship)</option>
+                    <option value="made_to_order" className="bg-[#032019]">🔵 Made to Order (3-5 Days)</option>
+                    <option value="low_stock" className="bg-[#032019]">🟠 Low Stock Warning</option>
+                    <option value="out_of_stock" className="bg-[#032019]">🔴 Out of Stock</option>
                   </select>
                 </div>
 
@@ -1713,7 +1707,7 @@ export default function AdminBurgerPage() {
                     onChange={(e) => setFormData({ ...formData, readyToShip: e.target.checked })}
                     className="w-4 h-4 rounded text-[#D4AF37] focus:ring-[#D4AF37]"
                   />
-                  <span>Mark as Ready to Ship in 24â€“48 Hours</span>
+                  <span>Mark as Ready to Ship in 24–48 Hours</span>
                 </label>
               </div>
             </div>
@@ -1840,7 +1834,7 @@ export default function AdminBurgerPage() {
                     title="Automatically clean raw Etsy copy-paste, asterisks, and format into luxury paragraphs"
                   >
                     <Wand2 className="w-3.5 h-3.5" />
-                    <span>âœ¨ Auto-Clean & De-Congest</span>
+                    <span>✨ Auto-Clean & De-Congest</span>
                   </button>
                   <button
                     type="button"
@@ -1848,7 +1842,7 @@ export default function AdminBurgerPage() {
                     className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg transition-colors border border-white/20 flex items-center gap-1.5 cursor-pointer"
                   >
                     <Eye className="w-3.5 h-3.5" />
-                    <span>{isPreviewingDescription ? 'Hide Preview' : 'ðŸ‘ï¸ Live Customer View'}</span>
+                    <span>{isPreviewingDescription ? 'Hide Preview' : '👁️ Live Customer View'}</span>
                   </button>
                 </div>
               </div>
@@ -1856,7 +1850,7 @@ export default function AdminBurgerPage() {
               {/* Story Preset Templates */}
               <div className="p-3 bg-black/25 rounded-xl border border-white/10 space-y-2">
                 <span className="text-[11px] font-semibold text-gray-300 block">
-                  âš¡ 1-Click Luxury Story Presets:
+                  ⚡ 1-Click Luxury Story Presets:
                 </span>
                 <div className="flex flex-wrap gap-2">
                   <button
@@ -1905,7 +1899,7 @@ export default function AdminBurgerPage() {
                       Customer Reading Experience (Live Preview):
                     </span>
                     <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
-                      âœ“ Zero Congestion
+                      ✓ Zero Congestion
                     </span>
                   </div>
 
@@ -2042,7 +2036,7 @@ export default function AdminBurgerPage() {
                       onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
                       className="w-4 h-4 rounded text-[#D4AF37] focus:ring-[#D4AF37]"
                     />
-                    <span>ðŸŒŸ Feature on Homepage Spotlight Carousel</span>
+                    <span>🌟 Feature on Homepage Spotlight Carousel</span>
                   </label>
                 </div>
               </div>
@@ -2055,12 +2049,12 @@ export default function AdminBurgerPage() {
                       Google Search Title
                     </label>
                     <span className="text-[10px] text-gray-400">
-                      {(formData.metaTitle || `${formData.name || 'Ring'} | ForeverJewellStudio Fine Jewelry`).length} / 60 characters
+                      {(formData.metaTitle || `${formData.name || 'Ring'} | AURA Fine Jewelry`).length} / 60 characters
                     </span>
                   </div>
                   <input
                     type="text"
-                    placeholder="e.g. Oval Rose Quartz Engagement Ring | ForeverJewellStudio Fine Jewelry"
+                    placeholder="e.g. Oval Rose Quartz Engagement Ring | AURA Fine Jewelry"
                     value={formData.metaTitle || ''}
                     onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
                     className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
@@ -2092,14 +2086,14 @@ export default function AdminBurgerPage() {
                       A
                     </div>
                     <div>
-                      <span className="text-[11px] text-gray-300 font-medium block leading-none">ForeverJewellStudio Fine Jewelry</span>
+                      <span className="text-[11px] text-gray-300 font-medium block leading-none">AURA Fine Jewelry</span>
                       <span className="text-[10px] text-gray-500 font-mono">
-                        https://ForeverJewellStudiofinejewelry.com &gt; products &gt; {formData.slug || 'product-url'}
+                        https://aurafinejewelry.com &gt; products &gt; {formData.slug || 'product-url'}
                       </span>
                     </div>
                   </div>
                   <h4 className="text-[#8ab4f8] text-sm font-medium hover:underline cursor-pointer pt-1">
-                    {formData.metaTitle || `${formData.name || 'Handcrafted Solitaire Ring'} | ForeverJewellStudio Fine Jewelry`}
+                    {formData.metaTitle || `${formData.name || 'Handcrafted Solitaire Ring'} | AURA Fine Jewelry`}
                   </h4>
                   <p className="text-gray-400 text-xs leading-relaxed">
                     {formData.metaDescription || (formData.description ? formData.description.slice(0, 150) + '...' : 'Shop certified handcrafted engagement rings in 14k Solid Gold and 925 Sterling Silver with free express delivery.')}

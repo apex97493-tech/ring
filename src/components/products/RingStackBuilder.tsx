@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { Sparkles, Plus, Check, ShieldCheck, Heart } from 'lucide-react';
@@ -97,7 +97,7 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
               {product.name}
             </p>
             <p className="font-sans text-xs font-semibold text-[#064E3B]">
-              â‚¹{product.price.toLocaleString('en-IN')}
+              ₹{product.price.toLocaleString('en-IN')}
             </p>
           </div>
         </div>
@@ -133,8 +133,8 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
               Curved Chevron Tiara Band
             </p>
             <p className="font-sans text-xs font-semibold text-[#064E3B]">
-              +â‚¹{bandPrice.toLocaleString('en-IN')}{' '}
-              <span className="text-[10px] text-gray-400 line-through">â‚¹10,999</span>
+              +₹{bandPrice.toLocaleString('en-IN')}{' '}
+              <span className="text-[10px] text-gray-400 line-through">₹10,999</span>
             </p>
           </div>
         </div>
@@ -145,15 +145,15 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
         <div>
           <div className="flex items-baseline gap-2">
             <span className="font-sans text-lg font-bold text-[#064E3B]">
-              â‚¹{(includeBand ? discountedTotalPrice : product.price).toLocaleString('en-IN')}
+              ₹{(includeBand ? discountedTotalPrice : product.price).toLocaleString('en-IN')}
             </span>
             {includeBand && (
               <>
                 <span className="font-sans text-xs text-gray-400 line-through">
-                  â‚¹{originalTotalPrice.toLocaleString('en-IN')}
+                  ₹{originalTotalPrice.toLocaleString('en-IN')}
                 </span>
                 <span className="font-sans text-[11px] font-bold text-[#059669]">
-                  (You Save â‚¹{savings.toLocaleString('en-IN')})
+                  (You Save ₹{savings.toLocaleString('en-IN')})
                 </span>
               </>
             )}

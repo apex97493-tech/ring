@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { Sparkles, Shield, Award } from 'lucide-react';
 
@@ -33,7 +33,7 @@ const comparisonData = [
   },
   {
     property: 'Color & Clarity Grade',
-    moissanite: 'VVS1 Clarity â€¢ D-Color Colorless',
+    moissanite: 'VVS1 Clarity • D-Color Colorless',
     diamond: 'Varies (High cost for VVS/D)',
     cz: 'Synthetic Glass Grade',
     highlight: false,
@@ -54,9 +54,9 @@ const comparisonData = [
   },
   {
     property: 'Price for 2.00 Carat Solitaire',
-    moissanite: 'â‚¹3,499 - â‚¹4,999 (Affordable Luxury)',
-    diamond: 'â‚¹3,00,000 - â‚¹8,00,000+',
-    cz: 'â‚¹500 - â‚¹1,000 (No Resale)',
+    moissanite: '₹3,499 - ₹4,999 (Affordable Luxury)',
+    diamond: '₹3,00,000 - ₹8,00,000+',
+    cz: '₹500 - ₹1,000 (No Resale)',
     highlight: true,
   },
 ];
@@ -91,10 +91,10 @@ export default function MoissaniteComparison() {
                 <th className="p-5 font-serif text-lg font-bold text-[#8C6A1F] bg-[#F4E8C1]/30 border-x border-[#D4AF37]/30 w-1/3 text-center">
                   <div className="flex items-center justify-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-[#B89035]" />
-                    <span>ForeverJewellStudio Moissanite</span>
+                    <span>AURA Moissanite</span>
                   </div>
                   <span className="block font-sans text-[10px] font-normal text-gray-600 uppercase tracking-widest mt-0.5">
-                    VVS1 â€¢ D-Color â€¢ GRA Certified
+                    VVS1 • D-Color • GRA Certified
                   </span>
                 </th>
                 <th className="p-5 font-serif text-base font-bold text-gray-700 w-1/5 text-center">
@@ -152,7 +152,7 @@ export default function MoissaniteComparison() {
                 2.4x More Sparkle & Fire
               </h4>
               <p className="font-sans text-xs text-gray-600">
-                Moissanite has a dispersion of 0.104 compared to diamond&apos;s 0.044, yielding mesmerizing rainbow flashes under any lighting.
+                Moissanite has a dispersion of 0.104 compared to diamond's 0.044, yielding mesmerizing rainbow flashes under any lighting.
               </p>
             </div>
           </div>

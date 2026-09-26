@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -72,7 +72,7 @@ export default function SecurityTrustBar() {
               className="inline-flex items-center gap-1.5 font-sans text-xs text-[#D4AF37] hover:text-white transition-colors underline underline-offset-4 cursor-pointer"
             >
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Read Our 5-Point Bank-Grade Buyer Security & Privacy Protocol â†’</span>
+              <span>Read Our 5-Point Bank-Grade Buyer Security & Privacy Protocol →</span>
             </button>
           </div>
         </div>
@@ -103,7 +103,7 @@ export default function SecurityTrustBar() {
                 </div>
                 <div>
                   <h3 className="font-serif text-xl font-bold text-[#18181B]">
-                    ForeverJewellStudio Buyer Security & Privacy Protocol
+                    AURA Buyer Security & Privacy Protocol
                   </h3>
                   <span className="font-sans text-[11px] text-gray-500 uppercase tracking-wider block">
                     Enterprise SSL & Certified Protection
@@ -112,7 +112,7 @@ export default function SecurityTrustBar() {
               </div>
 
               <p className="font-sans text-xs text-gray-600 mb-6 leading-relaxed">
-                When you invest in fine jewelry at ForeverJewellStudio, your financial credentials, personal address, and gemstone authenticity are safeguarded by military-grade security infrastructure.
+                When you invest in fine jewelry at AURA, your financial credentials, personal address, and gemstone authenticity are safeguarded by military-grade security infrastructure.
               </p>
 
               <div className="space-y-4 font-sans text-xs">

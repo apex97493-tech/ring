@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -40,24 +40,24 @@ export default function CartDrawer() {
 
   // Generate pre-filled WhatsApp message for Indian jewelry clients
   const handleWhatsAppCheckout = () => {
-    let message = `*ORDER INQUIRY - ForeverJewellStudio FINE JEWELRY*%0A%0A`;
+    let message = `*ORDER INQUIRY - AURA FINE JEWELRY*%0A%0A`;
     cart.forEach((item, idx) => {
       message += `*${idx + 1}. ${item.product.name}*%0A`;
-      message += `â€¢ Metal: ${item.selectedMetal}%0A`;
-      message += `â€¢ Size: ${item.selectedSize} | Carat: ${item.selectedCarat}%0A`;
+      message += `• Metal: ${item.selectedMetal}%0A`;
+      message += `• Size: ${item.selectedSize} | Carat: ${item.selectedCarat}%0A`;
       if (item.engravingText) {
-        message += `â€¢ Engraving: "${item.engravingText}"%0A`;
+        message += `• Engraving: "${item.engravingText}"%0A`;
       }
-      message += `â€¢ Qty: ${item.quantity} x â‚¹${item.price.toLocaleString('en-IN')}%0A%0A`;
+      message += `• Qty: ${item.quantity} x ₹${item.price.toLocaleString('en-IN')}%0A%0A`;
     });
 
     if (appliedDiscount > 0) {
-      message += `*Discount Applied (WOKE10):* -â‚¹${Math.round(appliedDiscount).toLocaleString('en-IN')}%0A`;
+      message += `*Discount Applied (WOKE10):* -₹${Math.round(appliedDiscount).toLocaleString('en-IN')}%0A`;
     }
     if (isGiftWrap) {
-      message += `*Luxury Velvet Gift Box:* +â‚¹149%0A`;
+      message += `*Luxury Velvet Gift Box:* +₹149%0A`;
     }
-    message += `*Grand Total:* â‚¹${Math.round(finalTotal).toLocaleString('en-IN')}%0A`;
+    message += `*Grand Total:* ₹${Math.round(finalTotal).toLocaleString('en-IN')}%0A`;
     message += `*Shipping:* Free Insured Delivery%0A%0A`;
     message += `Please confirm availability & delivery details for my pincode!`;
 
@@ -106,7 +106,7 @@ export default function CartDrawer() {
                 <div className="flex items-center justify-between text-xs font-sans mb-1.5">
                   {remainingForFreeShipping > 0 ? (
                     <span className="text-[#18181B] text-[11px] sm:text-xs">
-                      Add <strong className="text-[#B89035]">â‚¹{remainingForFreeShipping.toLocaleString('en-IN')}</strong> more for <span className="font-bold text-[#064E3B]">FREE Shipping</span>
+                      Add <strong className="text-[#B89035]">₹{remainingForFreeShipping.toLocaleString('en-IN')}</strong> more for <span className="font-bold text-[#064E3B]">FREE Shipping</span>
                     </span>
                   ) : (
                     <span className="text-[#064E3B] font-semibold flex items-center gap-1 text-[11px] sm:text-xs">
@@ -168,7 +168,7 @@ export default function CartDrawer() {
                             </button>
                           </div>
                           <p className="font-sans text-[11px] text-gray-500 mt-1">
-                            {item.selectedMetal} â€¢ US {item.selectedSize} â€¢ {item.selectedCarat}
+                            {item.selectedMetal} • US {item.selectedSize} • {item.selectedCarat}
                           </p>
                           {item.engravingText && (
                             <p className="font-sans text-[10px] text-[#8C6A1F] italic mt-0.5">
@@ -196,7 +196,7 @@ export default function CartDrawer() {
                             </button>
                           </div>
                           <span className="font-sans text-sm font-bold text-[#064E3B]">
-                            â‚¹{(item.price * item.quantity).toLocaleString('en-IN')}
+                            ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                           </span>
                         </div>
                       </div>
@@ -241,25 +241,25 @@ export default function CartDrawer() {
                       onChange={(e) => setIsGiftWrap(e.target.checked)}
                       className="rounded border-gray-300 text-[#B89035] focus:ring-[#B89035]"
                     />
-                    <span>Add Premium Velvet Gift Packaging & Ribbon (+â‚¹149)</span>
+                    <span>Add Premium Velvet Gift Packaging & Ribbon (+₹149)</span>
                   </label>
 
                   {/* Totals Summary */}
                   <div className="space-y-1.5 pt-2 border-t border-gray-100 text-xs font-sans">
                     <div className="flex justify-between text-gray-500">
                       <span>Bag Subtotal</span>
-                      <span>â‚¹{subtotal.toLocaleString('en-IN')}</span>
+                      <span>₹{subtotal.toLocaleString('en-IN')}</span>
                     </div>
                     {appliedDiscount > 0 && (
                       <div className="flex justify-between text-[#059669] font-medium">
                         <span>Discount (WOKE10)</span>
-                        <span>-â‚¹{Math.round(appliedDiscount).toLocaleString('en-IN')}</span>
+                        <span>-₹{Math.round(appliedDiscount).toLocaleString('en-IN')}</span>
                       </div>
                     )}
                     {isGiftWrap && (
                       <div className="flex justify-between text-gray-500">
                         <span>Luxury Gift Box</span>
-                        <span>+â‚¹149</span>
+                        <span>+₹149</span>
                       </div>
                     )}
                     <div className="flex justify-between text-gray-500">
@@ -268,7 +268,7 @@ export default function CartDrawer() {
                     </div>
                     <div className="flex justify-between text-sm font-bold text-[#18181B] pt-2 border-t border-gray-200">
                       <span>Total (Incl. all taxes)</span>
-                      <span>â‚¹{Math.round(finalTotal).toLocaleString('en-IN')}</span>
+                      <span>₹{Math.round(finalTotal).toLocaleString('en-IN')}</span>
                     </div>
                   </div>
 
@@ -285,7 +285,7 @@ export default function CartDrawer() {
 
                     {/* Standard Secure Checkout */}
                     <button
-                      onClick={() => alert(`Proceeding to Razorpay / Cashfree Gateway for â‚¹${Math.round(finalTotal)}`)}
+                      onClick={() => alert(`Proceeding to Razorpay / Cashfree Gateway for ₹${Math.round(finalTotal)}`)}
                       className="w-full py-3.5 bg-[#18181B] text-white hover:bg-black font-sans text-xs font-bold tracking-widest uppercase transition-colors rounded-none cursor-pointer"
                     >
                       Secure Online Checkout
@@ -297,9 +297,9 @@ export default function CartDrawer() {
                     <span className="flex items-center gap-1">
                       <ShieldCheck className="w-3 h-3 text-[#B89035]" /> 100% Secure
                     </span>
-                    <span>â€¢</span>
+                    <span>•</span>
                     <span>GRA Verified</span>
-                    <span>â€¢</span>
+                    <span>•</span>
                     <span>15-Day Exchange</span>
                   </div>
                 </div>
