@@ -11,13 +11,15 @@ import RingSizeGuide from '@/components/sections/RingSizeGuide';
 import ReviewsSection from '@/components/sections/ReviewsSection';
 import FaqSection from '@/components/sections/FaqSection';
 import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
-import { Sparkles, ShieldCheck, Truck, Award } from 'lucide-react';
+import { Sparkles, ShieldCheck, Truck, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function ShopPage() {
   const { products } = useProducts();
   const [selectedShape, setSelectedShape] = useState<string>('all');
   const [selectedMetal, setSelectedMetal] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('featured');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const PRODUCTS_PER_PAGE = 8;
 
   const filteredProducts = useMemo(() => {
     return products
@@ -34,7 +36,20 @@ export default function ShopPage() {
         if (sortBy === 'rating') return b.rating - a.rating;
         return 0;
       });
+  }, [products, selectedShape, selectedMetal, sortBy]);
+
+  React.useEffect(() => {
+    setCurrentPage(1);
   }, [selectedShape, selectedMetal, sortBy]);
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE) || 1;
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    return filteredProducts.slice(start, start + PRODUCTS_PER_PAGE);
+  }, [filteredProducts, currentPage]);
+
+  const startIndex = filteredProducts.length > 0 ? (currentPage - 1) * PRODUCTS_PER_PAGE + 1 : 0;
+  const endIndex = Math.min(currentPage * PRODUCTS_PER_PAGE, filteredProducts.length);
 
   return (
     <div className="w-full min-h-screen bg-[#FDFBF7]">
@@ -78,7 +93,7 @@ export default function ShopPage() {
               {selectedShape === 'all' ? 'All Jewelry Designs' : `${selectedShape} Cut Jewels`}
             </h2>
             <p className="font-sans text-xs text-gray-500 mt-0.5">
-              Showing {filteredProducts.length} certified jewelry pieces
+              Showing {filteredProducts.length > 0 ? `${startIndex}–${endIndex}` : 0} of {filteredProducts.length} certified jewelry pieces
             </p>
           </div>
 
@@ -108,10 +123,73 @@ export default function ShopPage() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 w-full max-w-full">
-          {filteredProducts.map((prod) => (
+          {paginatedProducts.map((prod) => (
             <ProductCard key={prod.id} product={prod} />
           ))}
         </div>
+
+        {/* Boutique Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="mt-10 pt-6 border-t border-[#E8E5DF] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <span className="text-xs text-gray-500 font-sans">
+              Showing page {currentPage} of {totalPages} ({filteredProducts.length} designs)
+            </span>
+
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                disabled={currentPage <= 1}
+                onClick={() => {
+                  setCurrentPage((prev) => Math.max(prev - 1, 1));
+                  window.scrollTo({ top: 400, behavior: 'smooth' });
+                }}
+                className="px-3 py-1.5 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-lg text-xs font-semibold hover:border-[#D4AF37] transition-colors flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+                <span>Previous</span>
+              </button>
+
+              <div className="flex items-center gap-1">
+                {totalPages <= 5 ? (
+                  Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                    <button
+                      key={pageNum}
+                      type="button"
+                      onClick={() => {
+                        setCurrentPage(pageNum);
+                        window.scrollTo({ top: 400, behavior: 'smooth' });
+                      }}
+                      className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        currentPage === pageNum
+                          ? 'bg-[#022C22] text-[#D4AF37] shadow'
+                          : 'bg-white text-gray-600 hover:text-[#022C22] border border-[#E8E5DF]'
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  ))
+                ) : (
+                  <span className="px-3 py-1.5 bg-white border border-[#E8E5DF] rounded-lg font-serif font-bold text-xs text-[#022C22]">
+                    Page {currentPage} of {totalPages}
+                  </span>
+                )}
+              </div>
+
+              <button
+                type="button"
+                disabled={currentPage >= totalPages}
+                onClick={() => {
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                  window.scrollTo({ top: 400, behavior: 'smooth' });
+                }}
+                className="px-3 py-1.5 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-lg text-xs font-semibold hover:border-[#D4AF37] transition-colors flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed"
+              >
+                <span>Next</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Educational & Trust suite */}

@@ -40,6 +40,8 @@ import {
   Hash,
   BarChart3,
   HelpCircle,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { Product, ProductVariant, SHAPES, METALS } from '@/lib/data';
 import { useProducts } from '@/context/ProductContext';
@@ -108,9 +110,12 @@ export default function AdminBurgerPage() {
   const [viewMode, setViewMode] = useState<'tabs' | 'all'>('tabs');
   const [isPreviewingDescription, setIsPreviewingDescription] = useState<boolean>(false);
 
-  // Search filter for catalog
+  // Search & Pagination state for catalog
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('all');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+  const [isMobileCatalogOpen, setIsMobileCatalogOpen] = useState<boolean>(false);
 
   // Uploading state
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -552,6 +557,20 @@ export default function AdminBurgerPage() {
     });
   }, [products, searchQuery, selectedCategoryFilter]);
 
+  // Reset to page 1 whenever filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedCategoryFilter, itemsPerPage]);
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage) || 1;
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredProducts.slice(start, start + itemsPerPage);
+  }, [filteredProducts, currentPage, itemsPerPage]);
+
+  const startIndex = filteredProducts.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
+  const endIndex = Math.min(currentPage * itemsPerPage, filteredProducts.length);
+
   // =========================================================================
   // LOCK SCREEN (Protected Access)
   // =========================================================================
@@ -692,82 +711,184 @@ export default function AdminBurgerPage() {
         {/* LEFT COLUMN: PRODUCT CATALOG BROWSER (4 COLS)                       */}
         {/* =================================================================== */}
         <aside className="lg:col-span-4 bg-[#031E18] border-r border-white/10 flex flex-col h-auto lg:h-[calc(100vh-57px)]">
-          <div className="p-4 border-b border-white/10 space-y-3">
-            <div className="relative">
-              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search products by name or ID..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-black/40 border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
-              />
-            </div>
-
-            <div className="flex gap-2 overflow-x-auto pb-1 text-xs">
-              {['all', 'rings', 'earrings', 'necklaces'].map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategoryFilter(cat)}
-                  className={`px-3 py-1 rounded-lg capitalize whitespace-nowrap cursor-pointer transition-colors text-[11px] font-medium ${
-                    selectedCategoryFilter === cat
-                      ? 'bg-[#D4AF37] text-[#022C22] font-bold'
-                      : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+          {/* Mobile Drawer Bar (Prevents scrolling through 100 items on phone) */}
+          <div className="lg:hidden p-3 bg-[#021A14] border-b border-white/10 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={() => setIsMobileCatalogOpen(!isMobileCatalogOpen)}
+              className="flex items-center gap-2 text-xs font-bold text-white cursor-pointer"
+            >
+              <FolderOpen className="w-4 h-4 text-[#D4AF37]" />
+              <span>Catalog ({filteredProducts.length} Rings)</span>
+              <span className="text-[10px] text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-full font-semibold">
+                {isMobileCatalogOpen ? '▲ Collapse' : '▼ Browse Products'}
+              </span>
+            </button>
+            <span className="text-[11px] text-gray-400 font-mono">
+              Page {currentPage} of {totalPages}
+            </span>
           </div>
 
-          <div className="flex-1 overflow-y-auto divide-y divide-white/5">
-            {filteredProducts.map((p) => {
-              const isSelected = formData.id === p.id && !isNewListing;
-              const primaryImg = p.images?.[0] || p.variants?.[0]?.image || '/images/ai_ring1_front.jpg';
+          {/* Catalog Body (Always visible on desktop, toggleable on mobile) */}
+          <div className={`${isMobileCatalogOpen ? 'flex' : 'hidden lg:flex'} flex-col flex-1 min-h-0`}>
+            {/* Search & Category Filter */}
+            <div className="p-3.5 border-b border-white/10 space-y-2.5">
+              <div className="relative">
+                <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Search products by name or ID..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-black/40 border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                />
+              </div>
 
-              return (
-                <div
-                  key={p.id}
-                  onClick={() => handleSelectProduct(p)}
-                  className={`p-3.5 flex items-center gap-3 cursor-pointer transition-colors ${
-                    isSelected
-                      ? 'bg-[#06382C] border-l-4 border-[#D4AF37]'
-                      : 'hover:bg-white/5'
-                  }`}
-                >
-                  <img
-                    src={primaryImg}
-                    alt={p.name}
-                    className="w-12 h-12 rounded-lg object-cover bg-black/40 border border-white/10 flex-shrink-0"
-                    onError={(e) => {
-                      e.currentTarget.src = '/images/ai_ring1_front.jpg';
-                    }}
-                  />
+              <div className="flex gap-1.5 overflow-x-auto pb-0.5 text-xs">
+                {['all', 'rings', 'earrings', 'necklaces'].map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategoryFilter(cat)}
+                    className={`px-2.5 py-1 rounded-lg capitalize whitespace-nowrap cursor-pointer transition-colors text-[10px] font-medium ${
+                      selectedCategoryFilter === cat
+                        ? 'bg-[#D4AF37] text-[#022C22] font-bold'
+                        : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
 
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-1">
-                      <span className="font-serif text-xs font-bold text-white truncate block">
-                        {p.name}
-                      </span>
-                      {p.badge && (
-                        <span className="text-[9px] bg-[#D4AF37]/20 text-[#D4AF37] px-1.5 py-0.2 rounded font-mono flex-shrink-0">
-                          {p.badge}
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-baseline gap-2 mt-0.5">
-                      <span className="font-sans text-xs font-bold text-emerald-400">
-                        ₹{p.price.toLocaleString('en-IN')}
-                      </span>
-                      <span className="font-sans text-[10px] text-gray-400">
-                        • {p.images?.length || 0} photos • {p.shape}
-                      </span>
-                    </div>
-                  </div>
+              {/* Items Counter & Per-Page Selector */}
+              <div className="flex items-center justify-between text-[11px] text-gray-400 pt-1">
+                <span>
+                  Showing {filteredProducts.length > 0 ? `${startIndex}–${endIndex}` : 0} of {filteredProducts.length} items
+                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px]">Show:</span>
+                  <select
+                    value={itemsPerPage}
+                    onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                    className="bg-black/50 border border-white/20 rounded px-1.5 py-0.5 text-[10px] text-white focus:outline-none cursor-pointer"
+                  >
+                    <option value={5}>5 / page</option>
+                    <option value={10}>10 / page</option>
+                    <option value={20}>20 / page</option>
+                    <option value={50}>50 / page</option>
+                  </select>
                 </div>
-              );
-            })}
+              </div>
+            </div>
+
+            {/* Paginated Products List (5 items per page) */}
+            <div className="flex-1 overflow-y-auto divide-y divide-white/5 min-h-[300px] lg:min-h-0">
+              {paginatedProducts.length > 0 ? (
+                paginatedProducts.map((p) => {
+                  const isSelected = formData.id === p.id && !isNewListing;
+                  const primaryImg = p.images?.[0] || p.variants?.[0]?.image || '/images/ai_ring1_front.jpg';
+
+                  return (
+                    <div
+                      key={p.id}
+                      onClick={() => {
+                        handleSelectProduct(p);
+                        setIsMobileCatalogOpen(false); // Auto-close on mobile so editor is immediately in view!
+                      }}
+                      className={`p-3 flex items-center gap-3 cursor-pointer transition-colors ${
+                        isSelected
+                          ? 'bg-[#06382C] border-l-4 border-[#D4AF37]'
+                          : 'hover:bg-white/5'
+                      }`}
+                    >
+                      <img
+                        src={primaryImg}
+                        alt={p.name}
+                        className="w-12 h-12 rounded-lg object-cover bg-black/40 border border-white/10 flex-shrink-0"
+                        onError={(e) => {
+                          e.currentTarget.src = '/images/ai_ring1_front.jpg';
+                        }}
+                      />
+
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-1">
+                          <span className="font-serif text-xs font-bold text-white truncate block">
+                            {p.name}
+                          </span>
+                          {p.badge && (
+                            <span className="text-[9px] bg-[#D4AF37]/20 text-[#D4AF37] px-1.5 py-0.2 rounded font-mono flex-shrink-0">
+                              {p.badge}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-baseline gap-2 mt-0.5">
+                          <span className="font-sans text-xs font-bold text-emerald-400">
+                            ₹{p.price.toLocaleString('en-IN')}
+                          </span>
+                          <span className="font-sans text-[10px] text-gray-400">
+                            • {p.images?.length || 0} photos • {p.shape}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="p-8 text-center text-gray-400 text-xs">
+                  No products found matching your search.
+                </div>
+              )}
+            </div>
+
+            {/* Bottom Pagination Bar */}
+            {totalPages > 1 && (
+              <div className="p-3 bg-[#021711] border-t border-white/10 flex items-center justify-between text-xs">
+                <button
+                  type="button"
+                  disabled={currentPage <= 1}
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  className="px-2.5 py-1.5 bg-white/5 hover:bg-white/15 disabled:opacity-25 disabled:hover:bg-white/5 text-gray-300 hover:text-white rounded-lg transition-colors flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed text-[11px] font-semibold"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                  <span>Prev</span>
+                </button>
+
+                <div className="flex items-center gap-1">
+                  {totalPages <= 5 ? (
+                    Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                      <button
+                        key={pageNum}
+                        type="button"
+                        onClick={() => setCurrentPage(pageNum)}
+                        className={`w-7 h-7 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                          currentPage === pageNum
+                            ? 'bg-[#D4AF37] text-[#022C22] shadow'
+                            : 'bg-black/30 text-gray-400 hover:text-white hover:bg-white/10'
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    ))
+                  ) : (
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-black/40 border border-white/10 rounded-lg text-xs font-mono">
+                      <span className="text-[#D4AF37] font-bold">{currentPage}</span>
+                      <span className="text-gray-500">/</span>
+                      <span className="text-gray-400">{totalPages}</span>
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  disabled={currentPage >= totalPages}
+                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  className="px-2.5 py-1.5 bg-white/5 hover:bg-white/15 disabled:opacity-25 disabled:hover:bg-white/5 text-gray-300 hover:text-white rounded-lg transition-colors flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed text-[11px] font-semibold"
+                >
+                  <span>Next</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
           </div>
         </aside>
 
