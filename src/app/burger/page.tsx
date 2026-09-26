@@ -79,6 +79,15 @@ const EMPTY_PRODUCT: Product = {
   metaTitle: '',
   metaDescription: '',
   isFeatured: false,
+  grossWeight: '3.75G',
+  karatage: '925 Silver / 14k Gold',
+  materialColor: 'Silver / White / Rose / Yellow Gold',
+  diamondType: 'Lab Grown Moissanite Diamond (Passes Diamond Tester)',
+  diamondColor: 'White (D-Color / Colorless)',
+  diamondClarity: 'VVS1 / Flawless (FL)',
+  settingStyle: 'Crown Setting',
+  prepaidDiscountNote: '₹300 OFF on prepaid orders',
+  bespokeNotice: 'BESPOKE! SHIPS IN 2-3 WEEKS!',
   variants: [
     { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: '' },
     { metal: '14k Yellow Gold', colorCode: '#CA8A04', image: '' },
@@ -170,6 +179,15 @@ export default function AdminBurgerPage() {
       metaTitle: p.metaTitle || `${p.name} | AURA Fine Jewelry`,
       metaDescription: p.metaDescription || (p.description ? p.description.slice(0, 155) : ''),
       isFeatured: p.isFeatured ?? (p.badge === 'BESTSELLER'),
+      grossWeight: p.grossWeight || '3.75G',
+      karatage: p.karatage || '925 Silver / 14k Gold',
+      materialColor: p.materialColor || 'Silver / White / Rose / Yellow Gold',
+      diamondType: p.diamondType || 'Lab Grown Moissanite Diamond (Passes Diamond Tester)',
+      diamondColor: p.diamondColor || p.colorGrade || 'White (D-Color / Colorless)',
+      diamondClarity: p.diamondClarity || p.clarity || 'VVS1 / Flawless (FL)',
+      settingStyle: p.settingStyle || p.ringStyle || 'Crown Setting',
+      prepaidDiscountNote: p.prepaidDiscountNote || '₹300 OFF on prepaid orders',
+      bespokeNotice: p.bespokeNotice || 'BESPOKE! SHIPS IN 2-3 WEEKS!',
       variants: p.variants ? [...p.variants] : [],
       images: p.images ? [...p.images] : [],
       features: p.features ? [...p.features] : [],
@@ -1405,6 +1423,109 @@ export default function AdminBurgerPage() {
                       value={formData.cut}
                       onChange={(e) => setFormData({ ...formData, cut: e.target.value })}
                       className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    />
+                  </div>
+                </div>
+
+                {/* Woke Collection Specifications Card Section */}
+                <div className="bg-black/30 border border-[#D4AF37]/30 rounded-xl p-4 sm:p-5 space-y-4">
+                  <h4 className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider flex items-center gap-2 pb-2 border-b border-white/10">
+                    <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span>Luxury Specification Card Settings (Woke Collection Style)</span>
+                  </h4>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-gray-300 mb-1">
+                        Karatage
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 925/14k Gold"
+                        value={formData.karatage || ''}
+                        onChange={(e) => setFormData({ ...formData, karatage: e.target.value })}
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-semibold text-gray-300 mb-1">
+                        Material Colour
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Silver/White/Rose"
+                        value={formData.materialColor || ''}
+                        onChange={(e) => setFormData({ ...formData, materialColor: e.target.value })}
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-semibold text-gray-300 mb-1">
+                        Gross Weight
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. 3.75G"
+                        value={formData.grossWeight || ''}
+                        onChange={(e) => setFormData({ ...formData, grossWeight: e.target.value })}
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-gray-300 mb-1">
+                        Diamond Type
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Lab Grown Moissanite Diamond"
+                        value={formData.diamondType || ''}
+                        onChange={(e) => setFormData({ ...formData, diamondType: e.target.value })}
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-semibold text-gray-300 mb-1">
+                        Setting Architecture
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Crown Setting / Solitaire Prong"
+                        value={formData.settingStyle || ''}
+                        onChange={(e) => setFormData({ ...formData, settingStyle: e.target.value })}
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-semibold text-gray-300 mb-1">
+                        Bespoke Timeline Notice
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. BESPOKE! SHIPS IN 2-3 WEEKS!"
+                        value={formData.bespokeNotice || ''}
+                        onChange={(e) => setFormData({ ...formData, bespokeNotice: e.target.value })}
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-gray-300 mb-1">
+                      Prepaid Discount Ribbon (Badge on Buy Button)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. ₹300 OFF on prepaid orders"
+                      value={formData.prepaidDiscountNote || ''}
+                      onChange={(e) => setFormData({ ...formData, prepaidDiscountNote: e.target.value })}
+                      className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
