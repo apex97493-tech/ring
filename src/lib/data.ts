@@ -49,6 +49,8 @@ export type Product = {
   settingStyle?: string;
   prepaidDiscountNote?: string;
   bespokeNotice?: string;
+  itemDetails?: Record<string, string>;
+  tags?: string[];
 };
 
 export const SHAPES = [
