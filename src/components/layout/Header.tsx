@@ -24,7 +24,7 @@ import { products } from '@/lib/data';
 export default function Header() {
   const router = useRouter();
   const { totalItems, setIsCartOpen, wishlist } = useCart();
-  const { selectedRegion, selectedCurrency, setIsSettingsModalOpen, formatPrice } = useCurrency();
+  const { selectedRegion, selectedCurrency, setIsSettingsModalOpen, formatPrice, t } = useCurrency();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -264,7 +264,8 @@ export default function Header() {
                 <input
                   ref={searchInputRef}
                   type="text"
-                  placeholder="Search rings, gemstones, shapes, styles (e.g. Oval, Signet, Opal)..."
+                  placeholder={t.search.placeholder}
+
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full font-sans text-sm sm:text-base text-white bg-transparent focus:outline-none placeholder:text-gray-400"

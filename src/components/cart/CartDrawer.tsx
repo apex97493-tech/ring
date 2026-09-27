@@ -18,7 +18,8 @@ export default function CartDrawer() {
     freeShippingThreshold,
     totalItems,
   } = useCart();
-  const { formatPrice, selectedCurrency } = useCurrency();
+  const { formatPrice, selectedCurrency, t } = useCurrency();
+
 
   const [couponCode, setCouponCode] = useState('');
   const [appliedDiscount, setAppliedDiscount] = useState(0);
@@ -92,7 +93,7 @@ export default function CartDrawer() {
                 <div className="flex items-center gap-2">
                   <ShoppingBag className="w-5 h-5 text-[#8C6A1F]" />
                   <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#18181B]">
-                    Your Shopping Bag ({totalItems})
+                    {t.cart.title} ({totalItems})
                   </h2>
                 </div>
                 <button
@@ -133,7 +134,7 @@ export default function CartDrawer() {
                       <ShoppingBag className="w-8 h-8 text-gray-400" />
                     </div>
                     <h3 className="font-serif text-xl text-[#18181B] mb-2">
-                      Your bag is currently empty
+                      {t.cart.empty}
                     </h3>
                     <p className="font-sans text-xs text-gray-500 mb-6 max-w-xs mx-auto">
                       Explore our handcrafted Moissanite Solitaire rings certified with authentic GRA reports.
@@ -249,7 +250,7 @@ export default function CartDrawer() {
                   {/* Totals Summary */}
                   <div className="space-y-1.5 pt-2 border-t border-gray-100 text-xs font-sans">
                     <div className="flex justify-between text-gray-500">
-                      <span>Bag Subtotal</span>
+                      <span>{t.cart.subtotal}</span>
                       <span>{formatPrice(subtotal)}</span>
                     </div>
                     {appliedDiscount > 0 && (
@@ -266,7 +267,7 @@ export default function CartDrawer() {
                     )}
                     <div className="flex justify-between text-gray-500">
                       <span>Insured Express Shipping</span>
-                      <span className="text-[#059669] font-bold">FREE</span>
+                      <span className="text-[#059669] font-bold">{t.cart.freeShipping}</span>
                     </div>
                     <div className="flex justify-between text-sm font-bold text-[#18181B] pt-2 border-t border-gray-200">
                       <span>Total (Incl. all taxes)</span>
@@ -282,7 +283,7 @@ export default function CartDrawer() {
                       className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#064E3B] text-[#D4AF37] hover:bg-[#043327] font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md rounded-none cursor-pointer"
                     >
                       <Send className="w-4 h-4" />
-                      Quick Order via WhatsApp
+                      {t.cart.whatsappOrder}
                     </button>
 
                     {/* Standard Secure Checkout */}

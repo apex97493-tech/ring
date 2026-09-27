@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronDown, Globe, Check } from 'lucide-react';
+import { X, ChevronDown, Check } from 'lucide-react';
 import {
   useCurrency,
   SUPPORTED_REGIONS,
@@ -18,6 +18,7 @@ export default function RegionalSettingsModal() {
     selectedLanguage,
     selectedCurrency,
     updateSettings,
+    t,
   } = useCurrency();
 
   const [tempRegionId, setTempRegionId] = useState(selectedRegion.id);
@@ -70,6 +71,7 @@ export default function RegionalSettingsModal() {
           exit={{ opacity: 0, scale: 0.95, y: 10 }}
           transition={{ duration: 0.2 }}
           className="relative z-10 bg-white w-full max-w-lg rounded-3xl shadow-2xl p-6 sm:p-8 border border-gray-200 text-[#18181B]"
+          dir="ltr"
         >
           {/* Close button */}
           <button
@@ -80,13 +82,13 @@ export default function RegionalSettingsModal() {
             <X className="w-5 h-5" />
           </button>
 
-          {/* Heading (matches Etsy design) */}
+          {/* Heading */}
           <div className="mb-6 pr-6">
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#18181B] mb-2">
-              Update your settings
+              {t.settings.title}
             </h2>
             <p className="font-sans text-xs sm:text-sm text-gray-600 leading-relaxed">
-              Set where you live, the language you use, and the currency you pay in.
+              {t.settings.subtitle}
             </p>
           </div>
 
@@ -94,7 +96,7 @@ export default function RegionalSettingsModal() {
             {/* 1. Region / Country */}
             <div>
               <label className="block text-xs font-bold text-gray-800 uppercase tracking-wider mb-1.5 font-sans">
-                Region / Country
+                {t.settings.region}
               </label>
               <div className="relative">
                 <select
@@ -115,7 +117,7 @@ export default function RegionalSettingsModal() {
             {/* 2. Language */}
             <div>
               <label className="block text-xs font-bold text-gray-800 uppercase tracking-wider mb-1.5 font-sans">
-                Language
+                {t.settings.language}
               </label>
               <div className="relative">
                 <select
@@ -136,7 +138,7 @@ export default function RegionalSettingsModal() {
             {/* 3. Currency */}
             <div>
               <label className="block text-xs font-bold text-gray-800 uppercase tracking-wider mb-1.5 font-sans">
-                Currency
+                {t.settings.currency}
               </label>
               <div className="relative">
                 <select
@@ -155,14 +157,14 @@ export default function RegionalSettingsModal() {
             </div>
           </div>
 
-          {/* Action Buttons (matches Etsy layout: Cancel on left, Save on right) */}
+          {/* Action Buttons */}
           <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-end gap-3 font-sans">
             <button
               type="button"
               onClick={handleCancel}
               className="px-6 py-2.5 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-50 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
             >
-              Cancel
+              {t.settings.cancelBtn}
             </button>
 
             <button
@@ -173,10 +175,10 @@ export default function RegionalSettingsModal() {
               {isSavedToast ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  Saved
+                  {t.settings.saved}
                 </>
               ) : (
-                'Save'
+                t.settings.saveBtn
               )}
             </button>
           </div>
@@ -185,3 +187,4 @@ export default function RegionalSettingsModal() {
     </AnimatePresence>
   );
 }
+

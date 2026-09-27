@@ -241,6 +241,8 @@ export default function AdminBurgerPage() {
       setIsAuthenticated(true);
       sessionStorage.setItem('aura_admin_auth', 'true');
       sessionStorage.setItem('fj_admin_auth', 'true');
+      // Store the actual passcode as the API token for server-side validation
+      sessionStorage.setItem('fj_admin_token', enteredPin.trim().toLowerCase());
       setPinError('');
     } else {
       setPinError('Incorrect Master PIN. Please try again.');
@@ -251,6 +253,7 @@ export default function AdminBurgerPage() {
     setIsAuthenticated(false);
     sessionStorage.removeItem('aura_admin_auth');
     sessionStorage.removeItem('fj_admin_auth');
+    sessionStorage.removeItem('fj_admin_token');
     setEnteredPin('');
   };
 
@@ -634,10 +637,16 @@ export default function AdminBurgerPage() {
     }
 
     try {
+      const uploadTok = sessionStorage.getItem('fj_admin_token') || '';
+      const uploadHeaders: Record<string, string> = uploadTok
+        ? { Authorization: `Bearer ${uploadTok}` }
+        : {};
       const res = await fetch('/api/upload', {
         method: 'POST',
+        headers: uploadHeaders,
         body: uploadFormData,
       });
+
 
       const data = await res.json();
       if (data.success && data.urls && data.urls.length > 0) {

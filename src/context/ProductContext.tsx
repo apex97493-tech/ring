@@ -3,6 +3,23 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { products as defaultProducts, Product, findMatchingProduct } from '@/lib/data';
 
+/** Get the admin API token stored in sessionStorage by the admin panel. */
+function getAdminToken(): string {
+  try {
+    return sessionStorage.getItem('fj_admin_token') || sessionStorage.getItem('fj_admin_auth') || '';
+  } catch {
+    return '';
+  }
+}
+
+/** Build auth headers for admin write operations */
+function adminHeaders(extra?: Record<string, string>): Record<string, string> {
+  const token = getAdminToken();
+  const headers: Record<string, string> = { 'Content-Type': 'application/json', ...extra };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  return headers;
+}
+
 interface ProductContextType {
   products: Product[];
   isLoading: boolean;
@@ -82,7 +99,7 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
     try {
       const res = await fetch('/api/products', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: adminHeaders(),
         body: JSON.stringify({ product }),
       });
       const data = await res.json();
@@ -110,6 +127,7 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
     try {
       const res = await fetch(`/api/products?id=${encodeURIComponent(id)}`, {
         method: 'DELETE',
+        headers: adminHeaders(),
       });
       const data = await res.json();
       if (data.success && Array.isArray(data.products)) {
@@ -132,7 +150,7 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
     try {
       const res = await fetch('/api/products', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: adminHeaders(),
         body: JSON.stringify({ resetToDefault: true }),
       });
       const data = await res.json();
