@@ -10,7 +10,7 @@ interface LiveDiamondTestBannerProps {
 export default function LiveDiamondTestBanner({ productName }: LiveDiamondTestBannerProps) {
   const handleScheduleCall = () => {
     const message = encodeURIComponent(
-      `Hi AURA Atelier, I would like to schedule a Live Video Call to preview the "${productName}" and see the Moissanite Diamond Thermal Tester verification!`
+      `Hi ForeverJewellStudio Atelier, I would like to schedule a Live Video Call to preview the "${productName}" and see the Moissanite Diamond Thermal Tester verification!`
     );
     window.open(`https://wa.me/919999999999?text=${message}`, '_blank', 'noopener,noreferrer');
   };

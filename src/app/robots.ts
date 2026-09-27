@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://aurajewelry.com/sitemap.xml',
+    sitemap: 'https://foreverjewellstudio.com/sitemap.xml',
   };
 }

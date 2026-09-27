@@ -10,7 +10,7 @@ const UNBOXING_ITEMS = [
     desc: 'Crafted in matte royal emerald with satin interior and integrated micro-LED lighting that illuminates the gemstone the second the box is opened.',
     icon: Gift,
     highlight: 'Proposal Ready',
-    image: '/images/ai_ring1_front.jpg',
+    image: '/uploads/etsy_4523361246_img1.jpg',
   },
   {
     step: '02',
@@ -18,7 +18,7 @@ const UNBOXING_ITEMS = [
     desc: 'Individual embossed laboratory report verifying VVS1 clarity, Colorless D grade, cut symmetry, and corresponding laser girdle serial number.',
     icon: Award,
     highlight: 'Serial Inscribed',
-    image: '/images/ai_ring2_front.jpg',
+    image: '/uploads/etsy_4514456821_img1.jpg',
   },
   {
     step: '03',
@@ -26,7 +26,7 @@ const UNBOXING_ITEMS = [
     desc: 'Includes an ultra-fine microfibre jewelry polishing cloth and a complimentary ring sizing multisizer tool for future heirloom stacking.',
     icon: Sparkles,
     highlight: 'Complimentary',
-    image: '/images/ai_ring3_front.jpg',
+    image: '/uploads/etsy_4580287314_img1.jpg',
   },
   {
     step: '04',
@@ -34,7 +34,7 @@ const UNBOXING_ITEMS = [
     desc: 'Shipped in plain, tamper-evident unbranded outer packaging to keep your surprise proposal completely secret, fully insured door-to-door.',
     icon: EyeOff,
     highlight: 'Zero Risk',
-    image: '/images/ai_ring1_hand.jpg',
+    image: '/uploads/etsy_4514460848_img1.jpg',
   },
 ];
 
@@ -53,7 +53,7 @@ export default function UnboxingExperience() {
           </h2>
           <div className="w-16 h-[1.5px] bg-[#D4AF37] mx-auto mb-4" />
           <p className="font-sans text-xs sm:text-sm text-gray-600 leading-relaxed max-w-2xl mx-auto">
-            While generic marketplace sellers ship jewelry in plain plastic envelopes, every AURA creation arrives in our signature museum-grade presentation suite.
+            While generic marketplace sellers ship jewelry in plain plastic envelopes, every ForeverJewellStudio creation arrives in our signature museum-grade presentation suite.
           </p>
         </div>
 

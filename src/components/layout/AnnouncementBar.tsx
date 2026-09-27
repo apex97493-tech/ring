@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { Sparkles, ShieldCheck, Truck, Percent } from 'lucide-react';
@@ -7,7 +7,7 @@ const announcements = [
   { text: 'Complimentary Insured Express Delivery Across India', icon: Truck },
   { text: 'Certified VVS1 D-Color Moissanite With Individual GRA Lab Reports', icon: Sparkles },
   { text: 'Guaranteed 100% Lifetime Buyback & Upgrade Credit', icon: ShieldCheck },
-  { text: 'Use Code WOKE10 For 10% Off On Your First Solitaire', icon: Percent },
+  { text: 'Use Code FOREVER10 For 10% Off On Your First Solitaire', icon: Percent },
 ];
 
 export default function AnnouncementBar() {

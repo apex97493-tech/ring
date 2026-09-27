@@ -173,10 +173,10 @@ export default function AdminBurgerPage() {
   const handleSelectProduct = (p: Product) => {
     setFormData({
       ...p,
-      sku: p.sku || `AUR-${(p.shape || 'RNG').toUpperCase()}-${p.id.replace(/[^0-9]/g, '').slice(-4) || '001'}`,
+      sku: p.sku || `FJS-${(p.shape || 'RNG').toUpperCase()}-${p.id.replace(/[^0-9]/g, '').slice(-4) || '001'}`,
       stockStatus: p.stockStatus || (p.readyToShip ? 'in_stock' : 'made_to_order'),
       stockQuantity: p.stockQuantity ?? 10,
-      metaTitle: p.metaTitle || `${p.name} | AURA Fine Jewelry`,
+      metaTitle: p.metaTitle || `${p.name} | ForeverJewellStudio`,
       metaDescription: p.metaDescription || (p.description ? p.description.slice(0, 155) : ''),
       isFeatured: p.isFeatured ?? (p.badge === 'BESTSELLER'),
       grossWeight: p.grossWeight || '3.75G',
@@ -254,8 +254,6 @@ export default function AdminBurgerPage() {
     let text = formData.description;
 
     text = text
-      .replace(/thanks for visiting foreverjewellstudio/gi, 'Thank you for choosing AURA Fine Jewelry')
-      .replace(/foreverjewellstudio/gi, 'AURA Fine Jewelry')
       .replace(/important\*:-?/gi, '')
       .replace(/\*{1,5}/g, '');
 
@@ -544,7 +542,7 @@ export default function AdminBurgerPage() {
       sku: finalSku,
       stockStatus: formData.stockStatus || (formData.readyToShip ? 'in_stock' : 'made_to_order'),
       stockQuantity: Number(formData.stockQuantity) || 10,
-      metaTitle: formData.metaTitle || `${formData.name} | AURA Fine Jewelry`,
+      metaTitle: formData.metaTitle || `${formData.name} | ForeverJewellStudio`,
       metaDescription: formData.metaDescription || (formData.description ? formData.description.slice(0, 155) : ''),
       isFeatured: formData.isFeatured ?? (formData.badge === 'BESTSELLER'),
       price: Number(formData.price) || 2999,
@@ -604,7 +602,7 @@ export default function AdminBurgerPage() {
             Official Store Portal
           </span>
           <h1 className="font-serif text-2xl font-bold text-white mb-2">
-            AURA Atelier Vault
+            ForeverJewellStudio Atelier Vault
           </h1>
           <p className="text-xs text-gray-300 mb-6">
             Enter your administrative master passcode to manage products and store catalog.
@@ -678,7 +676,7 @@ export default function AdminBurgerPage() {
             </div>
             <div>
               <h1 className="font-serif text-sm font-bold text-white tracking-wide">
-                AURA Atelier • Product Manager
+                ForeverJewellStudio Atelier • Product Manager
               </h1>
               <p className="text-[10px] text-[#D4AF37] font-mono">
                 Admin Control Room • {products.length} Products Live
@@ -2049,12 +2047,12 @@ export default function AdminBurgerPage() {
                       Google Search Title
                     </label>
                     <span className="text-[10px] text-gray-400">
-                      {(formData.metaTitle || `${formData.name || 'Ring'} | AURA Fine Jewelry`).length} / 60 characters
+                      {(formData.metaTitle || `${formData.name || 'Ring'} | ForeverJewellStudio`).length} / 60 characters
                     </span>
                   </div>
                   <input
                     type="text"
-                    placeholder="e.g. Oval Rose Quartz Engagement Ring | AURA Fine Jewelry"
+                    placeholder="e.g. Oval Rose Quartz Engagement Ring | ForeverJewellStudio"
                     value={formData.metaTitle || ''}
                     onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
                     className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
@@ -2083,17 +2081,17 @@ export default function AdminBurgerPage() {
                 <div className="bg-[#202124] p-4 rounded-xl border border-white/10 text-left space-y-1">
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-[#D4AF37] font-bold">
-                      A
+                      F
                     </div>
                     <div>
-                      <span className="text-[11px] text-gray-300 font-medium block leading-none">AURA Fine Jewelry</span>
+                      <span className="text-[11px] text-gray-300 font-medium block leading-none">ForeverJewellStudio</span>
                       <span className="text-[10px] text-gray-500 font-mono">
-                        https://aurafinejewelry.com &gt; products &gt; {formData.slug || 'product-url'}
+                        https://foreverjewellstudio.com &gt; products &gt; {formData.slug || 'product-url'}
                       </span>
                     </div>
                   </div>
                   <h4 className="text-[#8ab4f8] text-sm font-medium hover:underline cursor-pointer pt-1">
-                    {formData.metaTitle || `${formData.name || 'Handcrafted Solitaire Ring'} | AURA Fine Jewelry`}
+                    {formData.metaTitle || `${formData.name || 'Handcrafted Solitaire Ring'} | ForeverJewellStudio`}
                   </h4>
                   <p className="text-gray-400 text-xs leading-relaxed">
                     {formData.metaDescription || (formData.description ? formData.description.slice(0, 150) + '...' : 'Shop certified handcrafted engagement rings in 14k Solid Gold and 925 Sterling Silver with free express delivery.')}

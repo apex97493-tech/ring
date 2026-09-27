@@ -58,7 +58,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       <div className="min-h-screen bg-[#FDFBF7] pt-32 pb-20 flex items-center justify-center font-sans">
         <div className="text-center space-y-4">
           <div className="w-12 h-12 rounded-full border-2 border-[#D4AF37] border-t-transparent animate-spin mx-auto" />
-          <h2 className="font-serif text-xl text-[#18181B] font-bold">Unlocking AURA Vault...</h2>
+          <h2 className="font-serif text-xl text-[#18181B] font-bold">Loading Studio Gemstone Vault...</h2>
           <p className="text-xs text-gray-500 font-sans">Retrieving gemstone specifications & high-res angles</p>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   // WhatsApp order inquiry
   const handleWhatsAppOrder = () => {
     const message = encodeURIComponent(
-      `*INQUIRY: ${product.name}*\n• Metal: ${activeVariant.metal}\n• Ring Size: Indian Size ${selectedSize}\n• Carat: ${product.carat}\n• Price: ₹${product.price.toLocaleString('en-IN')}\n\nHi AURA team, please assist me with ordering this piece!`
+      `*INQUIRY: ${product.name}*\n• Metal: ${activeVariant.metal}\n• Ring Size: Indian Size ${selectedSize}\n• Carat: ${product.carat}\n• Price: ₹${product.price.toLocaleString('en-IN')}\n\nHi ForeverJewellStudio team, please assist me with ordering this piece!`
     );
     window.open(`https://wa.me/919999999999?text=${message}`, '_blank', 'noopener,noreferrer');
   };

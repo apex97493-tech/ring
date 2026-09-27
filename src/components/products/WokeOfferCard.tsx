@@ -34,15 +34,15 @@ export default function WokeOfferCard() {
               <li className="flex items-center justify-between gap-2 bg-white/70 px-2.5 py-1.5 rounded-lg border border-[#E3DBD0]/50">
                 <div className="flex items-center gap-1.5 truncate">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#8C6A1F] flex-shrink-0" />
-                  <span className="font-mono font-bold text-[#18181B]">AURASHAGUN</span>
-                  <span className="text-gray-600 truncate">: FLAT 11% UPTO ₹3,500</span>
+                  <span className="font-mono font-bold text-[#18181B]">FOREVER10</span>
+                  <span className="text-gray-600 truncate">: FLAT 10% OFF FIRST ORDER</span>
                 </div>
                 <button
                   type="button"
-                  onClick={() => copyCoupon('AURASHAGUN')}
+                  onClick={() => copyCoupon('FOREVER10')}
                   className="text-[10px] font-bold text-[#8C6A1F] hover:text-black uppercase tracking-wider px-2 py-0.5 bg-[#FAF6EE] hover:bg-gray-100 rounded border border-[#E0D7C7] transition-colors flex items-center gap-1 cursor-pointer flex-shrink-0"
                 >
-                  {copiedCode === 'AURASHAGUN' ? (
+                  {copiedCode === 'FOREVER10' ? (
                     <>
                       <Check className="w-3 h-3 text-emerald-600" />
                       <span>Copied</span>

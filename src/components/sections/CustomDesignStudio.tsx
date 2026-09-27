@@ -52,7 +52,7 @@ export default function CustomDesignStudio() {
       .slice(0, 200);
 
     const message = [
-      '*BESPOKE CUSTOM JEWELRY INQUIRY (AURA ATELIER)*',
+      '*BESPOKE CUSTOM JEWELRY INQUIRY (FOREVERJEWELLSTUDIO ATELIER)*',
       '',
       `• Setting Silhouette: ${selectedSilhouette.name}`,
       `• Center Stone: ${selectedCut.name} (${selectedCarat} Moissanite)`,

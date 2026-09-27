@@ -24,11 +24,11 @@ export default function CartDrawer() {
   const [isGiftWrap, setIsGiftWrap] = useState(false);
 
   const handleApplyCoupon = () => {
-    if (couponCode.trim().toUpperCase() === 'WOKE10') {
+    if (couponCode.trim().toUpperCase() === 'FOREVER10') {
       setAppliedDiscount(subtotal * 0.1);
       setCouponError('');
     } else {
-      setCouponError('Invalid code. Try "WOKE10" for 10% off!');
+      setCouponError('Invalid code. Try "FOREVER10" for 10% off!');
       setAppliedDiscount(0);
     }
   };
@@ -40,7 +40,7 @@ export default function CartDrawer() {
 
   // Generate pre-filled WhatsApp message for Indian jewelry clients
   const handleWhatsAppCheckout = () => {
-    let message = `*ORDER INQUIRY - AURA FINE JEWELRY*%0A%0A`;
+    let message = `*ORDER INQUIRY - FOREVERJEWELLSTUDIO*%0A%0A`;
     cart.forEach((item, idx) => {
       message += `*${idx + 1}. ${item.product.name}*%0A`;
       message += `• Metal: ${item.selectedMetal}%0A`;
@@ -52,7 +52,7 @@ export default function CartDrawer() {
     });
 
     if (appliedDiscount > 0) {
-      message += `*Discount Applied (WOKE10):* -₹${Math.round(appliedDiscount).toLocaleString('en-IN')}%0A`;
+      message += `*Discount Applied (FOREVER10):* -₹${Math.round(appliedDiscount).toLocaleString('en-IN')}%0A`;
     }
     if (isGiftWrap) {
       message += `*Luxury Velvet Gift Box:* +₹149%0A`;
@@ -212,7 +212,7 @@ export default function CartDrawer() {
                   <div className="flex gap-2">
                     <input
                       type="text"
-                      placeholder="Promo Code (e.g. WOKE10)"
+                      placeholder="Promo Code (e.g. FOREVER10)"
                       value={couponCode}
                       onChange={(e) => setCouponCode(e.target.value)}
                       className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-xs font-sans uppercase focus:outline-none focus:border-[#B89035]"
@@ -252,7 +252,7 @@ export default function CartDrawer() {
                     </div>
                     {appliedDiscount > 0 && (
                       <div className="flex justify-between text-[#059669] font-medium">
-                        <span>Discount (WOKE10)</span>
+                        <span>Discount (FOREVER10)</span>
                         <span>-₹{Math.round(appliedDiscount).toLocaleString('en-IN')}</span>
                       </div>
                     )}

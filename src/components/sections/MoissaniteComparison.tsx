@@ -91,7 +91,7 @@ export default function MoissaniteComparison() {
                 <th className="p-5 font-serif text-lg font-bold text-[#8C6A1F] bg-[#F4E8C1]/30 border-x border-[#D4AF37]/30 w-1/3 text-center">
                   <div className="flex items-center justify-center gap-1.5">
                     <Sparkles className="w-4 h-4 text-[#B89035]" />
-                    <span>AURA Moissanite</span>
+                    <span>ForeverJewell Studio Moissanite</span>
                   </div>
                   <span className="block font-sans text-[10px] font-normal text-gray-600 uppercase tracking-widest mt-0.5">
                     VVS1 • D-Color • GRA Certified

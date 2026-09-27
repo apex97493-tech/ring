@@ -17,7 +17,6 @@ import { useProducts } from '@/context/ProductContext';
 import ProductCard from '@/components/products/ProductCard';
 import ShapeFilterBar from '@/components/sections/ShapeFilterBar';
 import MoissaniteComparison from '@/components/sections/MoissaniteComparison';
-import InteractiveSparkleSlider from '@/components/sections/InteractiveSparkleSlider';
 import CutPersonalityGuide from '@/components/sections/CutPersonalityGuide';
 import WhyChooseUs from '@/components/sections/WhyChooseUs';
 import RingSizeGuide from '@/components/sections/RingSizeGuide';
@@ -36,7 +35,7 @@ const slides = [
   {
     id: 1,
     type: 'promo',
-    image: '/images/ai_ring1_front.jpg',
+    image: '/uploads/etsy_4523361246_img1.jpg',
     titleTop: 'New',
     titleMain: 'Arrivals',
     subtitle: 'Discover The',
@@ -47,7 +46,7 @@ const slides = [
   {
     id: 2,
     type: 'promo',
-    image: '/images/ai_ring2_front.jpg',
+    image: '/uploads/etsy_4514456821_img1.jpg',
     titleTop: 'Custom',
     titleMain: 'Design',
     subtitle: 'Create Your',
@@ -661,11 +660,8 @@ export default function Home() {
       <CustomDesignStudio />
 
       {/* ============================================================ */}
-      {/* 5. THE SIGNATURE WOKE EDUCATIONAL & TRUST BOTTOM SECTIONS    */}
+      {/* 5. THE SIGNATURE EDUCATIONAL & TRUST ATELIER SECTIONS        */}
       {/* ============================================================ */}
-      {/* Interactive Sparkle Drag Slider */}
-      <InteractiveSparkleSlider />
-
       {/* Deep Moissanite vs Diamond vs CZ Comparison Matrix */}
       <MoissaniteComparison />
 

@@ -329,7 +329,7 @@ export default function WokeAccordions({ product, selectedMetal, selectedCarat }
             >
               <div className="pt-4 pb-2 space-y-3 text-xs sm:text-sm text-gray-700 leading-relaxed font-sans">
                 <p>
-                  We stand 100% behind the craftsmanship of every AURA creation.
+                  We stand 100% behind the craftsmanship of every ForeverJewellStudio creation.
                 </p>
                 <ul className="list-disc pl-5 space-y-1.5 text-gray-600">
                   <li><span className="font-semibold text-gray-800">15-Day Exchange:</span> If the size or style isn&apos;t flawless, exchange it within 15 days in unworn condition.</li>
@@ -375,7 +375,7 @@ export default function WokeAccordions({ product, selectedMetal, selectedCarat }
                 <ul className="list-disc pl-5 space-y-1.5 text-gray-600">
                   <li><span className="font-semibold text-gray-800">GRA Certificate:</span> Includes individual serial number matched to an online international verification card.</li>
                   <li><span className="font-semibold text-gray-800">Cleaning:</span> Gently soak in lukewarm water with mild dish soap and brush with a soft toothbrush. Rinse and pat dry with the provided lint-free polishing cloth.</li>
-                  <li><span className="font-semibold text-gray-800">Storage:</span> Store in your velvet AURA box to prevent contact with other hard gemstones.</li>
+                  <li><span className="font-semibold text-gray-800">Storage:</span> Store in your velvet ForeverJewellStudio presentation box to prevent contact with other hard gemstones.</li>
                 </ul>
               </div>
             </motion.div>

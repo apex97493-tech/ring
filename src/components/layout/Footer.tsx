@@ -28,7 +28,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="font-sans text-xs tracking-[0.25em] text-gray-400 uppercase mt-1 mb-4 font-semibold">
-              Woke Moissanite & Fine Jewelry
+              Jaipur Moissanite & Fine Jewelry
             </p>
             <p className="font-sans text-sm text-gray-400 max-w-md leading-relaxed">
               Crafting ethical, lab-grown high jewelry with certified VVS1 D-Color Moissanite that rivals mined diamonds in fire, brilliance, and lifetime durability.
@@ -46,7 +46,7 @@ export default function Footer() {
 
             {subscribed ? (
               <div className="p-3 bg-[#064E3B] text-[#D4AF37] text-xs font-sans rounded-xl font-bold">
-                Welcome to the ForeverJewellStudio Circle. Use code <strong>WOKE10</strong> at checkout for 10% off.
+                Welcome to the ForeverJewellStudio Circle. Use code <strong>FOREVER10</strong> at checkout for 10% off.
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-2">

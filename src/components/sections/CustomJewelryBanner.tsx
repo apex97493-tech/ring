@@ -49,7 +49,7 @@ export default function CustomJewelryBanner() {
             </a>
 
             <a
-              href="mailto:contact@aurajewelry.com"
+              href="mailto:foreverjewellstudio@gmail.com"
               className="px-8 py-4 bg-transparent border border-[#D4AF37]/50 hover:bg-[#D4AF37]/10 text-[#D4AF37] font-sans text-xs font-bold tracking-widest uppercase rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               Email Us CAD Files <ArrowRight className="w-4 h-4" />

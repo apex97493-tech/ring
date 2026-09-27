@@ -30,7 +30,7 @@ export default function ContactPage() {
     if (!formData.name || !formData.phone) return;
 
     // Send formatted WhatsApp message or show confirmation
-    const waText = `*NEW CONTACT INQUIRY - AURA JEWELRY*%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}%0A*Email:* ${formData.email || 'N/A'}%0A*Type:* ${formData.inquiryType}%0A*Message:* ${formData.message || 'I would like to speak with a jewelry consultant.'}`;
+    const waText = `*NEW CONTACT INQUIRY - FOREVERJEWELLSTUDIO*%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}%0A*Email:* ${formData.email || 'N/A'}%0A*Type:* ${formData.inquiryType}%0A*Message:* ${formData.message || 'I would like to speak with a jewelry consultant.'}`;
     window.open(`https://wa.me/919999999999?text=${waText}`, '_blank');
     setIsSubmitted(true);
   };
@@ -86,7 +86,7 @@ export default function ContactPage() {
               </div>
             </div>
             <a
-              href="https://wa.me/919999999999?text=Hello%20AURA%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20Moissanite%20Ring."
+              href="https://wa.me/919999999999?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20Moissanite%20Ring."
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-2.5 bg-[#064E3B] hover:bg-[#043327] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-wider rounded-xl text-center transition-colors block"
@@ -132,11 +132,11 @@ export default function ContactPage() {
                 Send custom CAD design drawings, moodboards, or corporate order requests.
               </p>
               <p className="font-sans text-xs font-bold text-[#18181B] mb-4 truncate">
-                care@aurajewelry.com
+                foreverjewellstudio@gmail.com
               </p>
             </div>
             <a
-              href="mailto:care@aurajewelry.com"
+              href="mailto:foreverjewellstudio@gmail.com"
               className="w-full py-2.5 bg-[#F5F2EC] hover:bg-[#E8E5DF] text-[#18181B] font-sans text-xs font-bold uppercase tracking-wider rounded-xl text-center transition-colors block border border-[#E8E5DF]"
             >
               Send Email
@@ -291,10 +291,10 @@ export default function ContactPage() {
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-[#022C22] text-[#FDFBF7] p-8 rounded-3xl border border-[#D4AF37]/30 shadow-xl">
               <span className="font-serif text-2xl font-bold text-[#D4AF37] block mb-1">
-                AURA
+                ForeverJewellStudio
               </span>
               <p className="font-sans text-[10px] tracking-widest text-[#F3E5AB] uppercase font-semibold mb-6">
-                Royal Moissanite & Fine Jewelry
+                Jaipur Moissanite & Fine Jewelry
               </p>
 
               <div className="space-y-4 text-xs font-sans text-gray-300">
