@@ -120,6 +120,23 @@ export default function Home() {
       });
   }, [selectedShape, selectedMetal, sortBy]);
 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const PRODUCTS_PER_PAGE = 8;
+
+  // Reset to page 1 on filter change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedShape, selectedMetal, sortBy]);
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE) || 1;
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    return filteredProducts.slice(start, start + PRODUCTS_PER_PAGE);
+  }, [filteredProducts, currentPage]);
+
+  const startIndex = filteredProducts.length > 0 ? (currentPage - 1) * PRODUCTS_PER_PAGE + 1 : 0;
+  const endIndex = Math.min(currentPage * PRODUCTS_PER_PAGE, filteredProducts.length);
+
   return (
     <div className="w-full min-h-screen bg-[#FDFBF7]">
       {/* ============================================================ */}
@@ -364,7 +381,7 @@ export default function Home() {
                 : `${selectedShape} Cut Moissanite Solitaires`}
             </h2>
             <p className="font-sans text-xs sm:text-sm text-gray-500 mt-0.5">
-              Showing {filteredProducts.length} certified jewelry creations
+              Showing {filteredProducts.length > 0 ? `${startIndex}–${endIndex}` : 0} of {filteredProducts.length} certified jewelry creations
             </p>
           </div>
 
@@ -395,11 +412,143 @@ export default function Home() {
         </div>
 
         {/* Product Grid: gap-2 on mobile so both columns fit seamlessly within 412px */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 w-full max-w-full">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {paginatedProducts.length > 0 ? (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 w-full max-w-full">
+              {paginatedProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+
+            {/* Luxury Pagination Navigation Bar */}
+            {totalPages > 1 && (
+              <div className="mt-10 pt-6 border-t border-[#E8E5DF] flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span className="text-xs text-gray-500 font-sans">
+                  Page <strong className="text-[#022C22] font-semibold">{currentPage}</strong> of{' '}
+                  <strong className="text-[#022C22] font-semibold">{totalPages}</strong> ({filteredProducts.length} total designs)
+                </span>
+
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    disabled={currentPage <= 1}
+                    onClick={() => {
+                      setCurrentPage((prev) => Math.max(prev - 1, 1));
+                      document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                    <span>Previous</span>
+                  </button>
+
+                  <div className="flex items-center gap-1">
+                    {totalPages <= 7 ? (
+                      Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                        <button
+                          key={pageNum}
+                          type="button"
+                          onClick={() => {
+                            setCurrentPage(pageNum);
+                            document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                          className={`w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            currentPage === pageNum
+                              ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
+                              : 'bg-white text-gray-700 hover:text-[#022C22] hover:border-[#D4AF37] border border-[#E8E5DF]'
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      ))
+                    ) : (
+                      <>
+                        {[1, 2].map((pageNum) => (
+                          <button
+                            key={pageNum}
+                            type="button"
+                            onClick={() => {
+                              setCurrentPage(pageNum);
+                              document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className={`w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                              currentPage === pageNum
+                                ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
+                                : 'bg-white text-gray-700 hover:text-[#022C22] hover:border-[#D4AF37] border border-[#E8E5DF]'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        ))}
+
+                        {currentPage > 3 && <span className="px-1 text-gray-400 text-xs">...</span>}
+
+                        {currentPage > 2 && currentPage < totalPages - 1 && (
+                          <button
+                            type="button"
+                            className="w-8 h-8 rounded-xl text-xs font-bold bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]"
+                          >
+                            {currentPage}
+                          </button>
+                        )}
+
+                        {currentPage < totalPages - 2 && <span className="px-1 text-gray-400 text-xs">...</span>}
+
+                        {[totalPages - 1, totalPages].map((pageNum) => (
+                          <button
+                            key={pageNum}
+                            type="button"
+                            onClick={() => {
+                              setCurrentPage(pageNum);
+                              document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className={`w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                              currentPage === pageNum
+                                ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
+                                : 'bg-white text-gray-700 hover:text-[#022C22] hover:border-[#D4AF37] border border-[#E8E5DF]'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        ))}
+                      </>
+                    )}
+                  </div>
+
+                  <button
+                    type="button"
+                    disabled={currentPage >= totalPages}
+                    onClick={() => {
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                      document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                  >
+                    <span>Next</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="py-16 text-center bg-white rounded-2xl border border-[#E8E5DF] my-4">
+            <p className="font-serif text-xl sm:text-2xl text-[#18181B] mb-2">No matching pieces found</p>
+            <p className="font-sans text-xs text-gray-500 mb-6">
+              Try switching your stone shape or metal filter to explore more designs.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedShape('all');
+                setSelectedMetal('all');
+              }}
+              className="px-6 py-2.5 bg-[#022C22] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-[#B89035] hover:text-white transition-all shadow-md cursor-pointer"
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
       </section>
 
       {/* ============================================================ */}
@@ -408,7 +557,7 @@ export default function Home() {
       <CustomDesignStudio />
 
       {/* ============================================================ */}
-      {/* 5. THE SIGNATURE WOKE EDUCATIONAL & TRUST BOTTOM SECTIONS    */}
+      {/* 5. THE SIGNATURE EDUCATIONAL & TRUST ATELIER SECTIONS        */}
       {/* ============================================================ */}
       {/* Interactive Sparkle Drag Slider */}
 
