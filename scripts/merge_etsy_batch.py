@@ -62,11 +62,58 @@ def detect_gemstone(title, details):
         return gem_val.title()
 
     t = title.lower()
-    for gem in ['rose quartz','black onyx','green onyx','malachite','champagne moissanite',
+    for gem in ['kammererite','aqua chalcedony','chalcedony','morganite','rose quartz','black onyx','green onyx','smoky quartz','malachite','champagne moissanite',
                 'moissanite','blue sapphire','teal sapphire','pink sapphire','sapphire',
-                'ruby','emerald','garnet','white opal','opal','topaz','moss agate','moonstone','diamond']:
+                'ruby','emerald','garnet','white opal','opal','topaz','moss agate','moonstone',
+                'alexandrite','amethyst','citrine','labradorite','larimar','lapis lazuli','lapis','aquamarine','freshwater pearl','pearl','diamond']:
         if gem in t: return gem.title()
     return 'Moissanite'
+
+def detect_category(title, details, desc=''):
+    t = title.lower()
+    d = desc.lower() if desc else ''
+    
+    # Body, Ear, Wrist, Neck jewelry checks first
+    if 'belly' in t or 'navel' in t:
+        return 'belly-rings'
+    if 'nose ring' in t or 'nose pin' in t or 'septum' in t:
+        return 'nose-ring'
+    if 'earring' in t or 'huggie' in t or ('stud' in t and 'ring' not in t):
+        return 'earrings'
+    if 'bracelet' in t or 'bangle' in t or 'cuff' in t:
+        return 'bracelet'
+    if 'necklace' in t or 'choker' in t or 'chain' in t:
+        return 'necklace'
+    if 'pendant' in t or 'locket' in t:
+        return 'pendant'
+    
+    # Lesbian / LGBT couple rings
+    if ('lesbian' in t or 'lesbian' in d or 'venus' in t or 'lgbt' in t) and ('ring' in t or 'band' in t or 'signet' in t):
+        return 'lesbian-ring'
+
+    # Bridal / Ring Sets
+    if (
+        'ring set' in t 
+        or 'bridal set' in t 
+        or 'wedding set' in t 
+        or 'bridal ring set' in t
+        or 'stack set' in t 
+        or 'two piece' in t 
+        or 'three piece' in t
+        or 'toi et moi' in t
+    ):
+        return 'ring-set'
+        
+    # Bands
+    if (
+        'band' in t 
+        or 'eternity' in t 
+        or 'chevron' in t 
+        or 'contour' in t
+    ) and 'solitaire' not in t and 'engagement ring set' not in t:
+        return 'band'
+        
+    return 'rings'
 
 def parse_item_details(description):
     """Parse structured key-value specifications from Etsy description."""
@@ -173,23 +220,28 @@ def main():
         if not valid_images:
             valid_images = raw_images
 
-        local_images = []
-        for i, img_url in enumerate(valid_images[:8]):
+        from concurrent.futures import ThreadPoolExecutor
+
+        def fetch_img(idx_url):
+            i, img_url = idx_url
             fname = f'etsy_{lid}_img{i+1}.jpg'
             fpath = os.path.join(UPLOAD_DIR, fname)
-
             if os.path.exists(fpath) and os.path.getsize(fpath) > 5000:
-                local_images.append(f'/uploads/{fname}')
-                continue
-
+                return (i, f'/uploads/{fname}', None)
             if download_image(img_url, fpath):
                 size_kb = os.path.getsize(fpath) // 1024
-                print(f'   Downloaded img{i+1}: {size_kb}KB')
-                local_images.append(f'/uploads/{fname}')
-            else:
-                # CDN fallback
-                local_images.append(img_url)
-            time.sleep(0.1)
+                return (i, f'/uploads/{fname}', f'   Downloaded img{i+1}: {size_kb}KB')
+            return (i, img_url, None)
+
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            results = list(pool.map(fetch_img, enumerate(valid_images[:8])))
+
+        results.sort(key=lambda x: x[0])
+        local_images = []
+        for _, path, log_msg in results:
+            if log_msg:
+                print(log_msg)
+            local_images.append(path)
 
         # If existing product had some images, ensure local_images isn't empty
         if not local_images and pid in products_by_id:
@@ -201,12 +253,13 @@ def main():
         features = extract_features(desc, parsed_details)
 
         stone_size = parsed_details.get('Stone Size') or parsed_details.get('Size') or '7x9mm'
+        category = detect_category(title, parsed_details, desc)
 
         product_data = {
             'id': pid,
             'name': title,
             'slug': make_slug(title, lid),
-            'category': 'rings',
+            'category': category,
             'shape': shape,
             'price': price,
             'originalPrice': int(price * 1.85),

@@ -95,8 +95,8 @@ export default function InteractiveSparkleSlider() {
               <img
                 src={
                   activeLighting === 'sunlight'
-                    ? 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=1200&auto=format&fit=crop'
-                    : 'https://images.unsplash.com/photo-1598560917505-59a3ad559071?q=80&w=1200&auto=format&fit=crop'
+                    ? '/images/ai_ring1_front.jpg'
+                    : '/images/ai_ring2_front.jpg'
                 }
                 alt="AURA Royal Moissanite Fire"
                 className="w-full h-full object-cover brightness-105"
@@ -129,8 +129,8 @@ export default function InteractiveSparkleSlider() {
                 <img
                   src={
                     activeLighting === 'sunlight'
-                      ? 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200&auto=format&fit=crop'
-                      : 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1200&auto=format&fit=crop'
+                      ? '/images/diamond_front.png'
+                      : '/images/diamond_hand.png'
                   }
                   alt="Standard Mined Diamond"
                   className="w-full h-full object-cover filter contrast-90 brightness-95"

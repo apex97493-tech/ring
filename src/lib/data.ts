@@ -190,8 +190,23 @@ export function findMatchingProduct(productList: Product[], query: string): Prod
 }
 
 export function getProductsByCategory(category: string): Product[] {
-  if (category === 'all' || category === 'shop') return products;
-  return products.filter(p => p.category === category.toLowerCase());
+  const cat = (category || '').toLowerCase().trim();
+  if (!cat || cat === 'all' || cat === 'shop') return products;
+
+  return products.filter((p) => {
+    const pCat = (p.category || '').toLowerCase().trim();
+    if (pCat === cat) return true;
+    if (cat === 'rings' && (pCat === 'ring' || pCat === 'rings')) return true;
+    if (cat === 'band' && (pCat === 'band' || pCat === 'bands')) return true;
+    if (cat === 'earrings' && (pCat === 'earring' || pCat === 'earrings')) return true;
+    if ((cat === 'necklace' || cat === 'pendant') && (pCat === 'necklace' || pCat === 'pendant')) return true;
+    if (cat === 'ring-set' && (pCat === 'ring-set' || pCat === 'ring-sets' || pCat === 'bridal-set')) return true;
+    if (cat === 'lesbian-ring' && (pCat === 'lesbian-ring' || pCat === 'lesbian-rings')) return true;
+    if (cat === 'bracelet' && (pCat === 'bracelet' || pCat === 'bracelets')) return true;
+    if (cat === 'nose-ring' && (pCat === 'nose-ring' || pCat === 'nose-rings')) return true;
+    if (cat === 'belly-rings' && (pCat === 'belly-rings' || pCat === 'belly-ring')) return true;
+    return false;
+  });
 }
 
 export function getProductBySlug(slug: string): Product | undefined {

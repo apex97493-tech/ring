@@ -36,8 +36,7 @@ const slides = [
   {
     id: 1,
     type: 'promo',
-    image:
-      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=2000&auto=format&fit=crop',
+    image: '/images/ai_ring1_front.jpg',
     titleTop: 'New',
     titleMain: 'Arrivals',
     subtitle: 'Discover The',
@@ -48,8 +47,7 @@ const slides = [
   {
     id: 2,
     type: 'promo',
-    image:
-      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2000&auto=format&fit=crop',
+    image: '/images/ai_ring2_front.jpg',
     titleTop: 'Custom',
     titleMain: 'Design',
     subtitle: 'Create Your',
@@ -64,25 +62,116 @@ const slides = [
   },
 ];
 
-const collections = [
-  { name: 'Rings', slug: 'rings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Band', slug: 'band', img: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Lesbian Ring', slug: 'lesbian-ring', img: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Pendant', slug: 'pendant', img: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Earrings', slug: 'earrings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=top' },
-  { name: 'Necklace', slug: 'necklace', img: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Bracelet', slug: 'bracelet', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=left' },
-  { name: 'Nose Ring', slug: 'nose-ring', img: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Belly Rings', slug: 'belly-rings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Ring Set', slug: 'ring-set', img: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=600&auto=format&fit=crop' },
+interface CollectionItem {
+  name: string;
+  slug: string;
+  img: string;
+  tagline: string;
+  unit: string;
+}
+
+const collections: CollectionItem[] = [
+  {
+    name: 'Rings',
+    slug: 'rings',
+    img: '/uploads/etsy_4514460848_img1.jpg',
+    tagline: 'Solitaire & Promise',
+    unit: 'Designs',
+  },
+  {
+    name: 'Band',
+    slug: 'band',
+    img: '/uploads/etsy_4580287314_img1.jpg',
+    tagline: 'Eternity & Stacking',
+    unit: 'Designs',
+  },
+  {
+    name: 'Lesbian Ring',
+    slug: 'lesbian-ring',
+    img: '/uploads/etsy_4522231201_img1.jpg',
+    tagline: 'Sculptural & Pride',
+    unit: 'Designs',
+  },
+  {
+    name: 'Pendant',
+    slug: 'pendant',
+    img: '/uploads/etsy_4574617829_img1.jpg',
+    tagline: 'Solitaire & Drops',
+    unit: 'Designs',
+  },
+  {
+    name: 'Earrings',
+    slug: 'earrings',
+    img: '/uploads/etsy_4529748804_img1.jpg',
+    tagline: 'Huggies & Teardrops',
+    unit: 'Pairs',
+  },
+  {
+    name: 'Necklace',
+    slug: 'necklace',
+    img: '/uploads/etsy_4524005419_img1.jpg',
+    tagline: 'Serpent & Beaded',
+    unit: 'Designs',
+  },
+  {
+    name: 'Bracelet',
+    slug: 'bracelet',
+    img: '/uploads/etsy_4516789064_img1.jpg',
+    tagline: 'Tennis & Beaded',
+    unit: 'Designs',
+  },
+  {
+    name: 'Nose Ring',
+    slug: 'nose-ring',
+    img: '/uploads/etsy_4524485399_img1.jpg',
+    tagline: 'Dainty Pins & Studs',
+    unit: 'Designs',
+  },
+  {
+    name: 'Belly Rings',
+    slug: 'belly-rings',
+    img: '/uploads/etsy_4529755774_img1.jpg',
+    tagline: 'Lotus & Navel Bars',
+    unit: 'Designs',
+  },
+  {
+    name: 'Ring Set',
+    slug: 'ring-set',
+    img: '/uploads/etsy_4522722815_img1.jpg',
+    tagline: 'Bridal Stacks & Sets',
+    unit: 'Sets',
+  },
 ];
 
 export default function Home() {
-  const { products } = useProducts();
+  const { products, getProductsByCategory } = useProducts();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedShape, setSelectedShape] = useState<string>('all');
   const [selectedMetal, setSelectedMetal] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('featured');
+
+  // Dynamic category product counts for showcase
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    collections.forEach((cat) => {
+      if (cat.name === 'Pendant') {
+        const pendantCount = products.filter(
+          (p) =>
+            (p.category === 'necklace' || p.category === 'pendant') &&
+            (p.name.toLowerCase().includes('pendant') || p.name.toLowerCase().includes('charm'))
+        ).length;
+        counts[cat.name] = pendantCount || 10;
+      } else if (cat.name === 'Necklace') {
+        const neckCount = products.filter(
+          (p) => p.category === 'necklace' || p.category === 'pendant'
+        ).length;
+        counts[cat.name] = neckCount || 24;
+      } else {
+        counts[cat.name] = getProductsByCategory(cat.slug).length;
+      }
+    });
+    return counts;
+  }, [products, getProductsByCategory]);
 
   // Auto-play loop
   useEffect(() => {
@@ -118,7 +207,25 @@ export default function Home() {
         if (sortBy === 'rating') return b.rating - a.rating;
         return 0;
       });
+  }, [products, selectedShape, selectedMetal, sortBy]);
+
+  // Luxury Pagination State (16 items per page for clean, fast browsing)
+  const PRODUCTS_PER_PAGE = 16;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Automatically reset to page 1 whenever filters change
+  useEffect(() => {
+    setCurrentPage(1);
   }, [selectedShape, selectedMetal, sortBy]);
+
+  const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE) || 1;
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
+    return filteredProducts.slice(start, start + PRODUCTS_PER_PAGE);
+  }, [filteredProducts, currentPage]);
+
+  const startIndex = filteredProducts.length > 0 ? (currentPage - 1) * PRODUCTS_PER_PAGE + 1 : 0;
+  const endIndex = Math.min(currentPage * PRODUCTS_PER_PAGE, filteredProducts.length);
 
   return (
     <div className="w-full min-h-screen bg-[#FDFBF7]">
@@ -186,7 +293,7 @@ export default function Home() {
                       className="relative w-full max-w-[320px] sm:max-w-[480px] aspect-square flex items-center justify-center"
                     >
                       <img
-                        src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200&auto=format&fit=crop"
+                        src="/images/diamond_front.png"
                         alt="Floating Royal Solitaire Ring"
                         className="w-[85%] md:w-[92%] max-w-none object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.45)]"
                       />
@@ -307,33 +414,46 @@ export default function Home() {
           </h2>
           <div className="w-12 sm:w-16 h-[1.5px] bg-[#D4AF37] mx-auto mb-3 sm:mb-4" />
           <p className="font-sans text-xs sm:text-sm text-gray-600">
-            Explore bespoke categories engineered to capture light with mathematical perfection.
+            Explore bespoke Jaipur fine jewelry categories engineered with authentic gemstones and hand-set brilliance.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-8">
-          {collections.map((cat) => (
-            <Link
-              href={`/category/${cat.slug}`}
-              key={cat.name}
-              className="group cursor-pointer block"
-            >
-              <div className="relative aspect-[3/4] overflow-hidden bg-[#022C22] mb-4 rounded-xl border border-[#D4AF37]/30 shadow-royal">
-                <img
-                  src={cat.img}
-                  alt={cat.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#022C22]/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-                <span className="absolute bottom-3 inset-x-3 text-center font-sans text-[10px] tracking-widest text-[#D4AF37] uppercase font-bold">
-                  View Collection →
-                </span>
-              </div>
-              <h3 className="text-center font-serif text-xl tracking-wider text-[#022C22] group-hover:text-[#B89035] transition-colors italic">
-                {cat.name}
-              </h3>
-            </Link>
-          ))}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-6">
+          {collections.map((cat) => {
+            const count = categoryCounts[cat.name] || 0;
+            return (
+              <Link
+                href={`/category/${cat.slug}`}
+                key={cat.name}
+                className="group cursor-pointer block"
+              >
+                <div className="relative aspect-[3/4] overflow-hidden bg-[#022C22] mb-3 rounded-2xl border border-[#D4AF37]/35 shadow-royal transition-all duration-500 group-hover:border-[#D4AF37] group-hover:shadow-gold/30">
+                  <img
+                    src={cat.img}
+                    alt={cat.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-95 group-hover:opacity-100"
+                    loading="lazy"
+                  />
+                  {/* Luxury Quantity Pill Badge */}
+                  <span className="absolute top-2.5 right-2.5 bg-[#022C22]/90 backdrop-blur-md text-[#D4AF37] border border-[#D4AF37]/50 px-2.5 py-0.5 rounded-full text-[10px] font-sans font-bold tracking-wider shadow-md">
+                    {count} {cat.unit}
+                  </span>
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#022C22]/90 via-[#022C22]/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                  
+                  <span className="absolute bottom-3 inset-x-3 text-center font-sans text-[10px] tracking-widest text-[#D4AF37] group-hover:text-white uppercase font-bold transition-colors">
+                    View Collection →
+                  </span>
+                </div>
+                <h3 className="text-center font-serif text-lg sm:text-xl tracking-wider text-[#022C22] group-hover:text-[#B89035] transition-colors italic">
+                  {cat.name}
+                </h3>
+                <p className="text-center font-sans text-[11px] text-[#064E3B] font-semibold tracking-wider uppercase mt-0.5">
+                  {count} {cat.unit}
+                </p>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
@@ -364,7 +484,8 @@ export default function Home() {
                 : `${selectedShape} Cut Moissanite Solitaires`}
             </h2>
             <p className="font-sans text-xs sm:text-sm text-gray-500 mt-0.5">
-              Showing {filteredProducts.length} certified jewelry creations
+              Showing <span className="text-[#022C22] font-semibold">{startIndex}–{endIndex}</span> of{' '}
+              <span className="text-[#022C22] font-semibold">{filteredProducts.length}</span> certified jewelry creations
             </p>
           </div>
 
@@ -395,11 +516,143 @@ export default function Home() {
         </div>
 
         {/* Product Grid: gap-2 on mobile so both columns fit seamlessly within 412px */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 w-full max-w-full">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {paginatedProducts.length > 0 ? (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-6 w-full max-w-full">
+              {paginatedProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+
+            {/* Luxury Pagination Navigation Bar */}
+            {totalPages > 1 && (
+              <div className="mt-10 pt-6 border-t border-[#E8E5DF] flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span className="text-xs text-gray-500 font-sans">
+                  Page <strong className="text-[#022C22] font-semibold">{currentPage}</strong> of{' '}
+                  <strong className="text-[#022C22] font-semibold">{totalPages}</strong> ({filteredProducts.length} total designs)
+                </span>
+
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    disabled={currentPage <= 1}
+                    onClick={() => {
+                      setCurrentPage((prev) => Math.max(prev - 1, 1));
+                      document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                    <span>Previous</span>
+                  </button>
+
+                  <div className="flex items-center gap-1">
+                    {totalPages <= 7 ? (
+                      Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                        <button
+                          key={pageNum}
+                          type="button"
+                          onClick={() => {
+                            setCurrentPage(pageNum);
+                            document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                          className={`w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            currentPage === pageNum
+                              ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
+                              : 'bg-white text-gray-700 hover:text-[#022C22] hover:border-[#D4AF37] border border-[#E8E5DF]'
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      ))
+                    ) : (
+                      <>
+                        {[1, 2].map((pageNum) => (
+                          <button
+                            key={pageNum}
+                            type="button"
+                            onClick={() => {
+                              setCurrentPage(pageNum);
+                              document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className={`w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                              currentPage === pageNum
+                                ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
+                                : 'bg-white text-gray-700 hover:text-[#022C22] hover:border-[#D4AF37] border border-[#E8E5DF]'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        ))}
+
+                        {currentPage > 3 && <span className="px-1 text-gray-400 text-xs">...</span>}
+
+                        {currentPage > 2 && currentPage < totalPages - 1 && (
+                          <button
+                            type="button"
+                            className="w-8 h-8 rounded-xl text-xs font-bold bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]"
+                          >
+                            {currentPage}
+                          </button>
+                        )}
+
+                        {currentPage < totalPages - 2 && <span className="px-1 text-gray-400 text-xs">...</span>}
+
+                        {[totalPages - 1, totalPages].map((pageNum) => (
+                          <button
+                            key={pageNum}
+                            type="button"
+                            onClick={() => {
+                              setCurrentPage(pageNum);
+                              document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className={`w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                              currentPage === pageNum
+                                ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
+                                : 'bg-white text-gray-700 hover:text-[#022C22] hover:border-[#D4AF37] border border-[#E8E5DF]'
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        ))}
+                      </>
+                    )}
+                  </div>
+
+                  <button
+                    type="button"
+                    disabled={currentPage >= totalPages}
+                    onClick={() => {
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+                      document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                  >
+                    <span>Next</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="py-16 text-center bg-white rounded-2xl border border-[#E8E5DF] my-4">
+            <p className="font-serif text-xl sm:text-2xl text-[#18181B] mb-2">No matching pieces found</p>
+            <p className="font-sans text-xs text-gray-500 mb-6">
+              Try switching your stone shape or metal filter to explore more designs.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedShape('all');
+                setSelectedMetal('all');
+              }}
+              className="px-6 py-2.5 bg-[#022C22] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-[#B89035] hover:text-white transition-all shadow-md cursor-pointer"
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
       </section>
 
       {/* ============================================================ */}

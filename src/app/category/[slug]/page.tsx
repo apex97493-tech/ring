@@ -34,16 +34,36 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
       subtitle: 'Continuous 360-degree sparkle designed to stack seamlessly with your solitaire ring.',
     },
     'ring-set': {
-      title: 'Bridal Stacks & Tiara Rings',
+      title: 'Bridal Stacks & Ring Sets',
       subtitle: 'Contoured crown and tiara bands engineered to frame oval, pear, and round solitaires.',
+    },
+    necklace: {
+      title: 'Moissanite & Gemstone Necklaces',
+      subtitle: 'Effortless brilliance and handcrafted pendants suspended on pure 925 Silver and Solid Gold chains.',
     },
     pendant: {
       title: 'Solitaire Moissanite Pendants',
       subtitle: 'Effortless brilliance suspended on Italian 925 Silver and 18K Solid Gold chains.',
     },
+    'lesbian-ring': {
+      title: 'Sculptural Couple & Lesbian Rings',
+      subtitle: 'Art Deco handcrafted romantic couple kiss and sculptural promise rings in solid gold & sterling silver.',
+    },
     earrings: {
       title: 'Moissanite Stud & Drop Earrings',
       subtitle: 'Daily wear luxury featuring comfort screw-backs and certified VVS1 center stones.',
+    },
+    bracelet: {
+      title: 'Tennis & Fine Gemstone Bracelets',
+      subtitle: 'Hand-set brilliance crafted for radiant everyday elegance and wrist luxury.',
+    },
+    'nose-ring': {
+      title: 'Fine Nose Pins & Rings',
+      subtitle: 'Dainty handcrafted nose jewelry with sparkling lab-created and natural gemstones.',
+    },
+    'belly-rings': {
+      title: 'Designer Belly & Navel Rings',
+      subtitle: 'Artisan crafted body jewelry with shimmering moissanite and gemstones.',
     },
   };
 

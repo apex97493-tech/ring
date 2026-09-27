@@ -10,7 +10,7 @@ const UNBOXING_ITEMS = [
     desc: 'Crafted in matte royal emerald with satin interior and integrated micro-LED lighting that illuminates the gemstone the second the box is opened.',
     icon: Gift,
     highlight: 'Proposal Ready',
-    image: 'https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop',
+    image: '/images/ai_ring1_front.jpg',
   },
   {
     step: '02',
@@ -18,7 +18,7 @@ const UNBOXING_ITEMS = [
     desc: 'Individual embossed laboratory report verifying VVS1 clarity, Colorless D grade, cut symmetry, and corresponding laser girdle serial number.',
     icon: Award,
     highlight: 'Serial Inscribed',
-    image: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=800&auto=format&fit=crop',
+    image: '/images/ai_ring2_front.jpg',
   },
   {
     step: '03',
@@ -26,7 +26,7 @@ const UNBOXING_ITEMS = [
     desc: 'Includes an ultra-fine microfibre jewelry polishing cloth and a complimentary ring sizing multisizer tool for future heirloom stacking.',
     icon: Sparkles,
     highlight: 'Complimentary',
-    image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=800&auto=format&fit=crop',
+    image: '/images/ai_ring3_front.jpg',
   },
   {
     step: '04',
@@ -34,7 +34,7 @@ const UNBOXING_ITEMS = [
     desc: 'Shipped in plain, tamper-evident unbranded outer packaging to keep your surprise proposal completely secret, fully insured door-to-door.',
     icon: EyeOff,
     highlight: 'Zero Risk',
-    image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=800&auto=format&fit=crop',
+    image: '/images/ai_ring1_hand.jpg',
   },
 ];
 
