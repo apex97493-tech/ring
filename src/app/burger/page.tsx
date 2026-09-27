@@ -54,6 +54,19 @@ import ProductImageGallery from '@/components/products/ProductImageGallery';
 
 const PASSCODES = ['forever2026', 'aura2026', 'admin'];
 
+export const CATEGORY_DEFINITIONS: { value: string; label: string; shortLabel: string }[] = [
+  { value: 'all', label: 'All Products', shortLabel: 'All' },
+  { value: 'rings', label: 'Solitaire & Engagement Rings', shortLabel: 'Rings' },
+  { value: 'band', label: 'Wedding & Eternity Bands', shortLabel: 'Bands' },
+  { value: 'ring-set', label: 'Bridal Ring Sets', shortLabel: 'Ring Sets' },
+  { value: 'necklace', label: 'Necklaces & Pendants', shortLabel: 'Necklaces' },
+  { value: 'earrings', label: 'Fine Earrings', shortLabel: 'Earrings' },
+  { value: 'bracelet', label: 'Bracelets & Bangles', shortLabel: 'Bracelets' },
+  { value: 'lesbian-ring', label: 'Pride & Couple Rings', shortLabel: 'Pride Rings' },
+  { value: 'nose-ring', label: 'Nose Jewelry', shortLabel: 'Nose Rings' },
+  { value: 'belly-rings', label: 'Belly Rings', shortLabel: 'Belly Rings' },
+];
+
 const EMPTY_PRODUCT: Product = {
   id: '',
   name: '',
@@ -77,7 +90,7 @@ const EMPTY_PRODUCT: Product = {
   ringStyle: 'Art Deco / Royal Solitaire',
   occasion: 'Engagement & Wedding',
   deliveryTime: '4-7 Days Free Express Delivery',
-  sku: 'AUR-ROSE-001',
+  sku: 'FJ-ROSE-001',
   stockStatus: 'in_stock',
   stockQuantity: 10,
   metaTitle: '',
@@ -138,6 +151,43 @@ export default function AdminBurgerPage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(5);
   const [isMobileCatalogOpen, setIsMobileCatalogOpen] = useState<boolean>(false);
+
+  // Dynamic full categories list with live item counts across all jewelry collections
+  const allCategories = useMemo(() => {
+    const map = new Map<string, { value: string; label: string; shortLabel: string }>();
+    CATEGORY_DEFINITIONS.forEach((c) => map.set(c.value.toLowerCase(), c));
+
+    // Discover any additional category from active products
+    products.forEach((p) => {
+      const c = (p.category || '').toLowerCase().trim();
+      if (c && !map.has(c)) {
+        const pretty = c.replace(/[-_]/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+        map.set(c, { value: c, label: pretty, shortLabel: pretty });
+      }
+    });
+
+    const isMatch = (pCatRaw: string, target: string) => {
+      if (target === 'all') return true;
+      const pCat = (pCatRaw || '').toLowerCase().trim();
+      const t = target.toLowerCase().trim();
+      if (pCat === t) return true;
+      if ((t === 'necklace' || t === 'necklaces') && (pCat === 'necklace' || pCat === 'necklaces' || pCat === 'pendant')) return true;
+      if ((t === 'rings' || t === 'ring') && (pCat === 'rings' || pCat === 'ring')) return true;
+      if ((t === 'band' || t === 'bands') && (pCat === 'band' || pCat === 'bands')) return true;
+      if ((t === 'earrings' || t === 'earring') && (pCat === 'earrings' || pCat === 'earring')) return true;
+      if ((t === 'bracelet' || t === 'bracelets') && (pCat === 'bracelet' || pCat === 'bracelets')) return true;
+      if ((t === 'nose-ring' || t === 'nose') && (pCat === 'nose-ring' || pCat === 'nose')) return true;
+      if ((t === 'belly-rings' || t === 'belly') && (pCat === 'belly-rings' || pCat === 'belly')) return true;
+      return pCat.includes(t);
+    };
+
+    return Array.from(map.values()).map((cat) => ({
+      ...cat,
+      count: cat.value === 'all'
+        ? products.length
+        : products.filter((p) => isMatch(p.category, cat.value)).length,
+    }));
+  }, [products]);
 
   // Uploading state
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -674,9 +724,19 @@ export default function AdminBurgerPage() {
           (p.category && p.category.toLowerCase().includes(query)) ||
           (p.badge && p.badge.toLowerCase().includes(query));
 
+        const target = selectedCategoryFilter.toLowerCase().trim();
+        const pCat = (p.category || '').toLowerCase().trim();
         const matchCat =
-          selectedCategoryFilter === 'all' ||
-          p.category.toLowerCase() === selectedCategoryFilter.toLowerCase();
+          target === 'all' ||
+          pCat === target ||
+          ((target === 'necklace' || target === 'necklaces') && (pCat === 'necklace' || pCat === 'necklaces' || pCat === 'pendant')) ||
+          ((target === 'rings' || target === 'ring') && (pCat === 'rings' || pCat === 'ring')) ||
+          ((target === 'band' || target === 'bands') && (pCat === 'band' || pCat === 'bands')) ||
+          ((target === 'earrings' || target === 'earring') && (pCat === 'earrings' || pCat === 'earring')) ||
+          ((target === 'bracelet' || target === 'bracelets') && (pCat === 'bracelet' || pCat === 'bracelets')) ||
+          ((target === 'nose-ring' || target === 'nose') && (pCat === 'nose-ring' || pCat === 'nose')) ||
+          ((target === 'belly-rings' || target === 'belly') && (pCat === 'belly-rings' || pCat === 'belly')) ||
+          pCat.includes(target);
 
         const matchStock =
           selectedStockFilter === 'all' ||
@@ -1009,20 +1069,28 @@ export default function AdminBurgerPage() {
                   </div>
                   <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Categories</span>
                 </div>
-                <div className="flex flex-wrap gap-1 mt-0.5">
-                  {Object.entries(categoryBreakdown).slice(0, 3).map(([cat, count]) => (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => {
-                        setSelectedCategoryFilter(cat);
-                        setMainViewMode('table');
-                      }}
-                      className="text-[9px] bg-white/10 hover:bg-[#D4AF37] hover:text-[#022C22] text-gray-300 px-1.5 py-0.5 rounded capitalize transition-colors cursor-pointer"
-                    >
-                      {cat}: {count}
-                    </button>
-                  ))}
+                <div className="flex flex-wrap gap-1 mt-1 max-h-16 overflow-y-auto pr-0.5">
+                  {allCategories
+                    .filter((c) => c.value !== 'all')
+                    .map((cat) => (
+                      <button
+                        key={cat.value}
+                        type="button"
+                        onClick={() => {
+                          setSelectedCategoryFilter(cat.value);
+                          setMainViewMode('table');
+                        }}
+                        className={`text-[9px] px-1.5 py-0.5 rounded capitalize transition-colors cursor-pointer flex items-center gap-1 ${
+                          selectedCategoryFilter === cat.value
+                            ? 'bg-[#D4AF37] text-[#022C22] font-bold'
+                            : 'bg-white/10 hover:bg-[#D4AF37] hover:text-[#022C22] text-gray-300'
+                        }`}
+                        title={`${cat.label} (${cat.count} items)`}
+                      >
+                        <span>{cat.shortLabel}:</span>
+                        <span className="font-bold">{cat.count}</span>
+                      </button>
+                    ))}
                 </div>
               </div>
             </div>
@@ -1115,19 +1183,29 @@ export default function AdminBurgerPage() {
             {/* Filter Pills Row */}
             <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-white/10">
               {/* Category Pills */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-                <span className="text-[11px] text-gray-400 font-semibold mr-1">Category:</span>
-                {['all', 'rings', 'earrings', 'necklaces'].map((cat) => (
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs max-w-full">
+                <span className="text-[11px] text-gray-400 font-semibold mr-1 flex-shrink-0">Category:</span>
+                {allCategories.map((cat) => (
                   <button
-                    key={cat}
-                    onClick={() => setSelectedCategoryFilter(cat)}
-                    className={`px-3 py-1 rounded-lg capitalize whitespace-nowrap cursor-pointer transition-colors text-xs font-medium ${
-                      selectedCategoryFilter === cat
+                    key={cat.value}
+                    type="button"
+                    onClick={() => setSelectedCategoryFilter(cat.value)}
+                    className={`px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors text-xs font-medium flex items-center gap-1.5 flex-shrink-0 ${
+                      selectedCategoryFilter === cat.value
                         ? 'bg-[#D4AF37] text-[#022C22] font-bold shadow'
                         : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white'
                     }`}
                   >
-                    {cat}
+                    <span>{cat.shortLabel}</span>
+                    <span
+                      className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                        selectedCategoryFilter === cat.value
+                          ? 'bg-[#022C22]/20 text-[#022C22]'
+                          : 'bg-white/10 text-gray-400'
+                      }`}
+                    >
+                      {cat.count}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -1534,18 +1612,20 @@ export default function AdminBurgerPage() {
                 />
               </div>
 
-              <div className="flex gap-1.5 overflow-x-auto pb-0.5 text-xs">
-                {['all', 'rings', 'earrings', 'necklaces'].map((cat) => (
+              <div className="flex gap-1.5 overflow-x-auto pb-1 text-xs">
+                {allCategories.map((cat) => (
                   <button
-                    key={cat}
-                    onClick={() => setSelectedCategoryFilter(cat)}
-                    className={`px-2.5 py-1 rounded-lg capitalize whitespace-nowrap cursor-pointer transition-colors text-[10px] font-medium ${
-                      selectedCategoryFilter === cat
+                    key={cat.value}
+                    type="button"
+                    onClick={() => setSelectedCategoryFilter(cat.value)}
+                    className={`px-2.5 py-1 rounded-lg whitespace-nowrap cursor-pointer transition-colors text-[10px] font-medium flex items-center gap-1 flex-shrink-0 ${
+                      selectedCategoryFilter === cat.value
                         ? 'bg-[#D4AF37] text-[#022C22] font-bold'
                         : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
                     }`}
                   >
-                    {cat}
+                    <span>{cat.shortLabel}</span>
+                    <span className="opacity-70 text-[9px]">({cat.count})</span>
                   </button>
                 ))}
               </div>
@@ -2155,10 +2235,11 @@ export default function AdminBurgerPage() {
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                       className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     >
-                      <option value="rings">Rings</option>
-                      <option value="earrings">Earrings</option>
-                      <option value="necklaces">Necklaces</option>
-                      <option value="bracelets">Bracelets</option>
+                      {CATEGORY_DEFINITIONS.filter((c) => c.value !== 'all').map((c) => (
+                        <option key={c.value} value={c.value} className="bg-[#021A14]">
+                          {c.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
