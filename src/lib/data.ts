@@ -57,15 +57,18 @@ export type Product = {
 
 export const SHAPES = [
   { name: 'All Shapes', value: 'all', shapeType: 'all' },
+  { name: 'Pear', value: 'Pear', shapeType: 'pear' },
+  { name: 'Emerald', value: 'Emerald', shapeType: 'emerald' },
   { name: 'Round', value: 'Round', shapeType: 'round' },
   { name: 'Oval', value: 'Oval', shapeType: 'oval' },
-  { name: 'Emerald', value: 'Emerald', shapeType: 'emerald' },
-  { name: 'Radiant', value: 'Radiant', shapeType: 'radiant' },
-  { name: 'Cushion', value: 'Cushion', shapeType: 'cushion' },
-  { name: 'Pear', value: 'Pear', shapeType: 'pear' },
-  { name: 'Princess', value: 'Princess', shapeType: 'princess' },
   { name: 'Marquise', value: 'Marquise', shapeType: 'marquise' },
-  { name: 'Hexagon', value: 'Hexagon', shapeType: 'hexagon' },
+  { name: 'Cushion', value: 'Cushion', shapeType: 'cushion' },
+  { name: 'Princess', value: 'Princess', shapeType: 'princess' },
+  { name: 'Heart', value: 'Heart', shapeType: 'heart' },
+  { name: 'Radiant', value: 'Radiant', shapeType: 'radiant' },
+  { name: 'Asscher', value: 'Asscher', shapeType: 'asscher' },
+  { name: 'Trillion', value: 'Trillion', shapeType: 'trillion' },
+  { name: 'Baguette', value: 'Baguette', shapeType: 'baguette' },
 ] as const;
 
 export const METALS = [
