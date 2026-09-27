@@ -53,6 +53,8 @@ export type Product = {
   bespokeNotice?: string;
   itemDetails?: Record<string, string>;
   tags?: string[];
+  metalPrices?: Record<string, number>;
+  hasCenterStone?: boolean;
 };
 
 export const SHAPES = [

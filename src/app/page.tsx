@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -144,13 +144,92 @@ export default function Home() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const PRODUCTS_PER_PAGE = 8;
+  const isFirstMountRef = useRef(true);
+  const prevFiltersRef = useRef({ searchQuery, selectedShape, selectedMetal, sortBy });
 
-  // Reset to page 1 on filter change
+  // Restore pagination on mount from URL query or sessionStorage
   useEffect(() => {
-    setCurrentPage(1);
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlPage = parseInt(urlParams.get('page') || '', 10);
+      const sessionPage = parseInt(sessionStorage.getItem('fj_home_page') || '', 10);
+      const targetPage = (!isNaN(urlPage) && urlPage >= 1)
+        ? urlPage
+        : (!isNaN(sessionPage) && sessionPage >= 1 ? sessionPage : 1);
+
+      if (targetPage > 1) {
+        setCurrentPage(targetPage);
+      }
+    } catch (e) {
+      // safe fallback
+    }
+  }, []);
+
+  // Listen to browser Back / Forward (popstate)
+  useEffect(() => {
+    const handlePopState = () => {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const p = parseInt(urlParams.get('page') || '1', 10);
+        if (!isNaN(p) && p >= 1) {
+          setCurrentPage(p);
+        }
+      } catch (e) {}
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Reset to page 1 only when filters explicitly change AFTER initial mount
+  useEffect(() => {
+    if (isFirstMountRef.current) {
+      isFirstMountRef.current = false;
+      return;
+    }
+
+    const prev = prevFiltersRef.current;
+    if (
+      prev.searchQuery !== searchQuery ||
+      prev.selectedShape !== selectedShape ||
+      prev.selectedMetal !== selectedMetal ||
+      prev.sortBy !== sortBy
+    ) {
+      prevFiltersRef.current = { searchQuery, selectedShape, selectedMetal, sortBy };
+      setCurrentPage(1);
+      try {
+        sessionStorage.setItem('fj_home_page', '1');
+        const url = new URL(window.location.href);
+        url.searchParams.delete('page');
+        window.history.replaceState({}, '', url.toString());
+      } catch (e) {}
+    }
   }, [searchQuery, selectedShape, selectedMetal, sortBy]);
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE) || 1;
+
+  // Clamp page if filtered count drops
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
+
+  const handlePageChange = (newPage: number) => {
+    const clamped = Math.max(1, Math.min(newPage, totalPages));
+    setCurrentPage(clamped);
+    try {
+      sessionStorage.setItem('fj_home_page', String(clamped));
+      const url = new URL(window.location.href);
+      if (clamped > 1) {
+        url.searchParams.set('page', String(clamped));
+      } else {
+        url.searchParams.delete('page');
+      }
+      window.history.pushState({ page: clamped }, '', url.toString());
+    } catch (e) {}
+    document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const paginatedProducts = useMemo(() => {
     const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
     return filteredProducts.slice(start, start + PRODUCTS_PER_PAGE);
@@ -476,10 +555,7 @@ export default function Home() {
                   <button
                     type="button"
                     disabled={currentPage <= 1}
-                    onClick={() => {
-                      setCurrentPage((prev) => Math.max(prev - 1, 1));
-                      document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    onClick={() => handlePageChange(currentPage - 1)}
                     className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
                   >
                     <ChevronLeft className="w-3.5 h-3.5" />
@@ -492,10 +568,7 @@ export default function Home() {
                         <button
                           key={pageNum}
                           type="button"
-                          onClick={() => {
-                            setCurrentPage(pageNum);
-                            document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
-                          }}
+                          onClick={() => handlePageChange(pageNum)}
                           className={`w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                             currentPage === pageNum
                               ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
@@ -511,10 +584,7 @@ export default function Home() {
                           <button
                             key={pageNum}
                             type="button"
-                            onClick={() => {
-                              setCurrentPage(pageNum);
-                              document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
-                            }}
+                            onClick={() => handlePageChange(pageNum)}
                             className={`w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                               currentPage === pageNum
                                 ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
@@ -542,10 +612,7 @@ export default function Home() {
                           <button
                             key={pageNum}
                             type="button"
-                            onClick={() => {
-                              setCurrentPage(pageNum);
-                              document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
-                            }}
+                            onClick={() => handlePageChange(pageNum)}
                             className={`w-8 h-8 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                               currentPage === pageNum
                                 ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
@@ -562,10 +629,7 @@ export default function Home() {
                   <button
                     type="button"
                     disabled={currentPage >= totalPages}
-                    onClick={() => {
-                      setCurrentPage((prev) => Math.min(prev + 1, totalPages));
-                      document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    onClick={() => handlePageChange(currentPage + 1)}
                     className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
                   >
                     <span>Next</span>

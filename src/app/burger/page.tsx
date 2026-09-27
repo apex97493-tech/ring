@@ -46,9 +46,23 @@ import {
   Edit3,
   Filter,
   ArrowUpDown,
+  Coins,
+  RefreshCw,
+  CheckCheck,
+  SlidersHorizontal,
+  ArrowRight,
 } from 'lucide-react';
-import { Product, ProductVariant, SHAPES, METALS } from '@/lib/data';
+import {
+  Product,
+  ProductVariant,
+  SHAPES,
+  METALS,
+  STANDARD_METAL_TIERS,
+  PRODUCT_METAL_PRICES,
+} from '@/lib/data';
 import { useProducts } from '@/context/ProductContext';
+import { useCurrency, SUPPORTED_CURRENCIES } from '@/context/CurrencyContext';
+import { US_RING_SIZES } from '@/components/products/FindYourSizeDrawer';
 import ProductCard from '@/components/products/ProductCard';
 import ProductImageGallery from '@/components/products/ProductImageGallery';
 
@@ -123,6 +137,7 @@ const EMPTY_PRODUCT: Product = {
 
 export default function AdminBurgerPage() {
   const { products, addProduct, updateProduct, deleteProduct, resetToDefaults } = useProducts();
+  const { selectedCurrency, formatPrice } = useCurrency();
 
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -139,11 +154,21 @@ export default function AdminBurgerPage() {
   // Navigation & View Mode: Table Catalog View vs Deep Product Editor
   const [mainViewMode, setMainViewMode] = useState<'table' | 'editor'>('table');
   const [selectedStockFilter, setSelectedStockFilter] = useState<'all' | 'in_stock' | 'low_stock' | 'out_of_stock'>('all');
+  const [metalPricingFilter, setMetalPricingFilter] = useState<'all' | 'verified' | 'standard'>('all');
+  const [adminCurrency, setAdminCurrency] = useState<string>('INR');
   const [sortBy, setSortBy] = useState<'default' | 'price-asc' | 'price-desc' | 'name-asc' | 'stock-asc' | 'stock-desc'>('default');
   const [tableItemsPerPage, setTableItemsPerPage] = useState<number>(10);
   const [tableCurrentPage, setTableCurrentPage] = useState<number>(1);
   const [quickEditingPriceId, setQuickEditingPriceId] = useState<string | null>(null);
   const [quickPriceVal, setQuickPriceVal] = useState<number>(0);
+
+  // Currency conversion helper for admin table & matrix
+  const formatAdminPrice = (inrPrice: number, targetCurrencyCode?: string) => {
+    const code = targetCurrencyCode || adminCurrency;
+    const cur = SUPPORTED_CURRENCIES[code] || SUPPORTED_CURRENCIES.INR;
+    const converted = Math.round(inrPrice * cur.rate);
+    return `${cur.symbol}${converted.toLocaleString('en-US')}`;
+  };
 
   // Search & Pagination state for catalog
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -236,6 +261,35 @@ export default function AdminBurgerPage() {
 
   // Select a product from sidebar or table to edit in full editor
   const handleSelectProduct = (p: Product) => {
+    const existingMetalPrices: Record<string, number> = p.metalPrices
+      ? { ...p.metalPrices }
+      : PRODUCT_METAL_PRICES[p.id]
+      ? { ...PRODUCT_METAL_PRICES[p.id] }
+      : {
+          '925 Sterling Silver': p.price,
+          'Yellow Gold Overlay': p.price,
+          'Rose Gold Overlay': p.price,
+          'White Gold Overlay': p.price,
+          '9k Yellow Gold': p.price + 33461,
+          '9k Rose Gold': p.price + 33461,
+          '9k White Gold': p.price + 33461,
+          '10k Yellow Gold': p.price + 35000,
+          '10k Rose Gold': p.price + 35000,
+          '10k White Gold': p.price + 35000,
+          '14k Yellow Gold': p.price + 48489,
+          '14k Rose Gold': p.price + 48489,
+          '14k White Gold': p.price + 48489,
+          '18k Yellow Gold': p.price + 66021,
+          '18k Rose Gold': p.price + 66021,
+          '18k White Gold': p.price + 66021,
+        };
+
+    const isBand =
+      (p.category || '').toLowerCase().includes('band') ||
+      (p.name || '').toLowerCase().includes('band') ||
+      (p.name || '').toLowerCase().includes('signet');
+    const hasCenterStone = p.hasCenterStone !== undefined ? p.hasCenterStone : !isBand;
+
     setFormData({
       ...p,
       sku: p.sku || `FJS-${(p.shape || 'RNG').toUpperCase()}-${p.id.replace(/[^0-9]/g, '').slice(-4) || '001'}`,
@@ -256,6 +310,8 @@ export default function AdminBurgerPage() {
       variants: p.variants ? [...p.variants] : [],
       images: p.images ? [...p.images] : [],
       features: p.features ? [...p.features] : [],
+      metalPrices: existingMetalPrices,
+      hasCenterStone,
     });
     setIsNewListing(false);
     setMainViewMode('editor');
@@ -265,6 +321,24 @@ export default function AdminBurgerPage() {
   // Create brand new product
   const handleCreateNew = () => {
     const newId = `moi-${Date.now().toString().slice(-4)}`;
+    const defaultMetalPrices: Record<string, number> = {
+      '925 Sterling Silver': 3999,
+      'Yellow Gold Overlay': 3999,
+      'Rose Gold Overlay': 3999,
+      'White Gold Overlay': 3999,
+      '9k Yellow Gold': 37460,
+      '9k Rose Gold': 37460,
+      '9k White Gold': 37460,
+      '10k Yellow Gold': 38999,
+      '10k Rose Gold': 38999,
+      '10k White Gold': 38999,
+      '14k Yellow Gold': 52488,
+      '14k Rose Gold': 52488,
+      '14k White Gold': 52488,
+      '18k Yellow Gold': 70020,
+      '18k Rose Gold': 70020,
+      '18k White Gold': 70020,
+    };
     setFormData({
       ...EMPTY_PRODUCT,
       id: newId,
@@ -272,10 +346,82 @@ export default function AdminBurgerPage() {
       name: '',
       slug: '',
       images: [],
+      metalPrices: defaultMetalPrices,
+      hasCenterStone: true,
     });
     setIsNewListing(true);
     setMainViewMode('editor');
     showToast('Ready to add a new product');
+  };
+
+  // Metal Pricing Variation Batch Helpers
+  const handleUpdateMetalPrice = (metal: string, price: number) => {
+    setFormData((prev) => {
+      const updated = { ...(prev.metalPrices || {}) };
+      if (price <= 0) {
+        delete updated[metal];
+      } else {
+        updated[metal] = price;
+      }
+      return {
+        ...prev,
+        metalPrices: updated,
+      };
+    });
+  };
+
+  const handleApplyStandardMetalFormulas = () => {
+    const base = formData.price || 3999;
+    const formulaPrices: Record<string, number> = {
+      '925 Sterling Silver': base,
+      'Yellow Gold Overlay': base,
+      'Rose Gold Overlay': base,
+      'White Gold Overlay': base,
+      '9k Yellow Gold': base + 33461,
+      '9k Rose Gold': base + 33461,
+      '9k White Gold': base + 33461,
+      '10k Yellow Gold': base + 35000,
+      '10k Rose Gold': base + 35000,
+      '10k White Gold': base + 35000,
+      '14k Yellow Gold': base + 48489,
+      '14k Rose Gold': base + 48489,
+      '14k White Gold': base + 48489,
+      '18k Yellow Gold': base + 66021,
+      '18k Rose Gold': base + 66021,
+      '18k White Gold': base + 66021,
+    };
+    setFormData((prev) => ({
+      ...prev,
+      metalPrices: formulaPrices,
+    }));
+    showToast('Applied standard solid gold formulas to all 16 metal tiers');
+  };
+
+  const handleSyncOverlaysToBasePrice = () => {
+    const base = formData.price || 3999;
+    setFormData((prev) => ({
+      ...prev,
+      metalPrices: {
+        ...(prev.metalPrices || {}),
+        '925 Sterling Silver': base,
+        'Yellow Gold Overlay': base,
+        'Rose Gold Overlay': base,
+        'White Gold Overlay': base,
+      },
+    }));
+    showToast(`Synced all Gold Overlays to match ₹${base.toLocaleString('en-IN')}`);
+  };
+
+  const handleResetToEtsyDefaults = () => {
+    if (PRODUCT_METAL_PRICES[formData.id]) {
+      setFormData((prev) => ({
+        ...prev,
+        metalPrices: { ...PRODUCT_METAL_PRICES[formData.id] },
+      }));
+      showToast('Loaded verified Etsy listing pricing matrix');
+    } else {
+      handleApplyStandardMetalFormulas();
+    }
   };
 
   // Duplicate current product
@@ -698,6 +844,8 @@ export default function AdminBurgerPage() {
       reviewsCount: Number(formData.reviewsCount) || 10,
       images: formData.images.length > 0 ? formData.images : ['/images/ai_ring1_front.jpg'],
       variants: cleanVariants,
+      metalPrices: formData.metalPrices,
+      hasCenterStone: formData.hasCenterStone,
     };
 
     if (isNewListing) {
@@ -744,7 +892,13 @@ export default function AdminBurgerPage() {
           (selectedStockFilter === 'low_stock' && p.stockStatus === 'low_stock') ||
           (selectedStockFilter === 'out_of_stock' && p.stockStatus === 'out_of_stock');
 
-        return matchSearch && matchCat && matchStock;
+        const hasVerifiedMetal = !!p.metalPrices || !!PRODUCT_METAL_PRICES[p.id];
+        const matchMetal =
+          metalPricingFilter === 'all' ||
+          (metalPricingFilter === 'verified' && hasVerifiedMetal) ||
+          (metalPricingFilter === 'standard' && !hasVerifiedMetal);
+
+        return matchSearch && matchCat && matchStock && matchMetal;
       })
       .sort((a, b) => {
         if (sortBy === 'price-asc') return a.price - b.price;
@@ -754,14 +908,131 @@ export default function AdminBurgerPage() {
         if (sortBy === 'stock-desc') return (b.stockQuantity ?? 10) - (a.stockQuantity ?? 10);
         return 0;
       });
-  }, [products, searchQuery, selectedCategoryFilter, selectedStockFilter, sortBy]);
+  }, [products, searchQuery, selectedCategoryFilter, selectedStockFilter, metalPricingFilter, sortBy]);
 
-  // Reset sidebar pagination to page 1 whenever filters change
+  const isFirstMountAdminRef = useRef(true);
+  const prevAdminFiltersRef = useRef({
+    searchQuery,
+    selectedCategoryFilter,
+    selectedStockFilter,
+    metalPricingFilter,
+    sortBy,
+    tableItemsPerPage,
+    itemsPerPage,
+  });
+
+  // Restore admin pagination from URL or sessionStorage on mount
   useEffect(() => {
-    setCurrentPage(1);
-  }, [searchQuery, selectedCategoryFilter, selectedStockFilter, itemsPerPage]);
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlAdminPage = parseInt(urlParams.get('tablePage') || '', 10);
+      const savedAdminPage = parseInt(sessionStorage.getItem('fj_admin_table_page') || '', 10);
+      const pageToUse = (!isNaN(urlAdminPage) && urlAdminPage >= 1)
+        ? urlAdminPage
+        : (!isNaN(savedAdminPage) && savedAdminPage >= 1 ? savedAdminPage : 1);
+      if (pageToUse > 1) {
+        setTableCurrentPage(pageToUse);
+      }
+
+      const savedSidebarPage = parseInt(sessionStorage.getItem('fj_admin_sidebar_page') || '', 10);
+      if (!isNaN(savedSidebarPage) && savedSidebarPage > 1) {
+        setCurrentPage(savedSidebarPage);
+      }
+    } catch (e) {}
+  }, []);
+
+  // Popstate listener for admin back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const p = parseInt(urlParams.get('tablePage') || '1', 10);
+        if (!isNaN(p) && p >= 1) {
+          setTableCurrentPage(p);
+        }
+      } catch (e) {}
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Filter reset effect: ONLY when admin deliberately changes filters
+  useEffect(() => {
+    if (isFirstMountAdminRef.current) {
+      isFirstMountAdminRef.current = false;
+      return;
+    }
+
+    const prev = prevAdminFiltersRef.current;
+    if (
+      prev.searchQuery !== searchQuery ||
+      prev.selectedCategoryFilter !== selectedCategoryFilter ||
+      prev.selectedStockFilter !== selectedStockFilter ||
+      prev.metalPricingFilter !== metalPricingFilter ||
+      prev.sortBy !== sortBy ||
+      prev.tableItemsPerPage !== tableItemsPerPage ||
+      prev.itemsPerPage !== itemsPerPage
+    ) {
+      prevAdminFiltersRef.current = {
+        searchQuery,
+        selectedCategoryFilter,
+        selectedStockFilter,
+        metalPricingFilter,
+        sortBy,
+        tableItemsPerPage,
+        itemsPerPage,
+      };
+      setTableCurrentPage(1);
+      setCurrentPage(1);
+      try {
+        sessionStorage.setItem('fj_admin_table_page', '1');
+        sessionStorage.setItem('fj_admin_sidebar_page', '1');
+        const url = new URL(window.location.href);
+        url.searchParams.delete('tablePage');
+        window.history.replaceState({}, '', url.toString());
+      } catch (e) {}
+    }
+  }, [searchQuery, selectedCategoryFilter, selectedStockFilter, metalPricingFilter, sortBy, tableItemsPerPage, itemsPerPage]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage) || 1;
+  const tableTotalPages = tableItemsPerPage === 0 ? 1 : Math.ceil(filteredProducts.length / tableItemsPerPage) || 1;
+
+  // Clamp pages
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
+
+  useEffect(() => {
+    if (tableCurrentPage > tableTotalPages && tableTotalPages > 0) {
+      setTableCurrentPage(tableTotalPages);
+    }
+  }, [tableTotalPages, tableCurrentPage]);
+
+  const handleTablePageChange = (newPage: number) => {
+    const clamped = Math.max(1, Math.min(newPage, tableTotalPages));
+    setTableCurrentPage(clamped);
+    try {
+      sessionStorage.setItem('fj_admin_table_page', String(clamped));
+      const url = new URL(window.location.href);
+      if (clamped > 1) {
+        url.searchParams.set('tablePage', String(clamped));
+      } else {
+        url.searchParams.delete('tablePage');
+      }
+      window.history.pushState({ tablePage: clamped }, '', url.toString());
+    } catch (e) {}
+  };
+
+  const handleSidebarPageChange = (newPage: number) => {
+    const clamped = Math.max(1, Math.min(newPage, totalPages));
+    setCurrentPage(clamped);
+    try {
+      sessionStorage.setItem('fj_admin_sidebar_page', String(clamped));
+    } catch (e) {}
+  };
+
   const paginatedProducts = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
     return filteredProducts.slice(start, start + itemsPerPage);
@@ -770,12 +1041,6 @@ export default function AdminBurgerPage() {
   const startIndex = filteredProducts.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0;
   const endIndex = Math.min(currentPage * itemsPerPage, filteredProducts.length);
 
-  // Table pagination
-  useEffect(() => {
-    setTableCurrentPage(1);
-  }, [searchQuery, selectedCategoryFilter, selectedStockFilter, sortBy, tableItemsPerPage]);
-
-  const tableTotalPages = tableItemsPerPage === 0 ? 1 : Math.ceil(filteredProducts.length / tableItemsPerPage) || 1;
   const tablePaginatedProducts = useMemo(() => {
     if (tableItemsPerPage === 0) return filteredProducts;
     const start = (tableCurrentPage - 1) * tableItemsPerPage;
@@ -958,9 +1223,8 @@ export default function AdminBurgerPage() {
         const outOfStockCount = products.filter(p => p.stockStatus === 'out_of_stock').length;
         const lowStockCount = products.filter(p => p.stockStatus === 'low_stock').length;
         const featuredCount = products.filter(p => p.isFeatured).length;
+        const verifiedCount = products.filter(p => !!p.metalPrices || !!PRODUCT_METAL_PRICES[p.id]).length;
         const avgPrice = products.length > 0 ? Math.round(products.reduce((sum, p) => sum + p.price, 0) / products.length) : 0;
-        const categoryBreakdown: Record<string, number> = {};
-        products.forEach(p => { categoryBreakdown[p.category] = (categoryBreakdown[p.category] || 0) + 1; });
 
         return (
           <div className="bg-[#021A14] border-b border-white/10 px-4 sm:px-8 py-3">
@@ -970,11 +1234,12 @@ export default function AdminBurgerPage() {
                 onClick={() => {
                   setSelectedStockFilter('all');
                   setSelectedCategoryFilter('all');
+                  setMetalPricingFilter('all');
                   setSearchQuery('');
                   setMainViewMode('table');
                 }}
                 className={`bg-[#032019] border text-left rounded-xl p-3 hover:border-[#D4AF37]/40 transition-all cursor-pointer ${
-                  selectedStockFilter === 'all' && selectedCategoryFilter === 'all' && !searchQuery
+                  selectedStockFilter === 'all' && selectedCategoryFilter === 'all' && metalPricingFilter === 'all' && !searchQuery
                     ? 'border-[#D4AF37] ring-1 ring-[#D4AF37]/50'
                     : 'border-white/10'
                 }`}
@@ -1036,6 +1301,28 @@ export default function AdminBurgerPage() {
               <button
                 type="button"
                 onClick={() => {
+                  setMetalPricingFilter((prev) => (prev === 'verified' ? 'all' : 'verified'));
+                  setMainViewMode('table');
+                }}
+                className={`bg-[#032019] border text-left rounded-xl p-3 hover:border-[#D4AF37]/40 transition-all cursor-pointer ${
+                  metalPricingFilter === 'verified'
+                    ? 'border-[#D4AF37] ring-1 ring-[#D4AF37]/50'
+                    : 'border-white/10'
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-7 h-7 rounded-lg bg-[#D4AF37]/15 flex items-center justify-center">
+                    <CheckCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  </div>
+                  <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Etsy Synced</span>
+                </div>
+                <span className="text-lg font-bold text-[#D4AF37] block">{verifiedCount}</span>
+                <span className="text-[10px] text-gray-500">Live Etsy metal pricing</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
                   setSearchQuery('bestseller');
                   setMainViewMode('table');
                 }}
@@ -1058,40 +1345,12 @@ export default function AdminBurgerPage() {
                   </div>
                   <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Avg Price</span>
                 </div>
-                <span className="text-lg font-bold text-white block">₹{avgPrice.toLocaleString('en-IN')}</span>
-                <span className="text-[10px] text-gray-500">Per product catalog</span>
-              </div>
-
-              <div className="bg-[#032019] border border-white/10 rounded-xl p-3 hover:border-[#D4AF37]/40 transition-all">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-7 h-7 rounded-lg bg-[#D4AF37]/15 flex items-center justify-center">
-                    <BarChart3 className="w-3.5 h-3.5 text-[#D4AF37]" />
-                  </div>
-                  <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Categories</span>
-                </div>
-                <div className="flex flex-wrap gap-1 mt-1 max-h-16 overflow-y-auto pr-0.5">
-                  {allCategories
-                    .filter((c) => c.value !== 'all')
-                    .map((cat) => (
-                      <button
-                        key={cat.value}
-                        type="button"
-                        onClick={() => {
-                          setSelectedCategoryFilter(cat.value);
-                          setMainViewMode('table');
-                        }}
-                        className={`text-[9px] px-1.5 py-0.5 rounded capitalize transition-colors cursor-pointer flex items-center gap-1 ${
-                          selectedCategoryFilter === cat.value
-                            ? 'bg-[#D4AF37] text-[#022C22] font-bold'
-                            : 'bg-white/10 hover:bg-[#D4AF37] hover:text-[#022C22] text-gray-300'
-                        }`}
-                        title={`${cat.label} (${cat.count} items)`}
-                      >
-                        <span>{cat.shortLabel}:</span>
-                        <span className="font-bold">{cat.count}</span>
-                      </button>
-                    ))}
-                </div>
+                <span className="text-lg font-bold text-white block">
+                  {formatAdminPrice(avgPrice)}
+                </span>
+                <span className="text-[10px] text-gray-500 font-mono">
+                  ₹{avgPrice.toLocaleString('en-IN')} INR
+                </span>
               </div>
             </div>
           </div>
@@ -1159,6 +1418,25 @@ export default function AdminBurgerPage() {
                   </select>
                 </div>
 
+                {/* Currency Preview Dropdown */}
+                <div className="flex items-center gap-1.5 bg-black/40 border border-[#D4AF37]/40 rounded-xl px-2.5 py-2 text-xs shadow-inner">
+                  <Globe className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <span className="text-gray-400 text-[11px] hidden sm:inline">Currency:</span>
+                  <select
+                    value={adminCurrency}
+                    onChange={(e) => setAdminCurrency(e.target.value)}
+                    className="bg-transparent text-[#D4AF37] font-bold text-xs focus:outline-none cursor-pointer"
+                  >
+                    <option value="INR" className="bg-[#021A14]">₹ INR (India)</option>
+                    <option value="USD" className="bg-[#021A14]">$ USD (USA)</option>
+                    <option value="GBP" className="bg-[#021A14]">£ GBP (UK)</option>
+                    <option value="EUR" className="bg-[#021A14]">€ EUR (Europe)</option>
+                    <option value="CAD" className="bg-[#021A14]">$ CAD (Canada)</option>
+                    <option value="AUD" className="bg-[#021A14]">$ AUD (Australia)</option>
+                    <option value="AED" className="bg-[#021A14]">AED (UAE)</option>
+                  </select>
+                </div>
+
                 <button
                   type="button"
                   onClick={handleExportBackup}
@@ -1210,27 +1488,52 @@ export default function AdminBurgerPage() {
                 ))}
               </div>
 
-              {/* Stock Status Pills */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
-                <span className="text-[11px] text-gray-400 font-semibold mr-1">Stock:</span>
-                {[
-                  { id: 'all', label: 'All Stock' },
-                  { id: 'in_stock', label: 'In Stock' },
-                  { id: 'low_stock', label: 'Low Stock' },
-                  { id: 'out_of_stock', label: 'Out of Stock' },
-                ].map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => setSelectedStockFilter(s.id as any)}
-                    className={`px-2.5 py-1 rounded-lg whitespace-nowrap cursor-pointer transition-colors text-xs font-medium ${
-                      selectedStockFilter === s.id
-                        ? 'bg-emerald-500 text-black font-bold shadow'
-                        : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    {s.label}
-                  </button>
-                ))}
+              {/* Stock Status & Metal Pricing Pills */}
+              <div className="flex items-center gap-3 overflow-x-auto pb-1 text-xs">
+                {/* Stock Status Pills */}
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[11px] text-gray-400 font-semibold mr-1">Stock:</span>
+                  {[
+                    { id: 'all', label: 'All Stock' },
+                    { id: 'in_stock', label: 'In Stock' },
+                    { id: 'low_stock', label: 'Low' },
+                    { id: 'out_of_stock', label: 'Out' },
+                  ].map((s) => (
+                    <button
+                      key={s.id}
+                      onClick={() => setSelectedStockFilter(s.id as any)}
+                      className={`px-2 py-0.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors text-[11px] font-medium ${
+                        selectedStockFilter === s.id
+                          ? 'bg-emerald-500 text-black font-bold shadow'
+                          : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Metal Pricing Filter Pills */}
+                <div className="flex items-center gap-1.5 border-l border-white/10 pl-3">
+                  <span className="text-[11px] text-gray-400 font-semibold mr-1">Metals:</span>
+                  {[
+                    { id: 'all', label: 'All Metals' },
+                    { id: 'verified', label: '✓ Etsy Synced' },
+                    { id: 'standard', label: 'Formula' },
+                  ].map((f) => (
+                    <button
+                      key={f.id}
+                      onClick={() => setMetalPricingFilter(f.id as any)}
+                      className={`px-2 py-0.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors text-[11px] font-medium ${
+                        metalPricingFilter === f.id
+                          ? 'bg-[#D4AF37] text-[#022C22] font-bold shadow'
+                          : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white'
+                      }`}
+                    >
+                      {f.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -1243,7 +1546,8 @@ export default function AdminBurgerPage() {
                   <tr className="border-b border-white/10 bg-[#021A14] text-gray-400 font-semibold uppercase tracking-wider text-[10px]">
                     <th className="py-3.5 px-4">Product</th>
                     <th className="py-3.5 px-4">Category & Shape</th>
-                    <th className="py-3.5 px-4">Price (INR)</th>
+                    <th className="py-3.5 px-4">Price ({adminCurrency})</th>
+                    <th className="py-3.5 px-4">Etsy Variations</th>
                     <th className="py-3.5 px-4">Stock Qty</th>
                     <th className="py-3.5 px-4">Badges & Flags</th>
                     <th className="py-3.5 px-4 text-right">Actions</th>
@@ -1320,7 +1624,7 @@ export default function AdminBurgerPage() {
                             </div>
                           </td>
 
-                          {/* PRICE (WITH INLINE QUICK EDIT) */}
+                          {/* PRICE (WITH INLINE QUICK EDIT & MULTI-CURRENCY CONVERSION) */}
                           <td className="py-3.5 px-4" onClick={(e) => e.stopPropagation()}>
                             {isEditingPrice ? (
                               <div className="flex items-center gap-1.5">
@@ -1357,12 +1661,18 @@ export default function AdminBurgerPage() {
                               <div className="flex items-center gap-2">
                                 <div>
                                   <span className="font-sans font-bold text-emerald-400 text-xs block">
-                                    ₹{p.price.toLocaleString('en-IN')}
+                                    {formatAdminPrice(p.price)}
                                   </span>
-                                  {p.originalPrice > p.price && (
-                                    <span className="text-[10px] text-gray-500 line-through">
-                                      ₹{p.originalPrice.toLocaleString('en-IN')}
+                                  {adminCurrency !== 'INR' ? (
+                                    <span className="text-[10px] text-gray-400 font-mono block">
+                                      ₹{p.price.toLocaleString('en-IN')} INR
                                     </span>
+                                  ) : (
+                                    p.originalPrice > p.price && (
+                                      <span className="text-[10px] text-gray-500 line-through block">
+                                        ₹{p.originalPrice.toLocaleString('en-IN')}
+                                      </span>
+                                    )
                                   )}
                                 </div>
                                 <button
@@ -1372,12 +1682,54 @@ export default function AdminBurgerPage() {
                                     setQuickPriceVal(p.price);
                                   }}
                                   className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-[#D4AF37] transition-opacity cursor-pointer"
-                                  title="Quick Edit Price"
+                                  title="Quick Edit Base Price"
                                 >
                                   <Edit3 className="w-3 h-3" />
                                 </button>
                               </div>
                             )}
+                          </td>
+
+                          {/* ETSY METAL VARIATIONS PRICING */}
+                          <td className="py-3.5 px-4" onClick={(e) => e.stopPropagation()}>
+                            {(() => {
+                              const hasVerified = !!p.metalPrices || !!PRODUCT_METAL_PRICES[p.id];
+                              const prices = p.metalPrices ?? PRODUCT_METAL_PRICES[p.id] ?? null;
+                              const gold14k = prices?.['14k Yellow Gold'] || (p.price + 48489);
+                              const gold18k = prices?.['18k Yellow Gold'] || (p.price + 66021);
+
+                              return (
+                                <div className="flex flex-col gap-1 items-start">
+                                  <div className="flex items-center gap-1.5">
+                                    {hasVerified ? (
+                                      <span className="inline-flex items-center gap-1 text-[9px] font-bold bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 px-2 py-0.5 rounded-full">
+                                        <span>✓ Etsy Synced</span>
+                                      </span>
+                                    ) : (
+                                      <span className="inline-flex items-center gap-1 text-[9px] font-medium bg-white/5 text-gray-400 border border-white/10 px-2 py-0.5 rounded-full">
+                                        <span>Formula Tier</span>
+                                      </span>
+                                    )}
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        handleSelectProduct(p);
+                                        setActiveTab('variants');
+                                      }}
+                                      className="text-[10px] text-gray-400 hover:text-[#D4AF37] underline cursor-pointer"
+                                      title="Configure metal variation prices"
+                                    >
+                                      Configure
+                                    </button>
+                                  </div>
+                                  <div className="text-[10px] text-gray-400 font-mono">
+                                    <span>14k: {formatAdminPrice(gold14k)}</span>
+                                    <span className="mx-1">•</span>
+                                    <span>18k: {formatAdminPrice(gold18k)}</span>
+                                  </div>
+                                </div>
+                              );
+                            })()}
                           </td>
 
                           {/* STOCK WITH QUICK +/- */}
@@ -1452,13 +1804,21 @@ export default function AdminBurgerPage() {
                           {/* ACTIONS */}
                           <td className="py-3.5 px-4 text-right" onClick={(e) => e.stopPropagation()}>
                             <div className="flex items-center justify-end gap-1.5">
+                              <Link
+                                href={`/products/${p.slug}`}
+                                target="_blank"
+                                className="p-1.5 bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white rounded-lg transition-colors cursor-pointer"
+                                title="View live on store website"
+                              >
+                                <ExternalLink className="w-3.5 h-3.5 text-[#D4AF37]" />
+                              </Link>
                               <button
                                 type="button"
                                 onClick={() => handleSelectProduct(p)}
                                 className="px-2.5 py-1.5 bg-[#D4AF37] hover:bg-white text-[#022C22] rounded-lg text-xs font-bold transition-all shadow flex items-center gap-1 cursor-pointer"
                                 title="Edit all product specs, photos, pricing, story"
                               >
-                                <Edit3 className="w-3 h-3" />
+                                <Edit3 className="w-3.5 h-3.5" />
                                 <span>Edit</span>
                               </button>
 
@@ -1531,7 +1891,7 @@ export default function AdminBurgerPage() {
                   <button
                     type="button"
                     disabled={tableCurrentPage <= 1}
-                    onClick={() => setTableCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    onClick={() => handleTablePageChange(tableCurrentPage - 1)}
                     className="px-3 py-1.5 bg-white/5 hover:bg-white/15 disabled:opacity-25 disabled:hover:bg-white/5 text-gray-300 hover:text-white rounded-lg transition-colors flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
                   >
                     <ChevronLeft className="w-3.5 h-3.5" />
@@ -1544,7 +1904,7 @@ export default function AdminBurgerPage() {
                       return (
                         <button
                           key={pageNum}
-                          onClick={() => setTableCurrentPage(pageNum)}
+                          onClick={() => handleTablePageChange(pageNum)}
                           className={`w-7 h-7 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
                             tableCurrentPage === pageNum
                               ? 'bg-[#D4AF37] text-[#022C22]'
@@ -1561,7 +1921,7 @@ export default function AdminBurgerPage() {
                   <button
                     type="button"
                     disabled={tableCurrentPage >= tableTotalPages}
-                    onClick={() => setTableCurrentPage((prev) => Math.min(prev + 1, tableTotalPages))}
+                    onClick={() => handleTablePageChange(tableCurrentPage + 1)}
                     className="px-3 py-1.5 bg-white/5 hover:bg-white/15 disabled:opacity-25 disabled:hover:bg-white/5 text-gray-300 hover:text-white rounded-lg transition-colors flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed text-xs font-semibold"
                   >
                     <span>Next</span>
@@ -1748,7 +2108,7 @@ export default function AdminBurgerPage() {
                 <button
                   type="button"
                   disabled={currentPage <= 1}
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  onClick={() => handleSidebarPageChange(currentPage - 1)}
                   className="px-2.5 py-1.5 bg-white/5 hover:bg-white/15 disabled:opacity-25 disabled:hover:bg-white/5 text-gray-300 hover:text-white rounded-lg transition-colors flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed text-[11px] font-semibold"
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
@@ -1761,7 +2121,7 @@ export default function AdminBurgerPage() {
                       <button
                         key={pageNum}
                         type="button"
-                        onClick={() => setCurrentPage(pageNum)}
+                        onClick={() => handleSidebarPageChange(pageNum)}
                         className={`w-7 h-7 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                           currentPage === pageNum
                             ? 'bg-[#D4AF37] text-[#022C22] shadow'
@@ -1783,7 +2143,7 @@ export default function AdminBurgerPage() {
                 <button
                   type="button"
                   disabled={currentPage >= totalPages}
-                  onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                  onClick={() => handleSidebarPageChange(currentPage + 1)}
                   className="px-2.5 py-1.5 bg-white/5 hover:bg-white/15 disabled:opacity-25 disabled:hover:bg-white/5 text-gray-300 hover:text-white rounded-lg transition-colors flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed text-[11px] font-semibold"
                 >
                   <span>Next</span>
@@ -2303,58 +2663,109 @@ export default function AdminBurgerPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">
-                      Carat Weight
+                {/* Solitaire Center Stone Toggle & Specs */}
+                <div className="bg-black/30 border border-white/10 rounded-xl p-4 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-xs font-bold text-white flex items-center gap-2">
+                        <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        <span>Center Stone Solitaire Carat Selection</span>
+                      </label>
+                      <p className="text-[11px] text-gray-400 mt-0.5">
+                        {formData.hasCenterStone !== false
+                          ? 'Active: Shoppers can choose center stone carat and review 4Cs specifications.'
+                          : 'Disabled: Plain Band / Eternity Band / Signet Ring mode (carat selection hidden from customers).'}
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={formData.hasCenterStone !== false}
+                        onChange={(e) => setFormData({ ...formData, hasCenterStone: e.target.checked })}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4AF37]"></div>
                     </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. 2.00 CT"
-                      value={formData.carat}
-                      onChange={(e) => setFormData({ ...formData, carat: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">
-                      Color Grade
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Blush Pink / D-Color"
-                      value={formData.colorGrade}
-                      onChange={(e) => setFormData({ ...formData, colorGrade: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
+                  {formData.hasCenterStone !== false ? (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-3 border-t border-white/10">
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 mb-1">
+                          Carat Weight
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. 2.00 CT"
+                          value={formData.carat}
+                          onChange={(e) => setFormData({ ...formData, carat: e.target.value })}
+                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        />
+                      </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">
-                      Clarity Grade
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. VVS1 / Eye Clean"
-                      value={formData.clarity}
-                      onChange={(e) => setFormData({ ...formData, clarity: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 mb-1">
+                          Color Grade
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Blush Pink / D-Color"
+                          value={formData.colorGrade}
+                          onChange={(e) => setFormData({ ...formData, colorGrade: e.target.value })}
+                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        />
+                      </div>
 
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-300 mb-1">
-                      Cut Symmetry
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="e.g. Oval Brilliant Cut"
-                      value={formData.cut}
-                      onChange={(e) => setFormData({ ...formData, cut: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 mb-1">
+                          Clarity Grade
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. VVS1 / Eye Clean"
+                          value={formData.clarity}
+                          onChange={(e) => setFormData({ ...formData, clarity: e.target.value })}
+                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-300 mb-1">
+                          Cut Symmetry
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Oval Brilliant Cut"
+                          value={formData.cut}
+                          onChange={(e) => setFormData({ ...formData, cut: e.target.value })}
+                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-xs text-amber-300 flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                      <span>Solitaire carat specs are suppressed for this item. Perfect for eternity bands and plain signet rings.</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Sizing Standard Information Card */}
+                <div className="bg-black/30 border border-white/10 rounded-xl p-4 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-[#D4AF37]/15 flex items-center justify-center text-[#D4AF37]">
+                      <Ruler className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="font-semibold text-white block">Standard US Ring Sizes Offered</span>
+                      <span className="text-[11px] text-gray-400">
+                        US 3.0 to US 14.0 (23 full & half sizes, 14.0 mm to 22.6 mm comfort fit)
+                      </span>
+                    </div>
                   </div>
+                  <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-md border border-emerald-500/30">
+                    Auto-Mapped Size Drawer
+                  </span>
                 </div>
 
                 {/* Woke Collection Specifications Card Section */}
@@ -2517,11 +2928,26 @@ export default function AdminBurgerPage() {
                   <input
                     type="number"
                     value={formData.price}
-                    onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
+                    onChange={(e) => {
+                      const newPrice = Number(e.target.value);
+                      setFormData((prev) => {
+                        const updatedPrices = { ...(prev.metalPrices || {}) };
+                        // Auto-keep 925 silver and plated overlays matched to base price
+                        updatedPrices['925 Sterling Silver'] = newPrice;
+                        updatedPrices['Yellow Gold Overlay'] = newPrice;
+                        updatedPrices['Rose Gold Overlay'] = newPrice;
+                        updatedPrices['White Gold Overlay'] = newPrice;
+                        return {
+                          ...prev,
+                          price: newPrice,
+                          metalPrices: updatedPrices,
+                        };
+                      });
+                    }}
                     className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-sm text-emerald-400 font-bold focus:outline-none focus:border-[#D4AF37]"
                   />
                   <span className="text-[10px] text-gray-400 mt-1 block">
-                    Actual checkout price charged to the customer.
+                    Actual checkout price charged to the customer for base 925 Sterling Silver & Gold Overlays.
                   </span>
                 </div>
 
@@ -2539,6 +2965,55 @@ export default function AdminBurgerPage() {
                     Used to showcase exclusive discount savings.
                   </span>
                 </div>
+              </div>
+
+              {/* International Price Conversion Live Preview */}
+              <div className="p-4 bg-black/30 border border-white/10 rounded-xl space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-gray-300 flex items-center gap-1.5">
+                    <Globe className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    Live Multi-Currency Price Conversion
+                  </span>
+                  <span className="text-[10px] text-gray-400 font-mono">
+                    Baseline: ₹{formData.price.toLocaleString('en-IN')} INR
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 pt-1">
+                  {['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'AED'].map((curCode) => {
+                    const c = SUPPORTED_CURRENCIES[curCode];
+                    if (!c) return null;
+                    const val = Math.round(formData.price * c.rate);
+                    return (
+                      <div key={curCode} className="p-2 bg-black/40 border border-white/10 rounded-lg text-center">
+                        <span className="text-[10px] text-gray-400 font-medium block">{curCode}</span>
+                        <span className="text-xs font-bold text-white block">{c.symbol}{val.toLocaleString('en-US')}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Quick Metal Pricing Card with Tab 4 Jump */}
+              <div className="p-4 bg-gradient-to-r from-emerald-950/60 to-black/60 border border-[#D4AF37]/30 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div>
+                  <span className="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Precious Metal Variation Pricing
+                  </span>
+                  <p className="text-[11px] text-gray-300 mt-0.5">
+                    Silver/Overlays: ₹{formData.price.toLocaleString('en-IN')} • 
+                    10k Gold: ₹{((formData.metalPrices?.['10k Yellow Gold']) || (formData.price + 35000)).toLocaleString('en-IN')} • 
+                    14k Gold: ₹{((formData.metalPrices?.['14k Yellow Gold']) || (formData.price + 48489)).toLocaleString('en-IN')} • 
+                    18k Gold: ₹{((formData.metalPrices?.['18k Yellow Gold']) || (formData.price + 66021)).toLocaleString('en-IN')}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('variants')}
+                  className="px-3.5 py-1.5 bg-[#D4AF37] hover:bg-white text-[#022C22] text-xs font-bold rounded-lg transition-all shadow cursor-pointer whitespace-nowrap"
+                >
+                  Configure 16 Metal Tiers in Tab 4 →
+                </button>
               </div>
 
               {/* SKU & Inventory Controls */}
@@ -2644,98 +3119,291 @@ export default function AdminBurgerPage() {
           )}
 
           {/* ================================================================= */}
-          {/* TAB 4: PRECIOUS METAL VARIANTS                                    */}
+          {/* TAB 4: PRECIOUS METAL VARIATIONS & LIVE ETSY PRICING MATRIX       */}
           {/* ================================================================= */}
           {(activeTab === 'variants' || viewMode === 'all') && (
             <div className="bg-[#032019] p-5 sm:p-7 rounded-2xl border border-white/15 space-y-6 mb-6 shadow-md">
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <h3 className="font-serif text-base font-bold text-white flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-[#D4AF37]" />
-                  Precious Metal Swatches
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFormData({
-                      ...formData,
-                      variants: [
-                        ...formData.variants,
-                        {
-                          metal: '14k Solid White Gold',
-                          colorCode: '#F1F5F9',
-                          image: formData.images[0] || '/images/ai_ring1_front.jpg',
-                        },
-                      ],
-                    });
-                  }}
-                  className="px-3 py-1.5 bg-[#D4AF37] hover:bg-white text-[#022C22] text-xs font-bold rounded-lg cursor-pointer"
-                >
-                  + Add Metal Option
-                </button>
+              {/* Header & Quick Action Buttons */}
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-white/10 gap-3">
+                <div>
+                  <h3 className="font-serif text-base font-bold text-white flex items-center gap-2">
+                    <Sliders className="w-4 h-4 text-[#D4AF37]" />
+                    <span>Precious Metal Variation Pricing & Swatches</span>
+                  </h3>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Manage exact selling prices for 925 Silver, Plated Overlays, and 9k/10k/14k/18k Solid Gold tiers. Customer selections will dynamically update the checkout price.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    type="button"
+                    onClick={handleSyncOverlaysToBasePrice}
+                    className="px-3 py-1.5 bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white rounded-lg text-xs font-semibold border border-white/15 transition-all flex items-center gap-1.5 cursor-pointer"
+                    title="Set Gold Overlays equal to 925 Silver base price"
+                  >
+                    <span>⚡ Sync Overlays</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleApplyStandardMetalFormulas}
+                    className="px-3 py-1.5 bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white rounded-lg text-xs font-semibold border border-white/15 transition-all flex items-center gap-1.5 cursor-pointer"
+                    title="Calculate +33.4k (9k), +35k (10k), +48.5k (14k), +66k (18k)"
+                  >
+                    <span>⚡ Standard Karat Addons</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleResetToEtsyDefaults}
+                    className="px-3.5 py-1.5 bg-[#D4AF37] hover:bg-white text-[#022C22] rounded-lg text-xs font-bold transition-all shadow flex items-center gap-1.5 cursor-pointer"
+                    title="Reset to verified live Etsy shop pricing"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    <span>Load Etsy Defaults</span>
+                  </button>
+                </div>
               </div>
 
-              <div className="space-y-3">
-                {formData.variants.map((v, idx) => (
-                  <div
-                    key={idx}
-                    className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 bg-black/30 rounded-xl border border-white/10"
-                  >
-                    <div className="flex items-center gap-2 w-full sm:w-auto">
-                      <span
-                        className="w-5 h-5 rounded-full border border-white/30 flex-shrink-0"
-                        style={{ backgroundColor: v.colorCode }}
-                      />
-                      <input
-                        type="text"
-                        value={v.metal}
-                        onChange={(e) => {
-                          const updated = [...formData.variants];
-                          updated[idx].metal = e.target.value;
-                          setFormData({ ...formData, variants: updated });
-                        }}
-                        className="bg-transparent border-b border-white/20 p-1 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                      />
+              {/* Status Banner */}
+              <div className="p-3.5 bg-black/40 border border-white/10 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-gray-300 font-medium">
+                    {PRODUCT_METAL_PRICES[formData.id]
+                      ? '✓ Verified Etsy Shop Listing — Exact synchronized metal price matrix active'
+                      : 'ℹ️ Custom Formula Pricing Active — Calculated from standard verified gold premiums'}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="text-gray-400">Preview Currency:</span>
+                  <span className="font-bold text-[#D4AF37] font-mono px-2 py-0.5 bg-black/50 border border-[#D4AF37]/30 rounded">
+                    {adminCurrency}
+                  </span>
+                </div>
+              </div>
+
+              {/* Metal Pricing Matrix Grid */}
+              <div className="space-y-4">
+                {[
+                  {
+                    groupName: '925 Sterling Silver & Plated Overlays (Base Tiers)',
+                    description: 'Cast in certified 925 sterling silver; yellow/rose/white overlays are 18k thick plated.',
+                    metals: [
+                      { metal: '925 Sterling Silver', colorCode: '#C0C5CE', defaultOffset: 0 },
+                      { metal: 'Yellow Gold Overlay', colorCode: '#D4AF37', defaultOffset: 0 },
+                      { metal: 'Rose Gold Overlay', colorCode: '#E8927C', defaultOffset: 0 },
+                      { metal: 'White Gold Overlay', colorCode: '#E5E7EB', defaultOffset: 0 },
+                    ],
+                  },
+                  {
+                    groupName: '9k Solid Gold (Affordable Luxury)',
+                    description: 'Solid 9k gold (37.5% pure gold alloy), hallmark certified.',
+                    metals: [
+                      { metal: '9k Yellow Gold', colorCode: '#C8A951', defaultOffset: 33461 },
+                      { metal: '9k Rose Gold', colorCode: '#D4826A', defaultOffset: 33461 },
+                      { metal: '9k White Gold', colorCode: '#B8BEC7', defaultOffset: 33461 },
+                    ],
+                  },
+                  {
+                    groupName: '10k Solid Gold (Etsy International Standard)',
+                    description: 'Solid 10k gold (41.7% pure gold alloy), popular worldwide.',
+                    metals: [
+                      { metal: '10k Yellow Gold', colorCode: '#C8A951', defaultOffset: 35000 },
+                      { metal: '10k Rose Gold', colorCode: '#D4826A', defaultOffset: 35000 },
+                      { metal: '10k White Gold', colorCode: '#B8BEC7', defaultOffset: 35000 },
+                    ],
+                  },
+                  {
+                    groupName: '14k Solid Gold (Flagship Fine Jewelry)',
+                    description: 'Solid 14k gold (58.3% pure gold alloy), most popular engagement ring karat.',
+                    metals: [
+                      { metal: '14k Yellow Gold', colorCode: '#CA8A04', defaultOffset: 48489 },
+                      { metal: '14k Rose Gold', colorCode: '#E0796A', defaultOffset: 48489 },
+                      { metal: '14k White Gold', colorCode: '#CBD5E1', defaultOffset: 48489 },
+                    ],
+                  },
+                  {
+                    groupName: '18k Solid Gold (Royal Heirloom Standard)',
+                    description: 'Solid 18k gold (75.0% pure gold alloy), premium rich luster.',
+                    metals: [
+                      { metal: '18k Yellow Gold', colorCode: '#B8860B', defaultOffset: 66021 },
+                      { metal: '18k Rose Gold', colorCode: '#C97B6E', defaultOffset: 66021 },
+                      { metal: '18k White Gold', colorCode: '#94A3B8', defaultOffset: 66021 },
+                    ],
+                  },
+                ].map((grp, gIdx) => (
+                  <div key={gIdx} className="bg-black/30 border border-white/10 rounded-xl p-4 space-y-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-white/10 gap-1">
+                      <span className="text-xs font-bold text-white tracking-wide">
+                        {grp.groupName}
+                      </span>
+                      <span className="text-[10px] text-gray-400">
+                        {grp.description}
+                      </span>
                     </div>
 
-                    <div className="flex items-center gap-2 w-full sm:flex-1">
-                      <input
-                        type="text"
-                        placeholder="Hex Color (#E2E8F0)"
-                        value={v.colorCode}
-                        onChange={(e) => {
-                          const updated = [...formData.variants];
-                          updated[idx].colorCode = e.target.value;
-                          setFormData({ ...formData, variants: updated });
-                        }}
-                        className="w-24 bg-transparent border-b border-white/20 p-1 text-xs font-mono text-gray-300 focus:outline-none focus:border-[#D4AF37]"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Image URL for this metal"
-                        value={v.image}
-                        onChange={(e) => {
-                          const updated = [...formData.variants];
-                          updated[idx].image = e.target.value;
-                          setFormData({ ...formData, variants: updated });
-                        }}
-                        className="flex-1 bg-transparent border-b border-white/20 p-1 text-xs text-gray-300 focus:outline-none focus:border-[#D4AF37]"
-                      />
-                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {grp.metals.map((mItem) => {
+                        const currentPrice =
+                          formData.metalPrices?.[mItem.metal] ??
+                          PRODUCT_METAL_PRICES[formData.id]?.[mItem.metal] ??
+                          (formData.price + mItem.defaultOffset);
+                        const isOffered = (formData.metalPrices?.[mItem.metal] ?? 1) > 0;
+                        const diffFromBase = currentPrice - formData.price;
 
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setFormData({
-                          ...formData,
-                          variants: formData.variants.filter((_, i) => i !== idx),
-                        });
-                      }}
-                      className="p-1.5 text-gray-400 hover:text-rose-400 cursor-pointer"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                        return (
+                          <div
+                            key={mItem.metal}
+                            className={`p-3 rounded-xl border transition-all flex items-center justify-between gap-3 ${
+                              isOffered
+                                ? 'bg-black/40 border-white/15'
+                                : 'bg-black/20 border-white/5 opacity-60'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <span
+                                className="w-4 h-4 rounded-full border border-white/40 flex-shrink-0 shadow-sm"
+                                style={{ backgroundColor: mItem.colorCode }}
+                              />
+                              <div className="min-w-0">
+                                <span className="font-semibold text-xs text-white block truncate">
+                                  {mItem.metal}
+                                </span>
+                                <span className="text-[10px] text-gray-400 block font-mono">
+                                  {diffFromBase > 0 ? `+₹${diffFromBase.toLocaleString('en-IN')}` : 'Base Price'}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              <div className="flex flex-col items-end">
+                                <div className="flex items-center gap-1">
+                                  <span className="text-gray-400 text-xs">₹</span>
+                                  <input
+                                    type="number"
+                                    value={currentPrice}
+                                    onChange={(e) => handleUpdateMetalPrice(mItem.metal, Number(e.target.value))}
+                                    className="w-24 bg-black/60 border border-white/20 rounded-lg px-2 py-1 text-xs font-bold text-emerald-400 text-right focus:outline-none focus:border-[#D4AF37]"
+                                  />
+                                </div>
+                                <span className="text-[10px] text-[#D4AF37] font-semibold mt-0.5">
+                                  ≈ {formatAdminPrice(currentPrice)}
+                                </span>
+                              </div>
+
+                              <button
+                                type="button"
+                                onClick={() => handleUpdateMetalPrice(mItem.metal, isOffered ? 0 : (formData.price + mItem.defaultOffset))}
+                                className={`text-[10px] px-2 py-1 rounded-md cursor-pointer transition-colors font-semibold ${
+                                  isOffered
+                                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                                    : 'bg-white/5 text-gray-500 hover:text-white'
+                                }`}
+                                title={isOffered ? 'Tier Offered (Click to disable)' : 'Tier Disabled (Click to enable)'}
+                              >
+                                {isOffered ? 'Active' : 'Off'}
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Swatch Photo & Color Mapping Sub-section */}
+              <div className="pt-4 border-t border-white/10 space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-white flex items-center gap-2">
+                    <ImageIcon className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span>Visual Swatch Photo & Hex Code Mapping</span>
+                  </h4>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData({
+                        ...formData,
+                        variants: [
+                          ...formData.variants,
+                          {
+                            metal: 'Custom Metal Tier',
+                            colorCode: '#E2E8F0',
+                            image: formData.images[0] || '/images/ai_ring1_front.jpg',
+                          },
+                        ],
+                      });
+                    }}
+                    className="px-2.5 py-1 bg-white/10 hover:bg-white/20 text-gray-200 text-xs font-semibold rounded-lg cursor-pointer"
+                  >
+                    + Add Custom Swatch
+                  </button>
+                </div>
+
+                <div className="space-y-2.5">
+                  {formData.variants.map((v, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 bg-black/40 rounded-xl border border-white/10"
+                    >
+                      <div className="flex items-center gap-2 w-full sm:w-auto">
+                        <span
+                          className="w-5 h-5 rounded-full border border-white/30 flex-shrink-0"
+                          style={{ backgroundColor: v.colorCode }}
+                        />
+                        <input
+                          type="text"
+                          value={v.metal}
+                          onChange={(e) => {
+                            const updated = [...formData.variants];
+                            updated[idx].metal = e.target.value;
+                            setFormData({ ...formData, variants: updated });
+                          }}
+                          className="bg-transparent border-b border-white/20 p-1 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        />
+                      </div>
+
+                      <div className="flex items-center gap-2 w-full sm:flex-1">
+                        <input
+                          type="text"
+                          placeholder="Hex (#CA8A04)"
+                          value={v.colorCode}
+                          onChange={(e) => {
+                            const updated = [...formData.variants];
+                            updated[idx].colorCode = e.target.value;
+                            setFormData({ ...formData, variants: updated });
+                          }}
+                          className="w-24 bg-transparent border-b border-white/20 p-1 text-xs font-mono text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Image URL for this metal swatch"
+                          value={v.image}
+                          onChange={(e) => {
+                            const updated = [...formData.variants];
+                            updated[idx].image = e.target.value;
+                            setFormData({ ...formData, variants: updated });
+                          }}
+                          className="flex-1 bg-transparent border-b border-white/20 p-1 text-xs text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                        />
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFormData({
+                            ...formData,
+                            variants: formData.variants.filter((_, i) => i !== idx),
+                          });
+                        }}
+                        className="p-1.5 text-gray-400 hover:text-rose-400 cursor-pointer"
+                        title="Remove swatch"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}

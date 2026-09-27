@@ -24,7 +24,7 @@ export default function QuickViewModal({
   // ── DYNAMIC METAL OFFERINGS & ACCURATE LIVE ETSY PRICING ──────────
   const basePrice = product.price;
   const baseMRP = product.originalPrice;
-  const exactPrices = PRODUCT_METAL_PRICES[product.id] ?? null;
+  const exactPrices = product.metalPrices ?? PRODUCT_METAL_PRICES[product.id] ?? null;
 
   const relevantTiers = STANDARD_METAL_TIERS.filter((tier) => {
     if (exactPrices) {

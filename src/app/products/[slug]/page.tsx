@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, use, useEffect } from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -13,6 +13,7 @@ import {
   Package,
   Award,
   Check,
+  ChevronLeft,
   ChevronRight,
   ChevronDown,
   Plus,
@@ -34,6 +35,7 @@ import WokeAccordions from '@/components/products/WokeAccordions';
 import WokeOfferCard from '@/components/products/WokeOfferCard';
 
 export default function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const router = useRouter();
   const resolvedParams = use(params);
   const { getProductBySlug, products, isLoading } = useProducts();
   const product = getProductBySlug(resolvedParams.slug);
@@ -84,8 +86,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const basePrice = product.price;         // ₹ silver selling price
   const baseMRP   = product.originalPrice; // ₹ silver MRP
 
-  // Exact per-product Etsy prices (if we have them), else additive premium model.
-  const exactPrices = PRODUCT_METAL_PRICES[product.id] ?? null;
+  // Exact per-product Etsy prices (or custom admin override), else additive premium model.
+  const exactPrices = product.metalPrices ?? PRODUCT_METAL_PRICES[product.id] ?? null;
 
   // Filter relevant metal tiers:
   // 1. If exact Etsy prices exist, ONLY show the metals that Etsy actually offers for this item (with price > 0)
@@ -231,17 +233,35 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="w-full min-h-screen bg-[#FFFFFF] text-[#18181B] font-sans antialiased">
-      {/* 1. CLEAN BREADCRUMB */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 text-xs text-gray-500 flex items-center gap-2 overflow-x-auto whitespace-nowrap border-b border-[#F0ECE1]">
-        <Link href="/" className="hover:text-black transition-colors">Home</Link>
-        <span className="text-gray-300">/</span>
-        <Link href="/shop" className="hover:text-black transition-colors">Moissanite Jewellery</Link>
-        <span className="text-gray-300">/</span>
-        <Link href={`/category/${product.category}`} className="hover:text-black capitalize transition-colors">
-          {product.category}
-        </Link>
-        <span className="text-gray-300">/</span>
-        <span className="text-gray-800 font-medium truncate max-w-[280px] sm:max-w-none">{product.name}</span>
+      {/* 1. CLEAN BREADCRUMB & INTUITIVE BACK BUTTON */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-3 text-xs text-gray-500 border-b border-[#F0ECE1]">
+        <div className="flex items-center gap-2 overflow-x-auto whitespace-nowrap min-w-0">
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== 'undefined' && window.history.length > 1) {
+                window.history.back();
+              } else {
+                router.push(`/category/${product.category}`);
+              }
+            }}
+            className="inline-flex items-center gap-1 px-2.5 py-1 bg-stone-100 hover:bg-[#022C22] hover:text-[#D4AF37] text-stone-800 rounded-md text-xs font-semibold transition-all cursor-pointer mr-1 flex-shrink-0 border border-stone-200 shadow-2xs"
+            title="Go back to previous page"
+          >
+            <ChevronLeft className="w-3.5 h-3.5" />
+            <span>Back</span>
+          </button>
+          <span className="text-gray-300">|</span>
+          <Link href="/" className="hover:text-black transition-colors">Home</Link>
+          <span className="text-gray-300">/</span>
+          <Link href="/shop" className="hover:text-black transition-colors">Moissanite Jewellery</Link>
+          <span className="text-gray-300">/</span>
+          <Link href={`/category/${product.category}`} className="hover:text-black capitalize transition-colors">
+            {product.category}
+          </Link>
+          <span className="text-gray-300">/</span>
+          <span className="text-gray-800 font-medium truncate max-w-[280px] sm:max-w-none">{product.name}</span>
+        </div>
       </div>
 
       {/* 2. MAIN PRODUCT SECTION (2-COLUMNS: WOKE COLLECTION LAYOUT) */}
