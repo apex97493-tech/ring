@@ -17,7 +17,7 @@ import { useProducts } from '@/context/ProductContext';
 import ProductCard from '@/components/products/ProductCard';
 import ShapeFilterBar from '@/components/sections/ShapeFilterBar';
 import MoissaniteComparison from '@/components/sections/MoissaniteComparison';
-import InteractiveSparkleSlider from '@/components/sections/InteractiveSparkleSlider';
+
 import CutPersonalityGuide from '@/components/sections/CutPersonalityGuide';
 import WhyChooseUs from '@/components/sections/WhyChooseUs';
 import RingSizeGuide from '@/components/sections/RingSizeGuide';
@@ -69,12 +69,12 @@ const collections = [
   { name: 'Band', slug: 'band', img: '/images/home-band.jpg' },
   { name: 'Lesbian Ring', slug: 'lesbian-ring', img: '/images/home-lesbian-ring.jpg' },
   { name: 'Pendant', slug: 'pendant', img: '/images/home-pendant.jpg' },
-  { name: 'Earrings', slug: 'earrings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=top' },
+  { name: 'Earrings', slug: 'earrings', img: '/images/home-earrings.jpg' },
   { name: 'Necklace', slug: 'necklace', img: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Bracelet', slug: 'bracelet', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop&crop=left' },
-  { name: 'Nose Ring', slug: 'nose-ring', img: 'https://images.unsplash.com/photo-1599643478524-fb505410a40f?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Belly Rings', slug: 'belly-rings', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=600&auto=format&fit=crop' },
-  { name: 'Ring Set', slug: 'ring-set', img: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=600&auto=format&fit=crop' },
+  { name: 'Bracelet', slug: 'bracelet', img: '/images/home-bracelet.jpg' },
+  { name: 'Nose Ring', slug: 'nose-ring', img: '/images/home-nose-ring.jpg' },
+  { name: 'Belly Rings', slug: 'belly-rings', img: '/images/home-belly-rings.jpg' },
+  { name: 'Ring Set', slug: 'ring-set', img: '/images/home-ring-set.jpg' },
 ];
 
 export default function Home() {
@@ -411,7 +411,7 @@ export default function Home() {
       {/* 5. THE SIGNATURE WOKE EDUCATIONAL & TRUST BOTTOM SECTIONS    */}
       {/* ============================================================ */}
       {/* Interactive Sparkle Drag Slider */}
-      <InteractiveSparkleSlider />
+
 
       {/* Deep Moissanite vs Diamond vs CZ Comparison Matrix */}
       <MoissaniteComparison />
