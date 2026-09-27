@@ -34,6 +34,36 @@ export const INDIAN_SIZE_CHART = [
   { indian: '20', us: '11', diameterMm: 20.2, circumMm: 63 },
   { indian: '21', us: '11.5', diameterMm: 20.6, circumMm: 65 },
   { indian: '22', us: '12', diameterMm: 21.0, circumMm: 66 },
+  { indian: '23', us: '12.5', diameterMm: 21.4, circumMm: 67 },
+  { indian: '24', us: '13', diameterMm: 21.8, circumMm: 69 },
+  { indian: '25', us: '13.5', diameterMm: 22.2, circumMm: 70 },
+  { indian: '26', us: '14', diameterMm: 22.6, circumMm: 71 },
+];
+
+export const US_RING_SIZES = [
+  { us: '3', label: 'US 3 (14.0 mm)', diameterMm: 14.0, circumMm: 44 },
+  { us: '3.5', label: 'US 3.5 (14.3 mm)', diameterMm: 14.3, circumMm: 45 },
+  { us: '4', label: 'US 4 (14.6 mm)', diameterMm: 14.6, circumMm: 46 },
+  { us: '4.5', label: 'US 4.5 (15.0 mm)', diameterMm: 15.0, circumMm: 47 },
+  { us: '5', label: 'US 5 (15.3 mm)', diameterMm: 15.3, circumMm: 48 },
+  { us: '5.5', label: 'US 5.5 (15.7 mm)', diameterMm: 15.7, circumMm: 49 },
+  { us: '6', label: 'US 6 (16.1 mm)', diameterMm: 16.1, circumMm: 51 },
+  { us: '6.5', label: 'US 6.5 (16.5 mm)', diameterMm: 16.5, circumMm: 52 },
+  { us: '7', label: 'US 7 (16.9 mm)', diameterMm: 16.9, circumMm: 53 },
+  { us: '7.5', label: 'US 7.5 (17.3 mm)', diameterMm: 17.3, circumMm: 54 },
+  { us: '8', label: 'US 8 (17.7 mm)', diameterMm: 17.7, circumMm: 56 },
+  { us: '8.5', label: 'US 8.5 (18.1 mm)', diameterMm: 18.1, circumMm: 57 },
+  { us: '9', label: 'US 9 (18.5 mm)', diameterMm: 18.5, circumMm: 58 },
+  { us: '9.5', label: 'US 9.5 (19.0 mm)', diameterMm: 19.0, circumMm: 60 },
+  { us: '10', label: 'US 10 (19.4 mm)', diameterMm: 19.4, circumMm: 61 },
+  { us: '10.5', label: 'US 10.5 (19.8 mm)', diameterMm: 19.8, circumMm: 62 },
+  { us: '11', label: 'US 11 (20.2 mm)', diameterMm: 20.2, circumMm: 63 },
+  { us: '11.5', label: 'US 11.5 (20.6 mm)', diameterMm: 20.6, circumMm: 65 },
+  { us: '12', label: 'US 12 (21.0 mm)', diameterMm: 21.0, circumMm: 66 },
+  { us: '12.5', label: 'US 12.5 (21.4 mm)', diameterMm: 21.4, circumMm: 67 },
+  { us: '13', label: 'US 13 (21.8 mm)', diameterMm: 21.8, circumMm: 69 },
+  { us: '13.5', label: 'US 13.5 (22.2 mm)', diameterMm: 22.2, circumMm: 70 },
+  { us: '14', label: 'US 14 (22.6 mm)', diameterMm: 22.6, circumMm: 71 },
 ];
 
 export default function FindYourSizeDrawer({
@@ -143,11 +173,11 @@ export default function FindYourSizeDrawer({
                 {/* Slider */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs text-gray-600 font-medium">
-                    <span>Smaller (Size 1)</span>
+                    <span>Smaller (Size 1 / US 1)</span>
                     <span className="text-[#8C6A1F] font-bold">
-                      Indian Size: {currentItem.indian} (US {currentItem.us})
+                      US {currentItem.us} • Indian {currentItem.indian}
                     </span>
-                    <span>Larger (Size 22)</span>
+                    <span>Larger (US 14 / Indian 26)</span>
                   </div>
                   <input
                     type="range"
@@ -160,10 +190,10 @@ export default function FindYourSizeDrawer({
                   <div className="flex justify-center pt-1">
                     <button
                       type="button"
-                      onClick={() => handlePickSize(currentItem.indian)}
+                      onClick={() => handlePickSize(`US ${currentItem.us}`)}
                       className="px-5 py-2 bg-[#18181B] hover:bg-[#8C6A1F] text-white text-xs font-bold rounded-lg transition-colors shadow-sm cursor-pointer"
                     >
-                      Select Indian Size {currentItem.indian}
+                      Select US Size {currentItem.us}
                     </button>
                   </div>
                 </div>
@@ -198,7 +228,7 @@ export default function FindYourSizeDrawer({
                               key={row.indian}
                               onClick={() => {
                                 setSliderIndex(idx);
-                                handlePickSize(row.indian);
+                                handlePickSize(`US ${row.us}`);
                               }}
                               className={`cursor-pointer transition-colors ${
                                 isCurrent

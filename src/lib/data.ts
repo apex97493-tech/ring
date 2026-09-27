@@ -5,6 +5,8 @@ export type ProductVariant = {
   colorCode: string;
   image: string;
   priceModifier?: number;
+  price?: number;
+  originalPrice?: number;
 };
 
 export type Product = {
