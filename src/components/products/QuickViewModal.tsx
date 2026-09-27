@@ -2,9 +2,10 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, Star, ShieldCheck, Truck, Check, ArrowRight, ChevronDown } from 'lucide-react';
+import { X, Star, ShieldCheck, Truck, Check, ArrowRight, ChevronDown, Package } from 'lucide-react';
 import { Product, STANDARD_METAL_TIERS, PRODUCT_METAL_PRICES } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
+import FindYourSizeDrawer, { US_RING_SIZES } from '@/components/products/FindYourSizeDrawer';
 import Link from 'next/link';
 
 export default function QuickViewModal({
@@ -94,11 +95,12 @@ export default function QuickViewModal({
       : metalBandOptions[0]?.metal || '925 Sterling Silver';
 
   const [selectedMetal, setSelectedMetal] = useState<string>(defaultMetal);
-  const [selectedSize, setSelectedSize] = useState('US 6');
+  const [selectedSize, setSelectedSize] = useState('US 7');
   const [selectedCarat, setSelectedCarat] = useState(product.carat || '2.00 CT');
   const [engraving, setEngraving] = useState('');
   const [activeImgIdx, setActiveImgIdx] = useState(0);
   const [isAdded, setIsAdded] = useState(false);
+  const [isSizeDrawerOpen, setIsSizeDrawerOpen] = useState(false);
 
   // Active metal tier
   const activeTier =
@@ -118,11 +120,6 @@ export default function QuickViewModal({
     ...(product.images || []).filter((img) => img !== activeVariantImage),
   ];
 
-  // US Ring sizes
-  const sizes = [
-    'US 4', 'US 4.5', 'US 5', 'US 5.5', 'US 6', 'US 6.5', 'US 7', 'US 7.5',
-    'US 8', 'US 8.5', 'US 9', 'US 9.5', 'US 10', 'US 11', 'US 12',
-  ];
   const caratOptions = ['1.00 CT', '1.50 CT', '2.00 CT', '2.50 CT', '3.00 CT'];
 
   // Check if center stone carat is applicable
@@ -324,18 +321,28 @@ export default function QuickViewModal({
 
                 {isRing && (
                   <div>
-                    <label className="block font-sans text-xs font-bold text-[#022C22] tracking-wider uppercase mb-1.5">
-                      US Ring Size:
-                    </label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-semibold text-[#18181B]">
+                        Ring size
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setIsSizeDrawerOpen(true)}
+                        className="text-[11px] text-gray-500 hover:text-black font-medium underline underline-offset-2 cursor-pointer transition-colors flex items-center gap-1"
+                      >
+                        <Package className="w-3 h-3 text-gray-400" />
+                        <span>Find your size</span>
+                      </button>
+                    </div>
                     <div className="relative">
                       <select
                         value={selectedSize}
                         onChange={(e) => setSelectedSize(e.target.value)}
-                        className="w-full bg-white border border-gray-300 rounded-lg p-2.5 text-xs font-sans text-gray-800 appearance-none focus:outline-none focus:border-[#D4AF37] pr-8 cursor-pointer"
+                        className="w-full bg-white border border-gray-300 hover:border-[#D4AF37] rounded-lg px-3 py-2.5 text-xs font-sans text-gray-800 appearance-none focus:outline-none focus:border-[#022C22] pr-8 cursor-pointer shadow-2xs"
                       >
-                        {sizes.map((s) => (
-                          <option key={s} value={s}>
-                            {s}
+                        {US_RING_SIZES.map((s) => (
+                          <option key={s.us} value={`US ${s.us}`}>
+                            US {s.us} ({s.diameterMm} mm)
                           </option>
                         ))}
                       </select>
@@ -398,6 +405,17 @@ export default function QuickViewModal({
           </div>
         </div>
       </motion.div>
+
+      {/* Interactive Find Your Size Drawer */}
+      <FindYourSizeDrawer
+        isOpen={isSizeDrawerOpen}
+        onClose={() => setIsSizeDrawerOpen(false)}
+        selectedSize={selectedSize.replace('US ', '')}
+        onSelectSize={(size) => {
+          setSelectedSize(size.startsWith('US ') ? size : `US ${size}`);
+          setIsSizeDrawerOpen(false);
+        }}
+      />
     </div>
   );
 }
