@@ -11,7 +11,7 @@ import RingSizeGuide from '@/components/sections/RingSizeGuide';
 import ReviewsSection from '@/components/sections/ReviewsSection';
 import FaqSection from '@/components/sections/FaqSection';
 import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
-import { Sparkles, ShieldCheck, Truck, Award, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Sparkles, ShieldCheck, Truck, Award, ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -23,6 +23,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
   const [selectedShape, setSelectedShape] = useState<string>('all');
   const [selectedMetal, setSelectedMetal] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('featured');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const categoryTitles: Record<string, { title: string; subtitle: string }> = {
     rings: {
@@ -76,8 +77,27 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
   const PRODUCTS_PER_PAGE = 8;
 
   const filteredProducts = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    const queryTokens = query.split(/\s+/).filter(Boolean);
+
     return rawProducts
       .filter((p) => {
+        if (queryTokens.length > 0) {
+          const searchable = [
+            p.name,
+            p.category,
+            p.shape,
+            p.metal,
+            p.primaryGemstone || '',
+            p.secondaryGemstone || '',
+            p.ringStyle || '',
+            p.description || '',
+          ].join(' ').toLowerCase();
+
+          const matches = queryTokens.every((token) => searchable.includes(token));
+          if (!matches) return false;
+        }
+
         const matchesShape = selectedShape === 'all' || p.shape === selectedShape;
         const matchesMetal =
           selectedMetal === 'all' ||
@@ -90,11 +110,11 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
         if (sortBy === 'rating') return b.rating - a.rating;
         return 0;
       });
-  }, [rawProducts, selectedShape, selectedMetal, sortBy]);
+  }, [rawProducts, searchQuery, selectedShape, selectedMetal, sortBy]);
 
   React.useEffect(() => {
     setCurrentPage(1);
-  }, [slug, selectedShape, selectedMetal, sortBy]);
+  }, [slug, searchQuery, selectedShape, selectedMetal, sortBy]);
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE) || 1;
   const paginatedProducts = useMemo(() => {
@@ -152,7 +172,29 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
             </p>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            {/* Search Input for Category */}
+            <div className="relative flex-1 sm:flex-initial min-w-[180px] sm:min-w-[220px]">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search designs in this collection..."
+                className="w-full bg-white border border-[#E8E5DF] rounded-xl pl-8 pr-7 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#18181B] focus:outline-none focus:border-[#B89035] shadow-xs placeholder:text-gray-400"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer p-0.5"
+                  title="Clear search"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+
             <select
               value={selectedMetal}
               onChange={(e) => setSelectedMetal(e.target.value)}
@@ -259,6 +301,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
               onClick={() => {
                 setSelectedShape('all');
                 setSelectedMetal('all');
+                setSearchQuery('');
               }}
               className="px-6 py-2.5 bg-[#18181B] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-widest rounded-lg"
             >

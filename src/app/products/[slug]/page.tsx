@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
+import { STANDARD_METAL_TIERS, PRODUCT_METAL_PRICES } from '@/lib/data';
 import ProductCard from '@/components/products/ProductCard';
 import ProductImageGallery from '@/components/products/ProductImageGallery';
 import FindYourSizeDrawer, { INDIAN_SIZE_CHART, US_RING_SIZES } from '@/components/products/FindYourSizeDrawer';
@@ -76,43 +77,101 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
     notFound();
   }
 
-  // Band options
-  const bandOptions = (product.variants && product.variants.length > 0)
-    ? product.variants
-    : [
-        { metal: '14k Yellow Gold', colorCode: '#CA8A04', image: product.images?.[0] || '', priceModifier: 4500 },
-        { metal: '14k Rose Gold', colorCode: '#FB7185', image: product.images?.[1] || product.images?.[0] || '', priceModifier: 4500 },
-        { metal: '925 Sterling Silver', colorCode: '#E2E8F0', image: product.images?.[2] || product.images?.[0] || '', priceModifier: 0 },
-      ];
+  // ── METAL PRICING ──────────────────────────────────────────────────
+  // Base price of the product is in 925 Sterling Silver.
+  const basePrice = product.price;         // ₹ silver selling price
+  const baseMRP   = product.originalPrice; // ₹ silver MRP
 
-  // Active variant resolution
-  const activeVariant = (selectedBandColour && bandOptions.find((v) => v.metal === selectedBandColour))
-    || bandOptions[activeVariantIdx]
-    || bandOptions[0]
-    || {
-      metal: product.metal || '925 Sterling Silver',
-      colorCode: '#E2E8F0',
-      image: product.images?.[0] || '/images/ai_ring1_front.jpg',
+  // Exact per-product Etsy prices (if we have them), else additive premium model.
+  const exactPrices = PRODUCT_METAL_PRICES[product.id] ?? null;
+
+  // Filter relevant metal tiers:
+  // 1. If exact Etsy prices exist, ONLY show the metals that Etsy actually offers for this item (with price > 0)
+  // 2. Otherwise, adaptively filter based on product category & karat mentions
+  const relevantTiers = STANDARD_METAL_TIERS.filter((tier) => {
+    if (exactPrices) {
+      const p = exactPrices[tier.metal];
+      return p !== undefined && p > 0;
+    }
+
+    const category = (product.category || '').toLowerCase();
+    const text = ((product.name || '') + ' ' + (product.description || '')).toLowerCase();
+    const isSilverOnlyCategory = category.includes('necklace') || category.includes('pendant') || category.includes('bracelet');
+    const mentionsSolidGold = text.includes('solid gold') || text.includes('14k solid') || text.includes('18k solid') || text.includes('9k solid') || text.includes('10k solid');
+
+    if (isSilverOnlyCategory && !mentionsSolidGold) {
+      return tier.group === 'Silver' || tier.group === 'Gold Overlay';
+    }
+
+    const has9k = text.includes('9k') || text.includes('9kt') || text.includes('9ct') || text.includes('375');
+    const has10k = text.includes('10k') || text.includes('10kt') || text.includes('10ct') || text.includes('417');
+
+    if (tier.group === '9k Gold') {
+      if (has9k) return true;
+      if (has10k) return false;
+      return true;
+    }
+
+    if (tier.group === '10k Gold') {
+      if (has10k) return true;
+      if (has9k) return false;
+      return false;
+    }
+
+    return true;
+  });
+
+  const metalBandOptions = relevantTiers.map((tier) => {
+    // Compute selling price
+    const price = exactPrices && exactPrices[tier.metal] !== undefined
+      ? exactPrices[tier.metal]
+      : basePrice + tier.priceAddon;
+
+    // MRP: keep same discount% as the silver base for overlay/silver tiers;
+    // for gold tiers, MRP = price * 2 (50% off, same as Etsy)
+    const originalPrice = tier.priceAddon === 0
+      ? baseMRP
+      : Math.round(price * 2);
+
+    return {
+      metal:         tier.metal,
+      colorCode:     tier.colorCode,
+      group:         tier.group,
+      price,
+      originalPrice,
+      // Try to find a matching variant image for this metal, else use first product image
+      image: (
+        product.variants?.find(
+          (v) => v.metal.toLowerCase().includes(tier.metal.toLowerCase().split(' ')[0])
+        )?.image
+        || product.images?.[0]
+        || ''
+      ),
     };
+  });
 
-  // Dynamic price calculation based on selected band colour / variant
-  const currentPrice = typeof activeVariant.price === 'number'
-    ? activeVariant.price
-    : product.price + (activeVariant.priceModifier || 0);
+  // Active metal tier based on dropdown selection
+  const activeTier = metalBandOptions.find((o) => o.metal === selectedBandColour)
+    ?? metalBandOptions[0];
 
-  const currentOriginalPrice = typeof activeVariant.originalPrice === 'number'
-    ? activeVariant.originalPrice
-    : product.originalPrice + (activeVariant.priceModifier ? (activeVariant.priceModifier > 0 ? activeVariant.priceModifier * 2 : activeVariant.priceModifier) : 0);
+  // Prices shown in price block — update reactively as band colour changes
+  const currentPrice         = activeTier.price;
+  const currentOriginalPrice = activeTier.originalPrice;
 
   const discountPercent = Math.max(
     5,
     Math.round(((currentOriginalPrice - currentPrice) / currentOriginalPrice) * 100)
   );
 
+  // For image gallery — use the active tier's matched image + rest of product images
+  const activeVariantImage = activeTier.image || product.images?.[0] || '';
   const allImages = [
-    activeVariant.image,
-    ...(product.images || []).filter((img) => img !== activeVariant.image),
+    activeVariantImage,
+    ...(product.images || []).filter((img) => img !== activeVariantImage),
   ];
+
+  // Convenience alias for metal name used in cart / WhatsApp
+  const activeMetal = activeTier.metal;
 
   // Add to cart handler
   const handleAddToCart = () => {
@@ -128,11 +187,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
     addToCart({
       product,
       quantity: 1,
-      selectedMetal: activeVariant.metal,
+      selectedMetal: activeMetal,
       selectedSize: selectedSize,
       selectedCarat: product.carat,
       price: currentPrice,
-      image: activeVariant.image,
+      image: activeVariantImage,
       engravingText: personalisationText.trim() || undefined,
     });
     setIsAdded(true);
@@ -152,17 +211,16 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
 
     handleAddToCart();
     const message = encodeURIComponent(
-      `*ORDER INQUIRY: ${product.name.toUpperCase()}*\n• Band Colour: ${activeVariant.metal}\n• Ring Size: ${selectedSize}\n• Carat: ${product.carat}${personalisationText ? `\n• Personalisation: ${personalisationText}` : ''}\n• Price: ₹${currentPrice.toLocaleString('en-IN')}\n\nI want to complete the purchase with ₹300 OFF prepaid discount!`
+      `*ORDER INQUIRY: ${product.name.toUpperCase()}*\n• Band Colour: ${activeMetal}\n• Ring Size: ${selectedSize}\n• Carat: ${product.carat}${personalisationText ? `\n• Personalisation: ${personalisationText}` : ''}\n• Price: \u20b9${currentPrice.toLocaleString('en-IN')}\n\nI want to complete the purchase with \u20b9300 OFF prepaid discount!`
     );
     window.open(`https://wa.me/919999999999?text=${message}`, '_blank', 'noopener,noreferrer');
   };
 
   // WhatsApp order inquiry
   const handleWhatsAppOrder = () => {
-    const metalName = selectedBandColour || activeVariant.metal;
     const sizeName = selectedSize || 'US 7';
     const message = encodeURIComponent(
-      `*INQUIRY: ${product.name}*\n• Band Colour: ${metalName}\n• Ring Size: ${sizeName}\n• Carat: ${product.carat}${personalisationText ? `\n• Personalisation: ${personalisationText}` : ''}\n• Price: ₹${currentPrice.toLocaleString('en-IN')}\n\nHi ForeverJewellStudio team, please assist me with ordering this piece!`
+      `*INQUIRY: ${product.name}*\n• Band Colour: ${activeMetal}\n• Ring Size: ${sizeName}\n• Carat: ${product.carat}${personalisationText ? `\n• Personalisation: ${personalisationText}` : ''}\n• Price: \u20b9${currentPrice.toLocaleString('en-IN')}\n\nHi ForeverJewellStudio team, please assist me with ordering this piece!`
     );
     window.open(`https://wa.me/919999999999?text=${message}`, '_blank', 'noopener,noreferrer');
   };
@@ -245,8 +303,6 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                     onChange={(e) => {
                       setSelectedBandColour(e.target.value);
                       setValidationErrors((prev) => ({ ...prev, band: false }));
-                      const idx = bandOptions.findIndex((v) => v.metal === e.target.value);
-                      if (idx >= 0) setActiveVariantIdx(idx);
                     }}
                     className={`w-full bg-white border ${
                       validationErrors.band
@@ -255,20 +311,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                     } rounded-md px-3.5 py-3 pr-10 text-sm text-[#222222] appearance-none cursor-pointer transition-colors shadow-2xs font-sans`}
                   >
                     <option value="" disabled>Select an option</option>
-                    {bandOptions.map((v) => {
-                      const modifier = v.priceModifier || 0;
-                      let label = v.metal;
-                      if (modifier !== 0) {
-                        label += ` (${modifier > 0 ? '+' : ''}Rs. ${Math.abs(modifier).toLocaleString('en-IN')}.00)`;
-                      } else if (typeof v.price === 'number' && v.price !== product.price) {
-                        label += ` (Rs. ${v.price.toLocaleString('en-IN')}.00)`;
-                      }
-                      return (
-                        <option key={v.metal} value={v.metal}>
-                          {label}
-                        </option>
-                      );
-                    })}
+                    {metalBandOptions.map((opt) => (
+                      <option key={opt.metal} value={opt.metal}>
+                        {opt.metal} (₹ {opt.price.toLocaleString('en-IN')})
+                      </option>
+                    ))}
                   </select>
                   <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 pointer-events-none" />
                 </div>
@@ -414,7 +461,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
         {/* 4. PRODUCT DETAILS SPECIFICATION GRID (WARM BEIGE CARDS) */}
         <WokeProductDetailsGrid
           product={product}
-          selectedMetal={activeVariant.metal}
+          selectedMetal={activeMetal}
           selectedCarat={product.carat}
         />
 
@@ -424,7 +471,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
         {/* 6. CLEAN ACCORDIONS (DESCRIPTION, SHIPPING, RETURNS, CARE) */}
         <WokeAccordions
           product={product}
-          selectedMetal={activeVariant.metal}
+          selectedMetal={activeMetal}
           selectedCarat={product.carat}
         />
 
@@ -480,7 +527,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                     {product.name}
                   </span>
                   <span className="text-[10px] text-gray-500 font-sans">
-                    {activeVariant.metal} {selectedSize ? `• ${selectedSize}` : ''}
+                    {activeMetal} {selectedSize ? `• ${selectedSize}` : ''}
                   </span>
                 </div>
               </div>

@@ -11,6 +11,8 @@ import {
   ShieldCheck,
   Truck,
   ArrowRight,
+  Search,
+  X,
 } from 'lucide-react';
 import { SHAPES } from '@/lib/data';
 import { useProducts } from '@/context/ProductContext';
@@ -83,6 +85,7 @@ export default function Home() {
   const [selectedShape, setSelectedShape] = useState<string>('all');
   const [selectedMetal, setSelectedMetal] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('featured');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Auto-play loop
   useEffect(() => {
@@ -102,8 +105,27 @@ export default function Home() {
 
   // Filter and Sort Logic
   const filteredProducts = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    const queryTokens = query.split(/\s+/).filter(Boolean);
+
     return products
       .filter((p) => {
+        if (queryTokens.length > 0) {
+          const searchable = [
+            p.name,
+            p.category,
+            p.shape,
+            p.metal,
+            p.primaryGemstone || '',
+            p.secondaryGemstone || '',
+            p.ringStyle || '',
+            p.description || '',
+          ].join(' ').toLowerCase();
+
+          const matches = queryTokens.every((token) => searchable.includes(token));
+          if (!matches) return false;
+        }
+
         const matchesShape = selectedShape === 'all' || p.shape === selectedShape;
         const matchesMetal =
           selectedMetal === 'all' ||
@@ -118,7 +140,7 @@ export default function Home() {
         if (sortBy === 'rating') return b.rating - a.rating;
         return 0;
       });
-  }, [selectedShape, selectedMetal, sortBy]);
+  }, [products, searchQuery, selectedShape, selectedMetal, sortBy]);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const PRODUCTS_PER_PAGE = 8;
@@ -126,7 +148,7 @@ export default function Home() {
   // Reset to page 1 on filter change
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedShape, selectedMetal, sortBy]);
+  }, [searchQuery, selectedShape, selectedMetal, sortBy]);
 
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE) || 1;
   const paginatedProducts = useMemo(() => {
@@ -385,8 +407,30 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Filter & Sort Controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Filter & Sort & Search Controls */}
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            {/* Quick Search in Collection */}
+            <div className="relative flex-1 sm:flex-initial min-w-[180px] sm:min-w-[220px]">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search rings & styles..."
+                className="w-full bg-white border border-[#E8E5DF] rounded-xl pl-8 pr-7 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] shadow-xs placeholder:text-gray-400"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer p-0.5"
+                  title="Clear search"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+
             <select
               value={selectedMetal}
               onChange={(e) => setSelectedMetal(e.target.value)}
@@ -542,6 +586,7 @@ export default function Home() {
               onClick={() => {
                 setSelectedShape('all');
                 setSelectedMetal('all');
+                setSearchQuery('');
               }}
               className="px-6 py-2.5 bg-[#022C22] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-[#B89035] hover:text-white transition-all shadow-md cursor-pointer"
             >
