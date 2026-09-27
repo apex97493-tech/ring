@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2, Plus, Minus, ShieldCheck, Sparkles, Send, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { useCurrency } from '@/context/CurrencyContext';
 import Link from 'next/link';
 
 export default function CartDrawer() {
@@ -17,6 +18,7 @@ export default function CartDrawer() {
     freeShippingThreshold,
     totalItems,
   } = useCart();
+  const { formatPrice, selectedCurrency } = useCurrency();
 
   const [couponCode, setCouponCode] = useState('');
   const [appliedDiscount, setAppliedDiscount] = useState(0);
@@ -48,18 +50,18 @@ export default function CartDrawer() {
       if (item.engravingText) {
         message += `• Engraving: "${item.engravingText}"%0A`;
       }
-      message += `• Qty: ${item.quantity} x ₹${item.price.toLocaleString('en-IN')}%0A%0A`;
+      message += `• Qty: ${item.quantity} x ${formatPrice(item.price)}%0A%0A`;
     });
 
     if (appliedDiscount > 0) {
-      message += `*Discount Applied (FOREVER10):* -₹${Math.round(appliedDiscount).toLocaleString('en-IN')}%0A`;
+      message += `*Discount Applied (FOREVER10):* -${formatPrice(appliedDiscount)}%0A`;
     }
     if (isGiftWrap) {
-      message += `*Luxury Velvet Gift Box:* +₹149%0A`;
+      message += `*Luxury Velvet Gift Box:* +${formatPrice(149)}%0A`;
     }
-    message += `*Grand Total:* ₹${Math.round(finalTotal).toLocaleString('en-IN')}%0A`;
-    message += `*Shipping:* Free Insured Delivery%0A%0A`;
-    message += `Please confirm availability & delivery details for my pincode!`;
+    message += `*Grand Total:* ${formatPrice(finalTotal)} (${selectedCurrency.code})%0A`;
+    message += `*Shipping:* Free Insured International Delivery%0A%0A`;
+    message += `Please confirm availability & delivery details for my address!`;
 
     window.open(`https://wa.me/919999999999?text=${message}`, '_blank');
   };
@@ -196,7 +198,7 @@ export default function CartDrawer() {
                             </button>
                           </div>
                           <span className="font-sans text-sm font-bold text-[#064E3B]">
-                            ₹{(item.price * item.quantity).toLocaleString('en-IN')}
+                            {formatPrice(item.price * item.quantity)}
                           </span>
                         </div>
                       </div>
@@ -248,18 +250,18 @@ export default function CartDrawer() {
                   <div className="space-y-1.5 pt-2 border-t border-gray-100 text-xs font-sans">
                     <div className="flex justify-between text-gray-500">
                       <span>Bag Subtotal</span>
-                      <span>₹{subtotal.toLocaleString('en-IN')}</span>
+                      <span>{formatPrice(subtotal)}</span>
                     </div>
                     {appliedDiscount > 0 && (
                       <div className="flex justify-between text-[#059669] font-medium">
                         <span>Discount (FOREVER10)</span>
-                        <span>-₹{Math.round(appliedDiscount).toLocaleString('en-IN')}</span>
+                        <span>-{formatPrice(appliedDiscount)}</span>
                       </div>
                     )}
                     {isGiftWrap && (
                       <div className="flex justify-between text-gray-500">
                         <span>Luxury Gift Box</span>
-                        <span>+₹149</span>
+                        <span>+{formatPrice(149)}</span>
                       </div>
                     )}
                     <div className="flex justify-between text-gray-500">
@@ -268,7 +270,7 @@ export default function CartDrawer() {
                     </div>
                     <div className="flex justify-between text-sm font-bold text-[#18181B] pt-2 border-t border-gray-200">
                       <span>Total (Incl. all taxes)</span>
-                      <span>₹{Math.round(finalTotal).toLocaleString('en-IN')}</span>
+                      <span>{formatPrice(finalTotal)}</span>
                     </div>
                   </div>
 

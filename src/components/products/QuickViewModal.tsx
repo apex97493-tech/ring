@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { X, Star, ShieldCheck, Truck, Check, ArrowRight, ChevronDown, Package } from 'lucide-react';
 import { Product, STANDARD_METAL_TIERS, PRODUCT_METAL_PRICES } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
+import { useCurrency } from '@/context/CurrencyContext';
 import FindYourSizeDrawer, { US_RING_SIZES } from '@/components/products/FindYourSizeDrawer';
 import Link from 'next/link';
 
@@ -18,6 +19,7 @@ export default function QuickViewModal({
   onClose: () => void;
 }) {
   const { addToCart } = useCart();
+  const { formatPrice } = useCurrency();
 
   // ── DYNAMIC METAL OFFERINGS & ACCURATE LIVE ETSY PRICING ──────────
   const basePrice = product.price;
@@ -231,10 +233,10 @@ export default function QuickViewModal({
               {/* Dynamic Live Price */}
               <div className="flex items-baseline flex-wrap gap-2.5 mb-5 p-3 rounded-xl bg-white border border-[#E8E5DF]">
                 <span className="font-sans text-2xl sm:text-3xl font-bold text-[#064E3B]">
-                  ₹{currentPrice.toLocaleString('en-IN')}
+                  {formatPrice(currentPrice)}
                 </span>
                 <span className="font-sans text-sm text-gray-400 line-through">
-                  ₹{currentOriginalPrice.toLocaleString('en-IN')}
+                  {formatPrice(currentOriginalPrice)}
                 </span>
                 <span className="font-sans text-xs font-bold text-[#059669] bg-[#ECFDF5] px-2 py-0.5 rounded">
                   ({discountPercent}% OFF)
@@ -263,7 +265,7 @@ export default function QuickViewModal({
                   >
                     {metalBandOptions.map((opt) => (
                       <option key={opt.metal} value={opt.metal}>
-                        {opt.metal} — ₹{opt.price.toLocaleString('en-IN')}
+                        {opt.metal} — {formatPrice(opt.price)}
                       </option>
                     ))}
                   </select>
@@ -379,7 +381,7 @@ export default function QuickViewModal({
                     <Check className="w-4 h-4" /> Added to Shopping Bag
                   </span>
                 ) : (
-                  `Add to Shopping Bag • ₹${currentPrice.toLocaleString('en-IN')}`
+                  `Add to Shopping Bag • ${formatPrice(currentPrice)}`
                 )}
               </button>
 

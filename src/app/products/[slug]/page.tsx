@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
+import { useCurrency } from '@/context/CurrencyContext';
 import { STANDARD_METAL_TIERS, PRODUCT_METAL_PRICES } from '@/lib/data';
 import ProductCard from '@/components/products/ProductCard';
 import ProductImageGallery from '@/components/products/ProductImageGallery';
@@ -38,6 +39,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const product = getProductBySlug(resolvedParams.slug);
 
   const { addToCart, isWishlisted, toggleWishlist } = useCart();
+  const { formatPrice } = useCurrency();
 
   // State hooks - Etsy style selectors
   const [activeVariantIdx, setActiveVariantIdx] = useState<number>(0);
@@ -275,10 +277,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
             <div className="space-y-1 pb-4 border-b border-[#E8E5DF]">
               <div className="flex items-center gap-3 flex-wrap">
                 <span className="font-sans text-2xl sm:text-3xl font-bold text-[#18181B]">
-                  Rs. {currentPrice.toLocaleString('en-IN')}.00
+                  {formatPrice(currentPrice)}
                 </span>
                 <span className="font-sans text-base text-gray-400 line-through">
-                  Rs. {currentOriginalPrice.toLocaleString('en-IN')}.00
+                  {formatPrice(currentOriginalPrice)}
                 </span>
                 <span className="bg-[#18181B] text-white text-[11px] font-bold px-2.5 py-0.5 rounded-xs tracking-wider uppercase">
                   {discountPercent}% OFF
@@ -313,7 +315,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                     <option value="" disabled>Select an option</option>
                     {metalBandOptions.map((opt) => (
                       <option key={opt.metal} value={opt.metal}>
-                        {opt.metal} (₹ {opt.price.toLocaleString('en-IN')})
+                        {opt.metal} ({formatPrice(opt.price)})
                       </option>
                     ))}
                   </select>
@@ -535,10 +537,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
               <div className="flex items-center gap-3 flex-shrink-0">
                 <div className="text-right">
                   <span className="font-sans text-sm sm:text-base font-bold text-[#18181B] block">
-                    Rs. {currentPrice.toLocaleString('en-IN')}.00
+                    {formatPrice(currentPrice)}
                   </span>
                   <span className="font-sans text-[10px] text-gray-400 line-through block">
-                    Rs. {currentOriginalPrice.toLocaleString('en-IN')}.00
+                    {formatPrice(currentOriginalPrice)}
                   </span>
                 </div>
 

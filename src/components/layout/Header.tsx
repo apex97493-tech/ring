@@ -14,14 +14,17 @@ import {
   MessageCircle,
   ArrowRight,
   Sparkles,
+  ChevronDown,
 } from 'lucide-react';
 import AnnouncementBar from './AnnouncementBar';
 import { useCart } from '@/context/CartContext';
+import { useCurrency } from '@/context/CurrencyContext';
 import { products } from '@/lib/data';
 
 export default function Header() {
   const router = useRouter();
   const { totalItems, setIsCartOpen, wishlist } = useCart();
+  const { selectedRegion, selectedCurrency, setIsSettingsModalOpen, formatPrice } = useCurrency();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -147,7 +150,25 @@ export default function Header() {
             </nav>
 
             {/* Right Action Icons */}
-            <div className="flex items-center space-x-2 sm:space-x-3.5">
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              {/* Region & Currency Selector (Etsy Style Flag Button) */}
+              <button
+                type="button"
+                onClick={() => setIsSettingsModalOpen(true)}
+                className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-sans text-[#FDFBF7] hover:text-[#D4AF37] bg-white/10 hover:bg-white/20 rounded-full transition-all border border-[#D4AF37]/35 hover:border-[#D4AF37] cursor-pointer shadow-xs"
+                title="Change country/region, language or currency"
+                aria-label="Change region and currency"
+              >
+                <span className="text-sm leading-none">{selectedRegion.flag}</span>
+                <span className="font-semibold tracking-wide hidden sm:inline">
+                  {selectedCurrency.code} ({selectedCurrency.symbol})
+                </span>
+                <span className="font-semibold tracking-wide sm:hidden">
+                  {selectedCurrency.code}
+                </span>
+                <ChevronDown className="w-3 h-3 text-[#D4AF37]" />
+              </button>
+
               {/* WhatsApp Support */}
               <a
                 href="https://wa.me/919999999999?text=Hello!%20I%20am%20interested%20in%20custom%20Moissanite%20Jewelry."
@@ -366,10 +387,10 @@ export default function Header() {
                           </div>
                           <div className="text-right shrink-0">
                             <span className="font-sans text-xs sm:text-sm font-bold text-[#064E3B] block">
-                              ₹{prod.price.toLocaleString('en-IN')}
+                              {formatPrice(prod.price)}
                             </span>
                             <span className="font-sans text-[10px] text-gray-400 line-through">
-                              ₹{prod.originalPrice.toLocaleString('en-IN')}
+                              {formatPrice(prod.originalPrice)}
                             </span>
                           </div>
                         </Link>
@@ -453,18 +474,23 @@ export default function Header() {
                   </button>
                 </div>
 
-                {/* Quick Search in Mobile Drawer */}
-                <div className="p-3 border-b border-[#D4AF37]/20">
-                  <div
+                {/* Region & Currency in Mobile Drawer */}
+                <div className="p-3 border-b border-[#D4AF37]/20 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="text-base">{selectedRegion.flag}</span>
+                    <span className="font-medium text-[#FDFBF7]">{selectedRegion.name}</span>
+                    <span className="text-[#D4AF37] font-bold">({selectedCurrency.code} {selectedCurrency.symbol})</span>
+                  </div>
+                  <button
+                    type="button"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      setIsSearchOpen(true);
+                      setIsSettingsModalOpen(true);
                     }}
-                    className="flex items-center gap-2 px-3 py-2 bg-black/30 rounded-xl border border-[#D4AF37]/30 text-xs text-gray-300 cursor-pointer"
+                    className="text-xs text-[#D4AF37] hover:underline font-semibold cursor-pointer"
                   >
-                    <Search className="w-4 h-4 text-[#D4AF37]" />
-                    <span className="font-sans">Search all 280+ rings & jewels...</span>
-                  </div>
+                    Change
+                  </button>
                 </div>
 
                 <nav className="p-4 space-y-2.5">

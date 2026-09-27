@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { Heart, Eye, Star, Check } from 'lucide-react';
 import { Product } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
+import { useCurrency } from '@/context/CurrencyContext';
 import QuickViewModal from './QuickViewModal';
 
 export default function ProductCard({ product }: { product: Product }) {
   const { isWishlisted, toggleWishlist, addToCart } = useCart();
+  const { formatPrice } = useCurrency();
   const [selectedVariantIdx, setSelectedVariantIdx] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
@@ -160,10 +162,10 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* Pricing Row: Cleanly wrapped for small phone screens */}
         <div className="flex items-baseline gap-1 sm:gap-1.5 flex-wrap mb-1.5 min-w-0 w-full">
           <span className="font-sans text-xs sm:text-sm md:text-base font-bold text-[#064E3B]">
-            ₹{product.price.toLocaleString('en-IN')}
+            {formatPrice(product.price)}
           </span>
           <span className="font-sans text-[10px] sm:text-xs text-gray-400 line-through">
-            ₹{product.originalPrice.toLocaleString('en-IN')}
+            {formatPrice(product.originalPrice)}
           </span>
           <span className="font-sans text-[9px] sm:text-[10px] font-bold text-[#059669]">
             {discountPercent}% OFF
