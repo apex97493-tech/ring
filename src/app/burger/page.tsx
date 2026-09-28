@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -51,6 +51,11 @@ import {
   CheckCheck,
   SlidersHorizontal,
   ArrowRight,
+  Truck,
+  Phone,
+  Mail,
+  MapPin,
+  Send,
 } from 'lucide-react';
 import {
   Product,
@@ -60,11 +65,13 @@ import {
   STANDARD_METAL_TIERS,
   PRODUCT_METAL_PRICES,
 } from '@/lib/data';
+import { Order } from '@/lib/types/order';
 import { useProducts } from '@/context/ProductContext';
 import { useCurrency, SUPPORTED_CURRENCIES } from '@/context/CurrencyContext';
 import { US_RING_SIZES } from '@/components/products/FindYourSizeDrawer';
 import ProductCard from '@/components/products/ProductCard';
 import ProductImageGallery from '@/components/products/ProductImageGallery';
+import OrdersManager from '@/components/admin/OrdersManager';
 
 const PASSCODES = ['forever2026', 'aura2026', 'admin'];
 
@@ -151,8 +158,8 @@ export default function AdminBurgerPage() {
   const [viewMode, setViewMode] = useState<'tabs' | 'all'>('tabs');
   const [isPreviewingDescription, setIsPreviewingDescription] = useState<boolean>(false);
 
-  // Navigation & View Mode: Table Catalog View vs Deep Product Editor
-  const [mainViewMode, setMainViewMode] = useState<'table' | 'editor'>('table');
+  // Navigation & View Mode: Table Catalog View vs Deep Product Editor vs Orders Manager
+  const [mainViewMode, setMainViewMode] = useState<'table' | 'editor' | 'orders'>('table');
   const [selectedStockFilter, setSelectedStockFilter] = useState<'all' | 'in_stock' | 'low_stock' | 'out_of_stock'>('all');
   const [metalPricingFilter, setMetalPricingFilter] = useState<'all' | 'verified' | 'standard'>('all');
   const [adminCurrency, setAdminCurrency] = useState<string>('INR');
@@ -161,6 +168,64 @@ export default function AdminBurgerPage() {
   const [tableCurrentPage, setTableCurrentPage] = useState<number>(1);
   const [quickEditingPriceId, setQuickEditingPriceId] = useState<string | null>(null);
   const [quickPriceVal, setQuickPriceVal] = useState<number>(0);
+
+  // Orders Management State
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [ordersLoading, setOrdersLoading] = useState<boolean>(false);
+  const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
+
+  const fetchOrders = useCallback(async () => {
+    setOrdersLoading(true);
+    try {
+      const tok = sessionStorage.getItem('fj_admin_token') || '';
+      const res = await fetch('/api/orders', {
+        headers: tok ? { Authorization: `Bearer ${tok}` } : {},
+      });
+      const data = await res.json();
+      if (data.success && Array.isArray(data.orders)) {
+        setOrders(data.orders);
+      }
+    } catch (err) {
+      console.error('Error fetching orders:', err);
+    } finally {
+      setOrdersLoading(false);
+    }
+  }, []);
+
+  const updateOrderStatus = async (
+    id: string,
+    newStatus: string,
+    trackingNumber?: string,
+    carrier?: string
+  ) => {
+    setUpdatingOrderId(id);
+    try {
+      const tok = sessionStorage.getItem('fj_admin_token') || '';
+      const res = await fetch('/api/orders', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(tok ? { Authorization: `Bearer ${tok}` } : {}),
+        },
+        body: JSON.stringify({
+          id,
+          orderStatus: newStatus,
+          trackingNumber,
+          carrier,
+        }),
+      });
+      const data = await res.json();
+      if (data.success && data.order) {
+        setOrders((prev) =>
+          prev.map((o) => (o.id === id ? { ...o, ...data.order } : o))
+        );
+      }
+    } catch (err) {
+      console.error('Error updating order:', err);
+    } finally {
+      setUpdatingOrderId(null);
+    }
+  };
 
   // Currency conversion helper for admin table & matrix
   const formatAdminPrice = (inrPrice: number, targetCurrencyCode?: string) => {
@@ -234,6 +299,12 @@ export default function AdminBurgerPage() {
       setIsAuthenticated(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchOrders();
+    }
+  }, [isAuthenticated, fetchOrders]);
 
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault();
@@ -1185,6 +1256,21 @@ export default function AdminBurgerPage() {
               <Edit3 className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">{isNewListing ? 'New Listing' : 'Product Editor'}</span>
             </button>
+            <button
+              type="button"
+              onClick={() => setMainViewMode('orders')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                mainViewMode === 'orders'
+                  ? 'bg-[#D4AF37] text-[#022C22] shadow'
+                  : 'text-gray-300 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Package className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Orders</span>
+              <span className="text-[10px] px-1.5 py-0.2 bg-black/20 rounded-full font-mono">
+                {orders.length}
+              </span>
+            </button>
           </div>
         </div>
 
@@ -1366,8 +1452,16 @@ export default function AdminBurgerPage() {
         );
       })()}
 
-      {/* CONDITIONAL VIEW: ALL PRODUCTS TABLE vs DEEP PRODUCT EDITOR */}
-      {mainViewMode === 'table' ? (
+      {/* CONDITIONAL VIEW: ORDERS MANAGER vs ALL PRODUCTS TABLE vs DEEP PRODUCT EDITOR */}
+      {mainViewMode === 'orders' ? (
+        <OrdersManager
+          orders={orders}
+          isLoading={ordersLoading}
+          onRefresh={fetchOrders}
+          onUpdateStatus={updateOrderStatus}
+          updatingOrderId={updatingOrderId}
+        />
+      ) : mainViewMode === 'table' ? (
         <div className="flex-1 p-4 sm:p-6 lg:p-8 space-y-5 max-w-7xl mx-auto w-full">
           {/* TOP CONTROLS & FILTER BAR */}
           <div className="bg-[#032019] border border-white/15 rounded-2xl p-4 sm:p-5 shadow-xl space-y-4">

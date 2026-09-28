@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Allowed admin tokens — comma-separated list from env var ADMIN_TOKENS
 // Falls back to the hardcoded passcodes if env var is not set.
@@ -39,10 +39,23 @@ function isRateLimited(ip: string): boolean {
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // ── Protect write operations on admin API routes ────────────────
+  // ── Protect admin API routes ────────────────
   const isAdminApiWrite =
     (pathname.startsWith('/api/products') && ['POST', 'DELETE', 'PUT', 'PATCH'].includes(req.method)) ||
-    (pathname.startsWith('/api/upload') && req.method === 'POST');
+    (pathname.startsWith('/api/upload') && req.method === 'POST') ||
+    (pathname.startsWith('/api/orders') && ['GET', 'PATCH', 'DELETE'].includes(req.method));
+
+  // ── Rate limit public order placements ────────────────
+  const isPublicOrderPost = pathname.startsWith('/api/orders') && req.method === 'POST';
+  if (isPublicOrderPost) {
+    const ip = getRealIp(req);
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { success: false, error: 'Too many order attempts. Please wait a moment.' },
+        { status: 429 }
+      );
+    }
+  }
 
   if (isAdminApiWrite) {
     const ip = getRealIp(req);
@@ -82,5 +95,6 @@ export const config = {
   matcher: [
     '/api/products/:path*',
     '/api/upload/:path*',
+    '/api/orders/:path*',
   ],
 };

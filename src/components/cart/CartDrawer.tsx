@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Trash2, Plus, Minus, ShieldCheck, Sparkles, Send, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
@@ -8,6 +9,7 @@ import { useCurrency } from '@/context/CurrencyContext';
 import Link from 'next/link';
 
 export default function CartDrawer() {
+  const router = useRouter();
   const {
     cart,
     isCartOpen,
@@ -288,9 +290,13 @@ export default function CartDrawer() {
 
                     {/* Standard Secure Checkout */}
                     <button
-                      onClick={() => alert(`Proceeding to Razorpay / Cashfree Gateway for ₹${Math.round(finalTotal)}`)}
-                      className="w-full py-3.5 bg-[#18181B] text-white hover:bg-black font-sans text-xs font-bold tracking-widest uppercase transition-colors rounded-none cursor-pointer"
+                      onClick={() => {
+                        setIsCartOpen(false);
+                        router.push('/checkout');
+                      }}
+                      className="w-full py-3.5 bg-[#18181B] text-white hover:bg-black font-sans text-xs font-bold tracking-widest uppercase transition-colors rounded-none cursor-pointer flex items-center justify-center gap-2"
                     >
+                      <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
                       Secure Online Checkout
                     </button>
                   </div>

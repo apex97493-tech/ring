@@ -1,0 +1,43 @@
+[
+  {
+    "id": "FJ-363456",
+    "createdAt": "2026-09-28T05:32:48.464Z",
+    "customer": {
+      "firstName": "Sarah",
+      "lastName": "Jenkins",
+      "email": "sarah@example.com",
+      "phone": "+1 415 555 2671",
+      "streetAddress": "450 Sutter St",
+      "apartment": "Suite 400",
+      "city": "San Francisco",
+      "state": "CA",
+      "postalCode": "94108",
+      "country": "United States"
+    },
+    "items": [
+      {
+        "productId": "ring-1",
+        "productName": "2.50 CT Oval Moissanite Solitaire Ring",
+        "productSlug": "2-50-ct-oval-moissanite",
+        "metal": "18K Yellow Gold",
+        "size": "US 7",
+        "carat": "2.50 CT",
+        "quantity": 1,
+        "unitPrice": 185,
+        "totalPrice": 185,
+        "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e"
+      }
+    ],
+    "currency": "USD",
+    "currencySymbol": "$",
+    "subtotal": 185,
+    "shippingFee": 0,
+    "total": 185,
+    "payment": {
+      "method": "paypal",
+      "status": "paid",
+      "transactionId": "PP-TEST98765"
+    },
+    "orderStatus": "confirmed"
+  }
+]
