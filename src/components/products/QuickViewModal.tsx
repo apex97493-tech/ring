@@ -20,7 +20,7 @@ export default function QuickViewModal({
   onClose: () => void;
 }) {
   const router = useRouter();
-  const { addToCart } = useCart();
+  const { addToCart, setIsCartOpen } = useCart();
   const { formatPrice } = useCurrency();
 
   // ── DYNAMIC METAL OFFERINGS & ACCURATE LIVE ETSY PRICING ──────────
@@ -175,6 +175,7 @@ export default function QuickViewModal({
       image: activeVariantImage,
     });
     onClose();
+    setIsCartOpen(false);
     router.push('/checkout');
   };
 
@@ -188,8 +189,9 @@ export default function QuickViewModal({
       >
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-3.5 right-3.5 z-20 p-2 bg-white/90 hover:bg-white text-gray-700 hover:text-black rounded-full shadow-md backdrop-blur-xs transition-colors cursor-pointer"
+          className="absolute top-3.5 right-3.5 z-20 p-2 bg-white/90 hover:bg-white text-gray-700 hover:text-black rounded-full shadow-md backdrop-blur-xs transition-colors cursor-pointer select-none active:scale-90"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />
@@ -213,9 +215,10 @@ export default function QuickViewModal({
             <div className="flex gap-2 justify-center overflow-x-auto py-1">
               {allImages.slice(0, 5).map((img, idx) => (
                 <button
+                  type="button"
                   key={idx}
                   onClick={() => setActiveImgIdx(idx)}
-                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden border-2 transition-all bg-white shrink-0 cursor-pointer ${
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden border-2 transition-all bg-white shrink-0 cursor-pointer select-none active:scale-95 ${
                     activeImgIdx === idx
                       ? 'border-[#B89035] scale-105 shadow-sm'
                       : 'border-transparent opacity-60 hover:opacity-100'
@@ -391,8 +394,9 @@ export default function QuickViewModal({
             <div className="space-y-2.5 pt-2">
               <div className="grid grid-cols-2 gap-2.5">
                 <button
+                  type="button"
                   onClick={handleAdd}
-                  className="w-full py-3 bg-[#022C22] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-[#022C22] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer border border-[#D4AF37]/40"
+                  className="w-full py-3 bg-[#022C22] hover:bg-[#D4AF37] active:scale-95 text-[#D4AF37] hover:text-[#022C22] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer border border-[#D4AF37]/40"
                 >
                   {isAdded ? (
                     <span className="flex items-center gap-1 text-white">
@@ -404,8 +408,9 @@ export default function QuickViewModal({
                 </button>
 
                 <button
+                  type="button"
                   onClick={handleBuyNow}
-                  className="w-full py-3 bg-[#D4AF37] hover:bg-[#B89035] text-[#022C22] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-3 bg-[#D4AF37] hover:bg-[#B89035] active:scale-95 text-[#022C22] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <Zap className="w-3.5 h-3.5 fill-current" /> Buy It Now
                 </button>

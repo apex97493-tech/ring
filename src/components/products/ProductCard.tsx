@@ -75,12 +75,13 @@ export default function ProductCard({ product }: { product: Product }) {
 
           {/* Wishlist Heart Button */}
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               toggleWishlist(product.id);
             }}
-            className={`absolute top-1.5 right-1.5 sm:top-2 sm:right-2 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all ${
+            className={`absolute top-1.5 right-1.5 sm:top-2 sm:right-2 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer active:scale-95 ${
               isWishlisted(product.id)
                 ? 'bg-rose-50 text-rose-500 shadow-sm'
                 : 'bg-white/85 text-gray-600 hover:bg-white hover:text-[#B89035]'
@@ -100,8 +101,10 @@ export default function ProductCard({ product }: { product: Product }) {
               alt={product.name}
               loading="lazy"
               onError={(e) => {
-                // Fallback image if remote url fails
-                e.currentTarget.src = product.images?.[0] || '/images/ai_ring1_front.jpg';
+                // Safeguard: fallback to clean local ring image if remote CDN fails, preventing loops
+                if (!e.currentTarget.src.includes('ai_ring1_front.jpg')) {
+                  e.currentTarget.src = '/images/ai_ring1_front.jpg';
+                }
               }}
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
@@ -109,12 +112,13 @@ export default function ProductCard({ product }: { product: Product }) {
 
           {/* Quick View Button on Hover (Desktop only, mobile has direct touch) */}
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               setIsQuickViewOpen(true);
             }}
-            className="hidden sm:flex absolute bottom-2.5 inset-x-2.5 bg-white/95 text-[#18181B] hover:bg-[#022C22] hover:text-[#D4AF37] font-sans text-[10px] sm:text-[11px] font-bold tracking-widest uppercase py-2 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 items-center justify-center gap-1.5 backdrop-blur-xs"
+            className="hidden sm:flex absolute bottom-2.5 inset-x-2.5 bg-white/95 text-[#18181B] hover:bg-[#022C22] hover:text-[#D4AF37] font-sans text-[10px] sm:text-[11px] font-bold tracking-widest uppercase py-2 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 items-center justify-center gap-1.5 backdrop-blur-xs cursor-pointer active:scale-95"
           >
             <Eye className="w-3.5 h-3.5" />
             Quick View
@@ -126,6 +130,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <div className="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
             {product.variants.map((v, idx) => (
               <button
+                type="button"
                 key={v.metal}
                 onClick={(e) => {
                   e.preventDefault();
@@ -133,7 +138,7 @@ export default function ProductCard({ product }: { product: Product }) {
                   setSelectedVariantIdx(idx);
                 }}
                 title={v.metal}
-                className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full border transition-all ${
+                className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full border transition-all cursor-pointer ${
                   (selectedVariantIdx === idx || (selectedVariantIdx === null && idx === 0))
                     ? 'ring-1.5 ring-[#D4AF37] ring-offset-1 border-black/30 scale-105'
                     : 'border-black/20 hover:scale-110'
@@ -187,8 +192,9 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Quick Add Button */}
         <button
+          type="button"
           onClick={handleQuickAdd}
-          className="mt-2 w-full py-1.5 sm:py-2 bg-[#F7F5F0] hover:bg-[#022C22] text-[#022C22] hover:text-[#D4AF37] font-sans text-[10px] sm:text-[11px] font-bold tracking-wider uppercase rounded-lg transition-colors flex items-center justify-center gap-1 cursor-pointer border border-[#E8E5DF] hover:border-[#022C22]"
+          className="mt-2 w-full py-1.5 sm:py-2 bg-[#F7F5F0] hover:bg-[#022C22] text-[#022C22] hover:text-[#D4AF37] font-sans text-[10px] sm:text-[11px] font-bold tracking-wider uppercase rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer border border-[#E8E5DF] hover:border-[#022C22] active:scale-95 select-none"
         >
           {isAddedToast ? (
             <span className="text-[#059669] flex items-center gap-1">

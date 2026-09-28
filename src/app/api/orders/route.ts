@@ -34,42 +34,94 @@ function writeOrdersToFile(orders: Order[]): boolean {
 
 // Helper: Format WhatsApp order message
 export function formatWhatsAppOrderMessage(order: Order): string {
-  const itemsText = order.items
-    .map(
-      (it, idx) =>
-        `${idx + 1}. *${it.productName}*\n   • Metal: ${it.metal}\n   • Size: ${it.size}${it.carat ? ` | Carat: ${it.carat}` : ''}\n   • Qty: ${it.quantity} × ${order.currencySymbol}${it.unitPrice.toLocaleString()}`
-    )
+  const itemsText = (order.items || [])
+    .map((it: any, idx) => {
+      const name = it.productName || it.product?.name || 'Jewelry Piece';
+      const metal = it.metal || it.selectedMetal || 'Fine Metal';
+      const size = it.size || it.selectedSize || 'Standard';
+      const carat = it.carat || it.selectedCarat || '';
+      const qty = it.quantity || 1;
+      const unitPrice = Number(it.unitPrice ?? it.price ?? 0);
+      return `${idx + 1}. *${name}*\n   • Metal: ${metal}\n   • Size: ${size}${carat ? ` | Carat: ${carat}` : ''}\n   • Qty: ${qty} × ${order.currencySymbol || '$'}${unitPrice.toLocaleString()}`;
+    })
     .join('\n\n');
 
   const paymentText =
-    order.payment.method === 'paypal'
+    order.payment?.method === 'paypal'
       ? `✅ Paid via PayPal (Txn: ${order.payment.transactionId || 'Verified'})`
-      : order.payment.method === 'card'
+      : order.payment?.method === 'card'
       ? `✅ Paid via Card (Txn: ${order.payment.transactionId || 'Verified'})`
-      : order.payment.method === 'payoneer'
+      : order.payment?.method === 'payoneer'
       ? `⏳ Payoneer Transfer (Ref: ${order.payment.payoneerReference || 'Pending verification'})`
+      : order.payment?.method === 'bank_transfer'
+      ? `🏦 Bank / UPI Transfer (Ref: ${order.payment.bankReference || 'Pending verification'})`
       : `💬 WhatsApp Quick Order`;
+
+  const totalNum = Number(order.total ?? 0);
+  const orderDate = order.createdAt ? new Date(order.createdAt).toLocaleString() : new Date().toLocaleString();
 
   return encodeURIComponent(
     `*✨ NEW ORDER RECEIVED — #${order.id}*\n\n` +
       `👤 *CUSTOMER DETAILS:*\n` +
-      `• Name: ${order.customer.firstName} ${order.customer.lastName}\n` +
-      `• Phone: ${order.customer.phone}\n` +
-      `• Email: ${order.customer.email}\n\n` +
+      `• Name: ${order.customer?.firstName || ''} ${order.customer?.lastName || ''}\n` +
+      `• Phone: ${order.customer?.phone || ''}\n` +
+      `• Email: ${order.customer?.email || ''}\n\n` +
       `📍 *SHIPPING ADDRESS:*\n` +
-      `• Address: ${order.customer.streetAddress}${order.customer.apartment ? `, ${order.customer.apartment}` : ''}\n` +
-      `• City: ${order.customer.city}, ${order.customer.state || ''} ${order.customer.postalCode}\n` +
-      `• Country: ${order.customer.country}\n\n` +
+      `• Address: ${order.customer?.streetAddress || ''}${order.customer?.apartment ? `, ${order.customer.apartment}` : ''}\n` +
+      `• City: ${order.customer?.city || ''}, ${order.customer?.state || ''} ${order.customer?.postalCode || ''}\n` +
+      `• Country: ${order.customer?.country || ''}\n\n` +
       `💍 *ORDER ITEMS:*\n${itemsText}\n\n` +
-      `💵 *TOTAL: ${order.currencySymbol}${order.total.toLocaleString()} ${order.currency}*\n` +
+      `💵 *TOTAL: ${order.currencySymbol || '$'}${totalNum.toLocaleString()} ${order.currency || 'USD'}*\n` +
       `💳 *PAYMENT: ${paymentText}*\n\n` +
-      `📅 *Date:* ${new Date(order.createdAt).toLocaleString()}\n` +
+      `📅 *Date:* ${orderDate}\n` +
       `🌐 *ForeverJewellStudio Online Store*`
   );
 }
 
-// GET /api/orders — Fetch orders list (latest first)
+// GET /api/orders — Fetch orders list (latest first from Supabase, fallback to JSON)
 export async function GET() {
+  try {
+    const { prisma } = await import('@/lib/prisma');
+    const dbOrders = await prisma.order.findMany({
+      include: { user: true },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (dbOrders && dbOrders.length > 0) {
+      const localOrders = readOrdersFromFile();
+      const localMap = new Map(localOrders.map((o) => [o.id, o]));
+
+      const mappedOrders: Order[] = dbOrders.map((o) => {
+        const local = localMap.get(o.id);
+        const addr = (o.shippingAddress as any) || local?.customer || {};
+        // Prefer orderItemsJson from Supabase (persistent), fallback to local JSON backup
+        const dbItems = (o as any).orderItemsJson;
+        const items = Array.isArray(dbItems) && dbItems.length > 0 ? dbItems : (local?.items || []);
+        return {
+          id: o.id,
+          createdAt: o.createdAt.toISOString(),
+          customer: addr,
+          items,
+          currency: (o as any).currency || local?.currency || 'USD',
+          currencySymbol: (o as any).currencySymbol || local?.currencySymbol || '$',
+          subtotal: Number(o.totalAmount),
+          shippingFee: 0,
+          total: Number(o.totalAmount),
+          payment: local?.payment || {
+            method: 'paypal',
+            status: o.paymentStatus === 'SUCCESS' ? 'paid' : 'pending',
+            transactionId: o.paymentId || undefined,
+          },
+          orderStatus: o.status === 'PROCESSING' ? 'confirmed' : (o.status.toLowerCase() as any),
+        };
+      });
+
+      return NextResponse.json({ success: true, orders: mappedOrders });
+    }
+  } catch (dbErr) {
+    console.warn('Supabase read warning, using local file store:', dbErr);
+  }
+
   const orders = readOrdersFromFile();
   return NextResponse.json({
     success: true,
@@ -79,7 +131,7 @@ export async function GET() {
   });
 }
 
-// POST /api/orders — Create new customer order
+// POST /api/orders — Create new customer order (saves to Supabase & local store)
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -121,13 +173,53 @@ export async function POST(request: Request) {
       orderStatus: payment?.status === 'paid' ? 'confirmed' : 'pending',
     };
 
+    // Save to Supabase Cloud Database
+    try {
+      const { prisma } = await import('@/lib/prisma');
+      const phone = String(customer.phone).trim();
+      const fullName = `${customer.firstName} ${customer.lastName}`.trim();
+
+      const user = await prisma.user.upsert({
+        where: { phone },
+        update: { name: fullName, email: customer.email },
+        create: { phone, name: fullName, email: customer.email },
+      });
+
+      await prisma.order.create({
+        data: {
+          id: orderId,
+          userId: user.id,
+          totalAmount: total,
+          status: payment?.status === 'paid' ? 'PROCESSING' : 'PENDING',
+          paymentStatus: payment?.status === 'paid' ? 'SUCCESS' : 'PENDING',
+          paymentId: payment?.transactionId || null,
+          shippingAddress: customer as any,
+        },
+      });
+      console.log(`[Supabase] Order #${orderId} saved to cloud database!`);
+    } catch (dbErr) {
+      console.error('[Supabase Save Note]:', dbErr);
+    }
+
+    // Also persist to local backup store
     const currentOrders = readOrdersFromFile();
     const updatedOrders = [newOrder, ...currentOrders];
     writeOrdersToFile(updatedOrders);
 
     const waEncodedMessage = formatWhatsAppOrderMessage(newOrder);
-    const clientPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919999999999';
+    const clientPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '918387072406';
     const waUrl = `https://wa.me/${clientPhone}?text=${waEncodedMessage}`;
+
+    // Dispatch email notifications (customer + admin) asynchronously
+    try {
+      const { sendOrderNotifications } = await import('@/lib/notifications');
+      const origin = process.env.NEXT_PUBLIC_SITE_URL || new URL(request.url).origin;
+      sendOrderNotifications({ order: newOrder, siteUrl: origin }).catch((e) =>
+        console.warn('Background notification error:', e)
+      );
+    } catch (notifErr) {
+      console.warn('Failed to dispatch notifications:', notifErr);
+    }
 
     return NextResponse.json({
       success: true,

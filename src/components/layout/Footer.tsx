@@ -156,8 +156,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#faqs" className="hover:text-white transition-colors">
-                  Track Your Armored Package
+                <Link href="/track-order" className="hover:text-[#D4AF37] font-semibold text-white transition-colors">
+                  Track Your Jewelry Order
                 </Link>
               </li>
               <li>
@@ -200,7 +200,7 @@ export default function Footer() {
                   href="/contact"
                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#D4AF37] hover:text-[#F3E5AB] transition-colors uppercase tracking-wider"
                 >
-                  Get In Touch & Visit Store â†’
+                  Get In Touch & Visit Store →
                 </Link>
               </li>
               <li className="pt-2 flex gap-4 text-gray-400 text-xs">
@@ -211,15 +211,15 @@ export default function Footer() {
                     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                   </svg>
                 </a>
-                <span>â€¢</span>
+                <span>•</span>
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1">
                   <span>Facebook</span>
                 </a>
-                <span>â€¢</span>
+                <span>•</span>
                 <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1">
                   <span>YouTube</span>
                 </a>
-                <span>â€¢</span>
+                <span>•</span>
                 <a href="https://www.etsy.com/shop/foreverjewellstudio?section_id=59060242" target="_blank" rel="noopener noreferrer" className="hover:text-[#F1641E] flex items-center gap-1 font-serif font-bold tracking-tight">
                   <span>Etsy</span>
                 </a>
@@ -230,7 +230,7 @@ export default function Footer() {
 
         {/* Bottom Bar with Payment Gateways */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-gray-500">
-          <p>Â© 2026 ForeverJewellStudio Royal Moissanite Jewelry. All Rights Reserved. Crafted for eternal sparkle.</p>
+          <p>© 2026 ForeverJewellStudio Royal Moissanite Jewelry. All Rights Reserved. Crafted for eternal sparkle.</p>
 
           <div className="flex items-center gap-3">
             <span className="text-[10px] uppercase tracking-wider text-gray-400">

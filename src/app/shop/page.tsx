@@ -13,6 +13,32 @@ import FaqSection from '@/components/sections/FaqSection';
 import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
 import { Sparkles, ShieldCheck, Truck, Award, ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
 
+function getPaginationRange(current: number, total: number): (number | string)[] {
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+  const pages: (number | string)[] = [];
+  pages.push(1);
+
+  if (current > 3) {
+    pages.push('ellipsis-1');
+  }
+
+  const start = Math.max(2, current - 1);
+  const end = Math.min(total - 1, current + 1);
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+
+  if (current < total - 2) {
+    pages.push('ellipsis-2');
+  }
+
+  pages.push(total);
+  return pages;
+}
+
 export default function ShopPage() {
   const { products } = useProducts();
   const [selectedShape, setSelectedShape] = useState<string>('all');
@@ -21,8 +47,38 @@ export default function ShopPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const PRODUCTS_PER_PAGE = 8;
-  const isFirstMountRef = React.useRef(true);
-  const prevFiltersRef = React.useRef({ searchQuery, selectedShape, selectedMetal, sortBy });
+
+  // Sync shape filter if visited via /shop?shape=...
+  React.useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const urlShape = params.get('shape');
+      if (urlShape) {
+        setSelectedShape(urlShape);
+        setCurrentPage(1);
+      }
+    } catch {}
+  }, []);
+
+  const handleShapeChange = (shape: string) => {
+    setSelectedShape(shape);
+    setCurrentPage(1);
+  };
+
+  const handleMetalChange = (metal: string) => {
+    setSelectedMetal(metal);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (sort: string) => {
+    setSortBy(sort);
+    setCurrentPage(1);
+  };
 
   const filteredProducts = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -46,7 +102,11 @@ export default function ShopPage() {
           if (!matches) return false;
         }
 
-        const matchesShape = selectedShape === 'all' || p.shape === selectedShape;
+        const matchesShape =
+          selectedShape === 'all' ||
+          (p.shape && p.shape.toLowerCase() === selectedShape.toLowerCase()) ||
+          (p.name && p.name.toLowerCase().includes(selectedShape.toLowerCase()));
+
         const matchesMetal =
           selectedMetal === 'all' ||
           p.variants.some((v) => v.metal.toLowerCase().includes(selectedMetal.toLowerCase()));
@@ -60,64 +120,6 @@ export default function ShopPage() {
       });
   }, [products, searchQuery, selectedShape, selectedMetal, sortBy]);
 
-  // Restore pagination on mount from URL query or sessionStorage
-  React.useEffect(() => {
-    try {
-      const urlParams = new URLSearchParams(window.location.search);
-      const urlPage = parseInt(urlParams.get('page') || '', 10);
-      const sessionPage = parseInt(sessionStorage.getItem('fj_shop_page') || '', 10);
-      const targetPage = (!isNaN(urlPage) && urlPage >= 1)
-        ? urlPage
-        : (!isNaN(sessionPage) && sessionPage >= 1 ? sessionPage : 1);
-
-      if (targetPage > 1) {
-        setCurrentPage(targetPage);
-      }
-    } catch (e) {
-      // safe fallback
-    }
-  }, []);
-
-  // Listen to browser Back / Forward (popstate)
-  React.useEffect(() => {
-    const handlePopState = () => {
-      try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const p = parseInt(urlParams.get('page') || '1', 10);
-        if (!isNaN(p) && p >= 1) {
-          setCurrentPage(p);
-        }
-      } catch (e) {}
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
-  // Reset to page 1 only when filters explicitly change AFTER initial mount
-  React.useEffect(() => {
-    if (isFirstMountRef.current) {
-      isFirstMountRef.current = false;
-      return;
-    }
-
-    const prev = prevFiltersRef.current;
-    if (
-      prev.searchQuery !== searchQuery ||
-      prev.selectedShape !== selectedShape ||
-      prev.selectedMetal !== selectedMetal ||
-      prev.sortBy !== sortBy
-    ) {
-      prevFiltersRef.current = { searchQuery, selectedShape, selectedMetal, sortBy };
-      setCurrentPage(1);
-      try {
-        sessionStorage.setItem('fj_shop_page', '1');
-        const url = new URL(window.location.href);
-        url.searchParams.delete('page');
-        window.history.replaceState({}, '', url.toString());
-      } catch (e) {}
-    }
-  }, [searchQuery, selectedShape, selectedMetal, sortBy]);
-
   const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE) || 1;
 
   // Clamp page if filtered count drops
@@ -130,17 +132,9 @@ export default function ShopPage() {
   const handlePageChange = (newPage: number) => {
     const clamped = Math.max(1, Math.min(newPage, totalPages));
     setCurrentPage(clamped);
-    try {
-      sessionStorage.setItem('fj_shop_page', String(clamped));
-      const url = new URL(window.location.href);
-      if (clamped > 1) {
-        url.searchParams.set('page', String(clamped));
-      } else {
-        url.searchParams.delete('page');
-      }
-      window.history.pushState({ page: clamped }, '', url.toString());
-    } catch (e) {}
-    window.scrollTo({ top: 380, behavior: 'smooth' });
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 380, behavior: 'smooth' });
+    }
   };
 
   const paginatedProducts = useMemo(() => {
@@ -183,7 +177,7 @@ export default function ShopPage() {
       </section>
 
       {/* Shape filter chips */}
-      <ShapeFilterBar selectedShape={selectedShape} onSelectShape={setSelectedShape} />
+      <ShapeFilterBar selectedShape={selectedShape} onSelectShape={handleShapeChange} />
 
       {/* Grid */}
       <section className="py-6 sm:py-10 max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8">
@@ -204,14 +198,14 @@ export default function ShopPage() {
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder="Search rings & styles..."
                 className="w-full bg-white border border-[#E8E5DF] rounded-xl pl-8 pr-7 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] shadow-xs placeholder:text-gray-400"
               />
               {searchQuery && (
                 <button
                   type="button"
-                  onClick={() => setSearchQuery('')}
+                  onClick={() => handleSearchChange('')}
                   className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer p-0.5"
                   title="Clear search"
                 >
@@ -222,7 +216,7 @@ export default function ShopPage() {
 
             <select
               value={selectedMetal}
-              onChange={(e) => setSelectedMetal(e.target.value)}
+              onChange={(e) => handleMetalChange(e.target.value)}
               className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37]"
             >
               <option value="all">All Metals</option>
@@ -233,7 +227,7 @@ export default function ShopPage() {
 
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
+              onChange={(e) => handleSortChange(e.target.value)}
               className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37]"
             >
               <option value="featured">Featured</option>
@@ -263,81 +257,43 @@ export default function ShopPage() {
                 type="button"
                 disabled={currentPage <= 1}
                 onClick={() => handlePageChange(currentPage - 1)}
-                className="px-3 py-1.5 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-lg text-xs font-semibold hover:border-[#D4AF37] transition-colors flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed"
+                className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs select-none active:scale-95"
               >
                 <ChevronLeft className="w-3.5 h-3.5" />
                 <span>Previous</span>
               </button>
 
               <div className="flex items-center gap-1">
-                {totalPages <= 7 ? (
-                  Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                {getPaginationRange(currentPage, totalPages).map((item, idx) => {
+                  if (typeof item === 'string') {
+                    return (
+                      <span key={`${item}-${idx}`} className="px-1 text-gray-400 text-xs select-none">
+                        ...
+                      </span>
+                    );
+                  }
+                  return (
                     <button
-                      key={pageNum}
+                      key={item}
                       type="button"
-                      onClick={() => handlePageChange(pageNum)}
-                      className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        currentPage === pageNum
-                          ? 'bg-[#022C22] text-[#D4AF37] shadow'
-                          : 'bg-white text-gray-600 hover:text-[#022C22] border border-[#E8E5DF]'
+                      onClick={() => handlePageChange(item)}
+                      className={`min-w-[34px] h-[34px] px-2 rounded-xl text-xs font-bold transition-all cursor-pointer select-none active:scale-95 ${
+                        currentPage === item
+                          ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
+                          : 'bg-white text-gray-700 hover:text-[#022C22] hover:border-[#D4AF37] border border-[#E8E5DF]'
                       }`}
                     >
-                      {pageNum}
+                      {item}
                     </button>
-                  ))
-                ) : (
-                  <>
-                    {[1, 2].map((pageNum) => (
-                      <button
-                        key={pageNum}
-                        type="button"
-                        onClick={() => handlePageChange(pageNum)}
-                        className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                          currentPage === pageNum
-                            ? 'bg-[#022C22] text-[#D4AF37] shadow'
-                            : 'bg-white text-gray-600 hover:text-[#022C22] border border-[#E8E5DF]'
-                        }`}
-                      >
-                        {pageNum}
-                      </button>
-                    ))}
-
-                    {currentPage > 3 && <span className="px-1 text-gray-400 text-xs">...</span>}
-
-                    {currentPage > 2 && currentPage < totalPages - 1 && (
-                      <button
-                        type="button"
-                        className="w-8 h-8 rounded-lg text-xs font-bold bg-[#022C22] text-[#D4AF37] shadow"
-                      >
-                        {currentPage}
-                      </button>
-                    )}
-
-                    {currentPage < totalPages - 2 && <span className="px-1 text-gray-400 text-xs">...</span>}
-
-                    {[totalPages - 1, totalPages].map((pageNum) => (
-                      <button
-                        key={pageNum}
-                        type="button"
-                        onClick={() => handlePageChange(pageNum)}
-                        className={`w-8 h-8 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                          currentPage === pageNum
-                            ? 'bg-[#022C22] text-[#D4AF37] shadow'
-                            : 'bg-white text-gray-600 hover:text-[#022C22] border border-[#E8E5DF]'
-                        }`}
-                      >
-                        {pageNum}
-                      </button>
-                    ))}
-                  </>
-                )}
+                  );
+                })}
               </div>
 
               <button
                 type="button"
                 disabled={currentPage >= totalPages}
                 onClick={() => handlePageChange(currentPage + 1)}
-                className="px-3 py-1.5 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-lg text-xs font-semibold hover:border-[#D4AF37] transition-colors flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed"
+                className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs select-none active:scale-95"
               >
                 <span>Next</span>
                 <ChevronRight className="w-3.5 h-3.5" />

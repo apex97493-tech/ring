@@ -20,6 +20,7 @@ import {
   Minus,
   HelpCircle,
   ShoppingBag,
+  Share2,
 } from 'lucide-react';
 import { useProducts } from '@/context/ProductContext';
 import { useCart } from '@/context/CartContext';
@@ -40,7 +41,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const { getProductBySlug, products, isLoading } = useProducts();
   const product = getProductBySlug(resolvedParams.slug);
 
-  const { addToCart, isWishlisted, toggleWishlist } = useCart();
+  const { addToCart, isWishlisted, toggleWishlist, setIsCartOpen } = useCart();
   const { formatPrice } = useCurrency();
 
   // State hooks - Etsy style selectors
@@ -52,6 +53,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const [validationErrors, setValidationErrors] = useState<{ band?: boolean; size?: boolean }>({});
   const [isSizeDrawerOpen, setIsSizeDrawerOpen] = useState<boolean>(false);
   const [isAdded, setIsAdded] = useState<boolean>(false);
+  const [isShareCopied, setIsShareCopied] = useState<boolean>(false);
   const [showStickyBar, setShowStickyBar] = useState<boolean>(false);
 
   // Sync scroll for bottom sticky buy bar
@@ -158,9 +160,20 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const activeTier = metalBandOptions.find((o) => o.metal === selectedBandColour)
     ?? metalBandOptions[0];
 
+  // Pre-populate default metal & ring size so dropdowns are never unselected
+  useEffect(() => {
+    if (metalBandOptions.length > 0 && !selectedBandColour) {
+      setSelectedBandColour(metalBandOptions[0].metal);
+    }
+    if (!selectedSize) {
+      const isRing = (product?.category || '').toLowerCase().includes('ring') || (product?.name || '').toLowerCase().includes('ring');
+      setSelectedSize(isRing ? 'US 7' : 'Standard');
+    }
+  }, [metalBandOptions, selectedBandColour, selectedSize, product]);
+
   // Prices shown in price block — update reactively as band colour changes
-  const currentPrice         = activeTier.price;
-  const currentOriginalPrice = activeTier.originalPrice;
+  const currentPrice         = activeTier?.price ?? basePrice;
+  const currentOriginalPrice = activeTier?.originalPrice ?? baseMRP;
 
   const discountPercent = Math.max(
     5,
@@ -168,62 +181,55 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   );
 
   // For image gallery — use the active tier's matched image + rest of product images
-  const activeVariantImage = activeTier.image || product.images?.[0] || '';
+  const activeVariantImage = activeTier?.image || product.images?.[0] || '';
   const allImages = [
     activeVariantImage,
     ...(product.images || []).filter((img) => img !== activeVariantImage),
   ];
 
   // Convenience alias for metal name used in cart / WhatsApp
-  const activeMetal = activeTier.metal;
+  const activeMetal = activeTier?.metal || metalBandOptions[0]?.metal || '925 Sterling Silver';
 
   // Add to cart handler
   const handleAddToCart = () => {
-    const errors: { band?: boolean; size?: boolean } = {};
-    if (!selectedBandColour) errors.band = true;
-    if (!selectedSize) errors.size = true;
-
-    if (Object.keys(errors).length > 0) {
-      setValidationErrors(errors);
-      return;
-    }
+    const isRing = (product?.category || '').toLowerCase().includes('ring') || (product?.name || '').toLowerCase().includes('ring');
+    const bandToUse = selectedBandColour || activeMetal;
+    const sizeToUse = selectedSize || (isRing ? 'US 7' : 'Standard');
 
     addToCart({
       product,
       quantity: 1,
-      selectedMetal: activeMetal,
-      selectedSize: selectedSize,
+      selectedMetal: bandToUse,
+      selectedSize: sizeToUse,
       selectedCarat: product.carat,
       price: currentPrice,
       image: activeVariantImage,
       engravingText: personalisationText.trim() || undefined,
     });
+    setValidationErrors({});
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2500);
   };
 
   // Buy it now (adds to cart & opens /checkout directly)
   const handleBuyNow = () => {
-    const errors: { band?: boolean; size?: boolean } = {};
-    if (!selectedBandColour) errors.band = true;
-    if (!selectedSize) errors.size = true;
-
-    if (Object.keys(errors).length > 0) {
-      setValidationErrors(errors);
-      return;
-    }
+    const isRing = (product?.category || '').toLowerCase().includes('ring') || (product?.name || '').toLowerCase().includes('ring');
+    const bandToUse = selectedBandColour || activeMetal;
+    const sizeToUse = selectedSize || (isRing ? 'US 7' : 'Standard');
 
     addToCart({
       product,
       quantity: 1,
-      selectedMetal: activeMetal,
-      selectedSize: selectedSize,
+      selectedMetal: bandToUse,
+      selectedSize: sizeToUse,
       selectedCarat: product.carat,
       price: currentPrice,
       image: activeVariantImage,
       engravingText: personalisationText.trim() || undefined,
     });
 
+    setValidationErrors({});
+    setIsCartOpen(false);
     router.push('/checkout');
   };
 
@@ -328,18 +334,13 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                 </label>
                 <div className="relative">
                   <select
-                    value={selectedBandColour}
+                    value={selectedBandColour || metalBandOptions[0]?.metal || ''}
                     onChange={(e) => {
                       setSelectedBandColour(e.target.value);
                       setValidationErrors((prev) => ({ ...prev, band: false }));
                     }}
-                    className={`w-full bg-white border ${
-                      validationErrors.band
-                        ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-gray-400 hover:border-gray-600 focus:border-black focus:ring-1 focus:ring-black'
-                    } rounded-md px-3.5 py-3 pr-10 text-sm text-[#222222] appearance-none cursor-pointer transition-colors shadow-2xs font-sans`}
+                    className="w-full bg-white border border-gray-400 hover:border-gray-600 focus:border-black focus:ring-1 focus:ring-black rounded-md px-3.5 py-3 pr-10 text-sm text-[#222222] appearance-none cursor-pointer transition-colors shadow-2xs font-sans"
                   >
-                    <option value="" disabled>Select an option</option>
                     {metalBandOptions.map((opt) => (
                       <option key={opt.metal} value={opt.metal}>
                         {opt.metal} ({formatPrice(opt.price)})
@@ -353,20 +354,24 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                 )}
               </div>
 
-              {/* 2. Ring size Select */}
+              {/* 2. Ring size / Length Select */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="block text-sm font-semibold text-[#222222]">
-                    Ring size
+                    {((product.category || '').toLowerCase().includes('necklace') || (product.name || '').toLowerCase().includes('necklace') || (product.name || '').toLowerCase().includes('pendant'))
+                      ? 'Chain Length'
+                      : 'Ring size'}
                   </label>
-                  <button
-                    type="button"
-                    onClick={() => setIsSizeDrawerOpen(true)}
-                    className="text-xs text-gray-600 hover:text-black font-medium underline underline-offset-2 cursor-pointer transition-colors flex items-center gap-1"
-                  >
-                    <Package className="w-3.5 h-3.5 text-gray-500" />
-                    <span>Find your size</span>
-                  </button>
+                  {((product.category || '').toLowerCase().includes('ring') || (product.name || '').toLowerCase().includes('ring')) && (
+                    <button
+                      type="button"
+                      onClick={() => setIsSizeDrawerOpen(true)}
+                      className="text-xs text-gray-600 hover:text-black font-medium underline underline-offset-2 cursor-pointer transition-colors flex items-center gap-1"
+                    >
+                      <Package className="w-3.5 h-3.5 text-gray-500" />
+                      <span>Find your size</span>
+                    </button>
+                  )}
                 </div>
                 <div className="relative">
                   <select
@@ -375,24 +380,29 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                       setSelectedSize(e.target.value);
                       setValidationErrors((prev) => ({ ...prev, size: false }));
                     }}
-                    className={`w-full bg-white border ${
-                      validationErrors.size
-                        ? 'border-red-500 ring-1 ring-red-500'
-                        : 'border-gray-400 hover:border-gray-600 focus:border-black focus:ring-1 focus:ring-black'
-                    } rounded-md px-3.5 py-3 pr-10 text-sm text-[#222222] appearance-none cursor-pointer transition-colors shadow-2xs font-sans`}
+                    className="w-full bg-white border border-gray-400 hover:border-gray-600 focus:border-black focus:ring-1 focus:ring-black rounded-md px-3.5 py-3 pr-10 text-sm text-[#222222] appearance-none cursor-pointer transition-colors shadow-2xs font-sans"
                   >
-                    <option value="" disabled>Select an option</option>
-                    {US_RING_SIZES.map((s) => (
-                      <option key={s.us} value={`US ${s.us}`}>
-                        US {s.us} ({s.diameterMm} mm)
-                      </option>
-                    ))}
+                    {((product.category || '').toLowerCase().includes('necklace') || (product.name || '').toLowerCase().includes('necklace') || (product.name || '').toLowerCase().includes('pendant')) ? (
+                      <>
+                        <option value="16 Inch (40 cm)">16 Inch (40 cm) - Choker</option>
+                        <option value="18 Inch (45 cm)">18 Inch (45 cm) - Standard Collarbone</option>
+                        <option value="20 Inch (50 cm)">20 Inch (50 cm) - Matinee</option>
+                      </>
+                    ) : ((product.category || '').toLowerCase().includes('earring') || (product.name || '').toLowerCase().includes('earring')) ? (
+                      <option value="Standard Pair">Standard Pair (Stud / Drop)</option>
+                    ) : (
+                      <>
+                        <option value="US 7">US 7 (17.3 mm) - Standard Most Common</option>
+                        {US_RING_SIZES.filter(s => s.us !== '7').map((s) => (
+                          <option key={s.us} value={`US ${s.us}`}>
+                            US {s.us} ({s.diameterMm} mm)
+                          </option>
+                        ))}
+                      </>
+                    )}
                   </select>
                   <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 pointer-events-none" />
                 </div>
-                {validationErrors.size && (
-                  <p className="text-xs text-red-600 mt-1">Please select an option</p>
-                )}
               </div>
 
               {/* 3. + Add personalisation (optional) */}
@@ -463,17 +473,57 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                   <button
                     type="button"
                     onClick={handleBuyNow}
-                    className="w-full py-3 bg-white hover:bg-gray-50 text-[#18181B] font-bold text-xs tracking-wider uppercase rounded-full border border-gray-300 hover:border-black transition-colors cursor-pointer"
+                    className="w-full py-3 bg-white hover:bg-gray-50 text-[#18181B] font-bold text-xs tracking-wider uppercase rounded-full border border-gray-300 hover:border-black transition-colors cursor-pointer select-none active:scale-95"
                   >
                     BUY IT NOW
                   </button>
                   <button
                     type="button"
                     onClick={handleWhatsAppOrder}
-                    className="w-full py-3 bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold text-xs tracking-wider uppercase rounded-full transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                    className="w-full py-3 bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold text-xs tracking-wider uppercase rounded-full transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs select-none active:scale-95"
                   >
                     <MessageCircle className="w-4 h-4 fill-white text-transparent" />
                     <span>WHATSAPP</span>
+                  </button>
+                </div>
+
+                {/* Wishlist & Share Action Bar */}
+                <div className="flex items-center gap-2.5 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => product && toggleWishlist(product.id)}
+                    className={`flex-1 py-2.5 px-4 rounded-full border text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer select-none active:scale-95 ${
+                      product && isWishlisted(product.id)
+                        ? 'bg-rose-50 border-rose-300 text-rose-600'
+                        : 'bg-white border-gray-300 hover:border-black text-gray-700'
+                    }`}
+                  >
+                    <Heart className={`w-3.5 h-3.5 ${product && isWishlisted(product.id) ? 'fill-rose-500 text-rose-500' : ''}`} />
+                    <span>{product && isWishlisted(product.id) ? 'Saved in Wishlist' : 'Add to Wishlist'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        if (navigator.share) {
+                          navigator.share({
+                            title: product?.name,
+                            text: `Check out this handcrafted Moissanite design at ForeverJewellStudio: ${product?.name}`,
+                            url: window.location.href,
+                          }).catch(() => {});
+                        } else {
+                          navigator.clipboard.writeText(window.location.href);
+                          setIsShareCopied(true);
+                          setTimeout(() => setIsShareCopied(false), 2000);
+                        }
+                      }
+                    }}
+                    className="py-2.5 px-4 rounded-full border border-gray-300 hover:border-black bg-white text-gray-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer select-none active:scale-95"
+                    title="Share this design"
+                  >
+                    <Share2 className="w-3.5 h-3.5" />
+                    <span>{isShareCopied ? 'Link Copied!' : 'Share'}</span>
                   </button>
                 </div>
               </div>

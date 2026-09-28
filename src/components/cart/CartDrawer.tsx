@@ -99,8 +99,9 @@ export default function CartDrawer() {
                   </h2>
                 </div>
                 <button
+                  type="button"
                   onClick={() => setIsCartOpen(false)}
-                  className="p-2 text-gray-400 hover:text-gray-700 rounded-full transition-colors"
+                  className="p-2 text-gray-400 hover:text-gray-700 active:scale-90 rounded-full transition-all cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -142,8 +143,9 @@ export default function CartDrawer() {
                       Explore our handcrafted Moissanite Solitaire rings certified with authentic GRA reports.
                     </p>
                     <button
+                      type="button"
                       onClick={() => setIsCartOpen(false)}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#18181B] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-widest hover:bg-[#8C6A1F] hover:text-white transition-colors rounded-none"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#18181B] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-widest hover:bg-[#8C6A1F] hover:text-white active:scale-95 transition-all rounded-xl cursor-pointer"
                     >
                       Browse Solitaires <ArrowRight className="w-4 h-4" />
                     </button>
@@ -166,8 +168,10 @@ export default function CartDrawer() {
                               {item.product.name}
                             </h4>
                             <button
+                              type="button"
                               onClick={() => removeFromCart(item.id)}
-                              className="text-gray-400 hover:text-red-500 transition-colors p-1"
+                              className="text-gray-400 hover:text-red-500 active:scale-90 transition-all p-1 cursor-pointer"
+                              aria-label="Remove item"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -185,8 +189,10 @@ export default function CartDrawer() {
                         <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100">
                           <div className="flex items-center border border-gray-200 rounded-md bg-[#FDFBF7]">
                             <button
+                              type="button"
                               onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                              className="p-1 hover:bg-gray-100 text-gray-600"
+                              className="p-1.5 hover:bg-gray-100 active:scale-90 text-gray-600 cursor-pointer"
+                              aria-label="Decrease quantity"
                             >
                               <Minus className="w-3 h-3" />
                             </button>
@@ -194,8 +200,10 @@ export default function CartDrawer() {
                               {item.quantity}
                             </span>
                             <button
+                              type="button"
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                              className="p-1 hover:bg-gray-100 text-gray-600"
+                              className="p-1.5 hover:bg-gray-100 active:scale-90 text-gray-600 cursor-pointer"
+                              aria-label="Increase quantity"
                             >
                               <Plus className="w-3 h-3" />
                             </button>
@@ -223,8 +231,9 @@ export default function CartDrawer() {
                       className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-xs font-sans uppercase focus:outline-none focus:border-[#B89035]"
                     />
                     <button
+                      type="button"
                       onClick={handleApplyCoupon}
-                      className="px-4 py-2 bg-[#F7F5F0] hover:bg-[#E8E5DF] text-[#18181B] text-xs font-bold tracking-wider uppercase rounded-lg transition-colors"
+                      className="px-4 py-2 bg-[#F7F5F0] hover:bg-[#E8E5DF] active:scale-95 text-[#18181B] text-xs font-bold tracking-wider uppercase rounded-lg transition-all cursor-pointer"
                     >
                       Apply
                     </button>
@@ -281,8 +290,9 @@ export default function CartDrawer() {
                   <div className="space-y-2 pt-2">
                     {/* 1-Click WhatsApp Quick Checkout */}
                     <button
+                      type="button"
                       onClick={handleWhatsAppCheckout}
-                      className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#064E3B] text-[#D4AF37] hover:bg-[#043327] font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md rounded-none cursor-pointer"
+                      className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#064E3B] text-[#D4AF37] hover:bg-[#043327] active:scale-95 font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md rounded-xl cursor-pointer"
                     >
                       <Send className="w-4 h-4" />
                       {t.cart.whatsappOrder}
@@ -290,11 +300,12 @@ export default function CartDrawer() {
 
                     {/* Standard Secure Checkout */}
                     <button
+                      type="button"
                       onClick={() => {
                         setIsCartOpen(false);
                         router.push('/checkout');
                       }}
-                      className="w-full py-3.5 bg-[#18181B] text-white hover:bg-black font-sans text-xs font-bold tracking-widest uppercase transition-colors rounded-none cursor-pointer flex items-center justify-center gap-2"
+                      className="w-full py-3.5 bg-[#18181B] text-white hover:bg-black active:scale-95 font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl cursor-pointer flex items-center justify-center gap-2 shadow-md"
                     >
                       <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
                       Secure Online Checkout

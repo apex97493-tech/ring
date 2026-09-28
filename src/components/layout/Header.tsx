@@ -135,6 +135,8 @@ export default function Header() {
             <nav className="hidden lg:flex flex-nowrap items-center justify-center gap-x-8 xl:gap-x-12">
               {[
                 { name: 'Home', href: '/' },
+                { name: 'Shop All', href: '/shop' },
+                { name: 'Track Order', href: '/track-order' },
                 { name: 'Contact', href: '/contact' },
                 { name: 'Help', href: '/#faqs' },
               ].map((item) => (
@@ -208,8 +210,8 @@ export default function Header() {
 
               {/* Wishlist Icon */}
               <Link
-                href="/category/rings"
-                className="text-[#FDFBF7] hover:text-[#D4AF37] transition-colors relative p-1.5 hidden sm:block rounded-full hover:bg-white/10"
+                href="/wishlist"
+                className="text-[#FDFBF7] hover:text-[#D4AF37] active:scale-95 transition-all relative p-1.5 hidden sm:block rounded-full hover:bg-white/10"
                 aria-label="Wishlist"
               >
                 <Heart className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.8} />
@@ -496,6 +498,8 @@ export default function Header() {
 
                 <nav className="p-4 space-y-2.5">
                   {[
+                    { name: 'My Saved Wishlist', href: '/wishlist', count: `${wishlist.length} Saved` },
+                    { name: 'Track Order & History', href: '/track-order', count: 'Orders' },
                     { name: 'Search Product Catalog', href: '/search', count: 'Search' },
                     { name: 'Shop All Jewelry', href: '/shop', count: 'Explore' },
                     { name: 'Rings', href: '/category/rings', count: 'Bestsellers' },

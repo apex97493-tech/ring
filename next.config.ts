@@ -41,9 +41,20 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  compress: true, // Enable automatic Brotli/Gzip response compression for zero delay
   poweredByHeader: false, // Security: Hide 'X-Powered-By: Next.js' to prevent fingerprinting
   images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 86400,
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'qphfuzfsjggfskwszdco.supabase.co',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.supabase.co',
+      },
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -27,6 +27,7 @@ import {
   Clock,
   Send,
   HelpCircle,
+  Building2,
 } from 'lucide-react';
 
 const POPULAR_COUNTRIES = [
@@ -45,6 +46,12 @@ const POPULAR_COUNTRIES = [
   'Japan',
   'Other',
 ];
+
+declare global {
+  interface Window {
+    paypal?: any;
+  }
+}
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -67,13 +74,26 @@ export default function CheckoutPage() {
 
   const [saveAddress, setSaveAddress] = useState(true);
   const [hasSavedAddress, setHasSavedAddress] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'payoneer' | 'whatsapp'>('paypal');
+  const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'payoneer' | 'bank_transfer' | 'whatsapp'>('paypal');
   const [payoneerReference, setPayoneerReference] = useState('');
+  const [bankReference, setBankReference] = useState('');
+  const [copiedBankField, setCopiedBankField] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [completedOrder, setCompletedOrder] = useState<Order | null>(null);
   const [copiedPayoneer, setCopiedPayoneer] = useState(false);
   const [whatsAppUrl, setWhatsAppUrl] = useState('');
+
+  const copyBankField = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedBankField(label);
+    setTimeout(() => setCopiedBankField(null), 2500);
+  };
+
+  // PayPal SDK & Direct Gateway Integration State
+  const [isPayPalLoading, setIsPayPalLoading] = useState(false);
+  const [paypalError, setPaypalError] = useState<string | null>(null);
+  const [isRedirectingToPayPal, setIsRedirectingToPayPal] = useState(false);
 
   // Load saved address from localStorage on mount (Amazon-style)
   useEffect(() => {
@@ -91,12 +111,72 @@ export default function CheckoutPage() {
     }
   }, []);
 
+  // Listen for return from official PayPal Portal (Etsy / Shopify style)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('status');
+    const token = params.get('token');
+
+    if (status === 'paypal_success' && token) {
+      setIsSubmitting(true);
+      const pendingDataStr = localStorage.getItem('fj_pending_paypal_order');
+      let pendingData: any = {};
+      try {
+        if (pendingDataStr) pendingData = JSON.parse(pendingDataStr);
+      } catch (_) {}
+
+      fetch('/api/paypal/capture-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: token,
+          customer: pendingData.customer || formData,
+          items: pendingData.items || cart,
+          currency: pendingData.currency || 'USD',
+          currencySymbol: pendingData.currencySymbol || '$',
+          total: pendingData.total || 57,
+        }),
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.success && data.order) {
+            setCompletedOrder(data.order);
+            setWhatsAppUrl(data.whatsAppUrl || '');
+            clearCart();
+            localStorage.removeItem('fj_pending_paypal_order');
+            window.history.replaceState({}, document.title, '/checkout');
+          } else {
+            alert(data.error || 'Failed to capture PayPal payment.');
+          }
+        })
+        .catch((err) => {
+          console.error('Capture error:', err);
+          alert('Could not verify PayPal payment.');
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
+    } else if (status === 'paypal_cancelled') {
+      setPaypalError('PayPal payment was cancelled. You can try again or choose another payment method.');
+      window.history.replaceState({}, document.title, '/checkout');
+    }
+  }, []);
+
   // Calculate currency converted prices using selectedCurrency object
   const currencyCode = selectedCurrency.code;
   const currencySymbol = selectedCurrency.symbol;
   const convertedSubtotal = Math.round(subtotal * selectedCurrency.rate);
   const shippingFee = 0; // Free express worldwide shipping
   const finalTotal = convertedSubtotal + shippingFee;
+
+  // Supported PayPal direct currencies
+  const PAYPAL_DIRECT_CURRENCIES = ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'SGD', 'NZD', 'CHF', 'HKD'];
+  const isDirectPayPal = PAYPAL_DIRECT_CURRENCIES.includes(currencyCode);
+  const paypalCurrency = isDirectPayPal ? currencyCode : 'USD';
+  const paypalAmount = isDirectPayPal
+    ? finalTotal
+    : Math.max(1, Math.round(finalTotal / 86.5));
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -127,17 +207,25 @@ export default function CheckoutPage() {
       newErrors.payoneer = 'Please enter your Payoneer email or Transaction Reference ID';
     }
 
+    if (paymentMethod === 'bank_transfer' && !bankReference.trim()) {
+      newErrors.bankReference = 'Please enter your UPI reference number, UTR, or remitter account name';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   // Submit Order to backend
-  const handlePlaceOrder = async (overridePayment?: {
-    method: 'paypal' | 'card' | 'payoneer' | 'whatsapp';
-    status: 'paid' | 'pending';
-    transactionId?: string;
-  }) => {
-    if (!validateForm()) {
+  const handlePlaceOrder = async (
+    overridePayment?: {
+      method: 'paypal' | 'card' | 'payoneer' | 'bank_transfer' | 'whatsapp';
+      status: 'paid' | 'pending';
+      transactionId?: string;
+    },
+    overrideCustomer?: ShippingAddress
+  ) => {
+    const activeCustomer = overrideCustomer || formData;
+    if (!overrideCustomer && !validateForm()) {
       window.scrollTo({ top: 100, behavior: 'smooth' });
       return;
     }
@@ -146,7 +234,7 @@ export default function CheckoutPage() {
 
     try {
       // Save address if opted in
-      if (saveAddress) {
+      if (saveAddress && !overrideCustomer) {
         localStorage.setItem('fj_saved_shipping_address', JSON.stringify(formData));
       }
 
@@ -170,15 +258,16 @@ export default function CheckoutPage() {
 
       const effectivePayment = overridePayment || {
         method: paymentMethod,
-        status: paymentMethod === 'paypal' ? 'paid' : 'pending',
+        status: (paymentMethod === 'paypal' ? 'paid' : 'pending') as 'paid' | 'pending',
         payoneerReference: paymentMethod === 'payoneer' ? payoneerReference : undefined,
+        bankReference: paymentMethod === 'bank_transfer' ? bankReference : undefined,
       };
 
       const res = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          customer: formData,
+          customer: activeCustomer,
           items: orderItems,
           currency: currencyCode,
           currencySymbol: currencySymbol,
@@ -213,6 +302,94 @@ export default function CheckoutPage() {
     setCopiedPayoneer(true);
     setTimeout(() => setCopiedPayoneer(false), 2500);
   };
+
+  // Synchronize state to refs to prevent re-rendering PayPal iframe on every keystroke
+  const formDataRef = useRef(formData);
+  formDataRef.current = formData;
+
+  const paypalAmountRef = useRef(paypalAmount);
+  paypalAmountRef.current = paypalAmount;
+
+  const cartRef = useRef(cart);
+  cartRef.current = cart;
+
+  const handlePlaceOrderRef = useRef(handlePlaceOrder);
+  handlePlaceOrderRef.current = handlePlaceOrder;
+
+  const validateFormRef = useRef(validateForm);
+  validateFormRef.current = validateForm;
+
+  // Handle direct Etsy-Style PayPal Portal Checkout (Redirects directly to official PayPal checkout without popup hangs)
+  const handleEtsyStylePayPal = async () => {
+    if (saveAddress) {
+      try {
+        localStorage.setItem('fj_saved_shipping_address', JSON.stringify(formData));
+      } catch (_) {}
+    }
+
+    setIsRedirectingToPayPal(true);
+    setPaypalError(null);
+
+    try {
+      const res = await fetch('/api/paypal/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: paypalAmount,
+          currency: paypalCurrency,
+          customer: formData,
+          items: cart,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success && data.approveUrl) {
+        const normalizedItems: OrderItem[] = cart.map((item) => {
+          const itemPrice = Math.round(item.price * selectedCurrency.rate);
+          return {
+            productId: item.product.id,
+            productName: item.product.name,
+            productSlug: item.product.slug,
+            metal: item.selectedMetal,
+            size: item.selectedSize || 'US 7',
+            carat: item.selectedCarat || item.product.carat,
+            engraving: item.engravingText,
+            quantity: item.quantity,
+            unitPrice: itemPrice,
+            totalPrice: itemPrice * item.quantity,
+            image: item.image || item.product.images?.[0] || '',
+          };
+        });
+
+        localStorage.setItem(
+          'fj_pending_paypal_order',
+          JSON.stringify({
+            customer: formData,
+            items: normalizedItems,
+            currency: currencyCode,
+            currencySymbol: currencySymbol,
+            total: finalTotal,
+          })
+        );
+
+        // Open official PayPal checkout page directly (Etsy style!)
+        window.location.href = data.approveUrl;
+      } else {
+        setPaypalError(data.error || 'Could not initiate PayPal checkout session. Please try again.');
+        setIsRedirectingToPayPal(false);
+      }
+    } catch (err: any) {
+      console.error('PayPal redirect error:', err);
+      setPaypalError('Could not connect to PayPal server. Please try again.');
+      setIsRedirectingToPayPal(false);
+    }
+  };
+
+  // Clean up any pending state
+  useEffect(() => {
+    setIsPayPalLoading(false);
+  }, [paymentMethod]);
 
   // SUCCESS SCREEN
   if (completedOrder) {
@@ -299,7 +476,7 @@ export default function CheckoutPage() {
                     </div>
                     <span className="font-medium text-gray-900">
                       {completedOrder.currencySymbol}
-                      {it.totalPrice.toLocaleString()}
+                      {Number(it.totalPrice ?? it.unitPrice ?? 0).toLocaleString()}
                     </span>
                   </div>
                 ))}
@@ -310,15 +487,21 @@ export default function CheckoutPage() {
               <span>Total Paid / Due</span>
               <span>
                 {completedOrder.currencySymbol}
-                {completedOrder.total.toLocaleString()} {completedOrder.currency}
+                {Number(completedOrder.total || 0).toLocaleString()} {completedOrder.currency}
               </span>
             </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
+              href={`/track-order?id=${completedOrder.id}`}
+              className="px-6 py-3 bg-[#B89035] hover:bg-[#967428] text-white text-xs font-bold tracking-widest uppercase transition-all shadow-md text-center rounded"
+            >
+              Track Order Status
+            </Link>
+            <Link
               href="/shop"
-              className="px-6 py-3 bg-[#18181B] text-white hover:bg-black text-xs font-bold tracking-widest uppercase transition-colors"
+              className="px-6 py-3 bg-[#18181B] text-white hover:bg-black text-xs font-bold tracking-widest uppercase transition-colors text-center rounded"
             >
               Continue Shopping
             </Link>
@@ -622,7 +805,7 @@ export default function CheckoutPage() {
               </div>
 
               {/* Tabs for Payment Gateways */}
-              <div className="grid grid-cols-3 gap-2 p-1 bg-gray-100 rounded-lg mb-6">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-gray-100 rounded-lg mb-6">
                 <button
                   type="button"
                   onClick={() => setPaymentMethod('paypal')}
@@ -634,6 +817,19 @@ export default function CheckoutPage() {
                 >
                   <CreditCard className="w-4 h-4 text-[#B89035]" />
                   <span>PayPal / Cards</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setPaymentMethod('bank_transfer')}
+                  className={`py-2.5 px-2 text-xs font-semibold rounded-md transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 ${
+                    paymentMethod === 'bank_transfer'
+                      ? 'bg-white text-gray-900 shadow-sm border border-gray-200'
+                      : 'text-gray-500 hover:text-gray-900'
+                  }`}
+                >
+                  <Building2 className="w-4 h-4 text-[#064E3B]" />
+                  <span>UPI / Bank</span>
                 </button>
 
                 <button
@@ -692,23 +888,212 @@ export default function CheckoutPage() {
                       ))}
                     </div>
 
-                    <button
-                      type="button"
-                      disabled={isSubmitting}
-                      onClick={() =>
-                        handlePlaceOrder({
-                          method: 'paypal',
-                          status: 'paid',
-                          transactionId: `PP-${Date.now().toString().slice(-8)}`,
-                        })
-                      }
-                      className="w-full py-3.5 bg-[#FFC439] hover:bg-[#F2BA36] text-black font-sans text-xs font-bold tracking-widest uppercase transition-all shadow rounded flex items-center justify-center gap-2 cursor-pointer"
-                    >
-                      <CreditCard className="w-4 h-4" />
-                      {isSubmitting
-                        ? 'Processing Payment...'
-                        : `Pay ${currencySymbol}${finalTotal.toLocaleString()} with PayPal / Card`}
-                    </button>
+                    {!isDirectPayPal && (
+                      <div className="bg-amber-50 border border-amber-200 rounded-md p-2.5 mb-4 text-[11px] text-amber-900 flex items-start gap-2">
+                        <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                        <div>
+                          <span>
+                            PayPal processes international transactions in <strong>USD ($)</strong>. Your order of{' '}
+                            <strong>{currencySymbol}{finalTotal.toLocaleString()}</strong> will be charged as{' '}
+                            <strong>${paypalAmount.toLocaleString()} USD</strong> at real-time conversion.
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Direct Server-to-Server PayPal & Card Gateway (Zero Popups, 100% Mobile & Edge Compatible) */}
+                    <div className="space-y-3 mt-4">
+                      {isRedirectingToPayPal ? (
+                        <div className="py-8 px-4 bg-white rounded-xl border-2 border-[#D4AF37] text-center space-y-3 shadow-md">
+                          <div className="w-9 h-9 rounded-full border-3 border-[#003087] border-t-transparent animate-spin mx-auto" />
+                          <h4 className="font-serif text-sm font-bold text-[#003087]">
+                            Connecting to PayPal Secure Bank Gateway...
+                          </h4>
+                          <p className="text-xs text-gray-500 max-w-xs mx-auto font-sans">
+                            Redirecting you directly to the official portal. No popups or browser blockers.
+                          </p>
+                        </div>
+                      ) : (
+                        <>
+                          {/* Button 1: PayPal Account / Wallet */}
+                          <button
+                            type="button"
+                            disabled={isSubmitting}
+                            onClick={handleEtsyStylePayPal}
+                            className="w-full py-4 px-4 bg-[#FFC439] hover:bg-[#F4B728] active:scale-95 text-[#003087] font-sans font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer border border-[#E0A800]"
+                          >
+                            <span className="font-serif italic font-black text-2xl tracking-tight text-[#003087]">
+                              Pay<span className="text-[#0079C1]">Pal</span>
+                            </span>
+                            <span className="text-xs uppercase tracking-wider font-extrabold text-[#003087] ml-1">
+                              • Checkout (${paypalAmount} USD)
+                            </span>
+                          </button>
+
+                          {/* Button 2: Direct Debit / Credit Card (PayPal Guest Checkout) */}
+                          <button
+                            type="button"
+                            disabled={isSubmitting}
+                            onClick={handleEtsyStylePayPal}
+                            className="w-full py-3.5 px-4 bg-[#18181B] hover:bg-black active:scale-95 text-white font-sans font-semibold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer border border-gray-800"
+                          >
+                            <CreditCard className="w-4 h-4 text-[#D4AF37]" />
+                            <span>Debit or Credit Card (Visa, MasterCard, AMEX)</span>
+                          </button>
+                        </>
+                      )}
+
+                      {paypalError && (
+                        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+                          <p className="font-semibold mb-1">PayPal connection notice:</p>
+                          <p>{paypalError}</p>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-gray-200 flex items-center justify-center gap-1.5 text-[10px] text-gray-500">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#064E3B]" />
+                      <span>Direct 256-bit bank encryption via PayPal Official Checkout • 0% Extra Surcharge</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB: BANK / UPI TRANSFER (KOTAK MAHINDRA BANK) */}
+              {paymentMethod === 'bank_transfer' && (
+                <div className="space-y-4">
+                  <div className="bg-[#F0FDF4] border border-[#BBF7D0] rounded-lg p-5">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h4 className="text-xs font-bold text-[#064E3B] uppercase tracking-wider flex items-center gap-1.5">
+                          <Building2 className="w-4 h-4 text-[#064E3B]" />
+                          Kotak Mahindra Bank Transfer & Instant UPI
+                        </h4>
+                        <p className="text-xs text-gray-600 mt-1">
+                          Transfer directly using any UPI App (GPay, PhonePe, Paytm, BHIM) or NetBanking (IMPS/NEFT).
+                        </p>
+                      </div>
+                      <span className="px-2 py-0.5 bg-[#064E3B] text-[#D4AF37] text-[10px] font-bold rounded">
+                        Direct Deposit
+                      </span>
+                    </div>
+
+                    {/* Account Details Box */}
+                    <div className="bg-white border border-[#BBF7D0] rounded-lg p-4 space-y-3 mb-4 shadow-xs">
+                      {/* UPI ID */}
+                      <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
+                        <div>
+                          <span className="text-[10px] uppercase font-semibold text-gray-400 block">UPI ID (GPay / PhonePe / Paytm / BHIM)</span>
+                          <span className="font-mono font-bold text-gray-900 text-sm">982893045@kotak</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => copyBankField('982893045@kotak', 'UPI ID')}
+                          className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
+                        >
+                          {copiedBankField === 'UPI ID' ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-emerald-600" />
+                              <span className="text-emerald-600">Copied</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3.5 h-3.5" />
+                              <span>Copy</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      {/* Account Number */}
+                      <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
+                        <div>
+                          <span className="text-[10px] uppercase font-semibold text-gray-400 block">Bank Account Number</span>
+                          <span className="font-mono font-bold text-gray-900 text-sm">9848316724</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => copyBankField('9848316724', 'Account Number')}
+                          className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
+                        >
+                          {copiedBankField === 'Account Number' ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-emerald-600" />
+                              <span className="text-emerald-600">Copied</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3.5 h-3.5" />
+                              <span>Copy</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      {/* IFSC Code */}
+                      <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
+                        <div>
+                          <span className="text-[10px] uppercase font-semibold text-gray-400 block">Branch IFSC Code</span>
+                          <span className="font-mono font-bold text-gray-900 text-sm">KKBK0000273</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => copyBankField('KKBK0000273', 'IFSC')}
+                          className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
+                        >
+                          {copiedBankField === 'IFSC' ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-emerald-600" />
+                              <span className="text-emerald-600">Copied</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3.5 h-3.5" />
+                              <span>Copy</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+
+                      {/* Bank & Branch */}
+                      <div className="text-xs text-gray-600 pt-1 space-y-0.5">
+                        <p><strong>Beneficiary Bank:</strong> Kotak Mahindra Bank | <strong>CRN:</strong> 798804404</p>
+                        <p><strong>Branch:</strong> Hanuman Nagar, Amarpali Marg, Vaishali Nagar, Jaipur - 302021</p>
+                      </div>
+                    </div>
+
+                    {/* UTR Input */}
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Enter UPI Reference ID / UTR / Remitter Account Name *
+                      </label>
+                      <input
+                        type="text"
+                        value={bankReference}
+                        onChange={(e) => setBankReference(e.target.value)}
+                        placeholder="e.g. UTR 4281928472 or GPay Txn Ref"
+                        className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
+                          errors.bankReference ? 'border-red-500' : 'border-gray-300'
+                        } rounded focus:outline-none focus:border-[#064E3B]`}
+                      />
+                      {errors.bankReference && (
+                        <p className="text-[11px] text-red-600 mt-1">{errors.bankReference}</p>
+                      )}
+                    </div>
+
+                    <div className="mt-4">
+                      <button
+                        type="button"
+                        disabled={isSubmitting}
+                        onClick={() => handlePlaceOrder()}
+                        className="w-full py-3.5 bg-[#064E3B] hover:bg-[#043327] active:scale-95 text-[#D4AF37] font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md rounded-lg flex items-center justify-center gap-2 cursor-pointer"
+                      >
+                        <CheckCircle2 className="w-4 h-4" />
+                        {isSubmitting
+                          ? 'Submitting Order...'
+                          : `Confirm Bank / UPI Order (${currencySymbol}${finalTotal.toLocaleString()})`}
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -744,7 +1129,7 @@ export default function CheckoutPage() {
                         <button
                           type="button"
                           onClick={copyPayoneerEmail}
-                          className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700"
+                          className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 active:scale-90 text-gray-700 cursor-pointer transition-all"
                         >
                           {copiedPayoneer ? (
                             <>
@@ -784,7 +1169,7 @@ export default function CheckoutPage() {
                         type="button"
                         disabled={isSubmitting}
                         onClick={() => handlePlaceOrder()}
-                        className="w-full py-3.5 bg-[#EA580C] hover:bg-[#C2410C] text-white font-sans text-xs font-bold tracking-widest uppercase transition-all shadow rounded flex items-center justify-center gap-2 cursor-pointer"
+                        className="w-full py-3.5 bg-[#EA580C] hover:bg-[#C2410C] active:scale-95 text-white font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md rounded-lg flex items-center justify-center gap-2 cursor-pointer"
                       >
                         <CheckCircle2 className="w-4 h-4" />
                         {isSubmitting
@@ -814,7 +1199,7 @@ export default function CheckoutPage() {
                       type="button"
                       disabled={isSubmitting}
                       onClick={() => handlePlaceOrder({ method: 'whatsapp', status: 'pending' })}
-                      className="w-full py-3.5 bg-[#064E3B] hover:bg-[#043327] text-[#D4AF37] font-sans text-xs font-bold tracking-widest uppercase transition-all shadow rounded flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full py-3.5 bg-[#064E3B] hover:bg-[#043327] active:scale-95 text-[#D4AF37] font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md rounded-lg flex items-center justify-center gap-2 cursor-pointer"
                     >
                       <Send className="w-4 h-4" />
                       {isSubmitting

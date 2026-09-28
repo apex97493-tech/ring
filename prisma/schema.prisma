@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -64,17 +65,20 @@ model ProductVariant {
 }
 
 model Order {
-  id            String      @id @default(uuid())
-  userId        String?     // Nullable for guest checkout
-  user          User?       @relation(fields: [userId], references: [id])
-  status        OrderStatus @default(PENDING)
-  totalAmount   Decimal
-  paymentId     String?     // Razorpay/Cashfree payment ID
-  paymentStatus PaymentStatus @default(PENDING)
-  shippingAddress Json
-  orderItems    OrderItem[]
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  id              String        @id @default(uuid())
+  userId          String?       // Nullable for guest checkout
+  user            User?         @relation(fields: [userId], references: [id])
+  status          OrderStatus   @default(PENDING)
+  totalAmount     Decimal
+  paymentId       String?       // PayPal/Razorpay payment ID
+  paymentStatus   PaymentStatus @default(PENDING)
+  shippingAddress Json          // Customer info blob
+  orderItemsJson  Json?         // Cart items snapshot (name, qty, price, image etc.)
+  currency        String?       @default("USD")
+  currencySymbol  String?       @default("$")
+  orderItems      OrderItem[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }
 
 model OrderItem {

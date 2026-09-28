@@ -32,10 +32,76 @@ function writeProductsToFile(products: Product[]): boolean {
   }
 }
 
-// GET /api/products
+// GET /api/products — Live from Supabase PostgreSQL (Cloud Database) with fallback
 export async function GET() {
+  try {
+    const { prisma } = await import('@/lib/prisma');
+    const dbProducts = await prisma.product.findMany({
+      include: { images: true, variants: true, category: true },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (dbProducts && dbProducts.length > 0) {
+      const fileProducts = readProductsFromFile();
+      const fileMap = new Map(fileProducts.map((p) => [p.id, p]));
+
+      // Merge Supabase DB items with rich metadata (shapes, tags, badges)
+      const merged: Product[] = dbProducts.map((p) => {
+        const cached = fileMap.get(p.id);
+        const primaryVariant = p.variants?.[0];
+        const price = primaryVariant ? Number(primaryVariant.price) : (cached?.price || 4999);
+        const images = p.images?.length > 0 ? p.images.map((im) => im.url) : (cached?.images || ['/images/ai_ring1_front.jpg']);
+
+        if (cached) {
+          return {
+            ...cached,
+            price: price || cached.price,
+            images: images.length > 0 ? images : cached.images,
+          };
+        }
+
+        return {
+          id: p.id,
+          name: p.name,
+          slug: p.slug,
+          description: p.description,
+          category: p.category?.slug || 'rings',
+          shape: 'Round',
+          price,
+          originalPrice: Math.round(price * 1.8),
+          carat: primaryVariant?.stone || '2.00 CT',
+          clarity: 'VVS1',
+          colorGrade: 'D Color',
+          cut: 'Brilliant Cut',
+          certification: 'GRA Certified with Authenticity Card',
+          badge: 'BESTSELLER',
+          rating: 4.9,
+          reviewsCount: 52,
+          metal: primaryVariant?.metal || '925 Sterling Silver',
+          images,
+          features: [
+            'Handcrafted by master artisans at foreverjewellstudio',
+            'GRA Certified with Authenticity Card & Warranty',
+            'Arrives in Signature Luxury Ring Box',
+            'Free Express Insured Delivery',
+          ],
+          readyToShip: true,
+          variants: p.variants?.map((v) => ({
+            metal: v.metal,
+            colorCode: v.metal.toLowerCase().includes('rose') ? '#FB7185' : v.metal.toLowerCase().includes('yellow') ? '#CA8A04' : '#E5E7EB',
+            image: images[0] || '/images/ai_ring1_front.jpg',
+          })) || [],
+        };
+      });
+
+      return NextResponse.json({ success: true, products: merged, source: 'supabase-cloud' });
+    }
+  } catch (dbErr) {
+    console.warn('Supabase DB fetch failed, using stored catalog:', dbErr);
+  }
+
   const currentProducts = readProductsFromFile();
-  return NextResponse.json({ success: true, products: currentProducts });
+  return NextResponse.json({ success: true, products: currentProducts, source: 'file-store' });
 }
 
 // POST /api/products (Add or Update)

@@ -70,24 +70,18 @@ export default function ProductImageGallery({
 
       {/* 2. LARGE MAIN STAGE PHOTO WITH PREV / NEXT CONTROLS (Etsy Style) */}
       <div className="relative aspect-square w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#F7F5F0] border border-[#E8E5DF] shadow-luxury flex-1 group select-none">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={activeIdx}
-            src={displayImages[activeIdx]}
-            alt={`${productName} photo ${activeIdx + 1}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className={`w-full h-full object-cover transition-transform duration-500 ${
-              isZoomed ? 'scale-125 cursor-zoom-out' : 'cursor-zoom-in'
-            }`}
-            onClick={() => setIsZoomed(!isZoomed)}
-            onError={(e) => {
-              e.currentTarget.src = '/images/ai_ring1_front.jpg';
-            }}
-          />
-        </AnimatePresence>
+        <img
+          key={activeIdx}
+          src={displayImages[activeIdx]}
+          alt={`${productName} photo ${activeIdx + 1}`}
+          className={`w-full h-full object-cover transition-transform duration-300 ${
+            isZoomed ? 'scale-125 cursor-zoom-out' : 'cursor-zoom-in'
+          }`}
+          onClick={() => setIsZoomed(!isZoomed)}
+          onError={(e) => {
+            e.currentTarget.src = '/images/ai_ring1_front.jpg';
+          }}
+        />
 
         {/* Badge in top left (e.g. RARE FIND, BESTSELLER) */}
         {badge && (
