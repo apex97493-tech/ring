@@ -202,7 +202,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
     setTimeout(() => setIsAdded(false), 2500);
   };
 
-  // Buy it now (adds to cart & opens WhatsApp inquiry)
+  // Buy it now (adds to cart & opens /checkout directly)
   const handleBuyNow = () => {
     const errors: { band?: boolean; size?: boolean } = {};
     if (!selectedBandColour) errors.band = true;
@@ -213,11 +213,18 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       return;
     }
 
-    handleAddToCart();
-    const message = encodeURIComponent(
-      `*ORDER INQUIRY: ${product.name.toUpperCase()}*\n• Band Colour: ${activeMetal}\n• Ring Size: ${selectedSize}\n• Carat: ${product.carat}${personalisationText ? `\n• Personalisation: ${personalisationText}` : ''}\n• Price: \u20b9${currentPrice.toLocaleString('en-IN')}\n\nI want to complete the purchase with \u20b9300 OFF prepaid discount!`
-    );
-    window.open(`https://wa.me/919999999999?text=${message}`, '_blank', 'noopener,noreferrer');
+    addToCart({
+      product,
+      quantity: 1,
+      selectedMetal: activeMetal,
+      selectedSize: selectedSize,
+      selectedCarat: product.carat,
+      price: currentPrice,
+      image: activeVariantImage,
+      engravingText: personalisationText.trim() || undefined,
+    });
+
+    router.push('/checkout');
   };
 
   // WhatsApp order inquiry

@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { X, Star, ShieldCheck, Truck, Check, ArrowRight, ChevronDown, Package } from 'lucide-react';
+import { X, Star, ShieldCheck, Truck, Check, ArrowRight, ChevronDown, Package, Zap } from 'lucide-react';
 import { Product, STANDARD_METAL_TIERS, PRODUCT_METAL_PRICES } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
 import { useCurrency } from '@/context/CurrencyContext';
@@ -18,6 +19,7 @@ export default function QuickViewModal({
   initialVariantIdx?: number;
   onClose: () => void;
 }) {
+  const router = useRouter();
   const { addToCart } = useCart();
   const { formatPrice } = useCurrency();
 
@@ -159,6 +161,21 @@ export default function QuickViewModal({
     setTimeout(() => {
       onClose();
     }, 900);
+  };
+
+  const handleBuyNow = () => {
+    addToCart({
+      product,
+      quantity: 1,
+      selectedMetal: activeTier.metal,
+      selectedSize,
+      selectedCarat: hasCenterStone ? selectedCarat : (product.carat || 'N/A'),
+      engravingText: engraving.trim() || undefined,
+      price: currentPrice,
+      image: activeVariantImage,
+    });
+    onClose();
+    router.push('/checkout');
   };
 
   return (
@@ -372,18 +389,27 @@ export default function QuickViewModal({
 
             {/* Actions */}
             <div className="space-y-2.5 pt-2">
-              <button
-                onClick={handleAdd}
-                className="w-full py-3.5 bg-[#022C22] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-[#022C22] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-2 cursor-pointer border border-[#D4AF37]/40"
-              >
-                {isAdded ? (
-                  <span className="flex items-center gap-1.5 text-white">
-                    <Check className="w-4 h-4" /> Added to Shopping Bag
-                  </span>
-                ) : (
-                  `Add to Shopping Bag • ${formatPrice(currentPrice)}`
-                )}
-              </button>
+              <div className="grid grid-cols-2 gap-2.5">
+                <button
+                  onClick={handleAdd}
+                  className="w-full py-3 bg-[#022C22] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-[#022C22] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer border border-[#D4AF37]/40"
+                >
+                  {isAdded ? (
+                    <span className="flex items-center gap-1 text-white">
+                      <Check className="w-3.5 h-3.5" /> Added
+                    </span>
+                  ) : (
+                    'Add to Bag'
+                  )}
+                </button>
+
+                <button
+                  onClick={handleBuyNow}
+                  className="w-full py-3 bg-[#D4AF37] hover:bg-[#B89035] text-[#022C22] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Zap className="w-3.5 h-3.5 fill-current" /> Buy It Now
+                </button>
+              </div>
 
               <Link
                 href={`/products/${product.slug}`}
