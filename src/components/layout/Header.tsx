@@ -176,7 +176,7 @@ export default function Header() {
                 href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-sans font-bold tracking-wider text-[#022C22] bg-[#D4AF37] hover:bg-[#F3E5AB] rounded-full transition-colors shadow-sm"
+                className="hidden sm:flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-sans font-bold tracking-wider text-[#022C22] bg-[#D4AF37] hover:bg-[#F3E5AB] rounded-full transition-colors shadow-sm"
               >
                 <MessageCircle className="w-3.5 h-3.5 fill-current" />
                 <span className="hidden sm:inline">WhatsApp</span>
@@ -187,7 +187,7 @@ export default function Header() {
                 href="https://www.etsy.com/shop/foreverjewellstudio?section_id=59060242"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#FDFBF7] hover:text-[#D4AF37] transition-colors p-1 flex items-center justify-center group"
+                className="hidden sm:flex text-[#FDFBF7] hover:text-[#D4AF37] transition-colors p-1 items-center justify-center group"
                 aria-label="Visit our Etsy Shop"
                 title="Visit our Etsy Shop"
               >
