@@ -39,7 +39,7 @@ export default function CustomJewelryBanner() {
 
           <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
             <a
-              href="https://wa.me/919999999999?text=Hi%2C%20I%20would%20like%20to%20consult%20for%20a%20Custom%20Bespoke%20Moissanite%20Ring!"
+              href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-4 bg-[#064E3B] hover:bg-[#059669] text-[#D4AF37] hover:text-white font-sans text-xs font-bold tracking-widest uppercase rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer"
@@ -49,7 +49,7 @@ export default function CustomJewelryBanner() {
             </a>
 
             <a
-              href="mailto:foreverjewellstudio@gmail.com"
+              href="mailto:Foreverjewels98@gmail.com"
               className="px-8 py-4 bg-transparent border border-[#D4AF37]/50 hover:bg-[#D4AF37]/10 text-[#D4AF37] font-sans text-xs font-bold tracking-widest uppercase rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
               Email Us CAD Files <ArrowRight className="w-4 h-4" />

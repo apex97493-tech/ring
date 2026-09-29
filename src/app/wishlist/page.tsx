@@ -44,7 +44,7 @@ export default function WishlistPage() {
       text += `• Link: https://foreverjewellstudio.com/products/${p.slug}%0A%0A`;
     });
     text += `Please help me check the ring sizing and availability!`;
-    window.open(`https://wa.me/919999999999?text=${text}`, '_blank');
+    window.open(`https://wa.me/919828930454?text=${text}`, '_blank');
   };
 
   return (

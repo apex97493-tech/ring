@@ -102,7 +102,13 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
         const matched = SUPPORTED_LANGUAGES.find(
           (l) => LANGUAGE_NAME_TO_CODE[l.name] === detectedCode
         );
-        if (matched) resolvedLang = matched.name;
+        if (matched) {
+          resolvedLang = matched.name;
+          const code = LANGUAGE_NAME_TO_CODE[resolvedLang] || 'en';
+          if (code !== 'en') {
+            document.cookie = `googtrans=/en/${code}; path=/;`;
+          }
+        }
         localStorage.setItem('fjw_visited', '1');
       }
 
@@ -130,6 +136,8 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     const currency = SUPPORTED_CURRENCIES[currencyCode] || SUPPORTED_CURRENCIES['INR'];
     const translations = getTranslations(language);
     const rtl = isRTL(language);
+    
+    const isLanguageChanged = selectedLanguage !== language;
 
     setSelectedRegion(region);
     setSelectedLanguage(language);
@@ -139,14 +147,28 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
 
     // Apply direction to <html> element for RTL support
     document.documentElement.dir = rtl ? 'rtl' : 'ltr';
-    document.documentElement.lang = LANGUAGE_NAME_TO_CODE[language] ?? 'en';
+    const langCode = LANGUAGE_NAME_TO_CODE[language] ?? 'en';
+    document.documentElement.lang = langCode;
 
     try {
       localStorage.setItem('fjw_region', region.id);
       localStorage.setItem('fjw_language', language);
       localStorage.setItem('fjw_currency', currency.code);
+      
+      // Update Google Translate Cookie
+      if (langCode === 'en' || langCode === 'en-GB') {
+        document.cookie = `googtrans=/en/en; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        document.cookie = `googtrans=/en/en; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.${window.location.hostname}; path=/;`;
+      } else {
+        document.cookie = `googtrans=/en/${langCode}; path=/;`;
+        document.cookie = `googtrans=/en/${langCode}; domain=.${window.location.hostname}; path=/;`;
+      }
     } catch {
       // ignore
+    }
+
+    if (isLanguageChanged) {
+      setTimeout(() => window.location.reload(), 150);
     }
   };
 

@@ -63,7 +63,7 @@ export default function CustomDesignStudio() {
     ].filter(Boolean).join('\n');
 
     const encoded = encodeURIComponent(message);
-    window.open(`https://wa.me/919999999999?text=${encoded}`, '_blank', 'noopener,noreferrer');
+    window.open(`https://wa.me/919828930454?text=${encoded}`, '_blank', 'noopener,noreferrer');
   };
 
   return (

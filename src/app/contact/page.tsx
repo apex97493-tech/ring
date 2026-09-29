@@ -31,7 +31,7 @@ export default function ContactPage() {
 
     // Send formatted WhatsApp message or show confirmation
     const waText = `*NEW CONTACT INQUIRY - FOREVERJEWELLSTUDIO*%0A%0A*Name:* ${formData.name}%0A*Phone:* ${formData.phone}%0A*Email:* ${formData.email || 'N/A'}%0A*Type:* ${formData.inquiryType}%0A*Message:* ${formData.message || 'I would like to speak with a jewelry consultant.'}`;
-    window.open(`https://wa.me/919999999999?text=${waText}`, '_blank');
+    window.open(`https://wa.me/919828930454?text=${waText}`, '_blank');
     setIsSubmitted(true);
   };
 
@@ -86,7 +86,7 @@ export default function ContactPage() {
               </div>
             </div>
             <a
-              href="https://wa.me/919999999999?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20Moissanite%20Ring."
+              href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-2.5 bg-[#064E3B] hover:bg-[#043327] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-wider rounded-xl text-center transition-colors block"
@@ -108,11 +108,11 @@ export default function ContactPage() {
                 Speak directly with an experienced gemologist or bridal consultant.
               </p>
               <p className="font-sans text-xs font-bold text-[#18181B] mb-4">
-                +91 99999 99999
+                +91 98289 30454
               </p>
             </div>
             <a
-              href="tel:+919999999999"
+              href="tel:+919828930454"
               className="w-full py-2.5 bg-[#18181B] hover:bg-black text-white font-sans text-xs font-bold uppercase tracking-wider rounded-xl text-center transition-colors block"
             >
               Call Us
@@ -132,11 +132,11 @@ export default function ContactPage() {
                 Send custom CAD design drawings, moodboards, or corporate order requests.
               </p>
               <p className="font-sans text-xs font-bold text-[#18181B] mb-4 truncate">
-                foreverjewellstudio@gmail.com
+                Foreverjewels98@gmail.com
               </p>
             </div>
             <a
-              href="mailto:foreverjewellstudio@gmail.com"
+              href="mailto:Foreverjewels98@gmail.com"
               className="w-full py-2.5 bg-[#F5F2EC] hover:bg-[#E8E5DF] text-[#18181B] font-sans text-xs font-bold uppercase tracking-wider rounded-xl text-center transition-colors block border border-[#E8E5DF]"
             >
               Send Email
@@ -153,7 +153,7 @@ export default function ContactPage() {
                 Flagship Studio & Store
               </h3>
               <p className="font-sans text-xs text-gray-500 mb-2">
-                Waterfield Road, Bandra West, Mumbai, Maharashtra 400050
+                143 Railway Office Colony, Kanakpura Station Road, Near Elwood International School, Jaipur, Rajasthan 302012
               </p>
               <div className="flex items-center gap-1.5 text-xs text-gray-600 mb-4 font-sans">
                 <Clock className="w-3.5 h-3.5 text-gray-400" />
@@ -161,7 +161,7 @@ export default function ContactPage() {
               </div>
             </div>
             <a
-              href="https://maps.google.com/?q=Bandra+West+Mumbai"
+              href="https://maps.google.com/?q=Kanakpura+Station+Road+Jaipur"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-2.5 bg-[#F7F5F0] hover:bg-[#E8E5DF] text-[#064E3B] font-sans text-xs font-bold uppercase tracking-wider rounded-xl text-center transition-colors block border border-[#E8E5DF]"
@@ -345,7 +345,7 @@ export default function ContactPage() {
                 Schedule a 1-on-1 virtual appointment to view diamond sparkle live on camera before ordering.
               </p>
               <a
-                href="https://wa.me/919999999999?text=Hi%2C%20I%20would%20like%20to%20book%20a%20Live%20Video%20Call%20to%20view%20Moissanite%20Rings!"
+                href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#F7F5F0] hover:bg-[#E8E5DF] text-[#064E3B] font-sans text-xs font-bold uppercase tracking-wider rounded-xl border border-[#E8E5DF] transition-colors"

@@ -66,7 +66,7 @@ export default function CartDrawer() {
     message += `*Shipping:* Free Insured International Delivery%0A%0A`;
     message += `Please confirm availability & delivery details for my address!`;
 
-    window.open(`https://wa.me/919999999999?text=${message}`, '_blank');
+    window.open(`https://wa.me/919828930454?text=${message}`, '_blank');
   };
 
   return (

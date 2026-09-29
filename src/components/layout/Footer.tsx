@@ -181,18 +181,18 @@ export default function Footer() {
             <ul className="space-y-3 text-gray-400">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#D4AF37] flex-shrink-0 mt-0.5" />
-                <span>Flagship Jewelry Studio, Bandra West, Mumbai, Maharashtra 400050</span>
+                <span>143 Railway Office Colony, Kanakpura Station Road, Near Elwood International School, Jaipur, Rajasthan 302012</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#D4AF37] flex-shrink-0" />
-                <a href="tel:+919999999999" className="hover:text-white transition-colors">
-                  +91 99999 99999 (Call & WhatsApp)
+                <a href="tel:+919828930454" className="hover:text-white transition-colors">
+                  +91 98289 30454 (Call & WhatsApp)
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#D4AF37] flex-shrink-0" />
-                <a href="mailto:care@ForeverJewellStudiojewelry.com" className="hover:text-white transition-colors">
-                  care@ForeverJewellStudiojewelry.com
+                <a href="mailto:Foreverjewels98@gmail.com" className="hover:text-white transition-colors">
+                  Foreverjewels98@gmail.com
                 </a>
               </li>
               <li className="pt-1">
@@ -210,14 +210,6 @@ export default function Footer() {
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
                     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                   </svg>
-                </a>
-                <span>•</span>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1">
-                  <span>Facebook</span>
-                </a>
-                <span>•</span>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1">
-                  <span>YouTube</span>
                 </a>
                 <span>•</span>
                 <a href="https://www.etsy.com/shop/foreverjewellstudio?section_id=59060242" target="_blank" rel="noopener noreferrer" className="hover:text-[#F1641E] flex items-center gap-1 font-serif font-bold tracking-tight">

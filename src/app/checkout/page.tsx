@@ -320,7 +320,7 @@ export default function CheckoutPage() {
   };
 
   const copyPayoneerEmail = () => {
-    const email = process.env.NEXT_PUBLIC_PAYONEER_EMAIL || 'payments@foreverjewellstudio.com';
+    const email = process.env.NEXT_PUBLIC_PAYONEER_EMAIL || 'Foreverjewels98@gmail.com';
     navigator.clipboard.writeText(email);
     setCopiedPayoneer(true);
     setTimeout(() => setCopiedPayoneer(false), 2500);
@@ -1328,7 +1328,7 @@ export default function CheckoutPage() {
                             Beneficiary Payoneer Email
                           </span>
                           <span className="font-mono font-bold text-gray-900 select-all">
-                            {process.env.NEXT_PUBLIC_PAYONEER_EMAIL || 'payments@foreverjewellstudio.com'}
+                            {process.env.NEXT_PUBLIC_PAYONEER_EMAIL || 'Foreverjewels98@gmail.com'}
                           </span>
                         </div>
                         <button

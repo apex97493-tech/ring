@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
@@ -35,6 +36,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable} overflow-x-hidden max-w-full`}>
       <body className="min-h-screen flex flex-col font-sans bg-[#FDFBF7] text-[#18181B] selection:bg-[#D4AF37] selection:text-white antialiased overflow-x-hidden max-w-full w-full">
+        <div id="google_translate_element" style={{ display: 'none' }}></div>
+        <Script
+          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          strategy="afterInteractive"
+        />
+        <Script id="google-translate-init" strategy="afterInteractive">
+          {`
+            function googleTranslateElementInit() {
+              new google.translate.TranslateElement({ pageLanguage: 'en', autoDisplay: false }, 'google_translate_element');
+            }
+          `}
+        </Script>
         <ProductProvider>
           <CurrencyProvider>
             <CartProvider>
@@ -49,7 +62,7 @@ export default function RootLayout({
 
               {/* Floating WhatsApp Support Widget - responsive sizing */}
               <a
-                href="https://wa.me/919999999999?text=Hello%20ForeverJewellStudio%20Jewelry%20Team!%20I%20would%20like%20to%20inquire%20about%20a%20Moissanite%20Ring."
+                href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 bg-[#064E3B] hover:bg-[#043327] text-[#D4AF37] hover:text-white p-3 sm:p-3.5 rounded-full shadow-2xl border border-[#D4AF37]/50 flex items-center justify-center transition-all duration-300 hover:scale-110 group cursor-pointer"

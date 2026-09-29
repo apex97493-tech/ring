@@ -227,7 +227,7 @@ export default function Home() {
       {/* ============================================================ */}
       {/* 1. ROYAL EMERALD ANIMATED HERO CAROUSEL                      */}
       {/* ============================================================ */}
-      <section className="relative h-[85vh] sm:h-[90vh] w-full overflow-hidden bg-[#FDFBF7]">
+      <section className="relative min-h-[100dvh] lg:h-[90vh] lg:min-h-0 w-full overflow-hidden bg-[#FDFBF7]">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -239,10 +239,7 @@ export default function Home() {
           >
             {slides[currentSlide].type === 'hero' ? (
               // SLIDE 1: Royal Emerald Shape with 3D Levitating & Rotating Ring
-              <div className="relative w-full h-full flex items-center pt-8 sm:pt-12 bg-[#FDFBF7]">
-                {/* Royal Emerald Circle Backdrop */}
-                <div className="absolute top-1/2 left-1/2 lg:left-[68%] -translate-y-1/2 -translate-x-1/2 lg:-translate-x-0 w-[100vw] h-[100vw] sm:w-[120vw] sm:h-[120vw] lg:w-[88vw] lg:h-[88vw] bg-[#064E3B] rounded-full z-0 pointer-events-none shadow-[inset_0_0_120px_rgba(0,0,0,0.6)]" />
-
+              <div className="relative w-full h-full flex items-center pt-32 pb-16 lg:pt-0 lg:pb-0 bg-[#FDFBF7]">
                 <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between">
                   {/* Left: Editorial Text Content */}
                   <div className="w-full lg:w-1/2 flex flex-col justify-center mb-8 lg:mb-0 text-center lg:text-left">
@@ -277,7 +274,8 @@ export default function Home() {
                   </div>
 
                   {/* Right: Levitating & Rotating 3D Solitaire Ring */}
-                  <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end">
+                  <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end relative mt-10 lg:mt-0">
+
                     <motion.div
                       animate={{
                         y: [0, -18, 0],
@@ -366,17 +364,17 @@ export default function Home() {
         {/* Carousel Arrow Controls */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-[#D4AF37]/60 rounded-full flex items-center justify-center text-[#D4AF37] bg-[#022C22]/60 backdrop-blur-xs hover:bg-[#D4AF37] hover:text-[#022C22] transition-all cursor-pointer shadow-md"
+          className="absolute left-4 md:left-8 top-[65%] sm:top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-12 lg:h-12 border border-[#D4AF37]/60 rounded-full flex items-center justify-center text-[#D4AF37] bg-[#022C22]/60 backdrop-blur-xs hover:bg-[#D4AF37] hover:text-[#022C22] transition-all cursor-pointer shadow-md"
           aria-label="Previous Slide"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 border border-[#D4AF37]/60 rounded-full flex items-center justify-center text-[#D4AF37] bg-[#022C22]/60 backdrop-blur-xs hover:bg-[#D4AF37] hover:text-[#022C22] transition-all cursor-pointer shadow-md"
+          className="absolute right-4 md:right-8 top-[65%] sm:top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-12 lg:h-12 border border-[#D4AF37]/60 rounded-full flex items-center justify-center text-[#D4AF37] bg-[#022C22]/60 backdrop-blur-xs hover:bg-[#D4AF37] hover:text-[#022C22] transition-all cursor-pointer shadow-md"
           aria-label="Next Slide"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6" />
         </button>
 
         {/* Carousel Indicator Dots */}
@@ -494,16 +492,6 @@ export default function Home() {
               )}
             </div>
 
-            <select
-              value={selectedMetal}
-              onChange={(e) => handleMetalChange(e.target.value)}
-              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] cursor-pointer shadow-xs"
-            >
-              <option value="all">All Metals</option>
-              <option value="Silver">925 Sterling Silver</option>
-              <option value="Yellow Gold">18K Yellow Gold</option>
-              <option value="Rose Gold">18K Rose Gold</option>
-            </select>
 
             <select
               value={sortBy}

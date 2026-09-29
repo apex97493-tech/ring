@@ -102,7 +102,7 @@ export default function RegionalSettingsModal() {
                 <select
                   value={tempRegionId}
                   onChange={(e) => handleRegionChange(e.target.value)}
-                  className="w-full bg-white border border-gray-300 hover:border-gray-500 focus:border-black focus:ring-1 focus:ring-black rounded-xl px-3.5 py-3 text-sm text-[#18181B] font-sans appearance-none cursor-pointer transition-colors shadow-2xs pr-10"
+                  className="notranslate w-full bg-white border border-gray-300 hover:border-gray-500 focus:border-black focus:ring-1 focus:ring-black rounded-xl px-3.5 py-3 text-sm text-[#18181B] font-sans appearance-none cursor-pointer transition-colors shadow-2xs pr-10"
                 >
                   {SUPPORTED_REGIONS.map((r) => (
                     <option key={r.id} value={r.id}>
@@ -123,7 +123,7 @@ export default function RegionalSettingsModal() {
                 <select
                   value={tempLanguage}
                   onChange={(e) => setTempLanguage(e.target.value)}
-                  className="w-full bg-white border border-gray-300 hover:border-gray-500 focus:border-black focus:ring-1 focus:ring-black rounded-xl px-3.5 py-3 text-sm text-[#18181B] font-sans appearance-none cursor-pointer transition-colors shadow-2xs pr-10"
+                  className="notranslate w-full bg-white border border-gray-300 hover:border-gray-500 focus:border-black focus:ring-1 focus:ring-black rounded-xl px-3.5 py-3 text-sm text-[#18181B] font-sans appearance-none cursor-pointer transition-colors shadow-2xs pr-10"
                 >
                   {SUPPORTED_LANGUAGES.map((lang) => (
                     <option key={lang.code} value={lang.name}>
@@ -144,7 +144,7 @@ export default function RegionalSettingsModal() {
                 <select
                   value={tempCurrencyCode}
                   onChange={(e) => setTempCurrencyCode(e.target.value)}
-                  className="w-full bg-white border border-gray-300 hover:border-gray-500 focus:border-black focus:ring-1 focus:ring-black rounded-xl px-3.5 py-3 text-sm text-[#18181B] font-sans appearance-none cursor-pointer transition-colors shadow-2xs pr-10"
+                  className="notranslate w-full bg-white border border-gray-300 hover:border-gray-500 focus:border-black focus:ring-1 focus:ring-black rounded-xl px-3.5 py-3 text-sm text-[#18181B] font-sans appearance-none cursor-pointer transition-colors shadow-2xs pr-10"
                 >
                   {Object.values(SUPPORTED_CURRENCIES).map((curr) => (
                     <option key={curr.code} value={curr.code}>

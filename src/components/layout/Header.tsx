@@ -173,7 +173,7 @@ export default function Header() {
 
               {/* WhatsApp Support */}
               <a
-                href="https://wa.me/919999999999?text=Hello!%20I%20am%20interested%20in%20custom%20Moissanite%20Jewelry."
+                href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-sans font-bold tracking-wider text-[#022C22] bg-[#D4AF37] hover:bg-[#F3E5AB] rounded-full transition-colors shadow-sm"
@@ -534,7 +534,7 @@ export default function Header() {
               {/* Bottom Drawer Actions */}
               <div className="p-4 bg-[#011C15] border-t border-[#D4AF37]/20 space-y-2">
                 <a
-                  href="https://wa.me/919999999999"
+                  href="https://wa.me/919828930454"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#D4AF37] text-[#022C22] rounded-xl font-sans text-xs font-bold tracking-wider uppercase shadow-md hover:bg-[#F3E5AB] transition-colors"

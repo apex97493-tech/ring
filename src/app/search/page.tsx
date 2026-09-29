@@ -556,7 +556,7 @@ function SearchContent() {
                 Our master artisans can craft any custom Moissanite or gemstone ring from your photos or CAD sketches.
               </p>
               <a
-                href={`https://wa.me/919999999999?text=${encodeURIComponent(
+                href={`https://wa.me/919828930454?text=${encodeURIComponent(
                   `Hi ForeverJewellStudio, I searched for "${searchTerm}" on your website and would like a custom quote!`
                 )}`}
                 target="_blank"
