@@ -168,15 +168,37 @@ const ar: Translations = {
 
 export const TRANSLATIONS: Record<LanguageCode, Translations> = { en, hi, ja, es, fr, de, ar };
 
-export const LANGUAGE_NAME_TO_CODE: Record<string, LanguageCode> = {
-  'English (US)': 'en',
-  'English (UK)': 'en',
-  'हिंदी (Hindi)': 'hi',
-  '日本語 (Japanese)': 'ja',
-  'Español (Spanish)': 'es',
-  'Français (French)': 'fr',
-  'Deutsch (German)': 'de',
-  'عربي (Arabic)': 'ar',
+export const LANGUAGE_NAME_TO_CODE: Record<string, string> = {
+  "English (US)": "en",
+  "English (UK)": "en-GB",
+  "हिंदी (Hindi)": "hi",
+  "日本語 (Japanese)": "ja",
+  "Español (Spanish)": "es",
+  "Français (French)": "fr",
+  "Deutsch (German)": "de",
+  "عربي (Arabic)": "ar",
+  "中文 (Simplified Chinese)": "zh-CN",
+  "繁體中文 (Traditional Chinese)": "zh-TW",
+  "한국어 (Korean)": "ko",
+  "Italiano (Italian)": "it",
+  "Português (Portuguese)": "pt",
+  "Русский (Russian)": "ru",
+  "বাংলা (Bengali)": "bn",
+  "اردو (Urdu)": "ur",
+  "Bahasa Indonesia (Indonesian)": "id",
+  "Tiếng Việt (Vietnamese)": "vi",
+  "Türkçe (Turkish)": "tr",
+  "ไทย (Thai)": "th",
+  "Nederlands (Dutch)": "nl",
+  "Polski (Polish)": "pl",
+  "Svenska (Swedish)": "sv",
+  "Suomi (Finnish)": "fi",
+  "Dansk (Danish)": "da",
+  "Norsk (Norwegian)": "no",
+  "Ελληνικά (Greek)": "el",
+  "עברית (Hebrew)": "he",
+  "Bahasa Melayu (Malay)": "ms",
+  "Tagalog (Filipino)": "tl"
 };
 
 const BROWSER_LANG_TO_CODE: Record<string, LanguageCode> = {
@@ -191,10 +213,10 @@ export function detectBrowserLanguage(): LanguageCode {
 
 export function getTranslations(languageName: string): Translations {
   const code = LANGUAGE_NAME_TO_CODE[languageName] ?? 'en';
-  return TRANSLATIONS[code] ?? TRANSLATIONS.en;
+  return TRANSLATIONS[code as LanguageCode] ?? TRANSLATIONS.en;
 }
 
-export const RTL_LANGUAGES: LanguageCode[] = ['ar'];
+export const RTL_LANGUAGES: string[] = ['ar', 'he', 'ur'];
 
 export function isRTL(languageName: string): boolean {
   const code = LANGUAGE_NAME_TO_CODE[languageName] ?? 'en';
