@@ -156,7 +156,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem('fjw_currency', currency.code);
       
       // Update Google Translate Cookie
-      if (langCode === 'en' || langCode === 'en-GB') {
+      if (langCode === 'en' || (langCode as string) === 'en-GB') {
         document.cookie = `googtrans=/en/en; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
         document.cookie = `googtrans=/en/en; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.${window.location.hostname}; path=/;`;
       } else {
