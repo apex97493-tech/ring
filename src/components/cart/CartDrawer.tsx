@@ -288,14 +288,17 @@ export default function CartDrawer() {
 
                   {/* CTA Buttons */}
                   <div className="space-y-2 pt-2">
-                    {/* 1-Click WhatsApp Quick Checkout */}
+                    {/* View Full Cart */}
                     <button
                       type="button"
-                      onClick={handleWhatsAppCheckout}
-                      className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#064E3B] text-[#D4AF37] hover:bg-[#043327] active:scale-95 font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md rounded-xl cursor-pointer"
+                      onClick={() => {
+                        setIsCartOpen(false);
+                        router.push('/cart');
+                      }}
+                      className="w-full py-3 border border-gray-300 bg-white hover:bg-gray-50 text-[#222222] font-sans text-xs font-bold tracking-wider uppercase transition-colors rounded-xl cursor-pointer flex items-center justify-center gap-2"
                     >
-                      <Send className="w-4 h-4" />
-                      {t.cart.whatsappOrder}
+                      <ShoppingBag className="w-4 h-4 text-[#8C6A1F]" />
+                      View Full Cart & Offers
                     </button>
 
                     {/* Standard Secure Checkout */}
@@ -305,10 +308,20 @@ export default function CartDrawer() {
                         setIsCartOpen(false);
                         router.push('/checkout');
                       }}
-                      className="w-full py-3.5 bg-[#18181B] text-white hover:bg-black active:scale-95 font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl cursor-pointer flex items-center justify-center gap-2 shadow-md"
+                      className="w-full py-3.5 bg-[#222222] text-white hover:bg-black active:scale-95 font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl cursor-pointer flex items-center justify-center gap-2 shadow-md"
                     >
                       <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
-                      Secure Online Checkout
+                      Proceed to Checkout
+                    </button>
+
+                    {/* 1-Click WhatsApp Quick Checkout */}
+                    <button
+                      type="button"
+                      onClick={handleWhatsAppCheckout}
+                      className="w-full flex items-center justify-center gap-2 py-3 bg-[#064E3B] text-[#D4AF37] hover:bg-[#043327] active:scale-95 font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl cursor-pointer"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                      {t.cart.whatsappOrder}
                     </button>
                   </div>
 

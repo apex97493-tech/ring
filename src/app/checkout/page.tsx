@@ -75,6 +75,28 @@ export default function CheckoutPage() {
 
   const [saveAddress, setSaveAddress] = useState(true);
   const [hasSavedAddress, setHasSavedAddress] = useState(false);
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
+
+  const handleClearSavedAddress = () => {
+    try {
+      localStorage.removeItem('fj_saved_shipping_address');
+    } catch (_) {}
+    setHasSavedAddress(false);
+    setIsEditingAddress(true);
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      streetAddress: '',
+      apartment: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      country: 'United States',
+    });
+  };
+
   const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'payoneer' | 'bank_transfer' | 'whatsapp'>('paypal');
   const [payoneerReference, setPayoneerReference] = useState('');
   const [bankReference, setBankReference] = useState('');
@@ -640,232 +662,338 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* LEFT COLUMN: Customer Form & Payment (7 Cols) */}
           <div className="lg:col-span-7 space-y-8">
-            {/* Step 1: Customer Contact Info */}
-            <div className="bg-white border border-[#E5E0D8] rounded-xl p-6 sm:p-7 shadow-sm">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-6 h-6 rounded-full bg-[#18181B] text-white text-xs font-bold flex items-center justify-center">
-                    1
-                  </span>
-                  <h2 className="text-base font-serif font-bold tracking-wide">
-                    Contact Information
-                  </h2>
-                </div>
-                {hasSavedAddress && (
-                  <span className="text-[11px] text-[#064E3B] bg-[#F0FDF4] px-2 py-0.5 rounded font-medium border border-[#BBF7D0]">
-                    ✓ Saved Address Loaded
-                  </span>
-                )}
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
-                    Email Address * (for order receipt & tracking)
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="you@example.com"
-                    className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
-                      errors.email ? 'border-red-500 bg-red-50/20' : 'border-gray-300'
-                    } rounded focus:outline-none focus:border-[#B89035]`}
-                  />
-                  {errors.email && <p className="text-[11px] text-red-600 mt-1">{errors.email}</p>}
-                </div>
-
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
-                    Phone Number * (for delivery courier)
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    placeholder="+1 (555) 000-0000"
-                    className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
-                      errors.phone ? 'border-red-500 bg-red-50/20' : 'border-gray-300'
-                    } rounded focus:outline-none focus:border-[#B89035]`}
-                  />
-                  {errors.phone && <p className="text-[11px] text-red-600 mt-1">{errors.phone}</p>}
-                </div>
-              </div>
-            </div>
-
-            {/* Step 2: Shipping Address (Amazon-style) */}
-            <div className="bg-white border border-[#E5E0D8] rounded-xl p-6 sm:p-7 shadow-sm">
-              <div className="flex items-center gap-2.5 mb-5">
-                <span className="w-6 h-6 rounded-full bg-[#18181B] text-white text-xs font-bold flex items-center justify-center">
-                  2
-                </span>
-                <h2 className="text-base font-serif font-bold tracking-wide">
-                  Shipping Address
-                </h2>
-              </div>
-
-              <div className="space-y-4">
-                {/* Country */}
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
-                    Country / Region *
-                  </label>
-                  <select
-                    name="country"
-                    value={formData.country}
-                    onChange={handleInputChange}
-                    className="w-full px-3.5 py-2.5 text-xs bg-white border border-gray-300 rounded focus:outline-none focus:border-[#B89035]"
-                  >
-                    {POPULAR_COUNTRIES.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* First and Last Name */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
-                      First Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      placeholder="Jane"
-                      className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
-                        errors.firstName ? 'border-red-500' : 'border-gray-300'
-                      } rounded focus:outline-none focus:border-[#B89035]`}
-                    />
-                    {errors.firstName && (
-                      <p className="text-[11px] text-red-600 mt-1">{errors.firstName}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
-                      Last Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      placeholder="Doe"
-                      className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
-                        errors.lastName ? 'border-red-500' : 'border-gray-300'
-                      } rounded focus:outline-none focus:border-[#B89035]`}
-                    />
-                    {errors.lastName && (
-                      <p className="text-[11px] text-red-600 mt-1">{errors.lastName}</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Street Address */}
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
-                    Street Address *
-                  </label>
-                  <input
-                    type="text"
-                    name="streetAddress"
-                    value={formData.streetAddress}
-                    onChange={handleInputChange}
-                    placeholder="123 Luxury Lane"
-                    className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
-                      errors.streetAddress ? 'border-red-500' : 'border-gray-300'
-                    } rounded focus:outline-none focus:border-[#B89035]`}
-                  />
-                  {errors.streetAddress && (
-                    <p className="text-[11px] text-red-600 mt-1">{errors.streetAddress}</p>
-                  )}
-                </div>
-
-                {/* Apartment, Suite, etc. */}
-                <div>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">
-                    Apartment, Suite, Unit, etc. (optional)
-                  </label>
-                  <input
-                    type="text"
-                    name="apartment"
-                    value={formData.apartment || ''}
-                    onChange={handleInputChange}
-                    placeholder="Apt 4B, Penthouse"
-                    className="w-full px-3.5 py-2.5 text-xs bg-white border border-gray-300 rounded focus:outline-none focus:border-[#B89035]"
-                  />
-                </div>
-
-                {/* City, State, ZIP */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">City *</label>
-                    <input
-                      type="text"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleInputChange}
-                      placeholder="New York"
-                      className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
-                        errors.city ? 'border-red-500' : 'border-gray-300'
-                      } rounded focus:outline-none focus:border-[#B89035]`}
-                    />
-                    {errors.city && <p className="text-[11px] text-red-600 mt-1">{errors.city}</p>}
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
-                      State / Province
-                    </label>
-                    <input
-                      type="text"
-                      name="state"
-                      value={formData.state}
-                      onChange={handleInputChange}
-                      placeholder="NY"
-                      className="w-full px-3.5 py-2.5 text-xs bg-white border border-gray-300 rounded focus:outline-none focus:border-[#B89035]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-gray-700 mb-1">
-                      ZIP / Postal Code *
-                    </label>
-                    <input
-                      type="text"
-                      name="postalCode"
-                      value={formData.postalCode}
-                      onChange={handleInputChange}
-                      placeholder="10001"
-                      className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
-                        errors.postalCode ? 'border-red-500' : 'border-gray-300'
-                      } rounded focus:outline-none focus:border-[#B89035]`}
-                    />
-                    {errors.postalCode && (
-                      <p className="text-[11px] text-red-600 mt-1">{errors.postalCode}</p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Amazon-style "Save this address" checkbox */}
-                <div className="pt-2">
-                  <label className="flex items-center gap-2 cursor-pointer select-none">
-                    <input
-                      type="checkbox"
-                      checked={saveAddress}
-                      onChange={(e) => setSaveAddress(e.target.checked)}
-                      className="w-4 h-4 text-[#064E3B] rounded border-gray-300 focus:ring-0"
-                    />
-                    <span className="text-xs text-gray-700 font-medium">
-                      Save this address for a faster 1-click checkout next time
+            {/* SAVED ADDRESS CARD (When customer has a saved profile) */}
+            {hasSavedAddress && !isEditingAddress ? (
+              <div className="bg-white border border-[#E5E0D8] rounded-xl p-6 sm:p-7 shadow-xs space-y-4">
+                <div className="flex items-center justify-between border-b border-gray-150 pb-3">
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-[#064E3B] text-white text-xs font-bold flex items-center justify-center">
+                      ✓
                     </span>
-                  </label>
+                    <h2 className="text-base font-serif font-bold text-gray-900 tracking-wide">
+                      Delivery & Contact Details
+                    </h2>
+                  </div>
+                  <span className="text-[11px] text-[#064E3B] bg-emerald-50 px-2.5 py-1 rounded-full font-semibold border border-emerald-200 flex items-center gap-1">
+                    <ShieldCheck className="w-3.5 h-3.5" /> Saved in your browser
+                  </span>
+                </div>
+
+                <div className="bg-[#FAF8F5] border border-[#E5E0D8] rounded-xl p-5">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-gray-900">
+                          {formData.firstName} {formData.lastName}
+                        </span>
+                        <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">
+                          Default Address
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-700">
+                        {formData.streetAddress}{formData.apartment ? `, ${formData.apartment}` : ''}
+                      </p>
+                      <p className="text-xs text-gray-700">
+                        {formData.city}, {formData.state} {formData.postalCode}, {formData.country}
+                      </p>
+                      <div className="flex flex-wrap items-center gap-3 mt-3 pt-2 border-t border-gray-200/80 text-xs text-gray-600">
+                        <span>📧 {formData.email}</span>
+                        <span>📞 {formData.phone}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex sm:flex-col gap-2 shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => setIsEditingAddress(true)}
+                        className="px-4 py-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 text-xs font-semibold rounded-lg transition-colors cursor-pointer flex items-center gap-1.5"
+                      >
+                        ✏️ Edit Details
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleClearSavedAddress}
+                        className="px-4 py-1.5 text-xs text-red-600 hover:text-red-800 hover:underline cursor-pointer text-center"
+                      >
+                        Clear Saved
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 text-[11px] text-gray-500 pt-1">
+                  <Lock className="w-3.5 h-3.5 text-[#064E3B]" />
+                  <span>Your details are loaded securely from your device. You won&apos;t need to retype them.</span>
+                </div>
+              </div>
+            ) : (
+              <>
+                {/* Step 1: Customer Contact Info */}
+                <div className="bg-white border border-[#E5E0D8] rounded-xl p-6 sm:p-7 shadow-xs">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2.5">
+                      <span className="w-6 h-6 rounded-full bg-[#18181B] text-white text-xs font-bold flex items-center justify-center">
+                        1
+                      </span>
+                      <h2 className="text-base font-serif font-bold tracking-wide">
+                        Contact Information
+                      </h2>
+                    </div>
+                    {hasSavedAddress && (
+                      <button
+                        type="button"
+                        onClick={() => setIsEditingAddress(false)}
+                        className="text-xs text-[#064E3B] font-semibold hover:underline cursor-pointer"
+                      >
+                        ← Back to Saved Address
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Email Address * (for order receipt & tracking)
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="you@example.com"
+                        className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
+                          errors.email ? 'border-red-500 bg-red-50/20' : 'border-gray-300'
+                        } rounded-lg focus:outline-none focus:border-[#B89035]`}
+                      />
+                      {errors.email && <p className="text-[11px] text-red-600 mt-1">{errors.email}</p>}
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Phone Number * (for delivery courier)
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="+1 (555) 000-0000"
+                        className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
+                          errors.phone ? 'border-red-500 bg-red-50/20' : 'border-gray-300'
+                        } rounded-lg focus:outline-none focus:border-[#B89035]`}
+                      />
+                      {errors.phone && <p className="text-[11px] text-red-600 mt-1">{errors.phone}</p>}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 2: Shipping Address */}
+                <div className="bg-white border border-[#E5E0D8] rounded-xl p-6 sm:p-7 shadow-xs">
+                  <div className="flex items-center gap-2.5 mb-5">
+                    <span className="w-6 h-6 rounded-full bg-[#18181B] text-white text-xs font-bold flex items-center justify-center">
+                      2
+                    </span>
+                    <h2 className="text-base font-serif font-bold tracking-wide">
+                      Shipping Address
+                    </h2>
+                  </div>
+
+                  <div className="space-y-4">
+                    {/* Country */}
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Country / Region *
+                      </label>
+                      <select
+                        name="country"
+                        value={formData.country}
+                        onChange={handleInputChange}
+                        className="w-full px-3.5 py-2.5 text-xs bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-[#B89035]"
+                      >
+                        {POPULAR_COUNTRIES.map((c) => (
+                          <option key={c} value={c}>
+                            {c}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* First and Last Name */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
+                          First Name *
+                        </label>
+                        <input
+                          type="text"
+                          name="firstName"
+                          value={formData.firstName}
+                          onChange={handleInputChange}
+                          placeholder="Jane"
+                          className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
+                            errors.firstName ? 'border-red-500' : 'border-gray-300'
+                          } rounded-lg focus:outline-none focus:border-[#B89035]`}
+                        />
+                        {errors.firstName && (
+                          <p className="text-[11px] text-red-600 mt-1">{errors.firstName}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
+                          Last Name *
+                        </label>
+                        <input
+                          type="text"
+                          name="lastName"
+                          value={formData.lastName}
+                          onChange={handleInputChange}
+                          placeholder="Doe"
+                          className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
+                            errors.lastName ? 'border-red-500' : 'border-gray-300'
+                          } rounded-lg focus:outline-none focus:border-[#B89035]`}
+                        />
+                        {errors.lastName && (
+                          <p className="text-[11px] text-red-600 mt-1">{errors.lastName}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Street Address */}
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Street Address *
+                      </label>
+                      <input
+                        type="text"
+                        name="streetAddress"
+                        value={formData.streetAddress}
+                        onChange={handleInputChange}
+                        placeholder="123 Luxury Lane"
+                        className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
+                          errors.streetAddress ? 'border-red-500' : 'border-gray-300'
+                        } rounded-lg focus:outline-none focus:border-[#B89035]`}
+                      />
+                      {errors.streetAddress && (
+                        <p className="text-[11px] text-red-600 mt-1">{errors.streetAddress}</p>
+                      )}
+                    </div>
+
+                    {/* Apartment, Suite, etc. */}
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Apartment, Suite, Unit, etc. (optional)
+                      </label>
+                      <input
+                        type="text"
+                        name="apartment"
+                        value={formData.apartment || ''}
+                        onChange={handleInputChange}
+                        placeholder="Apt 4B, Penthouse"
+                        className="w-full px-3.5 py-2.5 text-xs bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-[#B89035]"
+                      />
+                    </div>
+
+                    {/* City, State, ZIP */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 mb-1">City *</label>
+                        <input
+                          type="text"
+                          name="city"
+                          value={formData.city}
+                          onChange={handleInputChange}
+                          placeholder="New York"
+                          className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
+                            errors.city ? 'border-red-500' : 'border-gray-300'
+                          } rounded-lg focus:outline-none focus:border-[#B89035]`}
+                        />
+                        {errors.city && <p className="text-[11px] text-red-600 mt-1">{errors.city}</p>}
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
+                          State / Province
+                        </label>
+                        <input
+                          type="text"
+                          name="state"
+                          value={formData.state}
+                          onChange={handleInputChange}
+                          placeholder="NY"
+                          className="w-full px-3.5 py-2.5 text-xs bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-[#B89035]"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-medium text-gray-700 mb-1">
+                          ZIP / Postal Code *
+                        </label>
+                        <input
+                          type="text"
+                          name="postalCode"
+                          value={formData.postalCode}
+                          onChange={handleInputChange}
+                          placeholder="10001"
+                          className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
+                            errors.postalCode ? 'border-red-500' : 'border-gray-300'
+                          } rounded-lg focus:outline-none focus:border-[#B89035]`}
+                        />
+                        {errors.postalCode && (
+                          <p className="text-[11px] text-red-600 mt-1">{errors.postalCode}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Save this address checkbox */}
+                    <div className="pt-2">
+                      <label className="flex items-center gap-2 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={saveAddress}
+                          onChange={(e) => setSaveAddress(e.target.checked)}
+                          className="w-4 h-4 text-[#064E3B] rounded border-gray-300 focus:ring-0 cursor-pointer"
+                        />
+                        <span className="text-xs text-gray-700 font-medium">
+                          Save this address securely in my browser for 1-click checkout next time
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* CUSTOMER DATA & PAYMENT SECURITY PROMISE (Crucial for US/UK clients) */}
+            <div className="bg-[#FAF8F5] border border-[#E5E0D8] rounded-xl p-5 space-y-3">
+              <div className="flex items-center gap-2 text-[#064E3B] font-bold text-xs">
+                <ShieldCheck className="w-4 h-4 text-[#064E3B]" />
+                <span>Customer Data Security & Privacy Guarantee</span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-[11px] text-gray-600">
+                <div className="space-y-1">
+                  <p className="font-bold text-gray-900 flex items-center gap-1">
+                    <Lock className="w-3 h-3 text-[#064E3B]" /> Zero Card Storage
+                  </p>
+                  <p className="leading-relaxed">
+                    We never store credit/debit card numbers or bank logins. All payments are securely handled by official PayPal & banking networks.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="font-bold text-gray-900 flex items-center gap-1">
+                    <ShieldCheck className="w-3 h-3 text-[#064E3B]" /> Device-Level Privacy
+                  </p>
+                  <p className="leading-relaxed">
+                    Your address is saved privately in your own browser for convenience. We never sell, rent, or monetize personal customer details.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <p className="font-bold text-gray-900 flex items-center gap-1">
+                    <Package className="w-3 h-3 text-[#064E3B]" /> Passwordless Tracking
+                  </p>
+                  <p className="leading-relaxed">
+                    Your orders can be accessed anytime from the &quot;My Orders&quot; hub with just your Order ID or Email without creating accounts.
+                  </p>
                 </div>
               </div>
             </div>
@@ -1345,47 +1473,99 @@ export default function CheckoutPage() {
                 })}
               </div>
 
-              {/* Pricing Breakdown */}
-              <div className="border-t border-gray-200 pt-4 mt-4 space-y-2.5 text-xs text-gray-600">
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
+              {/* Pricing Breakdown (Exact Etsy Styling) */}
+              <div className="border-t border-gray-150 pt-4 mt-4 space-y-2.5 text-xs font-sans text-gray-700">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Item(s) total</span>
                   <span className="font-semibold text-gray-900">
-                    {currencySymbol}
-                    {convertedSubtotal.toLocaleString()}
+                    {currencySymbol}{(convertedSubtotal * 2).toLocaleString()}
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center text-[#0F6F2C]">
+                  <span className="font-medium">Shop discount</span>
+                  <span className="font-bold">
+                    -{currencySymbol}{convertedSubtotal.toLocaleString()}
+                  </span>
+                </div>
+
+                <div className="flex justify-between items-center pt-1 border-t border-gray-150">
+                  <span className="font-medium text-gray-700">Subtotal</span>
+                  <span className="font-semibold text-gray-900">
+                    {currencySymbol}{convertedSubtotal.toLocaleString()}
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5 text-gray-600">
                     <Truck className="w-3.5 h-3.5 text-[#064E3B]" />
-                    Insured Express Worldwide Shipping
+                    Delivery (Worldwide Express)
                   </span>
-                  <span className="text-[#064E3B] font-bold uppercase tracking-wider text-[11px]">
+                  <span className="text-[#0F6F2C] font-bold uppercase tracking-wider text-[11px]">
                     FREE
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5 text-gray-600">
                     <Sparkles className="w-3.5 h-3.5 text-[#B89035]" />
                     Velvet Ring Box & GRA Certificate
                   </span>
-                  <span className="text-[#064E3B] font-bold uppercase tracking-wider text-[11px]">
+                  <span className="text-[#0F6F2C] font-bold uppercase tracking-wider text-[11px]">
                     INCLUDED
                   </span>
                 </div>
 
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Tax</span>
+                  <span className="text-gray-500 text-[11px]">Included in total</span>
+                </div>
+
                 <div className="border-t border-gray-200 pt-3 mt-3 flex justify-between items-baseline">
-                  <span className="text-sm font-bold text-gray-900">Total</span>
+                  <span className="text-sm font-bold text-gray-900">
+                    Total ({cart.reduce((sum, item) => sum + item.quantity, 0)} {cart.length === 1 ? 'item' : 'items'})
+                  </span>
                   <div className="text-right">
-                    <span className="text-lg font-serif font-bold text-gray-900">
-                      {currencySymbol}
-                      {finalTotal.toLocaleString()}
+                    <span className="text-xl font-serif font-bold text-gray-900">
+                      {currencySymbol}{finalTotal.toLocaleString()}
                     </span>
-                    <span className="block text-[10px] text-gray-400">
-                      Includes all applicable duties & packaging
+                    <span className="block text-[10px] text-gray-500">
+                      {selectedCurrency.code} · Includes all applicable duties & packaging
                     </span>
                   </div>
+                </div>
+
+                {/* Secure options in checkout + Payment logos (Exact Etsy style) */}
+                <div className="pt-3 border-t border-gray-150 text-center space-y-2">
+                  <p className="text-xs font-semibold text-gray-800 flex items-center justify-center gap-1.5">
+                    <Lock className="w-3.5 h-3.5 text-gray-600" />
+                    Secure options in checkout
+                  </p>
+                  <div className="flex flex-wrap items-center justify-center gap-1.5">
+                    <span className="px-2 py-0.5 bg-white border border-gray-250 rounded text-[10px] font-black tracking-wider text-[#1A1F71] shadow-2xs">
+                      VISA
+                    </span>
+                    <span className="px-2 py-0.5 bg-white border border-gray-250 rounded text-[10px] font-bold text-gray-900 flex items-center gap-0.5 shadow-2xs">
+                      <span className="w-2 h-2 rounded-full bg-[#EB001B] inline-block -mr-1" />
+                      <span className="w-2 h-2 rounded-full bg-[#F79E1B] inline-block opacity-90" />
+                      <span className="text-[9px] ml-1">Mastercard</span>
+                    </span>
+                    <span className="px-2 py-0.5 bg-[#006FCF] text-white rounded text-[9px] font-bold tracking-wider shadow-2xs">
+                      AMEX
+                    </span>
+                    <span className="px-2 py-0.5 bg-white border border-gray-250 rounded text-[10px] font-bold text-[#003087] shadow-2xs">
+                      PayPal
+                    </span>
+                    <span className="px-2 py-0.5 bg-white border border-gray-250 rounded text-[9px] font-bold text-[#FF6000] shadow-2xs">
+                      DISCOVER
+                    </span>
+                    <span className="px-2 py-0.5 bg-black text-white rounded text-[9px] font-bold tracking-tight shadow-2xs">
+                       Pay
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-gray-400">
+                    Additional duties and fees <span className="underline cursor-pointer">may apply</span>.
+                  </p>
                 </div>
               </div>
             </div>

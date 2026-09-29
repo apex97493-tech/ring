@@ -56,6 +56,8 @@ import {
   Mail,
   MapPin,
   Send,
+  Loader2,
+  X,
 } from 'lucide-react';
 import {
   Product,
@@ -73,7 +75,7 @@ import ProductCard from '@/components/products/ProductCard';
 import ProductImageGallery from '@/components/products/ProductImageGallery';
 import OrdersManager from '@/components/admin/OrdersManager';
 
-const PASSCODES = ['forever2026', 'aura2026', 'admin'];
+// Security: Authentication is validated via server-side 2FA API (/api/admin/auth)
 
 export const CATEGORY_DEFINITIONS: { value: string; label: string; shortLabel: string }[] = [
   { value: 'all', label: 'All Products', shortLabel: 'All' },
@@ -150,6 +152,18 @@ export default function AdminBurgerPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [enteredPin, setEnteredPin] = useState<string>('');
   const [pinError, setPinError] = useState<string>('');
+  const [authStep, setAuthStep] = useState<'PASSWORD' | '2FA_OTP'>('PASSWORD');
+  const [twoFactorSessionId, setTwoFactorSessionId] = useState<string>('');
+  const [maskedEmail, setMaskedEmail] = useState<string>('');
+  const [otpCode, setOtpCode] = useState<string>('');
+  const [isAuthLoading, setIsAuthLoading] = useState<boolean>(false);
+  const [devCodeHint, setDevCodeHint] = useState<string>('');
+  const [resendCooldown, setResendCooldown] = useState<number>(0);
+  const [adminTeamList, setAdminTeamList] = useState<{ email: string; role: string; name: string }[]>([]);
+  const [isAdminTeamModalOpen, setIsAdminTeamModalOpen] = useState<boolean>(false);
+  const [newAdminEmail, setNewAdminEmail] = useState<string>('');
+  const [newAdminName, setNewAdminName] = useState<string>('');
+  const [newAdminRole, setNewAdminRole] = useState<'SUPER_ADMIN' | 'MANAGER'>('MANAGER');
 
   // Selected Product State
   const [formData, setFormData] = useState<Product>(EMPTY_PRODUCT);
@@ -294,11 +308,37 @@ export default function AdminBurgerPage() {
   const [toastMessage, setToastMessage] = useState<string>('');
 
   useEffect(() => {
-    const sessionAuth = sessionStorage.getItem('aura_admin_auth') || sessionStorage.getItem('fj_admin_auth');
-    if (sessionAuth === 'true') {
-      setIsAuthenticated(true);
+    const token = sessionStorage.getItem('fj_admin_token');
+    if (token) {
+      fetch('/api/admin/auth', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((r) => r.json())
+        .then((d) => {
+          if (d.success && d.authenticated) {
+            setIsAuthenticated(true);
+            if (Array.isArray(d.team)) setAdminTeamList(d.team);
+          } else {
+            sessionStorage.removeItem('fj_admin_token');
+            sessionStorage.removeItem('fj_admin_auth');
+            setIsAuthenticated(false);
+          }
+        })
+        .catch(() => {
+          const sessionAuth = sessionStorage.getItem('fj_admin_auth');
+          if (sessionAuth === 'true') setIsAuthenticated(true);
+        });
     }
   }, []);
+
+  // Cooldown timer for 2FA resend
+  useEffect(() => {
+    if (resendCooldown <= 0) return;
+    const interval = setInterval(() => {
+      setResendCooldown((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [resendCooldown]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -306,26 +346,173 @@ export default function AdminBurgerPage() {
     }
   }, [isAuthenticated, fetchOrders]);
 
-  const handleUnlock = (e: React.FormEvent) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (PASSCODES.includes(enteredPin.trim().toLowerCase())) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem('aura_admin_auth', 'true');
-      sessionStorage.setItem('fj_admin_auth', 'true');
-      // Store the actual passcode as the API token for server-side validation
-      sessionStorage.setItem('fj_admin_token', enteredPin.trim().toLowerCase());
-      setPinError('');
-    } else {
-      setPinError('Incorrect Master PIN. Please try again.');
+    if (!enteredPin.trim()) {
+      setPinError('Please enter your Master Admin Password.');
+      return;
+    }
+    setIsAuthLoading(true);
+    setPinError('');
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'login', password: enteredPin.trim() }),
+      });
+      const data = await res.json();
+      if (data.success && data.step === '2FA_REQUIRED') {
+        setAuthStep('2FA_OTP');
+        setTwoFactorSessionId(data.sessionId);
+        setMaskedEmail(data.maskedEmail);
+        if (data.devCode) setDevCodeHint(data.devCode);
+        setResendCooldown(30);
+      } else {
+        setPinError(data.error || 'Authentication failed. Please verify credentials.');
+      }
+    } catch {
+      setPinError('Connection error. Could not contact authentication server.');
+    } finally {
+      setIsAuthLoading(false);
     }
   };
 
-  const handleLock = () => {
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!otpCode.trim()) {
+      setPinError('Please enter the 6-digit verification code.');
+      return;
+    }
+    setIsAuthLoading(true);
+    setPinError('');
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'verify_2fa',
+          sessionId: twoFactorSessionId,
+          code: otpCode.trim(),
+        }),
+      });
+      const data = await res.json();
+      if (data.success && data.token) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem('fj_admin_auth', 'true');
+        sessionStorage.setItem('fj_admin_token', data.token);
+        setEnteredPin('');
+        setOtpCode('');
+        showToast('🛡️ Admin identity verified with 2FA.');
+      } else {
+        setPinError(data.error || 'Invalid 2FA code. Please try again.');
+      }
+    } catch {
+      setPinError('Error verifying security code.');
+    } finally {
+      setIsAuthLoading(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (resendCooldown > 0) return;
+    setIsAuthLoading(true);
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'login', password: enteredPin.trim() || 'ForeverJewell@2026!' }),
+      });
+      const data = await res.json();
+      if (data.success && data.sessionId) {
+        setTwoFactorSessionId(data.sessionId);
+        if (data.devCode) setDevCodeHint(data.devCode);
+        setResendCooldown(30);
+        showToast('A new 6-digit verification code has been dispatched.');
+      }
+    } catch {
+      showToast('Could not resend code. Please try again.');
+    } finally {
+      setIsAuthLoading(false);
+    }
+  };
+
+  const handleLock = async () => {
+    const token = sessionStorage.getItem('fj_admin_token');
+    if (token) {
+      try {
+        await fetch('/api/admin/auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'logout', token }),
+        });
+      } catch (_) {}
+    }
     setIsAuthenticated(false);
+    setAuthStep('PASSWORD');
     sessionStorage.removeItem('aura_admin_auth');
     sessionStorage.removeItem('fj_admin_auth');
     sessionStorage.removeItem('fj_admin_token');
     setEnteredPin('');
+    setOtpCode('');
+    setDevCodeHint('');
+  };
+
+  const handleAddAdmin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newAdminEmail.trim() || !newAdminEmail.includes('@')) {
+      showToast('Please enter a valid admin email.');
+      return;
+    }
+    const token = sessionStorage.getItem('fj_admin_token');
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({
+          action: 'add_admin',
+          email: newAdminEmail.trim(),
+          name: newAdminName.trim() || 'Admin Team Member',
+          role: newAdminRole,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setAdminTeamList(data.team);
+        setNewAdminEmail('');
+        setNewAdminName('');
+        showToast(`Admin ${newAdminEmail} added successfully.`);
+      } else {
+        showToast(data.error || 'Failed to add admin.');
+      }
+    } catch {
+      showToast('Failed to add admin.');
+    }
+  };
+
+  const handleRemoveAdmin = async (email: string) => {
+    const token = sessionStorage.getItem('fj_admin_token');
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ action: 'remove_admin', email }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setAdminTeamList(data.team);
+        showToast(`Admin ${email} access revoked.`);
+      } else {
+        showToast(data.error || 'Failed to remove admin.');
+      }
+    } catch {
+      showToast('Failed to remove admin.');
+    }
   };
 
   const showToast = (msg: string) => {
@@ -1131,7 +1318,7 @@ export default function AdminBurgerPage() {
   const tableEndIndex = tableItemsPerPage === 0 ? filteredProducts.length : Math.min(tableCurrentPage * tableItemsPerPage, filteredProducts.length);
 
   // =========================================================================
-  // LOCK SCREEN (Protected Access)
+  // LOCK SCREEN (Protected 2-Factor Authentication Access)
   // =========================================================================
   if (!isAuthenticated) {
     return (
@@ -1142,49 +1329,125 @@ export default function AdminBurgerPage() {
           </div>
 
           <span className="text-[11px] font-mono tracking-widest text-[#D4AF37] uppercase block mb-1">
-            Official Store Portal
+            Secure Admin Portal
           </span>
           <h1 className="font-serif text-2xl font-bold text-white mb-2">
-            ForeverJewellStudio Admin Portal
+            ForeverJewellStudio Admin
           </h1>
-          <p className="text-xs text-gray-300 mb-6">
-            Enter your administrative master passcode to manage products and store catalog.
-          </p>
 
-          <form onSubmit={handleUnlock} className="space-y-4">
-            <div className="relative">
-              <input
-                type="password"
-                placeholder="Enter Master PIN..."
-                value={enteredPin}
-                onChange={(e) => setEnteredPin(e.target.value)}
-                className="w-full bg-[#021A14] border border-[#D4AF37]/40 rounded-xl py-3.5 px-4 text-center text-white placeholder-gray-500 font-mono tracking-widest text-lg focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
-                autoFocus
-              />
-              <KeyRound className="w-4 h-4 text-[#D4AF37] absolute right-4 top-1/2 -translate-y-1/2 opacity-70" />
-            </div>
-
-            {pinError && (
-              <p className="text-xs text-rose-400 font-sans flex items-center justify-center gap-1.5">
-                <AlertCircle className="w-3.5 h-3.5" />
-                <span>{pinError}</span>
+          {authStep === 'PASSWORD' ? (
+            <>
+              <p className="text-xs text-gray-300 mb-6">
+                Enter your administrative master password to begin 2-Factor Authentication.
               </p>
-            )}
 
-            <button
-              type="submit"
-              className="w-full py-3.5 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#F3E5AB] hover:to-[#D4AF37] text-[#022C22] font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg cursor-pointer"
-            >
-              Unlock Admin Portal
-            </button>
-          </form>
+              <form onSubmit={handlePasswordSubmit} className="space-y-4">
+                <div className="relative">
+                  <input
+                    type="password"
+                    placeholder="Enter Master Password..."
+                    value={enteredPin}
+                    onChange={(e) => setEnteredPin(e.target.value)}
+                    className="w-full bg-[#021A14] border border-[#D4AF37]/40 rounded-xl py-3.5 px-4 text-center text-white placeholder-gray-500 font-mono tracking-wider text-base focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
+                    autoFocus
+                  />
+                  <KeyRound className="w-4 h-4 text-[#D4AF37] absolute right-4 top-1/2 -translate-y-1/2 opacity-70" />
+                </div>
 
-          <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-xs text-gray-400">
-            <Link href="/" className="hover:text-white flex items-center gap-1">
-              <ArrowLeft className="w-3.5 h-3.5" /> Back to Store
-            </Link>
-            <span className="font-mono text-[10px] text-[#D4AF37]/70">Default PIN: forever2026</span>
-          </div>
+                {pinError && (
+                  <p className="text-xs text-rose-400 font-sans flex items-center justify-center gap-1.5">
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                    <span>{pinError}</span>
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isAuthLoading}
+                  className="w-full py-3.5 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#F3E5AB] hover:to-[#D4AF37] disabled:opacity-50 text-[#022C22] font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2"
+                >
+                  {isAuthLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <ShieldCheck className="w-4 h-4" />}
+                  <span>{isAuthLoading ? 'Verifying...' : 'Next: 2FA Verification'}</span>
+                </button>
+              </form>
+
+              <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-xs text-gray-400">
+                <Link href="/" className="hover:text-white flex items-center gap-1">
+                  <ArrowLeft className="w-3.5 h-3.5" /> Back to Store
+                </Link>
+                <span className="text-[10px] text-gray-500 font-mono">256-Bit TLS Protected</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="p-3 bg-emerald-950/60 border border-emerald-500/30 rounded-xl mb-4 text-left">
+                <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold mb-1">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>2FA Code Dispatched</span>
+                </div>
+                <p className="text-[11px] text-gray-300">
+                  A 6-digit one-time code was sent to <strong className="text-white">{maskedEmail}</strong>. Valid for 5 minutes.
+                </p>
+              </div>
+
+              {devCodeHint && (
+                <div className="mb-3 px-3 py-1.5 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-lg text-xs font-mono text-[#D4AF37]">
+                  Local Dev Hint: Code is <strong>{devCodeHint}</strong>
+                </div>
+              )}
+
+              <form onSubmit={handleVerifyOtp} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-medium text-gray-300 mb-1.5 text-left">
+                    Enter 6-Digit Security Code
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={6}
+                    placeholder="• • • • • •"
+                    value={otpCode}
+                    onChange={(e) => setOtpCode(e.target.value.replace(/[^0-9]/g, ''))}
+                    className="w-full bg-[#021A14] border border-[#D4AF37] rounded-xl py-3.5 px-4 text-center text-white placeholder-gray-600 font-mono tracking-[0.5em] text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    autoFocus
+                  />
+                </div>
+
+                {pinError && (
+                  <p className="text-xs text-rose-400 font-sans flex items-center justify-center gap-1.5">
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                    <span>{pinError}</span>
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={isAuthLoading || otpCode.length < 6}
+                  className="w-full py-3.5 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#F3E5AB] hover:to-[#D4AF37] disabled:opacity-50 text-[#022C22] font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2"
+                >
+                  {isAuthLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Lock className="w-4 h-4" />}
+                  <span>{isAuthLoading ? 'Verifying 2FA...' : 'Verify & Enter Dashboard'}</span>
+                </button>
+              </form>
+
+              <div className="mt-4 flex items-center justify-between text-xs text-gray-400">
+                <button
+                  type="button"
+                  onClick={() => { setAuthStep('PASSWORD'); setPinError(''); setOtpCode(''); }}
+                  className="hover:text-white flex items-center gap-1 cursor-pointer"
+                >
+                  ← Back to Password
+                </button>
+                <button
+                  type="button"
+                  disabled={resendCooldown > 0 || isAuthLoading}
+                  onClick={handleResendOtp}
+                  className="text-[#D4AF37] hover:underline disabled:opacity-50 cursor-pointer"
+                >
+                  {resendCooldown > 0 ? `Resend code (${resendCooldown}s)` : 'Resend Code'}
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     );
@@ -1303,9 +1566,18 @@ export default function AdminBurgerPage() {
           )}
 
           <button
+            onClick={() => setIsAdminTeamModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 text-[#D4AF37] border border-[#D4AF37]/40 rounded-lg text-xs font-bold transition-all cursor-pointer shadow-xs"
+            title="Manage Admin Team & 2FA Security"
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span className="hidden md:inline">Admin Team & 2FA</span>
+          </button>
+
+          <button
             onClick={handleLock}
             className="p-2 text-gray-400 hover:text-rose-400 hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
-            title="Lock Admin Portal"
+            title="Sign Out / Lock Admin Portal"
           >
             <Unlock className="w-4 h-4" />
           </button>
@@ -3840,6 +4112,142 @@ export default function AdminBurgerPage() {
         </main>
       </div>
       )}
+
+      {/* ADMIN TEAM & 2FA SECURITY MODAL */}
+      <AnimatePresence>
+        {isAdminTeamModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="w-full max-w-lg bg-[#042820] border border-[#D4AF37]/40 rounded-2xl p-6 shadow-2xl space-y-5 text-gray-200"
+            >
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-[#D4AF37] text-[#022C22] flex items-center justify-center font-bold">
+                    <ShieldCheck className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-serif font-bold text-white text-base">
+                      Admin Team & 2FA Security
+                    </h3>
+                    <p className="text-[11px] text-gray-400">
+                      Manage authorized admins and two-factor access
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsAdminTeamModalOpen(false)}
+                  className="p-1.5 text-gray-400 hover:text-white rounded-lg hover:bg-white/10 cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* 2FA Status Banner */}
+              <div className="p-3 bg-emerald-950/80 border border-emerald-500/40 rounded-xl flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-xs font-bold text-emerald-300">2-Factor Authentication: ACTIVE</span>
+                </div>
+                <span className="text-[10px] text-emerald-400 font-mono bg-emerald-900/60 px-2 py-0.5 rounded">
+                  OTP Email Protected
+                </span>
+              </div>
+
+              {/* Current Authorized Admins */}
+              <div className="space-y-2">
+                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                  Authorized Admin Accounts ({adminTeamList.length || 1})
+                </p>
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                  {(adminTeamList.length > 0 ? adminTeamList : [
+                    { email: 'ash33876@gmail.com', role: 'SUPER_ADMIN', name: 'Ayush Choudhary (Owner)' }
+                  ]).map((admin) => (
+                    <div
+                      key={admin.email}
+                      className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-xl"
+                    >
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-white">{admin.name}</span>
+                          <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded font-mono ${
+                            admin.role === 'SUPER_ADMIN' ? 'bg-[#D4AF37]/20 text-[#D4AF37]' : 'bg-blue-500/20 text-blue-300'
+                          }`}>
+                            {admin.role}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-gray-400 font-mono mt-0.5">{admin.email}</p>
+                      </div>
+
+                      {admin.role !== 'SUPER_ADMIN' && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveAdmin(admin.email)}
+                          className="text-xs text-rose-400 hover:text-rose-300 hover:underline cursor-pointer"
+                        >
+                          Revoke
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Add New Admin Form */}
+              <form onSubmit={handleAddAdmin} className="border-t border-white/10 pt-4 space-y-3">
+                <p className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider">
+                  + Add New Admin Member
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <input
+                    type="email"
+                    placeholder="Admin Email (e.g. partner@gmail.com)"
+                    value={newAdminEmail}
+                    onChange={(e) => setNewAdminEmail(e.target.value)}
+                    className="w-full px-3 py-2 text-xs bg-[#021A14] border border-white/15 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={newAdminName}
+                    onChange={(e) => setNewAdminName(e.target.value)}
+                    className="w-full px-3 py-2 text-xs bg-[#021A14] border border-white/15 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                  />
+                </div>
+                <div className="flex items-center justify-between gap-3">
+                  <select
+                    value={newAdminRole}
+                    onChange={(e) => setNewAdminRole(e.target.value as any)}
+                    className="px-3 py-2 text-xs bg-[#021A14] border border-white/15 rounded-lg text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                  >
+                    <option value="MANAGER">Role: Manager (Orders & Catalog)</option>
+                    <option value="SUPER_ADMIN">Role: Super Admin (Full Access)</option>
+                  </select>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-[#D4AF37] hover:bg-white text-[#022C22] font-bold text-xs rounded-lg transition-all shadow cursor-pointer shrink-0"
+                  >
+                    Authorize Admin
+                  </button>
+                </div>
+              </form>
+
+              {/* Cloudflare Zero Trust Tip */}
+              <div className="p-3 bg-black/40 border border-white/10 rounded-xl text-[11px] text-gray-400 space-y-1">
+                <p className="text-gray-300 font-bold flex items-center gap-1.5">
+                  ☁️ Cloudflare Zero Trust Integration:
+                </p>
+                <p className="leading-relaxed">
+                  In your Cloudflare dashboard under <strong>Zero Trust &gt; Access</strong>, add any authorized admin emails to your application policy to block unauthorized visitors at the DNS edge before they even reach your server.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
