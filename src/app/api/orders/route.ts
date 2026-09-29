@@ -173,32 +173,62 @@ export async function POST(request: Request) {
       orderStatus: payment?.status === 'paid' ? 'confirmed' : 'pending',
     };
 
-    // Save to Supabase Cloud Database
+    // Save to Supabase Cloud Database (Prisma)
     try {
       const { prisma } = await import('@/lib/prisma');
-      const phone = String(customer.phone).trim();
-      const fullName = `${customer.firstName} ${customer.lastName}`.trim();
+      const phone = String(customer.phone || '').trim();
+      const fullName = `${customer.firstName || ''} ${customer.lastName || ''}`.trim();
+      const email = String(customer.email || '').trim();
 
-      const user = await prisma.user.upsert({
-        where: { phone },
-        update: { name: fullName, email: customer.email },
-        create: { phone, name: fullName, email: customer.email },
-      });
+      // Robust user lookup that avoids unique constraint collisions on phone/email
+      let userId: string | null = null;
+      try {
+        const existingUser = await prisma.user.findFirst({
+          where: {
+            OR: [
+              ...(phone ? [{ phone }] : []),
+              ...(email ? [{ email }] : []),
+            ],
+          },
+        });
+
+        if (existingUser) {
+          userId = existingUser.id;
+          await prisma.user.update({
+            where: { id: existingUser.id },
+            data: {
+              name: fullName || existingUser.name,
+              email: email || existingUser.email,
+              phone: phone || existingUser.phone,
+            },
+          }).catch(() => {});
+        } else {
+          const newUser = await prisma.user.create({
+            data: { phone: phone || `guest_${orderId}`, name: fullName, email: email || null },
+          });
+          userId = newUser.id;
+        }
+      } catch (userErr) {
+        console.warn('Customer user lookup warning:', userErr);
+      }
 
       await prisma.order.create({
         data: {
           id: orderId,
-          userId: user.id,
+          userId: userId,
           totalAmount: total,
           status: payment?.status === 'paid' ? 'PROCESSING' : 'PENDING',
           paymentStatus: payment?.status === 'paid' ? 'SUCCESS' : 'PENDING',
-          paymentId: payment?.transactionId || null,
+          paymentId: payment?.transactionId || payment?.bankReference || payment?.payoneerReference || null,
           shippingAddress: customer as any,
+          orderItemsJson: items as any,
+          currency: currency || 'USD',
+          currencySymbol: currencySymbol || '$',
         },
       });
       console.log(`[Supabase] Order #${orderId} saved to cloud database!`);
     } catch (dbErr) {
-      console.error('[Supabase Save Note]:', dbErr);
+      console.error('[Supabase Save Error]:', dbErr);
     }
 
     // Also persist to local backup store
@@ -210,13 +240,19 @@ export async function POST(request: Request) {
     const clientPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '918387072406';
     const waUrl = `https://wa.me/${clientPhone}?text=${waEncodedMessage}`;
 
-    // Dispatch email notifications (customer + admin) asynchronously
+    // Dispatch email notifications (customer + admin) - AWAIT so Vercel doesn't freeze the execution context
     try {
       const { sendOrderNotifications } = await import('@/lib/notifications');
-      const origin = process.env.NEXT_PUBLIC_SITE_URL || new URL(request.url).origin;
-      sendOrderNotifications({ order: newOrder, siteUrl: origin }).catch((e) =>
-        console.warn('Background notification error:', e)
-      );
+      const forwardedHost = request.headers.get('x-forwarded-host');
+      const host = forwardedHost || request.headers.get('host');
+      const proto = request.headers.get('x-forwarded-proto') || (host?.includes('localhost') ? 'http' : 'https');
+      const origin = host
+        ? `${proto}://${host}`
+        : (process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes('localhost')
+            ? process.env.NEXT_PUBLIC_SITE_URL
+            : new URL(request.url).origin);
+
+      await sendOrderNotifications({ order: newOrder, siteUrl: origin });
     } catch (notifErr) {
       console.warn('Failed to dispatch notifications:', notifErr);
     }

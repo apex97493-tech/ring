@@ -47,9 +47,15 @@ export async function POST(req: Request) {
     const token = await getAccessToken();
     const baseUrl = getPayPalBaseUrl();
 
-    // Determine host origin for return / cancel URLs
-    const url = new URL(req.url);
-    const origin = process.env.NEXT_PUBLIC_SITE_URL || url.origin || 'http://localhost:3000';
+    // Determine real public origin for PayPal return/cancel URLs (prevents mobile localhost redirect hangs)
+    const forwardedHost = req.headers.get('x-forwarded-host');
+    const host = forwardedHost || req.headers.get('host');
+    const proto = req.headers.get('x-forwarded-proto') || (host?.includes('localhost') ? 'http' : 'https');
+    const origin = host
+      ? `${proto}://${host}`
+      : (process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes('localhost')
+          ? process.env.NEXT_PUBLIC_SITE_URL
+          : new URL(req.url).origin);
 
     // PayPal supported currencies (INR is not supported for standard PayPal checkout in India)
     const PAYPAL_ALLOWED_CURRENCIES = ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'SGD', 'NZD', 'CHF', 'HKD'];

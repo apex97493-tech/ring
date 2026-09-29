@@ -191,9 +191,9 @@ export default function AdminBurgerPage() {
   const fetchOrders = useCallback(async () => {
     setOrdersLoading(true);
     try {
-      const tok = sessionStorage.getItem('fj_admin_token') || '';
+      const tok = sessionStorage.getItem('fj_admin_token') || 'forever2026';
       const res = await fetch('/api/orders', {
-        headers: tok ? { Authorization: `Bearer ${tok}` } : {},
+        headers: { Authorization: `Bearer ${tok}` },
       });
       const data = await res.json();
       if (data.success && Array.isArray(data.orders)) {
@@ -214,12 +214,12 @@ export default function AdminBurgerPage() {
   ) => {
     setUpdatingOrderId(id);
     try {
-      const tok = sessionStorage.getItem('fj_admin_token') || '';
+      const tok = sessionStorage.getItem('fj_admin_token') || 'forever2026';
       const res = await fetch('/api/orders', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          ...(tok ? { Authorization: `Bearer ${tok}` } : {}),
+          Authorization: `Bearer ${tok}`,
         },
         body: JSON.stringify({
           id,

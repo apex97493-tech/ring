@@ -187,17 +187,44 @@ export async function POST(req: Request) {
       const { prisma } = await import('@/lib/prisma');
       const phone = String(finalCustomer.phone || '9999999999').trim();
       const fullName = `${finalCustomer.firstName} ${finalCustomer.lastName}`.trim();
+      const email = String(finalCustomer.email || '').trim();
 
-      const user = await prisma.user.upsert({
-        where: { phone },
-        update: { name: fullName, email: finalCustomer.email },
-        create: { phone, name: fullName, email: finalCustomer.email },
-      });
+      // Robust user lookup that avoids unique constraint collisions on phone/email
+      let userId: string | null = null;
+      try {
+        const existingUser = await prisma.user.findFirst({
+          where: {
+            OR: [
+              ...(phone ? [{ phone }] : []),
+              ...(email ? [{ email }] : []),
+            ],
+          },
+        });
+
+        if (existingUser) {
+          userId = existingUser.id;
+          await prisma.user.update({
+            where: { id: existingUser.id },
+            data: {
+              name: fullName || existingUser.name,
+              email: email || existingUser.email,
+              phone: phone || existingUser.phone,
+            },
+          }).catch(() => {});
+        } else {
+          const newUser = await prisma.user.create({
+            data: { phone, name: fullName, email: email || null },
+          });
+          userId = newUser.id;
+        }
+      } catch (userErr) {
+        console.warn('PayPal user lookup warning:', userErr);
+      }
 
       await prisma.order.create({
         data: {
           id: orderNumber,
-          userId: user.id,
+          userId: userId,
           totalAmount: Number(total || 57),
           status: 'PROCESSING',
           paymentStatus: 'SUCCESS',
@@ -223,13 +250,19 @@ export async function POST(req: Request) {
     const message = formatWhatsAppOrderMessage(newOrder);
     const whatsAppUrl = `https://wa.me/${clientPhone}?text=${message}`;
 
-    // Dispatch email notifications (customer + store owner) asynchronously
+    // Dispatch email notifications (customer + store owner)
     try {
       const { sendOrderNotifications } = await import('@/lib/notifications');
-      const origin = process.env.NEXT_PUBLIC_SITE_URL || new URL(req.url).origin;
-      sendOrderNotifications({ order: newOrder, siteUrl: origin }).catch((e) =>
-        console.warn('Background PayPal notification error:', e)
-      );
+      const forwardedHost = req.headers.get('x-forwarded-host');
+      const host = forwardedHost || req.headers.get('host');
+      const proto = req.headers.get('x-forwarded-proto') || (host?.includes('localhost') ? 'http' : 'https');
+      const origin = host
+        ? `${proto}://${host}`
+        : (process.env.NEXT_PUBLIC_SITE_URL && !process.env.NEXT_PUBLIC_SITE_URL.includes('localhost')
+            ? process.env.NEXT_PUBLIC_SITE_URL
+            : new URL(req.url).origin);
+
+      await sendOrderNotifications({ order: newOrder, siteUrl: origin });
     } catch (notifErr) {
       console.warn('Failed to dispatch PayPal notifications:', notifErr);
     }
