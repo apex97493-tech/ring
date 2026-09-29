@@ -8,7 +8,7 @@ import { Sparkles, ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
 const CUTS = [
   {
     id: 'Round',
-    name: 'Round Brilliant',
+    name: 'Round',
     title: 'The Fire & Scintillation Champion',
     tagline: '58 mathematically calibrated facets designed for maximum rainbow fire.',
     fireScore: '10/10',
@@ -20,7 +20,7 @@ const CUTS = [
   },
   {
     id: 'Emerald',
-    name: 'Royal Emerald',
+    name: 'Emerald',
     title: 'The Art Deco Hall of Mirrors',
     tagline: 'Stepped rectangular facets providing hypnotic flashes of clarity and understated majesty.',
     fireScore: '8.5/10',
@@ -32,7 +32,7 @@ const CUTS = [
   },
   {
     id: 'Oval',
-    name: 'Modern Oval',
+    name: 'Oval',
     title: 'The Finger-Elongating Muse',
     tagline: 'Combines the fiery brilliance of a round cut with graceful elongating proportions.',
     fireScore: '9.5/10',
@@ -44,7 +44,7 @@ const CUTS = [
   },
   {
     id: 'Pear',
-    name: 'Dramatic Pear',
+    name: 'Pear',
     title: 'The Romantic Teardrop',
     tagline: 'A harmonious hybrid of round brilliance and marquise point, radiating poetic charm.',
     fireScore: '9/10',
@@ -56,7 +56,7 @@ const CUTS = [
   },
   {
     id: 'Cushion',
-    name: 'Crushed-Ice Cushion',
+    name: 'Cushion',
     title: 'The Pillow of Pure Sparkle',
     tagline: 'Curved pillow corners with modern crushed-ice micro-facets that scatter light endlessly.',
     fireScore: '9.5/10',
@@ -68,7 +68,7 @@ const CUTS = [
   },
   {
     id: 'Radiant',
-    name: 'Baroque Radiant',
+    name: 'Radiant',
     title: 'The Brilliant Geometric Powerhouse',
     tagline: '70 intense facets in a cut-corner rectangular profile for supreme scintillation.',
     fireScore: '9.5/10',
@@ -102,22 +102,6 @@ export default function CutPersonalityGuide() {
           </p>
         </div>
 
-        {/* Shape Pills Tab Bar */}
-        <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-4 justify-start sm:justify-center mb-8 scrollbar-none">
-          {CUTS.map((cut) => (
-            <button
-              key={cut.id}
-              onClick={() => setActiveCutId(cut.id)}
-              className={`px-4 sm:px-6 py-2.5 rounded-full font-sans text-xs font-bold tracking-wider uppercase transition-all whitespace-nowrap flex-shrink-0 cursor-pointer border ${
-                activeCutId === cut.id
-                  ? 'bg-[#022C22] text-[#D4AF37] border-[#022C22] shadow-md scale-105'
-                  : 'bg-white text-gray-700 border-[#E8E5DF] hover:border-[#D4AF37] hover:text-[#022C22]'
-              }`}
-            >
-              {cut.name}
-            </button>
-          ))}
-        </div>
 
         {/* Active Cut Spotlight Showcase */}
         <div className="max-w-5xl mx-auto bg-white rounded-2xl sm:rounded-3xl border border-[#E8E5DF] shadow-luxury overflow-hidden">

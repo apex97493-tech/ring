@@ -468,22 +468,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                   )}
                 </button>
 
-                {/* Secondary Fast Checkout & WhatsApp Inquiry */}
-                <div className="grid grid-cols-2 gap-2.5">
+                {/* Secondary Fast Checkout */}
+                <div className="w-full">
                   <button
                     type="button"
                     onClick={handleBuyNow}
                     className="w-full py-3 bg-white hover:bg-gray-50 text-[#18181B] font-bold text-xs tracking-wider uppercase rounded-full border border-gray-300 hover:border-black transition-colors cursor-pointer select-none active:scale-95"
                   >
                     BUY IT NOW
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleWhatsAppOrder}
-                    className="w-full py-3 bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold text-xs tracking-wider uppercase rounded-full transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-xs select-none active:scale-95"
-                  >
-                    <MessageCircle className="w-4 h-4 fill-white text-transparent" />
-                    <span>WHATSAPP</span>
                   </button>
                 </div>
 

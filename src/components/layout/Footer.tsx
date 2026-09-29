@@ -229,7 +229,7 @@ export default function Footer() {
               Accepted Payments:
             </span>
             <div className="flex gap-2">
-              {['UPI / GPay', 'Visa', 'Mastercard', 'RuPay', 'NetBanking', 'COD Available'].map((method) => (
+              {['UPI / GPay', 'Visa', 'Mastercard', 'RuPay', 'NetBanking', 'PayPal'].map((method) => (
                 <span
                   key={method}
                   className="px-2 py-1 bg-[#27272A] text-[10px] text-gray-300 rounded font-medium border border-[#3F3F46]"

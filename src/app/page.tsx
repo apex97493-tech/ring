@@ -19,14 +19,15 @@ import { useProducts } from '@/context/ProductContext';
 import ProductCard from '@/components/products/ProductCard';
 import ShapeFilterBar from '@/components/sections/ShapeFilterBar';
 import MoissaniteComparison from '@/components/sections/MoissaniteComparison';
-
 import CutPersonalityGuide from '@/components/sections/CutPersonalityGuide';
+
+
 import WhyChooseUs from '@/components/sections/WhyChooseUs';
 import RingSizeGuide from '@/components/sections/RingSizeGuide';
 import ReviewsSection from '@/components/sections/ReviewsSection';
 import FaqSection from '@/components/sections/FaqSection';
 import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
-import CustomDesignStudio from '@/components/sections/CustomDesignStudio';
+
 import UnboxingExperience from '@/components/sections/UnboxingExperience';
 import MetalPurityGuide from '@/components/sections/MetalPurityGuide';
 
@@ -227,7 +228,7 @@ export default function Home() {
       {/* ============================================================ */}
       {/* 1. ROYAL EMERALD ANIMATED HERO CAROUSEL                      */}
       {/* ============================================================ */}
-      <section className="relative min-h-[100dvh] lg:h-[90vh] lg:min-h-0 w-full overflow-hidden bg-[#FDFBF7]">
+      <section className="relative h-[45vh] sm:h-[60vh] lg:h-[90vh] w-full overflow-hidden bg-[#FDFBF7]">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -239,34 +240,34 @@ export default function Home() {
           >
             {slides[currentSlide].type === 'hero' ? (
               // SLIDE 1: Royal Emerald Shape with 3D Levitating & Rotating Ring
-              <div className="relative w-full h-full flex items-center pt-32 pb-16 lg:pt-0 lg:pb-0 bg-[#FDFBF7]">
-                <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between">
+              <div className="relative w-full h-full flex items-center justify-center lg:pt-0 lg:pb-0 bg-[#FDFBF7]">
+                <div className="relative z-10 w-full max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex flex-row items-center justify-between gap-2 sm:gap-6">
                   {/* Left: Editorial Text Content */}
-                  <div className="w-full lg:w-1/2 flex flex-col justify-center mb-8 lg:mb-0 text-center lg:text-left">
-                    <div className="inline-flex items-center gap-2 self-center lg:self-start px-3 py-1 bg-[#064E3B]/10 border border-[#064E3B]/30 text-[#064E3B] rounded-full text-[10px] sm:text-xs font-sans font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-3 sm:mb-6">
-                      <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-                      Royal Heritage Collection
+                  <div className="w-1/2 flex flex-col justify-center text-left">
+                    <div className="inline-flex items-center gap-1 sm:gap-2 self-start px-2 sm:px-3 py-0.5 sm:py-1 bg-[#064E3B]/10 border border-[#064E3B]/30 text-[#064E3B] rounded-full text-[8px] sm:text-xs font-sans font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase mb-2 sm:mb-6 whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
+                      <Sparkles className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-[#D4AF37] flex-shrink-0" />
+                      <span className="truncate">Royal Heritage</span>
                     </div>
 
-                    <h1 className="font-serif text-3xl sm:text-5xl md:text-7xl lg:text-8xl text-[#022C22] mb-3 sm:mb-6 leading-[1.1] sm:leading-[1.05] tracking-tight">
+                    <h1 className="font-serif text-lg sm:text-5xl md:text-7xl lg:text-8xl text-[#022C22] mb-2 sm:mb-6 leading-[1.1] sm:leading-[1.05] tracking-tight">
                       A Legacy in <br />
                       <span className="text-[#D4AF37] italic font-light">Every Carat.</span>
                     </h1>
 
-                    <p className="font-serif text-sm sm:text-xl text-[#022C22]/80 mb-6 sm:mb-10 font-medium max-w-md mx-auto lg:mx-0 leading-relaxed">
+                    <p className="font-serif text-[9px] sm:text-xl text-[#022C22]/80 mb-4 sm:mb-10 font-medium max-w-md leading-snug sm:leading-relaxed">
                       Discover ethical VVS1 D-Color Moissanite that outshines natural diamonds with 2.4x more fire. Handcrafted in BIS Hallmarked Gold & 925 Sterling Silver.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
+                    <div className="flex flex-col sm:flex-row items-start gap-1.5 sm:gap-4">
                       <a
                         href="#collection"
-                        className="w-full sm:w-auto inline-block bg-[#022C22] text-[#D4AF37] px-8 sm:px-12 py-3.5 sm:py-5 font-sans text-[11px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase hover:bg-[#D4AF37] hover:text-[#022C22] transition-colors shadow-royal border border-[#D4AF37]/40 text-center"
+                        className="inline-block bg-[#022C22] text-[#D4AF37] px-3 sm:px-12 py-1.5 sm:py-5 font-sans text-[8px] sm:text-[11px] font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase hover:bg-[#D4AF37] hover:text-[#022C22] transition-colors shadow-royal border border-[#D4AF37]/40 text-center whitespace-nowrap"
                       >
                         Explore Solitaires
                       </a>
                       <a
                         href="#comparison"
-                        className="w-full sm:w-auto inline-block bg-transparent text-[#022C22] border border-[#022C22]/30 px-6 sm:px-8 py-3.5 sm:py-5 font-sans text-[11px] font-bold tracking-[0.2em] sm:tracking-[0.25em] uppercase hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors text-center"
+                        className="inline-block bg-transparent text-[#022C22] border border-[#022C22]/30 px-3 sm:px-8 py-1.5 sm:py-5 font-sans text-[8px] sm:text-[11px] font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors text-center whitespace-nowrap"
                       >
                         Moissanite Guide
                       </a>
@@ -274,7 +275,7 @@ export default function Home() {
                   </div>
 
                   {/* Right: Levitating & Rotating 3D Solitaire Ring */}
-                  <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end relative mt-10 lg:mt-0">
+                  <div className="w-1/2 flex items-center justify-end relative">
 
                     <motion.div
                       animate={{
@@ -283,7 +284,7 @@ export default function Home() {
                         rotateZ: [0, -1.5, 1.5, 0],
                       }}
                       transition={{ repeat: Infinity, duration: 8, ease: 'easeInOut' }}
-                      className="relative w-full max-w-[320px] sm:max-w-[480px] aspect-square flex items-center justify-center"
+                      className="relative w-full max-w-[160px] sm:max-w-[480px] aspect-square flex items-center justify-center"
                     >
                       <img
                         src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200&auto=format&fit=crop"
@@ -296,11 +297,11 @@ export default function Home() {
               </div>
             ) : slides[currentSlide].type === 'full-image' ? (
               // SLIDE 4: Full Image Banner
-              <div className="relative w-full h-full flex items-center justify-center cursor-pointer overflow-hidden bg-black">
+              <div className="relative w-full h-full flex items-center justify-center cursor-pointer overflow-hidden bg-[#FDFBF7]">
                 <img
                   src={slides[currentSlide].image}
                   alt="Banner"
-                  className="w-full h-full object-cover object-center"
+                  className="w-full h-full object-contain object-center"
                 />
               </div>
             ) : (
@@ -316,40 +317,40 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-r from-[#022C22] via-[#022C22]/80 to-transparent" />
                 </div>
 
-                <div className="absolute inset-0 z-10 flex flex-col justify-center px-8 sm:px-16 md:px-24 lg:px-32">
+                <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 sm:px-16 md:px-24 lg:px-32">
                   <div className="max-w-2xl text-[#FDFBF7]">
-                    <div className="flex items-baseline gap-4 mb-2">
-                      <h2 className="font-serif text-5xl md:text-7xl italic font-light tracking-wider text-[#D4AF37]">
+                    <div className="flex items-baseline gap-2 sm:gap-4 mb-1 sm:mb-2">
+                      <h2 className="font-serif text-2xl sm:text-5xl md:text-7xl italic font-light tracking-wider text-[#D4AF37]">
                         {slides[currentSlide].titleTop}
                       </h2>
-                      <h1 className="font-serif text-6xl md:text-8xl tracking-tight text-white">
+                      <h1 className="font-serif text-3xl sm:text-6xl md:text-8xl tracking-tight text-white">
                         {slides[currentSlide].titleMain}
                       </h1>
                     </div>
 
-                    <div className="border border-[#D4AF37]/50 backdrop-blur-sm px-6 py-2 inline-block mb-3 min-w-[280px]">
-                      <p className="font-sans text-base sm:text-lg tracking-widest text-[#FDFBF7] uppercase font-semibold">
+                    <div className="border border-[#D4AF37]/50 backdrop-blur-sm px-3 py-1 sm:px-6 sm:py-2 inline-block mb-2 sm:mb-3 min-w-[140px] sm:min-w-[280px]">
+                      <p className="font-sans text-[10px] sm:text-base sm:text-lg tracking-widest text-[#FDFBF7] uppercase font-semibold">
                         {slides[currentSlide].subtitle}
                       </p>
                     </div>
 
-                    <div className="flex items-baseline gap-4 mb-4">
-                      <span className="font-serif text-6xl md:text-8xl tracking-tighter text-white">
+                    <div className="flex items-baseline gap-2 sm:gap-4 mb-2 sm:mb-4">
+                      <span className="font-serif text-3xl sm:text-6xl md:text-8xl tracking-tighter text-white">
                         {slides[currentSlide].highlightPrefix}
                       </span>
-                      <span className="font-serif text-4xl md:text-6xl italic font-light text-[#D4AF37]">
+                      <span className="font-serif text-xl sm:text-4xl md:text-6xl italic font-light text-[#D4AF37]">
                         {slides[currentSlide].highlightSuffix}
                       </span>
                     </div>
 
-                    <p className="font-serif text-lg sm:text-xl italic text-[#FDFBF7]/85 tracking-wider mb-8">
+                    <p className="font-serif text-xs sm:text-lg sm:text-xl italic text-[#FDFBF7]/85 tracking-wider mb-4 sm:mb-8">
                       {slides[currentSlide].description}
                     </p>
 
                     <div>
                       <a
                         href="#collection"
-                        className="inline-block bg-[#D4AF37] text-[#022C22] px-8 py-3.5 font-sans text-xs font-bold tracking-widest uppercase hover:bg-white transition-colors shadow-lg"
+                        className="inline-block bg-[#D4AF37] text-[#022C22] px-4 py-2 sm:px-8 sm:py-3.5 font-sans text-[9px] sm:text-xs font-bold tracking-widest uppercase hover:bg-white transition-colors shadow-lg"
                       >
                         Claim Offer Now
                       </a>
@@ -446,7 +447,6 @@ export default function Home() {
       {/* 3. SHAPE FILTER BAR                                         */}
       {/* ============================================================ */}
       <ShapeFilterBar selectedShape={selectedShape} onSelectShape={handleShapeChange} />
-
       {/* ============================================================ */}
       {/* 4. HIGH-CONVERTING MOISSANITE COLLECTION GRID                */}
       {/* ============================================================ */}
@@ -594,11 +594,6 @@ export default function Home() {
           </div>
         )}
       </section>
-
-      {/* ============================================================ */}
-      {/* 4.5 BESPOKE CUSTOM ATELIER / PINTEREST CAD STUDIO            */}
-      {/* ============================================================ */}
-      <CustomDesignStudio />
 
       {/* ============================================================ */}
       {/* 5. THE SIGNATURE EDUCATIONAL & TRUST ATELIER SECTIONS        */}

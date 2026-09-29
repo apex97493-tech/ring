@@ -118,22 +118,6 @@ export default function MetalPurityGuide() {
           ))}
         </div>
 
-        {/* Thickness Guarantee Callout Banner */}
-        <div className="max-w-4xl mx-auto bg-[#022C22] text-[#FDFBF7] p-5 sm:p-7 rounded-2xl border border-[#D4AF37]/30 shadow-royal flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] flex-shrink-0">
-              <Sparkles className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-serif text-base sm:text-lg font-bold text-[#FDFBF7]">
-                The Anti-Bending Band Guarantee (1.8mm–2.0mm Minimum)
-              </h4>
-              <p className="font-sans text-xs text-gray-300 mt-0.5">
-                Generic online marketplace sellers cut silver and gold costs by making shanks under 1.2mm, causing rings to bend easily. Every ForeverJewellStudio ring has a heavy, reinforced comfort-fit shank engineered for lifetime wear.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

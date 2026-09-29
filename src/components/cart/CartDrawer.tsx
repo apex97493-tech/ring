@@ -220,35 +220,9 @@ export default function CartDrawer() {
 
               {/* Cart Footer */}
               {cart.length > 0 && (
-                <div className="p-4 sm:p-6 bg-white border-t border-[#E8E5DF] space-y-3 sm:space-y-4">
-                  {/* Coupon Code Input */}
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="Promo Code (e.g. FOREVER10)"
-                      value={couponCode}
-                      onChange={(e) => setCouponCode(e.target.value)}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-xs font-sans uppercase focus:outline-none focus:border-[#B89035]"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleApplyCoupon}
-                      className="px-4 py-2 bg-[#F7F5F0] hover:bg-[#E8E5DF] active:scale-95 text-[#18181B] text-xs font-bold tracking-wider uppercase rounded-lg transition-all cursor-pointer"
-                    >
-                      Apply
-                    </button>
-                  </div>
-                  {couponError && (
-                    <p className="font-sans text-[11px] text-red-500 -mt-2">{couponError}</p>
-                  )}
-                  {appliedDiscount > 0 && (
-                    <p className="font-sans text-[11px] text-[#059669] font-medium -mt-2 flex items-center gap-1">
-                      <Sparkles className="w-3.5 h-3.5" /> 10% First Order Discount Applied!
-                    </p>
-                  )}
-
+                <div className="p-3 sm:p-5 bg-white border-t border-[#E8E5DF] space-y-2 sm:space-y-3">
                   {/* Gift Wrap Checkbox */}
-                  <label className="flex items-center gap-2 cursor-pointer select-none text-xs font-sans text-gray-700">
+                  <label className="flex items-center gap-2 cursor-pointer select-none text-[11px] sm:text-xs font-sans text-gray-700">
                     <input
                       type="checkbox"
                       checked={isGiftWrap}
@@ -259,14 +233,14 @@ export default function CartDrawer() {
                   </label>
 
                   {/* Totals Summary */}
-                  <div className="space-y-1.5 pt-2 border-t border-gray-100 text-xs font-sans">
+                  <div className="space-y-1 pt-1.5 border-t border-gray-100 text-[11px] sm:text-xs font-sans">
                     <div className="flex justify-between text-gray-500">
                       <span>{t.cart.subtotal}</span>
                       <span>{formatPrice(subtotal)}</span>
                     </div>
                     {appliedDiscount > 0 && (
                       <div className="flex justify-between text-[#059669] font-medium">
-                        <span>Discount (FOREVER10)</span>
+                        <span>Discount</span>
                         <span>-{formatPrice(appliedDiscount)}</span>
                       </div>
                     )}
@@ -280,14 +254,14 @@ export default function CartDrawer() {
                       <span>Insured Express Shipping</span>
                       <span className="text-[#059669] font-bold">{t.cart.freeShipping}</span>
                     </div>
-                    <div className="flex justify-between text-sm font-bold text-[#18181B] pt-2 border-t border-gray-200">
-                      <span>Total (Incl. all taxes)</span>
+                    <div className="flex justify-between text-xs sm:text-sm font-bold text-[#18181B] pt-1.5 border-t border-gray-200">
+                      <span>Total</span>
                       <span>{formatPrice(finalTotal)}</span>
                     </div>
                   </div>
 
                   {/* CTA Buttons */}
-                  <div className="space-y-2 pt-2">
+                  <div className="flex gap-2 pt-1">
                     {/* View Full Cart */}
                     <button
                       type="button"
@@ -295,10 +269,10 @@ export default function CartDrawer() {
                         setIsCartOpen(false);
                         router.push('/cart');
                       }}
-                      className="w-full py-3 border border-gray-300 bg-white hover:bg-gray-50 text-[#222222] font-sans text-xs font-bold tracking-wider uppercase transition-colors rounded-xl cursor-pointer flex items-center justify-center gap-2"
+                      className="flex-1 py-2.5 sm:py-3 border border-gray-300 bg-white hover:bg-gray-50 text-[#222222] font-sans text-[10px] sm:text-xs font-bold tracking-wider uppercase transition-colors rounded-xl cursor-pointer flex items-center justify-center gap-1.5"
                     >
-                      <ShoppingBag className="w-4 h-4 text-[#8C6A1F]" />
-                      View Full Cart & Offers
+                      <ShoppingBag className="w-3.5 h-3.5 text-[#8C6A1F]" />
+                      View Cart
                     </button>
 
                     {/* Standard Secure Checkout */}
@@ -308,20 +282,10 @@ export default function CartDrawer() {
                         setIsCartOpen(false);
                         router.push('/checkout');
                       }}
-                      className="w-full py-3.5 bg-[#222222] text-white hover:bg-black active:scale-95 font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl cursor-pointer flex items-center justify-center gap-2 shadow-md"
+                      className="flex-1 py-2.5 sm:py-3 bg-[#222222] text-white hover:bg-black active:scale-95 font-sans text-[10px] sm:text-xs font-bold tracking-wider uppercase transition-all rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shadow-md"
                     >
-                      <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
-                      Proceed to Checkout
-                    </button>
-
-                    {/* 1-Click WhatsApp Quick Checkout */}
-                    <button
-                      type="button"
-                      onClick={handleWhatsAppCheckout}
-                      className="w-full flex items-center justify-center gap-2 py-3 bg-[#064E3B] text-[#D4AF37] hover:bg-[#043327] active:scale-95 font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl cursor-pointer"
-                    >
-                      <Send className="w-3.5 h-3.5" />
-                      {t.cart.whatsappOrder}
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      Checkout
                     </button>
                   </div>
 

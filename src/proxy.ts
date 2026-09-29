@@ -36,7 +36,7 @@ function isRateLimited(ip: string): boolean {
   return entry.count > RATE_LIMIT_MAX_REQUESTS;
 }
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // ── Public order tracking: allow customer lookup without admin token ──

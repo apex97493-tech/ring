@@ -109,34 +109,99 @@ export default function Header() {
         <AnnouncementBar />
 
         {/* Main Navbar */}
-        <div className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between min-h-[56px] sm:min-h-[64px] lg:min-h-[80px] py-2 lg:py-3 gap-2 sm:gap-4">
-            {/* Mobile Menu Trigger */}
-            <div className="flex items-center lg:hidden">
-              <button
-                onClick={() => setIsMobileMenuOpen(true)}
-                className="p-1.5 text-[#FDFBF7] hover:text-[#D4AF37] transition-colors cursor-pointer"
-                aria-label="Open menu"
-              >
-                <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
-              </button>
+        <div className="max-w-[1440px] mx-auto px-2 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between min-h-[64px] lg:min-h-[80px] py-2 lg:py-0">
+            
+            {/* Mobile Top Row / Unwrapped on Desktop */}
+            <div className="flex items-center justify-between w-full lg:contents">
+              
+              {/* Brand Logo (Left) */}
+              <div className="flex items-center justify-start shrink-0 lg:order-1 py-1 lg:py-0">
+                <Link href="/" className="group flex items-center">
+                  <span className="font-serif italic text-[18px] sm:text-[30px] lg:text-[36px] font-bold text-[#D4AF37] group-hover:text-white transition-colors tracking-wide flex flex-col sm:block leading-[1.1] sm:leading-normal">
+                    <span>Forever</span>
+                    <span className="-mt-0.5 sm:mt-0">JewellStudio</span>
+                  </span>
+                </Link>
+              </div>
+
+              {/* Right Action Icons (Right) */}
+              <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0 lg:order-3">
+                {/* Region & Currency Selector */}
+                <button
+                  type="button"
+                  onClick={() => setIsSettingsModalOpen(true)}
+                  className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-sans text-[#FDFBF7] hover:text-[#D4AF37] bg-white/10 hover:bg-white/20 rounded-full transition-all border border-[#D4AF37]/35 hover:border-[#D4AF37] cursor-pointer shadow-xs"
+                  title="Change country/region, language or currency"
+                  aria-label="Change region and currency"
+                >
+                  <span className="text-sm leading-none">{selectedRegion.flag}</span>
+                  <span className="font-semibold tracking-wide hidden sm:inline">
+                    {selectedCurrency.code} ({selectedCurrency.symbol})
+                  </span>
+                  <span className="font-semibold tracking-wide sm:hidden">
+                    {selectedCurrency.code}
+                  </span>
+                  <ChevronDown className="w-3 h-3 text-[#D4AF37]" />
+                </button>
+
+
+                {/* Etsy Shop Button */}
+                <a
+                  href="https://www.etsy.com/shop/foreverjewellstudio?section_id=59060242"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex text-[#FDFBF7] hover:text-[#D4AF37] transition-colors p-1 items-center justify-center group"
+                  title="Visit our Etsy Shop"
+                >
+                  <div className="bg-[#F1641E] text-white px-2 sm:px-2.5 h-6 flex items-center justify-center rounded shadow-sm group-hover:scale-105 transition-all">
+                    <span className="font-serif font-bold text-[11px] sm:text-[12px] leading-none tracking-wide">
+                      Etsy
+                    </span>
+                  </div>
+                </a>
+
+                {/* Search Button */}
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="text-[#FDFBF7] hover:text-[#D4AF37] transition-colors p-1.5 cursor-pointer rounded-full hover:bg-white/10"
+                  title="Search"
+                >
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.8} />
+                </button>
+
+                {/* Wishlist */}
+                <Link
+                  href="/wishlist"
+                  className="text-[#FDFBF7] hover:text-[#D4AF37] active:scale-95 transition-all relative p-1.5 block rounded-full hover:bg-white/10"
+                >
+                  <Heart className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.8} />
+                  {wishlist.length > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#022C22] font-sans text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                      {wishlist.length}
+                    </span>
+                  )}
+                </Link>
+
+                {/* Cart */}
+                <button
+                  onClick={() => setIsCartOpen(true)}
+                  className="text-[#FDFBF7] hover:text-[#D4AF37] transition-colors relative p-1.5 flex items-center rounded-full hover:bg-white/10 cursor-pointer"
+                >
+                  <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.8} />
+                  {totalItems > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#022C22] font-sans text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-md">
+                      {totalItems}
+                    </span>
+                  )}
+                </button>
+              </div>
             </div>
 
-            {/* Brand Logo */}
-            <div className="flex items-center justify-start shrink-0">
-              <Link href="/" className="group flex items-center">
-                <span className="font-serif italic text-[18px] sm:text-[30px] lg:text-[36px] font-bold text-[#D4AF37] group-hover:text-white transition-colors tracking-wide flex flex-col sm:block leading-[1.1] sm:leading-normal">
-                  <span>Forever</span>
-                  <span className="-mt-0.5 sm:mt-0">JewellStudio</span>
-                </span>
-              </Link>
-            </div>
-
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex flex-wrap items-center justify-center gap-x-4 lg:gap-x-6 xl:gap-x-10 gap-y-2">
+            {/* Navigation Links (Center on Desktop, Bottom Row on Mobile) */}
+            <nav className="flex w-full lg:w-auto flex-wrap items-center justify-center gap-x-3 sm:gap-x-4 lg:gap-x-6 xl:gap-x-10 gap-y-1 pt-2 mt-1 lg:mt-0 lg:pt-0 lg:border-none lg:order-2">
               {[
                 { name: 'Home', href: '/' },
-                { name: 'Shop All', href: '/shop' },
                 { name: 'My Orders', href: '/my-orders' },
                 { name: 'Contact', href: '/contact' },
                 { name: 'Help', href: '/#faqs' },
@@ -144,7 +209,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="font-serif italic text-[15px] xl:text-[18px] font-medium tracking-[0.05em] text-[#FDFBF7] hover:text-[#D4AF37] transition-colors relative group py-1 whitespace-nowrap"
+                  className="font-serif italic text-[13px] sm:text-[15px] xl:text-[18px] font-medium tracking-[0.05em] text-[#FDFBF7] hover:text-[#D4AF37] transition-colors relative group whitespace-nowrap"
                 >
                   {item.name}
                   <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
@@ -152,91 +217,6 @@ export default function Header() {
               ))}
             </nav>
 
-            {/* Right Action Icons */}
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              {/* Region & Currency Selector (Etsy Style Flag Button) */}
-              <button
-                type="button"
-                onClick={() => setIsSettingsModalOpen(true)}
-                className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-sans text-[#FDFBF7] hover:text-[#D4AF37] bg-white/10 hover:bg-white/20 rounded-full transition-all border border-[#D4AF37]/35 hover:border-[#D4AF37] cursor-pointer shadow-xs"
-                title="Change country/region, language or currency"
-                aria-label="Change region and currency"
-              >
-                <span className="text-sm leading-none">{selectedRegion.flag}</span>
-                <span className="font-semibold tracking-wide hidden sm:inline">
-                  {selectedCurrency.code} ({selectedCurrency.symbol})
-                </span>
-                <span className="font-semibold tracking-wide sm:hidden">
-                  {selectedCurrency.code}
-                </span>
-                <ChevronDown className="w-3 h-3 text-[#D4AF37]" />
-              </button>
-
-              {/* WhatsApp Support */}
-              <a
-                href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden sm:flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-sans font-bold tracking-wider text-[#022C22] bg-[#D4AF37] hover:bg-[#F3E5AB] rounded-full transition-colors shadow-sm"
-              >
-                <MessageCircle className="w-3.5 h-3.5 fill-current" />
-                <span className="hidden sm:inline">WhatsApp</span>
-              </a>
-
-              {/* Etsy Shop Button */}
-              <a
-                href="https://www.etsy.com/shop/foreverjewellstudio?section_id=59060242"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden sm:flex text-[#FDFBF7] hover:text-[#D4AF37] transition-colors p-1 items-center justify-center group"
-                aria-label="Visit our Etsy Shop"
-                title="Visit our Etsy Shop"
-              >
-                <div className="bg-[#F1641E] text-white px-2 sm:px-2.5 h-6 flex items-center justify-center rounded shadow-sm group-hover:shadow-md transition-all group-hover:scale-105">
-                  <span className="font-serif font-bold text-[11px] sm:text-[12px] leading-none tracking-wide">
-                    Etsy
-                  </span>
-                </div>
-              </a>
-
-              {/* Search Button (Mobile/Tablet visible, Desktop quick click) */}
-              <button
-                onClick={() => setIsSearchOpen(true)}
-                className="text-[#FDFBF7] hover:text-[#D4AF37] transition-colors p-1.5 cursor-pointer rounded-full hover:bg-white/10"
-                aria-label="Search jewelry and rings"
-                title="Search (⌘K)"
-              >
-                <Search className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.8} />
-              </button>
-
-              {/* Wishlist Icon */}
-              <Link
-                href="/wishlist"
-                className="text-[#FDFBF7] hover:text-[#D4AF37] active:scale-95 transition-all relative p-1.5 hidden sm:block rounded-full hover:bg-white/10"
-                aria-label="Wishlist"
-              >
-                <Heart className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.8} />
-                {wishlist.length > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#022C22] font-sans text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                    {wishlist.length}
-                  </span>
-                )}
-              </Link>
-
-              {/* Cart Drawer Trigger */}
-              <button
-                onClick={() => setIsCartOpen(true)}
-                className="text-[#FDFBF7] hover:text-[#D4AF37] transition-colors relative p-1.5 flex items-center rounded-full hover:bg-white/10 cursor-pointer"
-                aria-label="Cart"
-              >
-                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.8} />
-                {totalItems > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#022C22] font-sans text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-md">
-                    {totalItems}
-                  </span>
-                )}
-              </button>
-            </div>
           </div>
         </div>
       </header>
