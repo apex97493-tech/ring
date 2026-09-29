@@ -110,7 +110,7 @@ export default function Header() {
 
         {/* Main Navbar */}
         <div className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20 gap-2 sm:gap-4">
+          <div className="flex items-center justify-between min-h-[56px] sm:min-h-[64px] lg:min-h-[80px] py-2 lg:py-3 gap-2 sm:gap-4">
             {/* Mobile Menu Trigger */}
             <div className="flex items-center lg:hidden">
               <button
@@ -133,7 +133,7 @@ export default function Header() {
             </div>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex flex-nowrap items-center justify-center gap-x-8 xl:gap-x-12">
+            <nav className="hidden lg:flex flex-wrap items-center justify-center gap-x-4 lg:gap-x-6 xl:gap-x-10 gap-y-2">
               {[
                 { name: 'Home', href: '/' },
                 { name: 'Shop All', href: '/shop' },
@@ -144,7 +144,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="font-serif italic text-[16px] xl:text-[20px] font-medium tracking-[0.05em] text-[#FDFBF7] hover:text-[#D4AF37] transition-colors relative group py-2"
+                  className="font-serif italic text-[15px] xl:text-[18px] font-medium tracking-[0.05em] text-[#FDFBF7] hover:text-[#D4AF37] transition-colors relative group py-1 whitespace-nowrap"
                 >
                   {item.name}
                   <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
