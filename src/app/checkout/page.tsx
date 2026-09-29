@@ -28,6 +28,7 @@ import {
   Send,
   HelpCircle,
   Building2,
+  Gem,
 } from 'lucide-react';
 
 const POPULAR_COUNTRIES = [
@@ -391,125 +392,201 @@ export default function CheckoutPage() {
     setIsPayPalLoading(false);
   }, [paymentMethod]);
 
-  // SUCCESS SCREEN
+  // SUCCESS SCREEN — Premium Amazon-Style Order Confirmation
   if (completedOrder) {
+    const isPaid = completedOrder.payment?.status === 'paid';
+    const payMethodLabel: Record<string, string> = {
+      paypal: 'PayPal', card: 'Credit / Debit Card',
+      payoneer: 'Payoneer', bank_transfer: 'Bank Transfer / UPI', whatsapp: 'WhatsApp Order',
+    };
+    const estDelivery = () => {
+      const d = new Date();
+      d.setDate(d.getDate() + 14);
+      return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    };
+
     return (
-      <div className="min-h-screen bg-[#FDFBF7] py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mx-auto bg-white border border-[#E5E0D8] rounded-xl shadow-lg p-6 sm:p-10 text-center">
-          <div className="w-16 h-16 bg-[#064E3B]/10 text-[#064E3B] rounded-full flex items-center justify-center mx-auto mb-5">
-            <CheckCircle2 className="w-10 h-10" />
-          </div>
+      <div className="min-h-screen bg-gradient-to-b from-[#F0FDF8] to-[#FAFAF7] py-8 px-4 sm:px-6">
+        <div className="max-w-2xl mx-auto space-y-4">
 
-          <span className="text-xs uppercase tracking-widest text-[#B89035] font-semibold">
-            Order Confirmed
-          </span>
-          <h1 className="text-2xl sm:text-3xl font-serif text-[#18181B] mt-2 mb-2">
-            Thank you, {completedOrder.customer.firstName}!
-          </h1>
-          <p className="text-sm text-gray-600 mb-6">
-            Your handcrafted jewelry order has been received and registered under order ID{' '}
-            <strong className="text-[#18181B]">#{completedOrder.id}</strong>.
-          </p>
-
-          {/* WhatsApp Direct Notification Callout */}
-          <div className="bg-[#F0FDF4] border border-[#BBF7D0] rounded-lg p-5 mb-8 text-left">
-            <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#064E3B] text-white flex items-center justify-center shrink-0 mt-0.5">
-                <Send className="w-4 h-4" />
+          {/* ── TOP CONFIRMATION CARD ── */}
+          <div className="bg-white rounded-2xl border border-[#BBF7D0] shadow-lg overflow-hidden">
+            {/* Green top bar */}
+            <div className="bg-[#064E3B] px-6 py-5 text-white text-center">
+              <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 animate-pulse">
+                <CheckCircle2 className="w-8 h-8 text-white" />
               </div>
-              <div className="flex-1">
-                <h3 className="text-sm font-semibold text-[#064E3B]">
-                  Send Order to ForeverJewell Concierge on WhatsApp
-                </h3>
-                <p className="text-xs text-gray-600 mt-1 mb-3">
-                  Click below to instantly send your order details, ring size confirmation, and address directly to our jewelry artisan team on WhatsApp.
-                </p>
-                {whatsAppUrl && (
-                  <a
-                    href={whatsAppUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#064E3B] hover:bg-[#043327] text-white text-xs font-bold uppercase tracking-wider rounded shadow transition-all"
-                  >
-                    <Send className="w-3.5 h-3.5" />
-                    Open WhatsApp Order Message
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Order Summary Card */}
-          <div className="border border-gray-200 rounded-lg p-5 text-left mb-8 bg-[#FAFAFA]">
-            <h4 className="text-xs uppercase tracking-wider font-bold text-gray-500 mb-3">
-              Delivery Details
-            </h4>
-            <div className="text-sm text-gray-700 space-y-1">
-              <p className="font-semibold text-gray-900">
-                {completedOrder.customer.firstName} {completedOrder.customer.lastName}
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300 mb-1">
+                {isPaid ? '✓ Payment Received' : '✓ Order Received — Awaiting Payment Verification'}
               </p>
-              <p>
-                {completedOrder.customer.streetAddress}
-                {completedOrder.customer.apartment && `, ${completedOrder.customer.apartment}`}
-              </p>
-              <p>
-                {completedOrder.customer.city}, {completedOrder.customer.state}{' '}
-                {completedOrder.customer.postalCode}, {completedOrder.customer.country}
-              </p>
-              <p className="text-xs text-gray-500 pt-1">
-                Phone: {completedOrder.customer.phone} | Email: {completedOrder.customer.email}
+              <h1 className="text-2xl font-serif font-bold text-white">
+                Thank you, {completedOrder.customer.firstName}! 🎉
+              </h1>
+              <p className="text-sm text-emerald-200 mt-1.5">
+                Your order has been confirmed and our artisans have been notified.
               </p>
             </div>
 
-            <div className="border-t border-gray-200 mt-4 pt-4">
-              <h4 className="text-xs uppercase tracking-wider font-bold text-gray-500 mb-3">
-                Items ({completedOrder.items.length})
-              </h4>
-              <div className="space-y-3">
-                {completedOrder.items.map((it, idx) => (
-                  <div key={idx} className="flex justify-between items-center text-xs">
-                    <div>
-                      <span className="font-semibold text-gray-900">{it.productName}</span>
-                      <p className="text-gray-500 text-[11px]">
-                        Metal: {it.metal} | Size: {it.size} | Qty: {it.quantity}
-                      </p>
+            {/* Order ID + Email notice */}
+            <div className="px-6 py-4 bg-emerald-50/60 border-b border-emerald-100 text-center">
+              <p className="text-xs text-gray-500 mb-1">Your Order Reference</p>
+              <p className="font-mono text-lg font-bold text-[#064E3B] tracking-wider">#{completedOrder.id}</p>
+              <p className="text-[11px] text-gray-500 mt-1">
+                {completedOrder.customer.email
+                  ? `A confirmation has been sent to ${completedOrder.customer.email}`
+                  : 'Save this Order ID to track your shipment'}
+              </p>
+            </div>
+
+            {/* Progress Stepper */}
+            <div className="px-6 py-5 border-b border-gray-100">
+              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-4 text-center">Order Journey</p>
+              <div className="flex items-start justify-between relative">
+                <div className="absolute top-5 left-10 right-10 h-0.5 bg-gray-200" />
+                <div className="absolute top-5 left-10 h-0.5 bg-[#064E3B]" style={{ width: '0%' }} />
+                {[
+                  { icon: CheckCircle2, label: 'Confirmed', sub: 'Just now', done: true },
+                  { icon: Sparkles, label: 'Crafting', sub: '3–5 days', done: false },
+                  { icon: Truck, label: 'Shipped', sub: '5–10 days', done: false },
+                  { icon: Package, label: 'Delivered', sub: `Est. ${estDelivery()}`, done: false },
+                ].map(({ icon: Icon, label, sub, done }, idx) => (
+                  <div key={idx} className="flex flex-col items-center z-10 flex-1">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all ${done ? 'bg-[#064E3B] border-[#064E3B] text-white shadow-md' : 'bg-white border-gray-200 text-gray-300'}`}>
+                      <Icon className="w-4 h-4" />
                     </div>
-                    <span className="font-medium text-gray-900">
-                      {completedOrder.currencySymbol}
-                      {Number(it.totalPrice ?? it.unitPrice ?? 0).toLocaleString()}
-                    </span>
+                    <p className={`mt-2 text-[10px] font-bold text-center leading-tight ${done ? 'text-[#064E3B]' : 'text-gray-400'}`}>{label}</p>
+                    <p className="text-[9px] text-gray-400 text-center">{sub}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="border-t border-gray-200 mt-4 pt-3 flex justify-between text-sm font-bold text-gray-900">
-              <span>Total Paid / Due</span>
-              <span>
-                {completedOrder.currencySymbol}
-                {Number(completedOrder.total || 0).toLocaleString()} {completedOrder.currency}
-              </span>
+            {/* Items Ordered */}
+            {completedOrder.items.length > 0 && (
+              <div className="px-6 py-4 border-b border-gray-100">
+                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-3">Items Ordered</p>
+                <div className="space-y-2.5">
+                  {completedOrder.items.map((it, idx) => (
+                    <div key={idx} className="flex items-center gap-3">
+                      <div className="w-9 h-9 bg-[#064E3B]/10 rounded-lg flex items-center justify-center shrink-0">
+                        <Gem className="w-4 h-4 text-[#064E3B]" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-gray-900 truncate">{it.productName}</p>
+                        <p className="text-[11px] text-gray-500">{it.metal}{it.size ? ` · Size ${it.size}` : ''} · Qty {it.quantity}</p>
+                      </div>
+                      <p className="text-sm font-bold text-gray-900 shrink-0">
+                        {completedOrder.currencySymbol}{Number(it.totalPrice ?? it.unitPrice ?? 0).toLocaleString()}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                  <span className="text-sm font-bold text-gray-900">Total {isPaid ? 'Paid' : 'Due'}</span>
+                  <span className="text-base font-bold text-[#064E3B]">
+                    {completedOrder.currencySymbol}{Number(completedOrder.total || 0).toLocaleString()} {completedOrder.currency}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Delivery + Payment side-by-side */}
+            <div className="grid sm:grid-cols-2 gap-0 border-b border-gray-100">
+              <div className="px-6 py-4 border-b sm:border-b-0 sm:border-r border-gray-100">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <MapPin className="w-3.5 h-3.5 text-[#064E3B]" />
+                  <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Shipping To</p>
+                </div>
+                <p className="text-sm font-semibold text-gray-900">{completedOrder.customer.firstName} {completedOrder.customer.lastName}</p>
+                <p className="text-xs text-gray-600">{completedOrder.customer.streetAddress}</p>
+                {completedOrder.customer.apartment && <p className="text-xs text-gray-600">{completedOrder.customer.apartment}</p>}
+                <p className="text-xs text-gray-600">{completedOrder.customer.city}, {completedOrder.customer.state} {completedOrder.customer.postalCode}</p>
+                <p className="text-xs font-semibold text-gray-700">{completedOrder.customer.country}</p>
+              </div>
+              <div className="px-6 py-4">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <CreditCard className="w-3.5 h-3.5 text-[#064E3B]" />
+                  <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Payment</p>
+                </div>
+                <p className="text-sm font-semibold text-gray-900">{payMethodLabel[completedOrder.payment?.method || ''] || 'Unknown'}</p>
+                <p className={`text-xs mt-0.5 font-bold ${isPaid ? 'text-green-600' : 'text-amber-600'}`}>
+                  {isPaid ? '✓ Payment Confirmed' : '⏳ Pending Verification'}
+                </p>
+                {!isPaid && (
+                  <p className="text-[10px] text-amber-600 mt-1">
+                    We will confirm your order once payment is verified (usually within 2–4 hrs).
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* WhatsApp CTA */}
+            <div className="px-6 py-4 bg-emerald-50 border-b border-emerald-100">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-[#064E3B] text-white flex items-center justify-center shrink-0">
+                  <Send className="w-4 h-4" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-[#064E3B]">Send to our Concierge on WhatsApp</p>
+                  <p className="text-[11px] text-gray-600">Confirm ring size, engraving, or get order updates instantly.</p>
+                </div>
+              </div>
+              {whatsAppUrl && (
+                <a
+                  href={whatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#064E3B] hover:bg-[#043327] text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow transition-all"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  Open WhatsApp — Send Order Details
+                </a>
+              )}
+            </div>
+
+            {/* Trust Badges */}
+            <div className="px-6 py-4 bg-gray-50 grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { icon: ShieldCheck, text: 'SSL Secured' },
+                { icon: Lock, text: 'Data Private' },
+                { icon: Truck, text: 'Tracked Shipping' },
+                { icon: Sparkles, text: 'GIA Certified' },
+              ].map(({ icon: Icon, text }) => (
+                <div key={text} className="flex flex-col items-center gap-1 text-center">
+                  <Icon className="w-4 h-4 text-[#064E3B]" />
+                  <p className="text-[10px] font-semibold text-gray-600">{text}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* CTAs */}
+            <div className="px-6 py-5 flex flex-col sm:flex-row gap-3">
+              <Link
+                href={`/my-orders?orderId=${completedOrder.id}`}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#064E3B] hover:bg-[#043327] text-white text-xs font-bold tracking-widest uppercase transition-all shadow-md rounded-xl"
+              >
+                <Package className="w-4 h-4" />
+                View My Orders
+              </Link>
+              <Link
+                href="/shop"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 bg-white hover:bg-gray-50 text-gray-800 text-xs font-bold tracking-widest uppercase transition-colors rounded-xl"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Continue Shopping
+              </Link>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href={`/track-order?id=${completedOrder.id}`}
-              className="px-6 py-3 bg-[#B89035] hover:bg-[#967428] text-white text-xs font-bold tracking-widest uppercase transition-all shadow-md text-center rounded"
-            >
-              Track Order Status
-            </Link>
-            <Link
-              href="/shop"
-              className="px-6 py-3 bg-[#18181B] text-white hover:bg-black text-xs font-bold tracking-widest uppercase transition-colors text-center rounded"
-            >
-              Continue Shopping
-            </Link>
-          </div>
+          {/* Reassurance note */}
+          <p className="text-center text-[11px] text-gray-400">
+            Questions? <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '918387072406'}`} target="_blank" rel="noopener noreferrer" className="text-[#064E3B] font-semibold hover:underline">WhatsApp us</a> · We reply within 2 hours · ForeverJewellStudio
+          </p>
         </div>
       </div>
     );
   }
+
 
   // EMPTY CART SCREEN
   if (cart.length === 0) {

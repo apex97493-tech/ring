@@ -136,7 +136,7 @@ export default function Header() {
               {[
                 { name: 'Home', href: '/' },
                 { name: 'Shop All', href: '/shop' },
-                { name: 'Track Order', href: '/track-order' },
+                { name: 'My Orders', href: '/my-orders' },
                 { name: 'Contact', href: '/contact' },
                 { name: 'Help', href: '/#faqs' },
               ].map((item) => (
@@ -499,7 +499,7 @@ export default function Header() {
                 <nav className="p-4 space-y-2.5">
                   {[
                     { name: 'My Saved Wishlist', href: '/wishlist', count: `${wishlist.length} Saved` },
-                    { name: 'Track Order & History', href: '/track-order', count: 'Orders' },
+                    { name: 'My Orders & History', href: '/my-orders', count: 'My Orders' },
                     { name: 'Search Product Catalog', href: '/search', count: 'Search' },
                     { name: 'Shop All Jewelry', href: '/shop', count: 'Explore' },
                     { name: 'Rings', href: '/category/rings', count: 'Bestsellers' },
