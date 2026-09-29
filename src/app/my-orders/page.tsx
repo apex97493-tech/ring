@@ -97,7 +97,7 @@ function OrderCard({ order }: { order: Order }) {
         <div className="flex items-center gap-2 flex-wrap">
           <StatusBadge status={order.orderStatus} />
           <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold border ${isPaid ? "bg-green-50 text-green-700 border-green-200" : "bg-amber-50 text-amber-700 border-amber-200"}`}>
-            {isPaid ? "? Paid" : "Awaiting Payment"}
+            {isPaid ? "‚úì Paid" : "Awaiting Payment"}
           </span>
         </div>
       </div>
@@ -112,7 +112,7 @@ function OrderCard({ order }: { order: Order }) {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-gray-900 truncate">{item.productName}</p>
-                <p className="text-[11px] text-gray-500">{item.metal}{item.size ? ` ∑ Size ${item.size}` : ""} ∑ Qty {item.quantity}</p>
+                <p className="text-[11px] text-gray-500">{item.metal}{item.size ? ` ¬∑ Size ${item.size}` : ""} ¬∑ Qty {item.quantity}</p>
               </div>
               <p className="text-sm font-medium text-gray-900 shrink-0">{order.currencySymbol}{Number(item.totalPrice ?? item.unitPrice ?? 0).toLocaleString()}</p>
             </div>
@@ -121,7 +121,7 @@ function OrderCard({ order }: { order: Order }) {
             <p className="text-xs text-[#064E3B] font-medium">+{order.items.length - 2} more item(s)</p>
           )}
           {order.items.length === 0 && (
-            <p className="text-xs text-gray-400 italic">Item details loadingÖ</p>
+            <p className="text-xs text-gray-400 italic">Item details loading‚Ä¶</p>
           )}
         </div>
       </div>
@@ -166,7 +166,7 @@ function OrderCard({ order }: { order: Order }) {
               </div>
               <p className="text-sm font-semibold text-gray-900">{payLabel[order.payment?.method || ""] || "Unknown"}</p>
               <p className={`text-xs mt-0.5 font-semibold ${isPaid ? "text-green-600" : "text-amber-600"}`}>
-                {isPaid ? "? Payment Confirmed" : "? Awaiting Verification"}
+                {isPaid ? "‚úì Payment Confirmed" : "‚è≥ Awaiting Verification"}
               </p>
               {order.payment?.transactionId && (
                 <p className="text-[10px] text-gray-500 mt-1 font-mono">Ref: {order.payment.transactionId}</p>
@@ -313,7 +313,7 @@ export default function MyOrdersPage() {
         {isLoading && (
           <div className="flex flex-col items-center justify-center py-16 text-gray-400">
             <Loader2 className="w-8 h-8 animate-spin text-[#064E3B] mb-3" />
-            <p className="text-sm">Looking up your ordersÖ</p>
+            <p className="text-sm">Looking up your orders‚Ä¶</p>
           </div>
         )}
 
