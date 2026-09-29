@@ -602,7 +602,7 @@ export default function CheckoutPage() {
 
           {/* Reassurance note */}
           <p className="text-center text-[11px] text-gray-400">
-            Questions? <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '918387072406'}`} target="_blank" rel="noopener noreferrer" className="text-[#064E3B] font-semibold hover:underline">WhatsApp us</a> · We reply within 2 hours · ForeverJewellStudio
+            Questions? <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454'}`} target="_blank" rel="noopener noreferrer" className="text-[#064E3B] font-semibold hover:underline">WhatsApp us</a> · We reply within 2 hours · ForeverJewellStudio
           </p>
         </div>
       </div>
@@ -1164,7 +1164,7 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              {/* TAB: BANK / UPI TRANSFER (KOTAK MAHINDRA BANK) */}
+              {/* TAB: BANK / UPI TRANSFER */}
               {paymentMethod === 'bank_transfer' && (
                 <div className="space-y-4">
                   <div className="bg-[#F0FDF4] border border-[#BBF7D0] rounded-lg p-5">
@@ -1172,7 +1172,7 @@ export default function CheckoutPage() {
                       <div>
                         <h4 className="text-xs font-bold text-[#064E3B] uppercase tracking-wider flex items-center gap-1.5">
                           <Building2 className="w-4 h-4 text-[#064E3B]" />
-                          Kotak Mahindra Bank Transfer & Instant UPI
+                          {process.env.NEXT_PUBLIC_BANK_NAME ? `${process.env.NEXT_PUBLIC_BANK_NAME} Transfer & Instant UPI` : 'Bank Transfer & Instant UPI'}
                         </h4>
                         <p className="text-xs text-gray-600 mt-1">
                           Transfer directly using any UPI App (GPay, PhonePe, Paytm, BHIM) or NetBanking (IMPS/NEFT).
@@ -1186,85 +1186,98 @@ export default function CheckoutPage() {
                     {/* Account Details Box */}
                     <div className="bg-white border border-[#BBF7D0] rounded-lg p-4 space-y-3 mb-4 shadow-xs">
                       {/* UPI ID */}
-                      <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
-                        <div>
-                          <span className="text-[10px] uppercase font-semibold text-gray-400 block">UPI ID (GPay / PhonePe / Paytm / BHIM)</span>
-                          <span className="font-mono font-bold text-gray-900 text-sm">982893045@kotak</span>
+                      {process.env.NEXT_PUBLIC_UPI_ID && (
+                        <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
+                          <div>
+                            <span className="text-[10px] uppercase font-semibold text-gray-400 block">UPI ID (GPay / PhonePe / Paytm / BHIM)</span>
+                            <span className="font-mono font-bold text-gray-900 text-sm">{process.env.NEXT_PUBLIC_UPI_ID}</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => copyBankField(process.env.NEXT_PUBLIC_UPI_ID || '', 'UPI ID')}
+                            className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
+                          >
+                            {copiedBankField === 'UPI ID' ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                <span className="text-emerald-600">Copied</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5" />
+                                <span>Copy</span>
+                              </>
+                            )}
+                          </button>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => copyBankField('982893045@kotak', 'UPI ID')}
-                          className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
-                        >
-                          {copiedBankField === 'UPI ID' ? (
-                            <>
-                              <Check className="w-3.5 h-3.5 text-emerald-600" />
-                              <span className="text-emerald-600">Copied</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="w-3.5 h-3.5" />
-                              <span>Copy</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
+                      )}
 
                       {/* Account Number */}
-                      <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
-                        <div>
-                          <span className="text-[10px] uppercase font-semibold text-gray-400 block">Bank Account Number</span>
-                          <span className="font-mono font-bold text-gray-900 text-sm">9848316724</span>
+                      {process.env.NEXT_PUBLIC_BANK_ACCOUNT && (
+                        <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
+                          <div>
+                            <span className="text-[10px] uppercase font-semibold text-gray-400 block">Bank Account Number</span>
+                            <span className="font-mono font-bold text-gray-900 text-sm">{process.env.NEXT_PUBLIC_BANK_ACCOUNT}</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => copyBankField(process.env.NEXT_PUBLIC_BANK_ACCOUNT || '', 'Account Number')}
+                            className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
+                          >
+                            {copiedBankField === 'Account Number' ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                <span className="text-emerald-600">Copied</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5" />
+                                <span>Copy</span>
+                              </>
+                            )}
+                          </button>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => copyBankField('9848316724', 'Account Number')}
-                          className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
-                        >
-                          {copiedBankField === 'Account Number' ? (
-                            <>
-                              <Check className="w-3.5 h-3.5 text-emerald-600" />
-                              <span className="text-emerald-600">Copied</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="w-3.5 h-3.5" />
-                              <span>Copy</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
+                      )}
 
                       {/* IFSC Code */}
-                      <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
-                        <div>
-                          <span className="text-[10px] uppercase font-semibold text-gray-400 block">Branch IFSC Code</span>
-                          <span className="font-mono font-bold text-gray-900 text-sm">KKBK0000273</span>
+                      {process.env.NEXT_PUBLIC_BANK_IFSC && (
+                        <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
+                          <div>
+                            <span className="text-[10px] uppercase font-semibold text-gray-400 block">Branch IFSC Code</span>
+                            <span className="font-mono font-bold text-gray-900 text-sm">{process.env.NEXT_PUBLIC_BANK_IFSC}</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => copyBankField(process.env.NEXT_PUBLIC_BANK_IFSC || '', 'IFSC')}
+                            className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
+                          >
+                            {copiedBankField === 'IFSC' ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                <span className="text-emerald-600">Copied</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5" />
+                                <span>Copy</span>
+                              </>
+                            )}
+                          </button>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => copyBankField('KKBK0000273', 'IFSC')}
-                          className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
-                        >
-                          {copiedBankField === 'IFSC' ? (
-                            <>
-                              <Check className="w-3.5 h-3.5 text-emerald-600" />
-                              <span className="text-emerald-600">Copied</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="w-3.5 h-3.5" />
-                              <span>Copy</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
+                      )}
 
-                      {/* Bank & Branch */}
-                      <div className="text-xs text-gray-600 pt-1 space-y-0.5">
-                        <p><strong>Beneficiary Bank:</strong> Kotak Mahindra Bank | <strong>CRN:</strong> 798804404</p>
-                        <p><strong>Branch:</strong> Hanuman Nagar, Amarpali Marg, Vaishali Nagar, Jaipur - 302021</p>
-                      </div>
+                      {/* Bank & Branch Details */}
+                      {(process.env.NEXT_PUBLIC_BANK_NAME || process.env.NEXT_PUBLIC_BANK_BRANCH) && (
+                        <div className="text-xs text-gray-600 pt-1 space-y-0.5">
+                          <p>
+                            {process.env.NEXT_PUBLIC_BANK_NAME && <span><strong>Beneficiary Bank:</strong> {process.env.NEXT_PUBLIC_BANK_NAME}</span>}
+                            {process.env.NEXT_PUBLIC_BANK_CRN && <span> | <strong>CRN:</strong> {process.env.NEXT_PUBLIC_BANK_CRN}</span>}
+                          </p>
+                          {process.env.NEXT_PUBLIC_BANK_BRANCH && (
+                            <p><strong>Branch:</strong> {process.env.NEXT_PUBLIC_BANK_BRANCH}</p>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     {/* UTR Input */}

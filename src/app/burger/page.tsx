@@ -4164,7 +4164,7 @@ export default function AdminBurgerPage() {
                 </p>
                 <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
                   {(adminTeamList.length > 0 ? adminTeamList : [
-                    { email: 'ash33876@gmail.com', role: 'SUPER_ADMIN', name: 'Ayush Choudhary (Owner)' }
+                    { email: 'ash33876@gmail.com', role: 'SUPER_ADMIN', name: 'Ayush Choudhary (Admin Owner)' }
                   ]).map((admin) => (
                     <div
                       key={admin.email}

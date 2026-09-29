@@ -237,7 +237,7 @@ export async function POST(request: Request) {
     writeOrdersToFile(updatedOrders);
 
     const waEncodedMessage = formatWhatsAppOrderMessage(newOrder);
-    const clientPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '918387072406';
+    const clientPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454';
     const waUrl = `https://wa.me/${clientPhone}?text=${waEncodedMessage}`;
 
     // Dispatch email notifications (customer + admin) - AWAIT so Vercel doesn't freeze the execution context

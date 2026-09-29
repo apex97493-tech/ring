@@ -106,7 +106,7 @@ export function generateCustomerEmailHtml(order: Order, siteUrl: string): string
 
         <!-- Footer -->
         <div style="background-color: #faf8f5; border-top: 1px solid #e5e0d8; padding: 20px; text-align: center; font-size: 12px; color: #9ca3af;">
-          Questions? Reply to this email or message our artisan concierge on WhatsApp at +91 83870 72406.<br/>
+          Questions? Reply to this email or message our artisan concierge on WhatsApp at +91 98289 30454.<br/>
           &copy; ${new Date().getFullYear()} Forever Jewell Studio. All rights reserved.
         </div>
       </div>
@@ -173,7 +173,7 @@ export function generateAdminEmailHtml(order: Order, siteUrl: string): string {
  */
 export async function sendOrderNotifications({ order, siteUrl = 'https://ring-pearl.vercel.app' }: SendOrderNotificationOptions) {
   const resendApiKey = process.env.RESEND_API_KEY;
-  const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.STORE_OWNER_EMAIL || 'ash33876@gmail.com';
+  const adminEmail = process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com';
   const fromEmail = process.env.SENDER_EMAIL || 'onboarding@resend.dev';
 
   if (!resendApiKey) {

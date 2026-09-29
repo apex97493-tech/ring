@@ -193,7 +193,7 @@ function OrderCard({ order }: { order: Order }) {
           {/* Support */}
           <div className="flex flex-wrap gap-2">
             <a
-              href={`https://wa.me/918387072406?text=Hi%20ForeverJewell%20Team,%20I%20need%20help%20with%20order%20%23${order.id}`}
+              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454'}?text=Hi%20ForeverJewell%20Team,%20I%20need%20help%20with%20order%20%23${order.id}`}
               target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#064E3B] text-white text-xs font-semibold rounded-lg hover:bg-[#043327] transition-colors"
             >
@@ -304,7 +304,7 @@ export default function MyOrdersPage() {
             <div>
               <p className="text-sm font-semibold text-amber-800">Order Not Found</p>
               <p className="text-xs text-amber-700 mt-0.5">{error}</p>
-              <p className="text-xs text-amber-600 mt-2">Need help? <a href="https://wa.me/918387072406?text=Hi%2C%20I%20cannot%20find%20my%20order" target="_blank" rel="noopener noreferrer" className="underline font-semibold">Chat on WhatsApp</a></p>
+              <p className="text-xs text-amber-600 mt-2">Need help? <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454'}?text=Hi%2C%20I%20cannot%20find%20my%20order`} target="_blank" rel="noopener noreferrer" className="underline font-semibold">Chat on WhatsApp</a></p>
             </div>
           </div>
         )}
@@ -365,7 +365,7 @@ export default function MyOrdersPage() {
         <p className="text-center text-xs text-gray-500">
           Still need help?{" "}
           <Link href="/contact" className="text-[#064E3B] font-semibold hover:underline">Contact us</Link>{" "}or{" "}
-          <a href="https://wa.me/918387072406" target="_blank" rel="noopener noreferrer" className="text-[#064E3B] font-semibold hover:underline">WhatsApp us</a>
+          <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454'}`} target="_blank" rel="noopener noreferrer" className="text-[#064E3B] font-semibold hover:underline">WhatsApp us</a>
           . We respond within 2 hours.
         </p>
       </div>

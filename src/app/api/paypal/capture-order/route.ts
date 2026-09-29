@@ -246,7 +246,7 @@ export async function POST(req: Request) {
     writeOrdersToFile(orders);
 
     // Generate WhatsApp link
-    const clientPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '918387072406';
+    const clientPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454';
     const message = formatWhatsAppOrderMessage(newOrder);
     const whatsAppUrl = `https://wa.me/${clientPhone}?text=${message}`;
 

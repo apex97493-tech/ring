@@ -34,9 +34,9 @@ interface AdminUser {
 
 const adminTeam: AdminUser[] = [
   {
-    email: process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com',
+    email: process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com',
     role: 'SUPER_ADMIN',
-    name: 'Ayush Choudhary (Owner)',
+    name: 'Ayush Choudhary (Admin Owner)',
     addedAt: '2026-09-01T00:00:00.000Z',
   },
 ];
@@ -106,7 +106,7 @@ export async function createTwoFactorChallenge(email?: string): Promise<{
   maskedEmail: string;
   devCode?: string;
 }> {
-  const targetEmail = email || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com';
+  const targetEmail = email || process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com';
 
   // Generate cryptographically random 6-digit number
   const otpCode = crypto.randomInt(100000, 999999).toString();
@@ -286,7 +286,7 @@ export function addAdminMember(email: string, role: 'SUPER_ADMIN' | 'MANAGER', n
 }
 
 export function removeAdminMember(email: string): boolean {
-  const superAdminEmail = (process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com').toLowerCase();
+  const superAdminEmail = (process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com').toLowerCase();
   if (email.toLowerCase() === superAdminEmail) {
     return false; // Cannot remove owner
   }
