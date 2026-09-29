@@ -39,11 +39,26 @@ function isRateLimited(ip: string): boolean {
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  // ── Public order tracking: allow customer lookup without admin token ──
+  if (pathname.startsWith('/api/orders/track')) {
+    const ip = getRealIp(req);
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { success: false, error: 'Too many search requests. Please slow down.' },
+        { status: 429 }
+      );
+    }
+    return NextResponse.next();
+  }
+
   // ── Protect admin API routes ────────────────
+  const isOrdersAdminRoute =
+    pathname.startsWith('/api/orders') && ['GET', 'PATCH', 'DELETE'].includes(req.method);
+
   const isAdminApiWrite =
     (pathname.startsWith('/api/products') && ['POST', 'DELETE', 'PUT', 'PATCH'].includes(req.method)) ||
     (pathname.startsWith('/api/upload') && req.method === 'POST') ||
-    (pathname.startsWith('/api/orders') && ['GET', 'PATCH', 'DELETE'].includes(req.method));
+    isOrdersAdminRoute;
 
   // ── Rate limit public order placements ────────────────
   const isPublicOrderPost = pathname.startsWith('/api/orders') && req.method === 'POST';

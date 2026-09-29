@@ -52,18 +52,20 @@ export async function GET(req: Request) {
         matched = dbOrders.map((o) => {
           const local = localMap.get(o.id);
           const addr = (o.shippingAddress as any) || local?.customer || {};
+          const dbItems = (o as any).orderItemsJson;
+          const items = Array.isArray(dbItems) && dbItems.length > 0 ? dbItems : (local?.items || []);
           return {
             id: o.id,
             createdAt: o.createdAt.toISOString(),
             customer: addr,
-            items: local?.items || [],
-            currency: local?.currency || 'USD',
-            currencySymbol: local?.currencySymbol || '$',
+            items,
+            currency: (o as any).currency || local?.currency || 'USD',
+            currencySymbol: (o as any).currencySymbol || local?.currencySymbol || '$',
             subtotal: Number(o.totalAmount),
             shippingFee: 0,
             total: Number(o.totalAmount),
             payment: local?.payment || {
-              method: 'paypal',
+              method: (addr as any)?.paymentMethod || 'paypal',
               status: o.paymentStatus === 'SUCCESS' ? 'paid' : 'pending',
               transactionId: o.paymentId || undefined,
             },
