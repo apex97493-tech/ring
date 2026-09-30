@@ -167,13 +167,53 @@ export function generateAdminEmailHtml(order: Order, siteUrl: string): string {
 }
 
 /**
+/**
+ * Helper to dispatch Resend emails with automatic retry on transient network failures
+ */
+async function sendResendWithRetry(
+  resend: any,
+  payload: any,
+  maxRetries = 2
+): Promise<{ data: any; error: any }> {
+  let lastResult: { data: any; error: any } = { data: null, error: null };
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const res = await resend.emails.send(payload);
+      if (!res.error) {
+        return res;
+      }
+      lastResult = res;
+      // If it's a network/DNS error, retry once after a short delay
+      if (
+        (res.error.name === 'application_error' || res.error.statusCode === null || res.error.statusCode === undefined) &&
+        attempt < maxRetries
+      ) {
+        console.warn(`[Resend]: Network connection issue, retrying in 1.2s (attempt ${attempt + 1}/${maxRetries})...`);
+        await new Promise((r) => setTimeout(r, 1200));
+        continue;
+      }
+      return res;
+    } catch (err: any) {
+      lastResult = { data: null, error: err };
+      if (attempt < maxRetries) {
+        await new Promise((r) => setTimeout(r, 1200));
+        continue;
+      }
+      return lastResult;
+    }
+  }
+  return lastResult;
+}
+
+/**
  * Dispatches email notifications to both Customer and Store Owner
  * NOTE: On Resend's free plan (no custom domain), emails can ONLY be sent to your own verified address.
  * We detect this and always ensure the admin gets a full notification including customer details.
  */
 export async function sendOrderNotifications({ order, siteUrl = 'https://ring-pearl.vercel.app' }: SendOrderNotificationOptions) {
   const resendApiKey = process.env.RESEND_API_KEY;
-  const adminEmail = process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com';
+  const primaryAdmin = (process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com').trim().toLowerCase();
+  const secondaryAdmin = (process.env.ADMIN_SECONDARY_EMAIL || process.env.STORE_OWNER_EMAIL || 'Foreverjewels98@gmail.com').trim().toLowerCase();
   const fromEmail = process.env.SENDER_EMAIL || 'onboarding@resend.dev';
 
   if (!resendApiKey) {
@@ -185,65 +225,97 @@ export async function sendOrderNotifications({ order, siteUrl = 'https://ring-pe
     const { Resend } = await import('resend');
     const resend = new Resend(resendApiKey);
 
-    // 1. Always send admin notification (works on free tier - sends to your own verified email)
-    if (adminEmail && adminEmail.includes('@')) {
-      try {
-        await resend.emails.send({
-          from: `Forever Jewell Store Alert <${fromEmail}>`,
-          replyTo: order.customer.email || adminEmail,
-          to: adminEmail,
-          subject: `🎉 NEW ORDER #${order.id} (${order.currencySymbol}${Number(order.total || 0).toLocaleString()} ${order.currency}) - ${order.customer.firstName} ${order.customer.lastName}`,
-          html: generateAdminEmailHtml(order, siteUrl),
-        });
-        console.log(`[Email ✓]: Admin order alert delivered to ${adminEmail}`);
-      } catch (adminErr: any) {
-        console.error(`[Email ✗]: Admin alert failed:`, adminErr?.message);
+    // 1. Send alert to Primary Admin (ash33876@gmail.com)
+    if (primaryAdmin && primaryAdmin.includes('@')) {
+      const adminRes = await sendResendWithRetry(resend, {
+        from: `Forever Jewell Store Alert <${fromEmail}>`,
+        replyTo: order.customer.email || primaryAdmin,
+        to: primaryAdmin,
+        subject: `🎉 NEW ORDER #${order.id} (${order.currencySymbol}${Number(order.total || 0).toLocaleString()} ${order.currency}) - ${order.customer.firstName} ${order.customer.lastName}`,
+        html: generateAdminEmailHtml(order, siteUrl),
+      });
+
+      if (adminRes.error) {
+        console.error(`[Email ✗]: Primary admin alert failed:`, adminRes.error.message || adminRes.error);
+      } else {
+        console.log(`[Email ✓]: Admin order alert delivered to ${primaryAdmin}`);
       }
     }
 
-    // 2. Try to send confirmation to Customer
-    // On free Resend plan (no domain verified), this will only work if customer email = admin email
-    // When a custom domain is added to Resend, this will work for all customers automatically
-    if (order.customer.email && order.customer.email.includes('@') && order.customer.email !== adminEmail) {
-      try {
-        const customerResult = await resend.emails.send({
-          from: `Forever Jewell Studio <${fromEmail}>`,
-          replyTo: adminEmail,
-          to: order.customer.email,
-          subject: `✨ Order Confirmation #${order.id} - Forever Jewell Studio`,
-          html: generateCustomerEmailHtml(order, siteUrl),
-        });
+    // 2. Also send alert to Secondary Store Admin (Foreverjewels98@gmail.com)
+    if (secondaryAdmin && secondaryAdmin !== primaryAdmin && secondaryAdmin.includes('@')) {
+      const secRes = await sendResendWithRetry(resend, {
+        from: `Forever Jewell Store Alert <${fromEmail}>`,
+        replyTo: order.customer.email || secondaryAdmin,
+        to: secondaryAdmin,
+        subject: `🎉 NEW ORDER #${order.id} (${order.currencySymbol}${Number(order.total || 0).toLocaleString()} ${order.currency}) - ${order.customer.firstName} ${order.customer.lastName}`,
+        html: generateAdminEmailHtml(order, siteUrl),
+      });
 
-        if (customerResult.error) {
-          // Domain not verified - send customer receipt to admin instead (CC workaround)
-          console.warn(`[Email]: Cannot send to customer ${order.customer.email} - domain not verified. Forwarding receipt to admin.`);
-          await resend.emails.send({
-            from: `Forever Jewell Studio <${fromEmail}>`,
-            to: adminEmail,
-            subject: `📋 Customer Receipt (FWD) #${order.id} → Please forward to ${order.customer.email}`,
+      if (secRes.error) {
+        // Resend Sandbox Restriction: If custom domain is not yet verified, Resend blocks external inboxes
+        if (secRes.error.statusCode === 403 || String(secRes.error.message || '').includes('own email address')) {
+          console.warn(`[Email Notice]: Resend Sandbox Mode: Cannot deliver directly to ${secondaryAdmin} until custom domain is verified at resend.com/domains.`);
+          // Forward copy to primary admin clearly labeled for secondary admin
+          await sendResendWithRetry(resend, {
+            from: `Forever Jewell Store Alert <${fromEmail}>`,
+            to: primaryAdmin,
+            subject: `📋 [For Admin: ${secondaryAdmin}] NEW ORDER #${order.id} (${order.currencySymbol}${Number(order.total || 0).toLocaleString()})`,
             html: `
-              <div style="background:#fff3cd;padding:16px;border-radius:6px;margin-bottom:20px;font-family:Arial,sans-serif;">
-                <strong>⚠️ ACTION REQUIRED:</strong> Please forward this receipt to your customer at 
-                <a href="mailto:${order.customer.email}">${order.customer.email}</a> or 
-                send it via WhatsApp to ${order.customer.phone}.<br/>
-                <small>This happens because your Resend account doesn't have a verified domain yet. 
-                Add your domain at <a href="https://resend.com/domains">resend.com/domains</a> to auto-send to all customers.</small>
+              <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:14px;margin-bottom:20px;font-family:Arial,sans-serif;color:#92400e;">
+                <strong>⚠️ Store Owner Notification (${secondaryAdmin}):</strong><br/>
+                This order alert is for store admin <strong>${secondaryAdmin}</strong>.<br/>
+                Because your Resend account is currently in test mode with sender <code>${fromEmail}</code>, direct delivery to external emails is restricted to <code>${primaryAdmin}</code>.<br/>
+                To deliver directly to <strong>${secondaryAdmin}</strong>'s inbox, verify your domain at <a href="https://resend.com/domains">resend.com/domains</a>.
               </div>
-              ${generateCustomerEmailHtml(order, siteUrl)}
+              ${generateAdminEmailHtml(order, siteUrl)}
             `,
           });
-          console.log(`[Email ✓]: Customer receipt forwarded to admin (${adminEmail}) for manual delivery to ${order.customer.email}`);
+          console.log(`[Email ✓]: Order alert for ${secondaryAdmin} forwarded to primary admin (${primaryAdmin})`);
         } else {
-          console.log(`[Email ✓]: Customer receipt delivered to ${order.customer.email}`);
+          console.error(`[Email ✗]: Secondary admin alert to ${secondaryAdmin} failed:`, secRes.error.message || secRes.error);
         }
-      } catch (custErr: any) {
-        console.warn(`[Email]: Customer email skipped:`, custErr?.message);
+      } else {
+        console.log(`[Email ✓]: Store owner order alert delivered to ${secondaryAdmin}`);
       }
-    } else if (order.customer.email === adminEmail) {
-      // Customer is the admin (testing scenario) - already received above
-      await resend.emails.send({
+    }
+
+    // 3. Send confirmation to Customer
+    if (order.customer.email && order.customer.email.includes('@') && order.customer.email !== primaryAdmin) {
+      const customerResult = await sendResendWithRetry(resend, {
         from: `Forever Jewell Studio <${fromEmail}>`,
-        to: adminEmail,
+        replyTo: secondaryAdmin || primaryAdmin,
+        to: order.customer.email,
+        subject: `✨ Order Confirmation #${order.id} - Forever Jewell Studio`,
+        html: generateCustomerEmailHtml(order, siteUrl),
+      });
+
+      if (customerResult.error) {
+        console.warn(`[Email]: Cannot deliver directly to customer ${order.customer.email} (domain not verified on Resend). Forwarding receipt to admin.`);
+        await sendResendWithRetry(resend, {
+          from: `Forever Jewell Studio <${fromEmail}>`,
+          to: primaryAdmin,
+          subject: `📋 Customer Receipt (FWD) #${order.id} → Please forward to ${order.customer.email}`,
+          html: `
+            <div style="background:#fff3cd;padding:16px;border-radius:6px;margin-bottom:20px;font-family:Arial,sans-serif;">
+              <strong>⚠️ ACTION REQUIRED:</strong> Please forward this receipt to your customer at 
+              <a href="mailto:${order.customer.email}">${order.customer.email}</a> or 
+              send it via WhatsApp to ${order.customer.phone}.<br/>
+              <small>This happens because your Resend account doesn't have a verified domain yet. 
+              Add your domain at <a href="https://resend.com/domains">resend.com/domains</a> to auto-send to all customers.</small>
+            </div>
+            ${generateCustomerEmailHtml(order, siteUrl)}
+          `,
+        });
+        console.log(`[Email ✓]: Customer receipt forwarded to admin (${primaryAdmin}) for manual delivery to ${order.customer.email}`);
+      } else {
+        console.log(`[Email ✓]: Customer receipt delivered to ${order.customer.email}`);
+      }
+    } else if (order.customer.email === primaryAdmin) {
+      // Customer is primary admin (testing scenario)
+      await sendResendWithRetry(resend, {
+        from: `Forever Jewell Studio <${fromEmail}>`,
+        to: primaryAdmin,
         subject: `✨ Order Confirmation #${order.id} - Forever Jewell Studio`,
         html: generateCustomerEmailHtml(order, siteUrl),
       });
@@ -332,7 +404,7 @@ export async function sendOrderStatusUpdateNotification({
 
     // Try customer first
     if (order.customer.email && order.customer.email.includes('@')) {
-      const custRes = await resend.emails.send({
+      const custRes = await sendResendWithRetry(resend, {
         from: `Forever Jewell Studio <${fromEmail}>`,
         replyTo: adminEmail,
         to: order.customer.email,
@@ -342,7 +414,7 @@ export async function sendOrderStatusUpdateNotification({
 
       if (custRes.error && adminEmail) {
         // Forward to admin if domain restriction blocks customer delivery
-        await resend.emails.send({
+        await sendResendWithRetry(resend, {
           from: `Forever Jewell Studio <${fromEmail}>`,
           to: adminEmail,
           subject: `📋 Status Update for #${order.id} (${order.customer.email})`,

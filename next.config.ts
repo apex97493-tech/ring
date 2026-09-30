@@ -44,6 +44,7 @@ const nextConfig: NextConfig = {
   compress: true, // Enable automatic Brotli/Gzip response compression for zero delay
   poweredByHeader: false, // Security: Hide 'X-Powered-By: Next.js' to prevent fingerprinting
   images: {
+    qualities: [70, 75, 80, 85, 90, 95, 100],
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 86400,
     remotePatterns: [

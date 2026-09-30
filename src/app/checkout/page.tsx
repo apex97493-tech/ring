@@ -124,6 +124,7 @@ export default function CheckoutPage() {
   const [isPayPalLoading, setIsPayPalLoading] = useState(false);
   const [paypalError, setPaypalError] = useState<string | null>(null);
   const [isRedirectingToPayPal, setIsRedirectingToPayPal] = useState(false);
+  const capturedTokensRef = useRef<Set<string>>(new Set());
 
   // Load saved address from localStorage on mount (Amazon-style)
   useEffect(() => {
@@ -149,6 +150,12 @@ export default function CheckoutPage() {
     const token = params.get('token');
 
     if (status === 'paypal_success' && token) {
+      // Prevent duplicate call triggered by React StrictMode in development
+      if (capturedTokensRef.current.has(token)) {
+        return;
+      }
+      capturedTokensRef.current.add(token);
+
       setIsSubmitting(true);
       const pendingDataStr = localStorage.getItem('fj_pending_paypal_order');
       let pendingData: any = {};

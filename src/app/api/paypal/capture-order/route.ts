@@ -75,6 +75,27 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Order ID is required' }, { status: 400 });
     }
 
+    // 1. Check if this order was already processed and saved
+    const existingOrders = readOrdersFromFile();
+    const alreadyProcessed = existingOrders.find(
+      (o) =>
+        o.payment?.transactionId === orderId ||
+        (o.payment as any)?.paypalOrderId === orderId
+    );
+
+    if (alreadyProcessed) {
+      console.log(`[PayPal] Order for token ${orderId} already in store. Returning existing order.`);
+      const clientPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454';
+      const message = formatWhatsAppOrderMessage(alreadyProcessed);
+      const whatsAppUrl = `https://wa.me/${clientPhone}?text=${message}`;
+      return NextResponse.json({
+        success: true,
+        order: alreadyProcessed,
+        whatsAppUrl,
+        alreadyCaptured: true,
+      });
+    }
+
     const token = await getAccessToken();
     const baseUrl = getPayPalBaseUrl();
 
@@ -92,12 +113,17 @@ export async function POST(req: Request) {
     const captureData = await captureRes.json();
 
     // Check if already captured or completed
+    const isAlreadyCaptured =
+      captureData.name === 'ORDER_ALREADY_CAPTURED' ||
+      (Array.isArray(captureData.details) &&
+        captureData.details.some((d: any) => d.issue === 'ORDER_ALREADY_CAPTURED'));
+
     const isCompleted =
       captureData.status === 'COMPLETED' ||
       captureData.status === 'APPROVED' ||
       captureRes.ok;
 
-    if (!isCompleted && captureData.name !== 'ORDER_ALREADY_CAPTURED') {
+    if (!isCompleted && !isAlreadyCaptured) {
       console.error('PayPal Capture Failed:', captureData);
       return NextResponse.json(
         { error: captureData.message || 'PayPal payment authorization failed.' },
@@ -105,13 +131,48 @@ export async function POST(req: Request) {
       );
     }
 
+    // If order was already captured on PayPal, fetch order details to populate customer info
+    let orderDetails = captureData;
+    if (isAlreadyCaptured) {
+      try {
+        const getRes = await fetch(`${baseUrl}/v2/checkout/orders/${orderId}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          cache: 'no-store',
+        });
+        if (getRes.ok) {
+          orderDetails = await getRes.json();
+        }
+      } catch (e) {
+        console.warn('Could not fetch existing PayPal order details:', e);
+      }
+    }
+
     // Extract transaction ID
-    const captureObj = captureData.purchase_units?.[0]?.payments?.captures?.[0];
-    const txnId = captureObj?.id || captureData.id || orderId;
+    const captureObj = orderDetails.purchase_units?.[0]?.payments?.captures?.[0];
+    const txnId = captureObj?.id || orderDetails.id || orderId;
+
+    // Check if already saved in store under txnId
+    const existingByTxn = existingOrders.find((o) => o.payment?.transactionId === txnId);
+    if (existingByTxn) {
+      console.log(`[PayPal] Order for txn ${txnId} already processed. Returning existing order.`);
+      const clientPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454';
+      const message = formatWhatsAppOrderMessage(existingByTxn);
+      const whatsAppUrl = `https://wa.me/${clientPhone}?text=${message}`;
+      return NextResponse.json({
+        success: true,
+        order: existingByTxn,
+        whatsAppUrl,
+        alreadyCaptured: true,
+      });
+    }
 
     // Extract customer details from PayPal payer/shipping if needed
-    const payer = captureData.payer || {};
-    const shipping = captureData.purchase_units?.[0]?.shipping || {};
+    const payer = orderDetails.payer || {};
+    const shipping = orderDetails.purchase_units?.[0]?.shipping || {};
     const shippingAddr = shipping?.address || {};
 
     const finalCustomer: ShippingAddress = {
