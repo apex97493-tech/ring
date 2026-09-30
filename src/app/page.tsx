@@ -27,7 +27,6 @@ import WhyChooseUs from '@/components/sections/WhyChooseUs';
 import RingSizeGuide from '@/components/sections/RingSizeGuide';
 import ReviewsSection from '@/components/sections/ReviewsSection';
 import FaqSection from '@/components/sections/FaqSection';
-import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
 
 import UnboxingExperience from '@/components/sections/UnboxingExperience';
 import MetalPurityGuide from '@/components/sections/MetalPurityGuide';
@@ -637,9 +636,6 @@ export default function Home() {
 
       {/* Frequently Asked Questions Accordion */}
       <FaqSection />
-
-      {/* Bespoke Custom CAD Studio & WhatsApp Support */}
-      <CustomJewelryBanner />
     </div>
   );
 }

@@ -11,6 +11,7 @@ import { CurrencyProvider } from "@/context/CurrencyContext";
 import RegionalSettingsModal from "@/components/common/RegionalSettingsModal";
 import { MessageCircle } from "lucide-react";
 import FlyToCartAnimation from "@/components/layout/FlyToCartAnimation";
+import WhatsAppWidget from "@/components/layout/WhatsAppWidget";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -59,20 +60,7 @@ export default function RootLayout({
                 {children}
               </main>
               <Footer />
-
-              {/* Floating WhatsApp Support Widget - responsive sizing */}
-              <a
-                href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 bg-[#B76E79] hover:bg-[#043327] text-[#D39EAA] hover:text-white p-3 sm:p-3.5 rounded-full shadow-2xl border border-[#D39EAA]/50 flex items-center justify-center transition-all duration-300 hover:scale-110 group cursor-pointer"
-                aria-label="Chat on WhatsApp"
-              >
-                <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />
-                <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-500 ease-in-out font-sans text-xs font-bold uppercase tracking-wider pl-0 group-hover:pl-2">
-                  Chat on WhatsApp
-                </span>
-              </a>
+              <WhatsAppWidget />
             </CartProvider>
           </CurrencyProvider>
         </ProductProvider>

@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+html {
+  background-color: #18181B; /* Match footer color to hide overscroll white space */
+  overscroll-behavior-y: none; /* Prevent bounce effect at the top and bottom of the page */
+}
+
+body {
+  background-color: #FFF0F5; /* Keep app background */
+}
+
 :root {
   --background: #FFF0F5; /* Pearl / Cream */
   --foreground: #592D37; /* Very Dark Royal Emerald */

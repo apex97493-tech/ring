@@ -10,7 +10,6 @@ import WhyChooseUs from '@/components/sections/WhyChooseUs';
 import RingSizeGuide from '@/components/sections/RingSizeGuide';
 import ReviewsSection from '@/components/sections/ReviewsSection';
 import FaqSection from '@/components/sections/FaqSection';
-import CustomJewelryBanner from '@/components/sections/CustomJewelryBanner';
 import { Sparkles, ShieldCheck, Truck, Award, ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
 import Link from 'next/link';
 
@@ -386,7 +385,6 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
       <RingSizeGuide />
       <ReviewsSection />
       <FaqSection />
-      <CustomJewelryBanner />
     </div>
   );
 }
