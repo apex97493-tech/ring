@@ -41,7 +41,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const { getProductBySlug, products, isLoading } = useProducts();
   const product = getProductBySlug(resolvedParams.slug);
 
-  const { addToCart, isWishlisted, toggleWishlist, setIsCartOpen } = useCart();
+  const { addToCart, buyNow, isWishlisted, toggleWishlist, setIsCartOpen, triggerFlyAnimation } = useCart();
   const { formatPrice } = useCurrency();
 
   // State hooks - Etsy style selectors
@@ -68,9 +68,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   // If products are still being fetched from the server/storage and product is not ready yet
   if (isLoading && !product) {
     return (
-      <div className="min-h-screen bg-[#FDFBF7] pt-32 pb-20 flex items-center justify-center font-sans">
+      <div className="min-h-screen bg-[#FFF0F5] pt-32 pb-20 flex items-center justify-center font-sans">
         <div className="text-center space-y-4">
-          <div className="w-12 h-12 rounded-full border-2 border-[#D4AF37] border-t-transparent animate-spin mx-auto" />
+          <div className="w-12 h-12 rounded-full border-2 border-[#D39EAA] border-t-transparent animate-spin mx-auto" />
           <h2 className="font-serif text-xl text-[#18181B] font-bold">Loading Studio Gemstone Vault...</h2>
           <p className="text-xs text-gray-500 font-sans">Retrieving gemstone specifications & high-res angles</p>
         </div>
@@ -191,7 +191,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
   const activeMetal = activeTier?.metal || metalBandOptions[0]?.metal || '925 Sterling Silver';
 
   // Add to cart handler
-  const handleAddToCart = () => {
+  const handleAddToCart = (e: React.MouseEvent) => {
     const isRing = (product?.category || '').toLowerCase().includes('ring') || (product?.name || '').toLowerCase().includes('ring');
     const bandToUse = selectedBandColour || activeMetal;
     const sizeToUse = selectedSize || (isRing ? 'US 7' : 'Standard');
@@ -206,18 +206,19 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       image: activeVariantImage,
       engravingText: personalisationText.trim() || undefined,
     });
+    triggerFlyAnimation(activeVariantImage, e);
     setValidationErrors({});
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 2500);
   };
 
   // Buy it now (adds to cart & opens /checkout directly)
-  const handleBuyNow = () => {
+  const handleBuyNow = (e: React.MouseEvent) => {
     const isRing = (product?.category || '').toLowerCase().includes('ring') || (product?.name || '').toLowerCase().includes('ring');
     const bandToUse = selectedBandColour || activeMetal;
     const sizeToUse = selectedSize || (isRing ? 'US 7' : 'Standard');
 
-    addToCart({
+    buyNow({
       product,
       quantity: 1,
       selectedMetal: bandToUse,
@@ -228,9 +229,12 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
       engravingText: personalisationText.trim() || undefined,
     });
 
+    triggerFlyAnimation(activeVariantImage, e, 'drop');
     setValidationErrors({});
     setIsCartOpen(false);
-    router.push('/checkout');
+    setTimeout(() => {
+      router.push('/checkout');
+    }, 1500); // Wait for the animation to play before redirecting
   };
 
   // WhatsApp order inquiry
@@ -258,7 +262,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                 router.push(`/category/${product.category}`);
               }
             }}
-            className="inline-flex items-center gap-1 px-2.5 py-1 bg-stone-100 hover:bg-[#022C22] hover:text-[#D4AF37] text-stone-800 rounded-md text-xs font-semibold transition-all cursor-pointer mr-1 flex-shrink-0 border border-stone-200 shadow-2xs"
+            className="inline-flex items-center gap-1 px-2.5 py-1 bg-stone-100 hover:bg-[#592D37] hover:text-[#D39EAA] text-stone-800 rounded-md text-xs font-semibold transition-all cursor-pointer mr-1 flex-shrink-0 border border-stone-200 shadow-2xs"
             title="Go back to previous page"
           >
             <ChevronLeft className="w-3.5 h-3.5" />

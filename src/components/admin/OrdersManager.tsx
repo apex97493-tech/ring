@@ -398,10 +398,10 @@ export default function OrdersManager({
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-[11px] font-mono tracking-widest text-[#D4AF37] uppercase">
+            <span className="text-[11px] font-mono tracking-widest text-[#D39EAA] uppercase">
               Admin Orders & Fulfillment Hub
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/30">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#D39EAA]/20 text-[#D39EAA] border border-[#D39EAA]/30">
               Live Cloud Sync
             </span>
           </div>
@@ -417,7 +417,7 @@ export default function OrdersManager({
           <button
             onClick={exportToCSV}
             disabled={filteredOrders.length === 0}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-[#022C22] hover:bg-[#033E30] text-[#D4AF37] border border-[#D4AF37]/40 rounded-xl text-xs font-semibold transition-all shadow-sm cursor-pointer disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-[#022C22] hover:bg-[#033E30] text-[#D39EAA] border border-[#D39EAA]/40 rounded-xl text-xs font-semibold transition-all shadow-sm cursor-pointer disabled:opacity-50"
             title="Download CSV spreadsheet of current orders"
           >
             <Download className="w-3.5 h-3.5" />
@@ -429,7 +429,7 @@ export default function OrdersManager({
             disabled={isLoading}
             className="flex items-center gap-1.5 px-3.5 py-2 bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white border border-white/15 rounded-xl text-xs font-semibold transition-all cursor-pointer"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-[#D4AF37]' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-[#D39EAA]' : ''}`} />
             <span>Refresh</span>
           </button>
 
@@ -438,7 +438,7 @@ export default function OrdersManager({
             <button
               onClick={() => setViewMode('table')}
               className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                viewMode === 'table' ? 'bg-[#D4AF37] text-[#022C22] shadow font-bold' : 'text-gray-400 hover:text-white'
+                viewMode === 'table' ? 'bg-[#D39EAA] text-[#592D37] shadow font-bold' : 'text-gray-400 hover:text-white'
               }`}
               title="Compact Table List View"
             >
@@ -447,7 +447,7 @@ export default function OrdersManager({
             <button
               onClick={() => setViewMode('cards')}
               className={`p-1.5 rounded-lg text-xs transition-colors cursor-pointer ${
-                viewMode === 'cards' ? 'bg-[#D4AF37] text-[#022C22] shadow font-bold' : 'text-gray-400 hover:text-white'
+                viewMode === 'cards' ? 'bg-[#D39EAA] text-[#592D37] shadow font-bold' : 'text-gray-400 hover:text-white'
               }`}
               title="Expanded Cards View"
             >
@@ -890,12 +890,12 @@ export default function OrdersManager({
             return (
               <div
                 key={order.id}
-                className="bg-[#032019] border border-white/15 rounded-2xl p-5 shadow-xl space-y-4 hover:border-[#D4AF37]/50 transition-all"
+                className="bg-[#032019] border border-white/15 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4 transition-all hover:border-[#D39EAA]/50"
               >
                 {/* Card Header */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-white/10 pb-3.5">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-sm font-bold text-[#D4AF37] bg-[#D4AF37]/15 px-2.5 py-1 rounded-lg border border-[#D4AF37]/30">
+                    <span className="font-mono text-sm font-bold text-[#D39EAA] bg-[#D39EAA]/15 px-2.5 py-1 rounded-lg border border-[#D39EAA]/30">
                       #{order.id}
                     </span>
                     <span className="text-xs text-gray-400 flex items-center gap-1.5">
@@ -940,11 +940,11 @@ export default function OrdersManager({
                 {/* Card Body: Customer & Items */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                   {/* Customer info (5 Cols) */}
-                  <div className="md:col-span-5 bg-black/30 border border-white/10 rounded-xl p-3.5 space-y-2 text-xs">
+                  <div className="md:col-span-5 bg-black/30 border border-white/10 rounded-xl p-3.5 space-y-2.5 text-xs">
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-white flex items-center gap-1.5">
-                        <User className="w-3.5 h-3.5 text-[#D4AF37]" />
-                        {order.customer.firstName} {order.customer.lastName}
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#D39EAA] flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5" />
+                        Customer & Shipping Address
                       </span>
                       <button
                         onClick={(e) => copyAddress(order, e)}
@@ -955,20 +955,41 @@ export default function OrdersManager({
                       </button>
                     </div>
 
-                    <p className="text-gray-300">
-                      {order.customer.streetAddress}
-                      {order.customer.apartment && `, ${order.customer.apartment}`}
-                      <br />
-                      {order.customer.city}, {order.customer.state || ''} {order.customer.postalCode}
-                      <br />
-                      <strong>{order.customer.country}</strong>
-                    </p>
+                    <div className="text-xs text-gray-300 space-y-1">
+                      <p className="font-bold text-white text-sm">
+                        {order.customer.firstName} {order.customer.lastName}
+                      </p>
+                      <p className="text-gray-300">
+                        {order.customer.streetAddress}
+                        {order.customer.apartment && `, ${order.customer.apartment}`}
+                      </p>
+                      <p className="text-gray-300">
+                        {order.customer.city}, {order.customer.state || ''} {order.customer.postalCode}
+                      </p>
+                      <p className="font-semibold text-white">{order.customer.country}</p>
+                    </div>
 
-                    <div className="pt-2 border-t border-white/10 flex items-center justify-between">
-                      <span className="text-gray-400 font-mono text-[11px]">{order.customer.phone}</span>
+                    <div className="pt-2 border-t border-white/10 flex flex-wrap items-center gap-2 text-xs">
+                      <a
+                        href={`tel:${order.customer.phone}`}
+                        className="flex items-center gap-1 text-gray-300 hover:text-[#D39EAA]"
+                      >
+                        <Phone className="w-3 h-3 text-[#D39EAA]" />
+                        <span>{order.customer.phone}</span>
+                      </a>
+                      <span className="text-gray-600">•</span>
+                      <a
+                        href={`mailto:${order.customer.email}`}
+                        className="flex items-center gap-1 text-gray-300 hover:text-[#D39EAA] truncate max-w-[180px]"
+                      >
+                        <Mail className="w-3 h-3 text-[#D39EAA]" />
+                        <span className="truncate">{order.customer.email}</span>
+                      </a>
+
                       <button
                         onClick={(e) => openCustomerWhatsApp(order, e)}
-                        className="flex items-center gap-1 text-[11px] text-[#D4AF37] font-semibold hover:underline"
+                        className="ml-auto flex items-center gap-1 px-2.5 py-1 bg-[#B76E79] hover:bg-[#A35D68] text-white text-[11px] font-bold rounded transition-colors cursor-pointer"
+                        title="Message customer on WhatsApp"
                       >
                         <Send className="w-3 h-3" />
                         <span>WhatsApp</span>
@@ -977,14 +998,15 @@ export default function OrdersManager({
                   </div>
 
                   {/* Items list (7 Cols) */}
-                  <div className="md:col-span-7 bg-black/30 border border-white/10 rounded-xl p-3.5 space-y-2.5">
+                  <div className="md:col-span-7 bg-black/40 border border-white/10 rounded-xl p-4 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#D4AF37]">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#D39EAA] flex items-center gap-1.5">
+                        <Package className="w-3.5 h-3.5" />
                         Ordered Pieces ({order.items.length})
                       </span>
                       <button
                         onClick={() => openOrderDrawer(order)}
-                        className="text-[11px] text-gray-300 hover:text-white flex items-center gap-1"
+                        className="text-[11px] text-gray-300 hover:text-white flex items-center gap-1 cursor-pointer"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         <span>Inspect Full Dossier</span>
@@ -1002,8 +1024,15 @@ export default function OrdersManager({
                           <div className="flex-1 min-w-0">
                             <p className="font-semibold text-white truncate">{it.productName}</p>
                             <p className="text-[11px] text-gray-400">
-                              {it.metal} · Size {it.size} {it.carat ? `· ${it.carat}` : ''}
+                              Metal: <strong className="text-gray-200">{it.metal}</strong> | Size:{' '}
+                              <strong className="text-[#D39EAA]">{it.size}</strong>
+                              {it.carat ? ` | Carat: ${it.carat}` : ''}
                             </p>
+                            {it.engraving && (
+                              <p className="text-[10px] text-[#D39EAA] italic">
+                                Engraving: &ldquo;{it.engraving}&rdquo;
+                              </p>
+                            )}
                           </div>
                           <div className="text-right shrink-0">
                             <span className="text-gray-400 text-[11px]">{it.quantity} × </span>
@@ -1021,7 +1050,7 @@ export default function OrdersManager({
                 {/* Tracking bar */}
                 <div className="pt-2 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
                   <div className="flex items-center gap-2">
-                    <Truck className="w-4 h-4 text-[#D4AF37]" />
+                    <Truck className="w-4 h-4 text-[#D39EAA]" />
                     {order.trackingNumber ? (
                       <span className="font-mono text-blue-300 font-bold">
                         {order.carrier || 'Courier'}: {order.trackingNumber}
@@ -1033,7 +1062,7 @@ export default function OrdersManager({
 
                   <button
                     onClick={() => openOrderDrawer(order)}
-                    className="px-3 py-1 bg-white/10 hover:bg-white/15 text-white rounded-lg transition-colors cursor-pointer text-xs font-semibold"
+                    className="px-3 py-1 bg-[#D39EAA]/20 hover:bg-[#D39EAA]/30 text-[#D39EAA] border border-[#D39EAA]/40 rounded-lg transition-colors cursor-pointer text-xs font-semibold"
                   >
                     Manage Tracking & Dispatch →
                   </button>

@@ -67,7 +67,7 @@ export default function MobileStickyBuyBar({
                   {product.name}
                 </p>
                 <div className="flex items-baseline gap-1 mt-0.5">
-                  <span className="font-sans text-xs font-bold text-[#064E3B]">
+                  <span className="font-sans text-xs font-bold text-[#B76E79]">
                     ₹{product.price.toLocaleString('en-IN')}
                   </span>
                   <span className="font-sans text-[9px] text-gray-500 uppercase">
@@ -81,7 +81,7 @@ export default function MobileStickyBuyBar({
             <div className="flex items-center gap-1.5 flex-shrink-0">
               <button
                 onClick={onAddToCart}
-                className="px-3 py-2 bg-[#18181B] hover:bg-[#B89035] text-[#D4AF37] hover:text-white rounded-lg font-sans text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1 shadow-xs cursor-pointer"
+                className="px-3 py-2 bg-[#18181B] hover:bg-[#C88E91] text-[#D39EAA] hover:text-white rounded-lg font-sans text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1 shadow-xs cursor-pointer"
               >
                 {isAdded ? (
                   <span className="text-emerald-400 flex items-center gap-1">
@@ -97,7 +97,7 @@ export default function MobileStickyBuyBar({
 
               <button
                 onClick={onWhatsAppOrder}
-                className="px-3 py-2 bg-[#064E3B] hover:bg-[#043327] text-white rounded-lg font-sans text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1 shadow-xs cursor-pointer"
+                className="px-3 py-2 bg-[#B76E79] hover:bg-[#043327] text-white rounded-lg font-sans text-[11px] font-bold tracking-wider uppercase transition-colors flex items-center gap-1 shadow-xs cursor-pointer"
                 title="Chat on WhatsApp"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-[#34D399]" />

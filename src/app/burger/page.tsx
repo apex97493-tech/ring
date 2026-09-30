@@ -1348,12 +1348,12 @@ export default function AdminBurgerPage() {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-[#021A14] flex items-center justify-center p-4">
-        <div className="w-full max-w-md bg-[#042820] border border-[#D4AF37]/30 rounded-3xl p-8 shadow-2xl text-center">
-          <div className="w-16 h-16 rounded-full bg-[#021A14] border-2 border-[#D4AF37] flex items-center justify-center mx-auto mb-5 text-[#D4AF37] shadow-lg">
+        <div className="w-full max-w-md bg-[#042820] border border-[#D39EAA]/30 rounded-3xl p-8 shadow-2xl text-center">
+          <div className="w-16 h-16 rounded-full bg-[#021A14] border-2 border-[#D39EAA] flex items-center justify-center mx-auto mb-5 text-[#D39EAA] shadow-lg">
             <Lock className="w-8 h-8" />
           </div>
 
-          <span className="text-[11px] font-mono tracking-widest text-[#D4AF37] uppercase block mb-1">
+          <span className="text-[11px] font-mono tracking-widest text-[#D39EAA] uppercase block mb-1">
             Secure Admin Portal
           </span>
           <h1 className="font-serif text-2xl font-bold text-white mb-2">
@@ -1369,7 +1369,7 @@ export default function AdminBurgerPage() {
               <form onSubmit={handlePasswordSubmit} className="space-y-4">
                 {/* 1. Admin Email Manual Input */}
                 <div className="text-left space-y-1">
-                  <label className="block text-[11px] font-semibold text-[#D4AF37] uppercase tracking-wider flex items-center gap-1.5">
+                  <label className="block text-[11px] font-semibold text-[#D39EAA] uppercase tracking-wider flex items-center gap-1.5">
                     <Mail className="w-3.5 h-3.5" />
                     Administrator Email
                   </label>
@@ -1380,7 +1380,7 @@ export default function AdminBurgerPage() {
                       placeholder="admin@foreverjewell.com"
                       value={adminEmailInput}
                       onChange={(e) => setAdminEmailInput(e.target.value)}
-                      className="w-full bg-[#021A14] border border-[#D4AF37]/40 rounded-xl py-3 px-3.5 text-white placeholder-gray-500 font-sans text-sm focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37]"
+                      className="w-full bg-[#021A14] border border-[#D39EAA]/40 rounded-xl py-3 px-3.5 text-white placeholder-gray-500 font-sans text-sm focus:outline-none focus:border-[#D39EAA] focus:ring-1 focus:ring-[#D39EAA]"
                       autoFocus
                     />
                   </div>
@@ -1388,7 +1388,7 @@ export default function AdminBurgerPage() {
 
                 {/* 2. Master Passcode with Reveal/Hide */}
                 <div className="text-left space-y-1">
-                  <label className="block text-[11px] font-semibold text-[#D4AF37] uppercase tracking-wider flex items-center gap-1.5">
+                  <label className="block text-[11px] font-semibold text-[#D39EAA] uppercase tracking-wider flex items-center gap-1.5">
                     <KeyRound className="w-3.5 h-3.5" />
                     Master Passcode
                   </label>
@@ -1399,12 +1399,12 @@ export default function AdminBurgerPage() {
                       placeholder="Enter master passcode..."
                       value={enteredPin}
                       onChange={(e) => setEnteredPin(e.target.value)}
-                      className="w-full bg-[#021A14] border border-[#D4AF37]/40 rounded-xl py-3 px-3.5 text-white placeholder-gray-500 font-mono tracking-wider text-sm focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] pr-10"
+                      className="w-full bg-[#021A14] border border-[#D39EAA]/40 rounded-xl py-3 px-3.5 text-white placeholder-gray-500 font-mono tracking-wider text-sm focus:outline-none focus:border-[#D39EAA] focus:ring-1 focus:ring-[#D39EAA] pr-10"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#D4AF37] transition-colors cursor-pointer"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#D39EAA] transition-colors cursor-pointer"
                       title={showPassword ? 'Hide passcode' : 'Show passcode'}
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -1422,7 +1422,7 @@ export default function AdminBurgerPage() {
                 <button
                   type="submit"
                   disabled={isAuthLoading}
-                  className="w-full py-3.5 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#F3E5AB] hover:to-[#D4AF37] disabled:opacity-50 text-[#022C22] font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2 mt-2"
+                  className="w-full py-3.5 bg-gradient-to-r from-[#D39EAA] to-[#FADBD8] hover:from-[#FADBD8] hover:to-[#D39EAA] disabled:opacity-50 text-[#592D37] font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2 mt-2"
                 >
                   {isAuthLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <ShieldCheck className="w-4 h-4" />}
                   <span>{isAuthLoading ? 'Authenticating...' : 'Verify & Send 2FA Code'}</span>
@@ -1449,7 +1449,7 @@ export default function AdminBurgerPage() {
               </div>
 
               {devCodeHint && (
-                <div className="mb-3 px-3 py-1.5 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-lg text-xs font-mono text-[#D4AF37]">
+                <div className="mb-3 px-3 py-1.5 bg-[#D39EAA]/10 border border-[#D39EAA]/30 rounded-lg text-xs font-mono text-[#D39EAA]">
                   Local Dev Hint: Code is <strong>{devCodeHint}</strong>
                 </div>
               )}
@@ -1465,7 +1465,7 @@ export default function AdminBurgerPage() {
                     placeholder="• • • • • •"
                     value={otpCode}
                     onChange={(e) => setOtpCode(e.target.value.replace(/[^0-9]/g, ''))}
-                    className="w-full bg-[#021A14] border border-[#D4AF37] rounded-xl py-3.5 px-4 text-center text-white placeholder-gray-600 font-mono tracking-[0.5em] text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+                    className="w-full bg-[#021A14] border border-[#D39EAA] rounded-xl py-3.5 px-4 text-center text-white placeholder-gray-600 font-mono tracking-[0.5em] text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-[#D39EAA]"
                     autoFocus
                   />
                 </div>
@@ -1480,7 +1480,7 @@ export default function AdminBurgerPage() {
                 <button
                   type="submit"
                   disabled={isAuthLoading || otpCode.length < 6}
-                  className="w-full py-3.5 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#F3E5AB] hover:to-[#D4AF37] disabled:opacity-50 text-[#022C22] font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2"
+                  className="w-full py-3.5 bg-gradient-to-r from-[#D39EAA] to-[#FADBD8] hover:from-[#FADBD8] hover:to-[#D39EAA] disabled:opacity-50 text-[#592D37] font-bold text-sm uppercase tracking-wider rounded-xl transition-all shadow-lg cursor-pointer flex items-center justify-center gap-2"
                 >
                   {isAuthLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Lock className="w-4 h-4" />}
                   <span>{isAuthLoading ? 'Verifying 2FA...' : 'Verify & Enter Dashboard'}</span>
@@ -1504,7 +1504,7 @@ export default function AdminBurgerPage() {
                   type="button"
                   onClick={handleResendOtp}
                   disabled={resendCooldown > 0 || isAuthLoading}
-                  className="text-[#D4AF37] hover:underline disabled:opacity-50 disabled:no-underline cursor-pointer"
+                  className="text-[#D39EAA] hover:underline disabled:opacity-50 disabled:no-underline cursor-pointer"
                 >
                   {resendCooldown > 0 ? `Resend Code (${resendCooldown}s)` : 'Resend Code'}
                 </button>
@@ -1528,7 +1528,7 @@ export default function AdminBurgerPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-4 right-4 z-50 bg-[#022C22] text-[#D4AF37] border border-[#D4AF37]/50 px-5 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 font-sans text-xs font-semibold"
+            className="fixed top-4 right-4 z-50 bg-[#592D37] text-[#D39EAA] border border-[#D39EAA]/50 px-5 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 font-sans text-xs font-semibold"
           >
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
             <span>{toastMessage}</span>
@@ -1540,14 +1540,14 @@ export default function AdminBurgerPage() {
       <header className="bg-[#021A14] border-b border-white/10 px-4 sm:px-8 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
         <div className="flex items-center gap-3 sm:gap-6">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#D4AF37] text-[#022C22] flex items-center justify-center font-serif font-bold text-[10px] shadow">
+            <div className="w-8 h-8 rounded-lg bg-[#D39EAA] text-[#592D37] flex items-center justify-center font-serif font-bold text-[10px] shadow">
               FJ
             </div>
             <div>
               <h1 className="font-serif text-sm font-bold text-white tracking-wide">
                 ForeverJewellStudio
               </h1>
-              <p className="text-[10px] text-[#D4AF37] font-mono">
+              <p className="text-[10px] text-[#D39EAA] font-mono">
                 Store Catalog & Product Manager
               </p>
             </div>
@@ -1560,7 +1560,7 @@ export default function AdminBurgerPage() {
               onClick={() => setMainViewMode('table')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                 mainViewMode === 'table'
-                  ? 'bg-[#D4AF37] text-[#022C22] shadow'
+                  ? 'bg-[#D39EAA] text-[#592D37] shadow'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
               }`}
             >
@@ -1575,7 +1575,7 @@ export default function AdminBurgerPage() {
               onClick={() => setMainViewMode('editor')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                 mainViewMode === 'editor'
-                  ? 'bg-[#D4AF37] text-[#022C22] shadow'
+                  ? 'bg-[#D39EAA] text-[#592D37] shadow'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
               }`}
             >
@@ -1587,7 +1587,7 @@ export default function AdminBurgerPage() {
               onClick={() => setMainViewMode('orders')}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                 mainViewMode === 'orders'
-                  ? 'bg-[#D4AF37] text-[#022C22] shadow'
+                  ? 'bg-[#D39EAA] text-[#592D37] shadow'
                   : 'text-gray-300 hover:text-white hover:bg-white/10'
               }`}
             >
@@ -1606,7 +1606,7 @@ export default function AdminBurgerPage() {
             target="_blank"
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white rounded-lg text-xs font-medium border border-white/10 transition-colors"
           >
-            <ExternalLink className="w-3.5 h-3.5 text-[#D4AF37]" />
+            <ExternalLink className="w-3.5 h-3.5 text-[#D39EAA]" />
             <span>Store Live</span>
           </Link>
 
@@ -1621,7 +1621,7 @@ export default function AdminBurgerPage() {
           {mainViewMode === 'editor' && (
             <button
               onClick={handleSaveProduct}
-              className="px-4 py-1.5 bg-[#D4AF37] hover:bg-white text-[#022C22] rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-md"
+              className="px-4 py-1.5 bg-[#D39EAA] hover:bg-white text-[#592D37] rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-md"
             >
               <Save className="w-3.5 h-3.5" />
               <span>Save Product</span>
@@ -1630,7 +1630,7 @@ export default function AdminBurgerPage() {
 
           <button
             onClick={() => setIsAdminTeamModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 text-[#D4AF37] border border-[#D4AF37]/40 rounded-lg text-xs font-bold transition-all cursor-pointer shadow-xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#D39EAA]/15 hover:bg-[#D39EAA]/25 text-[#D39EAA] border border-[#D39EAA]/40 rounded-lg text-xs font-bold transition-all cursor-pointer shadow-xs"
             title="Manage Admin Team & 2FA Security"
           >
             <ShieldCheck className="w-3.5 h-3.5" />
@@ -1668,9 +1668,9 @@ export default function AdminBurgerPage() {
                   setSearchQuery('');
                   setMainViewMode('table');
                 }}
-                className={`bg-[#032019] border text-left rounded-xl p-3 hover:border-[#D4AF37]/40 transition-all cursor-pointer ${
+                className={`bg-[#032019] border text-left rounded-xl p-3 hover:border-[#D39EAA]/40 transition-all cursor-pointer ${
                   selectedStockFilter === 'all' && selectedCategoryFilter === 'all' && metalPricingFilter === 'all' && !searchQuery
-                    ? 'border-[#D4AF37] ring-1 ring-[#D4AF37]/50'
+                    ? 'border-[#D39EAA] ring-1 ring-[#D39EAA]/50'
                     : 'border-white/10'
                 }`}
               >
@@ -1734,19 +1734,19 @@ export default function AdminBurgerPage() {
                   setMetalPricingFilter((prev) => (prev === 'verified' ? 'all' : 'verified'));
                   setMainViewMode('table');
                 }}
-                className={`bg-[#032019] border text-left rounded-xl p-3 hover:border-[#D4AF37]/40 transition-all cursor-pointer ${
+                className={`bg-[#032019] border text-left rounded-xl p-3 hover:border-[#D39EAA]/40 transition-all cursor-pointer ${
                   metalPricingFilter === 'verified'
-                    ? 'border-[#D4AF37] ring-1 ring-[#D4AF37]/50'
+                    ? 'border-[#D39EAA] ring-1 ring-[#D39EAA]/50'
                     : 'border-white/10'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-7 h-7 rounded-lg bg-[#D4AF37]/15 flex items-center justify-center">
-                    <CheckCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <div className="w-7 h-7 rounded-lg bg-[#D39EAA]/15 flex items-center justify-center">
+                    <CheckCheck className="w-3.5 h-3.5 text-[#D39EAA]" />
                   </div>
                   <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Etsy Synced</span>
                 </div>
-                <span className="text-lg font-bold text-[#D4AF37] block">{verifiedCount}</span>
+                <span className="text-lg font-bold text-[#D39EAA] block">{verifiedCount}</span>
                 <span className="text-[10px] text-gray-500">Live Etsy metal pricing</span>
               </button>
 
@@ -1756,15 +1756,15 @@ export default function AdminBurgerPage() {
                   setSearchQuery('bestseller');
                   setMainViewMode('table');
                 }}
-                className="bg-[#032019] border text-left border-white/10 rounded-xl p-3 hover:border-[#D4AF37]/40 transition-all cursor-pointer"
+                className="bg-[#032019] border text-left border-white/10 rounded-xl p-3 hover:border-[#D39EAA]/40 transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="w-7 h-7 rounded-lg bg-[#D4AF37]/15 flex items-center justify-center">
-                    <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <div className="w-7 h-7 rounded-lg bg-[#D39EAA]/15 flex items-center justify-center">
+                    <Sparkles className="w-3.5 h-3.5 text-[#D39EAA]" />
                   </div>
                   <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Featured</span>
                 </div>
-                <span className="text-lg font-bold text-[#D4AF37] block">{featuredCount}</span>
+                <span className="text-lg font-bold text-[#D39EAA] block">{featuredCount}</span>
                 <span className="text-[10px] text-gray-500">On homepage spotlight</span>
               </button>
 
@@ -1809,7 +1809,7 @@ export default function AdminBurgerPage() {
                   placeholder="Search products by name, SKU, shape, gemstone, ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-black/40 border border-white/20 rounded-xl pl-9 pr-8 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                  className="w-full bg-black/40 border border-white/20 rounded-xl pl-9 pr-8 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA]"
                 />
                 {searchQuery && (
                   <button
@@ -1826,7 +1826,7 @@ export default function AdminBurgerPage() {
               <div className="flex items-center gap-2 flex-wrap">
                 {/* Sort Dropdown */}
                 <div className="flex items-center gap-1.5 bg-black/40 border border-white/20 rounded-xl px-3 py-2 text-xs">
-                  <ArrowUpDown className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <ArrowUpDown className="w-3.5 h-3.5 text-[#D39EAA]" />
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as any)}
@@ -1857,13 +1857,13 @@ export default function AdminBurgerPage() {
                 </div>
 
                 {/* Currency Preview Dropdown */}
-                <div className="flex items-center gap-1.5 bg-black/40 border border-[#D4AF37]/40 rounded-xl px-2.5 py-2 text-xs shadow-inner">
-                  <Globe className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <div className="flex items-center gap-1.5 bg-black/40 border border-[#D39EAA]/40 rounded-xl px-2.5 py-2 text-xs shadow-inner">
+                  <Globe className="w-3.5 h-3.5 text-[#D39EAA]" />
                   <span className="text-gray-400 text-[11px] hidden sm:inline">Currency:</span>
                   <select
                     value={adminCurrency}
                     onChange={(e) => setAdminCurrency(e.target.value)}
-                    className="bg-transparent text-[#D4AF37] font-bold text-xs focus:outline-none cursor-pointer"
+                    className="bg-transparent text-[#D39EAA] font-bold text-xs focus:outline-none cursor-pointer"
                   >
                     <option value="INR" className="bg-[#021A14]">₹ INR (India)</option>
                     <option value="USD" className="bg-[#021A14]">$ USD (USA)</option>
@@ -1888,7 +1888,7 @@ export default function AdminBurgerPage() {
                 <button
                   type="button"
                   onClick={handleCreateNew}
-                  className="px-4 py-2 bg-[#D4AF37] hover:bg-white text-[#022C22] rounded-xl text-xs font-bold transition-all shadow flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 bg-[#D39EAA] hover:bg-white text-[#592D37] rounded-xl text-xs font-bold transition-all shadow flex items-center gap-1.5 cursor-pointer"
                 >
                   <Plus className="w-4 h-4" />
                   <span>+ Add Product</span>
@@ -1908,7 +1908,7 @@ export default function AdminBurgerPage() {
                     onClick={() => setSelectedCategoryFilter(cat.value)}
                     className={`px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors text-xs font-medium flex items-center gap-1.5 flex-shrink-0 ${
                       selectedCategoryFilter === cat.value
-                        ? 'bg-[#D4AF37] text-[#022C22] font-bold shadow'
+                        ? 'bg-[#D39EAA] text-[#592D37] font-bold shadow'
                         : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white'
                     }`}
                   >
@@ -1916,7 +1916,7 @@ export default function AdminBurgerPage() {
                     <span
                       className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                         selectedCategoryFilter === cat.value
-                          ? 'bg-[#022C22]/20 text-[#022C22]'
+                          ? 'bg-[#592D37]/20 text-[#592D37]'
                           : 'bg-white/10 text-gray-400'
                       }`}
                     >
@@ -1964,7 +1964,7 @@ export default function AdminBurgerPage() {
                       onClick={() => setMetalPricingFilter(f.id as any)}
                       className={`px-2 py-0.5 rounded-lg whitespace-nowrap cursor-pointer transition-colors text-[11px] font-medium ${
                         metalPricingFilter === f.id
-                          ? 'bg-[#D4AF37] text-[#022C22] font-bold shadow'
+                          ? 'bg-[#D39EAA] text-[#592D37] font-bold shadow'
                           : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white'
                       }`}
                     >
@@ -2039,7 +2039,7 @@ export default function AdminBurgerPage() {
                                 </span>
                               </div>
                               <div className="min-w-0 max-w-xs sm:max-w-sm">
-                                <span className="font-serif font-bold text-white text-xs block truncate hover:text-[#D4AF37] transition-colors">
+                                <span className="font-serif font-bold text-white text-xs block truncate hover:text-[#D39EAA] transition-colors">
                                   {p.name}
                                 </span>
                                 <div className="flex items-center gap-2 mt-0.5 text-[10px] text-gray-400 font-mono">
@@ -2071,7 +2071,7 @@ export default function AdminBurgerPage() {
                                   type="number"
                                   value={quickPriceVal}
                                   onChange={(e) => setQuickPriceVal(Number(e.target.value))}
-                                  className="w-20 bg-black/60 border border-[#D4AF37] rounded px-1.5 py-1 text-xs text-white focus:outline-none"
+                                  className="w-20 bg-black/60 border border-[#D39EAA] rounded px-1.5 py-1 text-xs text-white focus:outline-none"
                                   autoFocus
                                   onKeyDown={(e) => {
                                     if (e.key === 'Enter') handleQuickSavePrice(p, quickPriceVal);
@@ -2119,7 +2119,7 @@ export default function AdminBurgerPage() {
                                     setQuickEditingPriceId(p.id);
                                     setQuickPriceVal(p.price);
                                   }}
-                                  className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-[#D4AF37] transition-opacity cursor-pointer"
+                                  className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-[#D39EAA] transition-opacity cursor-pointer"
                                   title="Quick Edit Base Price"
                                 >
                                   <Edit3 className="w-3 h-3" />
@@ -2140,7 +2140,7 @@ export default function AdminBurgerPage() {
                                 <div className="flex flex-col gap-1 items-start">
                                   <div className="flex items-center gap-1.5">
                                     {hasVerified ? (
-                                      <span className="inline-flex items-center gap-1 text-[9px] font-bold bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 px-2 py-0.5 rounded-full">
+                                      <span className="inline-flex items-center gap-1 text-[9px] font-bold bg-[#D39EAA]/20 text-[#D39EAA] border border-[#D39EAA]/40 px-2 py-0.5 rounded-full">
                                         <span>✓ Etsy Synced</span>
                                       </span>
                                     ) : (
@@ -2154,7 +2154,7 @@ export default function AdminBurgerPage() {
                                         handleSelectProduct(p);
                                         setActiveTab('variants');
                                       }}
-                                      className="text-[10px] text-gray-400 hover:text-[#D4AF37] underline cursor-pointer"
+                                      className="text-[10px] text-gray-400 hover:text-[#D39EAA] underline cursor-pointer"
                                       title="Configure metal variation prices"
                                     >
                                       Configure
@@ -2208,7 +2208,7 @@ export default function AdminBurgerPage() {
                                 onClick={(e) => handleQuickToggleFeatured(e, p)}
                                 className={`px-2 py-0.5 rounded-md text-[10px] font-bold flex items-center gap-1 transition-all cursor-pointer ${
                                   p.isFeatured
-                                    ? 'bg-[#D4AF37] text-[#022C22] shadow'
+                                    ? 'bg-[#D39EAA] text-[#592D37] shadow'
                                     : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-gray-200'
                                 }`}
                                 title="Toggle Featured status on Home spotlight"
@@ -2232,7 +2232,7 @@ export default function AdminBurgerPage() {
                               </button>
 
                               {p.badge && (
-                                <span className="text-[9px] bg-[#D4AF37]/20 text-[#D4AF37] px-1.5 py-0.5 rounded font-bold">
+                                <span className="text-[9px] bg-[#D39EAA]/20 text-[#D39EAA] px-1.5 py-0.5 rounded font-bold">
                                   {p.badge}
                                 </span>
                               )}
@@ -2248,12 +2248,12 @@ export default function AdminBurgerPage() {
                                 className="p-1.5 bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white rounded-lg transition-colors cursor-pointer"
                                 title="View live on store website"
                               >
-                                <ExternalLink className="w-3.5 h-3.5 text-[#D4AF37]" />
+                                <ExternalLink className="w-3.5 h-3.5 text-[#D39EAA]" />
                               </Link>
                               <button
                                 type="button"
                                 onClick={() => handleSelectProduct(p)}
-                                className="px-2.5 py-1.5 bg-[#D4AF37] hover:bg-white text-[#022C22] rounded-lg text-xs font-bold transition-all shadow flex items-center gap-1 cursor-pointer"
+                                className="px-2.5 py-1.5 bg-[#D39EAA] hover:bg-white text-[#592D37] rounded-lg text-xs font-bold transition-all shadow flex items-center gap-1 cursor-pointer"
                                 title="Edit all product specs, photos, pricing, story"
                               >
                                 <Edit3 className="w-3.5 h-3.5" />
@@ -2345,7 +2345,7 @@ export default function AdminBurgerPage() {
                           onClick={() => handleTablePageChange(pageNum)}
                           className={`w-7 h-7 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
                             tableCurrentPage === pageNum
-                              ? 'bg-[#D4AF37] text-[#022C22]'
+                              ? 'bg-[#D39EAA] text-[#592D37]'
                               : 'text-gray-400 hover:text-white hover:bg-white/5'
                           }`}
                         >
@@ -2384,9 +2384,9 @@ export default function AdminBurgerPage() {
               onClick={() => setIsMobileCatalogOpen(!isMobileCatalogOpen)}
               className="flex items-center gap-2 text-xs font-bold text-white cursor-pointer"
             >
-              <FolderOpen className="w-4 h-4 text-[#D4AF37]" />
+              <FolderOpen className="w-4 h-4 text-[#D39EAA]" />
               <span>Catalog ({filteredProducts.length} Rings)</span>
-              <span className="text-[10px] text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded-full font-semibold">
+              <span className="text-[10px] text-[#D39EAA] bg-[#D39EAA]/15 px-2 py-0.5 rounded-full font-semibold">
                 {isMobileCatalogOpen ? '▲ Collapse' : '▼ Browse Products'}
               </span>
             </button>
@@ -2406,7 +2406,7 @@ export default function AdminBurgerPage() {
                   placeholder="Search products by name or ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-black/40 border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                  className="w-full bg-black/40 border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA]"
                 />
               </div>
 
@@ -2418,7 +2418,7 @@ export default function AdminBurgerPage() {
                     onClick={() => setSelectedCategoryFilter(cat.value)}
                     className={`px-2.5 py-1 rounded-lg whitespace-nowrap cursor-pointer transition-colors text-[10px] font-medium flex items-center gap-1 flex-shrink-0 ${
                       selectedCategoryFilter === cat.value
-                        ? 'bg-[#D4AF37] text-[#022C22] font-bold'
+                        ? 'bg-[#D39EAA] text-[#592D37] font-bold'
                         : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
                     }`}
                   >
@@ -2467,7 +2467,7 @@ export default function AdminBurgerPage() {
                       }}
                       className={`p-3 flex items-start gap-3 cursor-pointer transition-all group ${
                         isSelected
-                          ? 'bg-[#06382C] border-l-4 border-[#D4AF37] shadow-inner'
+                          ? 'bg-[#06382C] border-l-4 border-[#D39EAA] shadow-inner'
                           : 'hover:bg-white/5 border-l-4 border-transparent'
                       }`}
                     >
@@ -2508,7 +2508,7 @@ export default function AdminBurgerPage() {
                             </span>
                           )}
                           {p.badge && (
-                            <span className="text-[8px] bg-[#D4AF37]/20 text-[#D4AF37] px-1.5 py-0.5 rounded font-bold flex-shrink-0">
+                            <span className="text-[8px] bg-[#D39EAA]/20 text-[#D39EAA] px-1.5 py-0.5 rounded font-bold flex-shrink-0">
                               {p.badge}
                             </span>
                           )}
@@ -2526,7 +2526,7 @@ export default function AdminBurgerPage() {
                             • Qty: {p.stockQuantity ?? '–'}
                           </span>
                           {p.isFeatured && (
-                            <span className="text-[8px] text-[#D4AF37]">★</span>
+                            <span className="text-[8px] text-[#D39EAA]">★</span>
                           )}
                         </div>
                       </div>
@@ -2562,7 +2562,7 @@ export default function AdminBurgerPage() {
                         onClick={() => handleSidebarPageChange(pageNum)}
                         className={`w-7 h-7 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                           currentPage === pageNum
-                            ? 'bg-[#D4AF37] text-[#022C22] shadow'
+                            ? 'bg-[#D39EAA] text-[#592D37] shadow'
                             : 'bg-black/30 text-gray-400 hover:text-white hover:bg-white/10'
                         }`}
                       >
@@ -2571,7 +2571,7 @@ export default function AdminBurgerPage() {
                     ))
                   ) : (
                     <div className="flex items-center gap-1.5 px-2.5 py-1 bg-black/40 border border-white/10 rounded-lg text-xs font-mono">
-                      <span className="text-[#D4AF37] font-bold">{currentPage}</span>
+                      <span className="text-[#D39EAA] font-bold">{currentPage}</span>
                       <span className="text-gray-500">/</span>
                       <span className="text-gray-400">{totalPages}</span>
                     </div>
@@ -2597,27 +2597,27 @@ export default function AdminBurgerPage() {
         {/* =================================================================== */}
         <main className="lg:col-span-8 flex flex-col h-auto lg:h-[calc(100vh-167px)] overflow-y-auto p-4 sm:p-6 lg:p-8 bg-[#041611]">
           {/* Top Product Banner */}
-          <div className="bg-[#02241D] border border-[#D4AF37]/30 p-5 rounded-2xl mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
+          <div className="bg-[#02241D] border border-[#D39EAA]/30 p-5 rounded-2xl mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
             <div className="flex items-start gap-4">
               {/* Mini thumbnail preview */}
               {formData.images.length > 0 && (
                 <img
                   src={formData.images[0]}
                   alt={formData.name}
-                  className="w-16 h-16 rounded-xl object-cover border border-[#D4AF37]/30 shadow-md flex-shrink-0 hidden sm:block"
+                  className="w-16 h-16 rounded-xl object-cover border border-[#D39EAA]/30 shadow-md flex-shrink-0 hidden sm:block"
                   onError={(e) => { e.currentTarget.src = '/images/ai_ring1_front.jpg'; }}
                 />
               )}
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-sans text-[10px] font-bold uppercase tracking-widest text-[#D4AF37]">
+                  <span className="font-sans text-[10px] font-bold uppercase tracking-widest text-[#D39EAA]">
                     {isNewListing ? '✨ Adding New Product' : `✏️ Editing: ${formData.id}`}
                   </span>
                   <span className="bg-emerald-950 text-emerald-300 text-[10px] px-2 py-0.5 rounded border border-emerald-700">
                     {formData.readyToShip ? 'Ready to Ship' : 'Made to Order'}
                   </span>
                   {formData.badge && (
-                    <span className="text-[10px] bg-[#D4AF37]/20 text-[#D4AF37] px-2 py-0.5 rounded font-bold">
+                    <span className="text-[10px] bg-[#D39EAA]/20 text-[#D39EAA] px-2 py-0.5 rounded font-bold">
                       {formData.badge}
                     </span>
                   )}
@@ -2667,7 +2667,7 @@ export default function AdminBurgerPage() {
               <button
                 type="button"
                 onClick={() => setMainViewMode('table')}
-                className="px-3 py-2 bg-white/10 hover:bg-white/20 text-[#D4AF37] hover:text-white text-xs font-semibold rounded-xl transition-colors border border-white/20 flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-2 bg-white/10 hover:bg-white/20 text-[#D39EAA] hover:text-white text-xs font-semibold rounded-xl transition-colors border border-white/20 flex items-center gap-1.5 cursor-pointer"
                 title="Return to Catalog Table"
               >
                 <Table className="w-3.5 h-3.5" />
@@ -2712,7 +2712,7 @@ export default function AdminBurgerPage() {
               </button>
               <button
                 onClick={handleSaveProduct}
-                className="px-5 py-2.5 bg-[#D4AF37] hover:bg-white text-[#022C22] text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-lg flex items-center gap-1.5 cursor-pointer"
+                className="px-5 py-2.5 bg-[#D39EAA] hover:bg-white text-[#592D37] text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-lg flex items-center gap-1.5 cursor-pointer"
               >
                 <Save className="w-4 h-4" />
                 <span>Save to Store</span>
@@ -2727,7 +2727,7 @@ export default function AdminBurgerPage() {
                 onClick={() => setActiveTab('media')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   activeTab === 'media'
-                    ? 'bg-[#D4AF37] text-[#022C22] shadow-md'
+                    ? 'bg-[#D39EAA] text-[#592D37] shadow-md'
                     : 'text-gray-300 hover:text-white hover:bg-white/10'
                 }`}
               >
@@ -2739,7 +2739,7 @@ export default function AdminBurgerPage() {
                 onClick={() => setActiveTab('specs')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   activeTab === 'specs'
-                    ? 'bg-[#D4AF37] text-[#022C22] shadow-md'
+                    ? 'bg-[#D39EAA] text-[#592D37] shadow-md'
                     : 'text-gray-300 hover:text-white hover:bg-white/10'
                 }`}
               >
@@ -2751,7 +2751,7 @@ export default function AdminBurgerPage() {
                 onClick={() => setActiveTab('pricing')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   activeTab === 'pricing'
-                    ? 'bg-[#D4AF37] text-[#022C22] shadow-md'
+                    ? 'bg-[#D39EAA] text-[#592D37] shadow-md'
                     : 'text-gray-300 hover:text-white hover:bg-white/10'
                 }`}
               >
@@ -2763,7 +2763,7 @@ export default function AdminBurgerPage() {
                 onClick={() => setActiveTab('variants')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   activeTab === 'variants'
-                    ? 'bg-[#D4AF37] text-[#022C22] shadow-md'
+                    ? 'bg-[#D39EAA] text-[#592D37] shadow-md'
                     : 'text-gray-300 hover:text-white hover:bg-white/10'
                 }`}
               >
@@ -2775,7 +2775,7 @@ export default function AdminBurgerPage() {
                 onClick={() => setActiveTab('story')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   activeTab === 'story'
-                    ? 'bg-[#D4AF37] text-[#022C22] shadow-md'
+                    ? 'bg-[#D39EAA] text-[#592D37] shadow-md'
                     : 'text-gray-300 hover:text-white hover:bg-white/10'
                 }`}
               >
@@ -2787,7 +2787,7 @@ export default function AdminBurgerPage() {
                 onClick={() => setActiveTab('seo')}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                   activeTab === 'seo'
-                    ? 'bg-[#D4AF37] text-[#022C22] shadow-md'
+                    ? 'bg-[#D39EAA] text-[#592D37] shadow-md'
                     : 'text-gray-300 hover:text-white hover:bg-white/10'
                 }`}
               >
@@ -2812,14 +2812,14 @@ export default function AdminBurgerPage() {
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div>
                   <h3 className="font-serif text-base font-bold text-white flex items-center gap-2">
-                    <ImageIcon className="w-4 h-4 text-[#D4AF37]" />
+                    <ImageIcon className="w-4 h-4 text-[#D39EAA]" />
                     Product Photos & Gallery
                   </h3>
                   <p className="text-xs text-gray-400 mt-0.5">
                     Upload photos directly from your computer or phone. Support all angles (front, side claw, on-hand, box, certificate).
                   </p>
                 </div>
-                <span className="bg-[#D4AF37]/20 text-[#D4AF37] font-mono text-xs font-bold px-3 py-1 rounded-full border border-[#D4AF37]/40">
+                <span className="bg-[#D39EAA]/20 text-[#D39EAA] font-mono text-xs font-bold px-3 py-1 rounded-full border border-[#D39EAA]/40">
                   {formData.images.length} Photos in Gallery
                 </span>
               </div>
@@ -2832,8 +2832,8 @@ export default function AdminBurgerPage() {
                 onClick={() => fileInputRef.current?.click()}
                 className={`border-2 border-dashed rounded-2xl p-8 sm:p-10 text-center cursor-pointer transition-all ${
                   isDragging
-                    ? 'border-[#D4AF37] bg-[#D4AF37]/10 scale-101'
-                    : 'border-white/25 hover:border-[#D4AF37]/80 bg-black/30 hover:bg-black/40'
+                    ? 'border-[#D39EAA] bg-[#D39EAA]/10 scale-101'
+                    : 'border-white/25 hover:border-[#D39EAA]/80 bg-black/30 hover:bg-black/40'
                 }`}
               >
                 <input
@@ -2845,7 +2845,7 @@ export default function AdminBurgerPage() {
                   className="hidden"
                 />
 
-                <div className="w-16 h-16 rounded-full bg-[#022C22] border border-[#D4AF37]/50 text-[#D4AF37] flex items-center justify-center mx-auto mb-3 shadow-md">
+                <div className="w-16 h-16 rounded-full bg-[#592D37] border border-[#D39EAA]/50 text-[#D39EAA] flex items-center justify-center mx-auto mb-3 shadow-md">
                   <UploadCloud className="w-8 h-8" />
                 </div>
 
@@ -2858,7 +2858,7 @@ export default function AdminBurgerPage() {
 
                 <button
                   type="button"
-                  className="px-5 py-2.5 bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] text-[#022C22] font-bold text-xs rounded-xl shadow cursor-pointer inline-flex items-center gap-1.5"
+                  className="px-5 py-2.5 bg-gradient-to-r from-[#D39EAA] to-[#FADBD8] text-[#592D37] font-bold text-xs rounded-xl shadow cursor-pointer inline-flex items-center gap-1.5"
                 >
                   <FolderOpen className="w-4 h-4" />
                   <span>Browse Device Files</span>
@@ -2897,7 +2897,7 @@ export default function AdminBurgerPage() {
                         key={idx}
                         className={`relative group aspect-square rounded-xl overflow-hidden bg-black/60 border transition-all ${
                           idx === 0
-                            ? 'border-[#D4AF37] ring-2 ring-[#D4AF37]/50 shadow-lg'
+                            ? 'border-[#D39EAA] ring-2 ring-[#D39EAA]/50 shadow-lg'
                             : 'border-white/20 hover:border-white/50'
                         }`}
                       >
@@ -2914,7 +2914,7 @@ export default function AdminBurgerPage() {
                         <span
                           className={`absolute top-2 left-2 text-[9px] font-bold uppercase px-2 py-0.5 rounded shadow z-10 ${
                             idx === 0
-                              ? 'bg-[#D4AF37] text-[#022C22]'
+                              ? 'bg-[#D39EAA] text-[#592D37]'
                               : 'bg-black/80 text-gray-300'
                           }`}
                         >
@@ -2927,7 +2927,7 @@ export default function AdminBurgerPage() {
                             <button
                               type="button"
                               onClick={() => handleSetPrimaryImage(img)}
-                              className="w-full py-1 bg-[#D4AF37] hover:bg-white text-[#022C22] text-[10px] font-bold rounded cursor-pointer transition-colors"
+                              className="w-full py-1 bg-[#D39EAA] hover:bg-white text-[#592D37] text-[10px] font-bold rounded cursor-pointer transition-colors"
                             >
                               Set as Cover
                             </button>
@@ -2981,7 +2981,7 @@ export default function AdminBurgerPage() {
                       placeholder="Paste single image URL (https://...)"
                       value={singleUrlInput}
                       onChange={(e) => setSingleUrlInput(e.target.value)}
-                      className="flex-1 bg-black/40 border border-white/20 rounded-xl p-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                      className="flex-1 bg-black/40 border border-white/20 rounded-xl p-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA]"
                     />
                     <button
                       type="button"
@@ -2998,13 +2998,13 @@ export default function AdminBurgerPage() {
                       placeholder="Or paste multiple URLs (separated by lines or commas)"
                       value={bulkUrlsInput}
                       onChange={(e) => setBulkUrlsInput(e.target.value)}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37] font-mono"
+                      className="w-full bg-black/40 border border-white/20 rounded-xl p-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA] font-mono"
                     />
                     <div className="flex justify-end mt-1">
                       <button
                         type="button"
                         onClick={handleAddBulkUrls}
-                        className="px-3 py-1.5 bg-[#D4AF37] hover:bg-white text-[#022C22] text-xs font-bold rounded-lg cursor-pointer"
+                        className="px-3 py-1.5 bg-[#D39EAA] hover:bg-white text-[#592D37] text-xs font-bold rounded-lg cursor-pointer"
                       >
                         Add Bulk URLs
                       </button>
@@ -3021,7 +3021,7 @@ export default function AdminBurgerPage() {
           {(activeTab === 'specs' || viewMode === 'all') && (
             <div className="bg-[#032019] p-5 sm:p-7 rounded-2xl border border-white/15 space-y-6 mb-6 shadow-md">
               <h3 className="font-serif text-base font-bold text-white flex items-center gap-2 pb-3 border-b border-white/10">
-                <Gem className="w-4 h-4 text-[#D4AF37]" />
+                <Gem className="w-4 h-4 text-[#D39EAA]" />
                 Product Title & Gemstone Details
               </h3>
 
@@ -3035,7 +3035,7 @@ export default function AdminBurgerPage() {
                     placeholder="e.g. Oval Cut Rose Quartz Engagement Ring, 14k Solid Gold"
                     value={formData.name}
                     onChange={(e) => handleNameChange(e.target.value)}
-                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37] font-semibold"
+                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA] font-semibold"
                   />
                 </div>
 
@@ -3047,7 +3047,7 @@ export default function AdminBurgerPage() {
                     <select
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                     >
                       {CATEGORY_DEFINITIONS.filter((c) => c.value !== 'all').map((c) => (
                         <option key={c.value} value={c.value} className="bg-[#021A14]">
@@ -3064,7 +3064,7 @@ export default function AdminBurgerPage() {
                     <select
                       value={formData.shape}
                       onChange={(e: any) => setFormData({ ...formData, shape: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                     >
                       {SHAPES.filter((s) => s.value !== 'all').map((s) => (
                         <option key={s.value} value={s.value}>
@@ -3083,7 +3083,7 @@ export default function AdminBurgerPage() {
                       placeholder="e.g. RARE FIND, BESTSELLER"
                       value={formData.badge || ''}
                       onChange={(e) => setFormData({ ...formData, badge: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA]"
                     />
                   </div>
                 </div>
@@ -3099,7 +3099,7 @@ export default function AdminBurgerPage() {
                       placeholder="e.g. Natural Rose Quartz or GRA Moissanite"
                       value={formData.primaryGemstone || ''}
                       onChange={(e) => setFormData({ ...formData, primaryGemstone: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                     />
                   </div>
 
@@ -3112,7 +3112,7 @@ export default function AdminBurgerPage() {
                       placeholder="e.g. Round CZ Diamonds / Lab Diamonds"
                       value={formData.secondaryGemstone || ''}
                       onChange={(e) => setFormData({ ...formData, secondaryGemstone: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                     />
                   </div>
                 </div>
@@ -3122,7 +3122,7 @@ export default function AdminBurgerPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <label className="text-xs font-bold text-white flex items-center gap-2">
-                        <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        <Sparkles className="w-3.5 h-3.5 text-[#D39EAA]" />
                         <span>Center Stone Solitaire Carat Selection</span>
                       </label>
                       <p className="text-[11px] text-gray-400 mt-0.5">
@@ -3138,7 +3138,7 @@ export default function AdminBurgerPage() {
                         onChange={(e) => setFormData({ ...formData, hasCenterStone: e.target.checked })}
                         className="sr-only peer"
                       />
-                      <div className="w-11 h-6 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4AF37]"></div>
+                      <div className="w-11 h-6 bg-white/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D39EAA]"></div>
                     </label>
                   </div>
 
@@ -3153,7 +3153,7 @@ export default function AdminBurgerPage() {
                           placeholder="e.g. 2.00 CT"
                           value={formData.carat}
                           onChange={(e) => setFormData({ ...formData, carat: e.target.value })}
-                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                         />
                       </div>
 
@@ -3166,7 +3166,7 @@ export default function AdminBurgerPage() {
                           placeholder="e.g. Blush Pink / D-Color"
                           value={formData.colorGrade}
                           onChange={(e) => setFormData({ ...formData, colorGrade: e.target.value })}
-                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                         />
                       </div>
 
@@ -3179,7 +3179,7 @@ export default function AdminBurgerPage() {
                           placeholder="e.g. VVS1 / Eye Clean"
                           value={formData.clarity}
                           onChange={(e) => setFormData({ ...formData, clarity: e.target.value })}
-                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                         />
                       </div>
 
@@ -3192,7 +3192,7 @@ export default function AdminBurgerPage() {
                           placeholder="e.g. Oval Brilliant Cut"
                           value={formData.cut}
                           onChange={(e) => setFormData({ ...formData, cut: e.target.value })}
-                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                          className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                         />
                       </div>
                     </div>
@@ -3207,7 +3207,7 @@ export default function AdminBurgerPage() {
                 {/* Sizing Standard Information Card */}
                 <div className="bg-black/30 border border-white/10 rounded-xl p-4 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#D4AF37]/15 flex items-center justify-center text-[#D4AF37]">
+                    <div className="w-8 h-8 rounded-lg bg-[#D39EAA]/15 flex items-center justify-center text-[#D39EAA]">
                       <Ruler className="w-4 h-4" />
                     </div>
                     <div>
@@ -3223,9 +3223,9 @@ export default function AdminBurgerPage() {
                 </div>
 
                 {/* Woke Collection Specifications Card Section */}
-                <div className="bg-black/30 border border-[#D4AF37]/30 rounded-xl p-4 sm:p-5 space-y-4">
-                  <h4 className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider flex items-center gap-2 pb-2 border-b border-white/10">
-                    <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <div className="bg-black/30 border border-[#D39EAA]/30 rounded-xl p-4 sm:p-5 space-y-4">
+                  <h4 className="text-xs font-bold text-[#D39EAA] uppercase tracking-wider flex items-center gap-2 pb-2 border-b border-white/10">
+                    <Sparkles className="w-3.5 h-3.5 text-[#D39EAA]" />
                     <span>Luxury Specification Card Settings (Woke Collection Style)</span>
                   </h4>
 
@@ -3239,7 +3239,7 @@ export default function AdminBurgerPage() {
                         placeholder="e.g. 925/14k Gold"
                         value={formData.karatage || ''}
                         onChange={(e) => setFormData({ ...formData, karatage: e.target.value })}
-                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                       />
                     </div>
 
@@ -3252,7 +3252,7 @@ export default function AdminBurgerPage() {
                         placeholder="e.g. Silver/White/Rose"
                         value={formData.materialColor || ''}
                         onChange={(e) => setFormData({ ...formData, materialColor: e.target.value })}
-                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                       />
                     </div>
 
@@ -3265,7 +3265,7 @@ export default function AdminBurgerPage() {
                         placeholder="e.g. 3.75G"
                         value={formData.grossWeight || ''}
                         onChange={(e) => setFormData({ ...formData, grossWeight: e.target.value })}
-                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                       />
                     </div>
                   </div>
@@ -3280,7 +3280,7 @@ export default function AdminBurgerPage() {
                         placeholder="e.g. Lab Grown Moissanite Diamond"
                         value={formData.diamondType || ''}
                         onChange={(e) => setFormData({ ...formData, diamondType: e.target.value })}
-                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                       />
                     </div>
 
@@ -3293,7 +3293,7 @@ export default function AdminBurgerPage() {
                         placeholder="e.g. Crown Setting / Solitaire Prong"
                         value={formData.settingStyle || ''}
                         onChange={(e) => setFormData({ ...formData, settingStyle: e.target.value })}
-                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                       />
                     </div>
 
@@ -3306,7 +3306,7 @@ export default function AdminBurgerPage() {
                         placeholder="e.g. BESPOKE! SHIPS IN 2-3 WEEKS!"
                         value={formData.bespokeNotice || ''}
                         onChange={(e) => setFormData({ ...formData, bespokeNotice: e.target.value })}
-                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                        className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                       />
                     </div>
                   </div>
@@ -3320,7 +3320,7 @@ export default function AdminBurgerPage() {
                       placeholder="e.g. ₹300 OFF on prepaid orders"
                       value={formData.prepaidDiscountNote || ''}
                       onChange={(e) => setFormData({ ...formData, prepaidDiscountNote: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-black/40 border border-white/20 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                     />
                   </div>
                 </div>
@@ -3335,7 +3335,7 @@ export default function AdminBurgerPage() {
                       placeholder="e.g. Art Deco / Vintage Solitaire"
                       value={formData.ringStyle || ''}
                       onChange={(e) => setFormData({ ...formData, ringStyle: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                     />
                   </div>
 
@@ -3348,7 +3348,7 @@ export default function AdminBurgerPage() {
                       placeholder="e.g. Engagement, Anniversary, Valentine Gift"
                       value={formData.occasion || ''}
                       onChange={(e) => setFormData({ ...formData, occasion: e.target.value })}
-                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                     />
                   </div>
                 </div>
@@ -3363,7 +3363,7 @@ export default function AdminBurgerPage() {
             <div className="bg-[#032019] p-5 sm:p-7 rounded-2xl border border-white/15 space-y-6 mb-6 shadow-md">
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <h3 className="font-serif text-base font-bold text-white flex items-center gap-2">
-                  <DollarSign className="w-4 h-4 text-[#D4AF37]" />
+                  <DollarSign className="w-4 h-4 text-[#D39EAA]" />
                   Pricing, Stock Inventory & Vault SKU
                 </h3>
                 {formData.originalPrice > formData.price && (
@@ -3398,7 +3398,7 @@ export default function AdminBurgerPage() {
                         };
                       });
                     }}
-                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-sm text-emerald-400 font-bold focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-sm text-emerald-400 font-bold focus:outline-none focus:border-[#D39EAA]"
                   />
                   <span className="text-[10px] text-gray-400 mt-1 block">
                     Actual checkout price charged to the customer for base 925 Sterling Silver & Gold Overlays.
@@ -3413,7 +3413,7 @@ export default function AdminBurgerPage() {
                     type="number"
                     value={formData.originalPrice}
                     onChange={(e) => setFormData({ ...formData, originalPrice: Number(e.target.value) })}
-                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-sm text-gray-400 focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-sm text-gray-400 focus:outline-none focus:border-[#D39EAA]"
                   />
                   <span className="text-[10px] text-gray-400 mt-1 block">
                     Used to showcase exclusive discount savings.
@@ -3425,7 +3425,7 @@ export default function AdminBurgerPage() {
               <div className="p-4 bg-black/30 border border-white/10 rounded-xl space-y-2">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-semibold text-gray-300 flex items-center gap-1.5">
-                    <Globe className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <Globe className="w-3.5 h-3.5 text-[#D39EAA]" />
                     Live Multi-Currency Price Conversion
                   </span>
                   <span className="text-[10px] text-gray-400 font-mono">
@@ -3448,9 +3448,9 @@ export default function AdminBurgerPage() {
               </div>
 
               {/* Quick Metal Pricing Card with Tab 4 Jump */}
-              <div className="p-4 bg-gradient-to-r from-emerald-950/60 to-black/60 border border-[#D4AF37]/30 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="p-4 bg-gradient-to-r from-emerald-950/60 to-black/60 border border-[#D39EAA]/30 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div>
-                  <span className="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+                  <span className="text-xs font-bold text-[#D39EAA] flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5" />
                     Precious Metal Variation Pricing
                   </span>
@@ -3464,7 +3464,7 @@ export default function AdminBurgerPage() {
                 <button
                   type="button"
                   onClick={() => setActiveTab('variants')}
-                  className="px-3.5 py-1.5 bg-[#D4AF37] hover:bg-white text-[#022C22] text-xs font-bold rounded-lg transition-all shadow cursor-pointer whitespace-nowrap"
+                  className="px-3.5 py-1.5 bg-[#D39EAA] hover:bg-white text-[#592D37] text-xs font-bold rounded-lg transition-all shadow cursor-pointer whitespace-nowrap"
                 >
                   Configure 16 Metal Tiers in Tab 4 →
                 </button>
@@ -3480,7 +3480,7 @@ export default function AdminBurgerPage() {
                     <button
                       type="button"
                       onClick={handleGenerateSku}
-                      className="text-[10px] text-[#D4AF37] hover:underline cursor-pointer"
+                      className="text-[10px] text-[#D39EAA] hover:underline cursor-pointer"
                     >
                       ⚡ Auto-Gen
                     </button>
@@ -3490,7 +3490,7 @@ export default function AdminBurgerPage() {
                     placeholder="e.g. AUR-OVAL-925-016"
                     value={formData.sku || ''}
                     onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
-                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs font-mono text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs font-mono text-white focus:outline-none focus:border-[#D39EAA]"
                   />
                 </div>
 
@@ -3507,7 +3507,7 @@ export default function AdminBurgerPage() {
                         readyToShip: e.target.value === 'in_stock',
                       })
                     }
-                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                   >
                     <option value="in_stock" className="bg-[#032019]">🟢 In Stock (Ready to Ship)</option>
                     <option value="made_to_order" className="bg-[#032019]">🔵 Made to Order (3-5 Days)</option>
@@ -3524,7 +3524,7 @@ export default function AdminBurgerPage() {
                     type="number"
                     value={formData.stockQuantity ?? 10}
                     onChange={(e) => setFormData({ ...formData, stockQuantity: Number(e.target.value) })}
-                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                   />
                 </div>
               </div>
@@ -3540,7 +3540,7 @@ export default function AdminBurgerPage() {
                     placeholder="e.g. 4-7 Days Free Express Delivery"
                     value={formData.deliveryTime || ''}
                     onChange={(e) => setFormData({ ...formData, deliveryTime: e.target.value })}
-                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                   />
                 </div>
 
@@ -3553,7 +3553,7 @@ export default function AdminBurgerPage() {
                     placeholder="e.g. GRA Lab Authenticity Report"
                     value={formData.certification}
                     onChange={(e) => setFormData({ ...formData, certification: e.target.value })}
-                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                   />
                 </div>
               </div>
@@ -3564,7 +3564,7 @@ export default function AdminBurgerPage() {
                     type="checkbox"
                     checked={formData.readyToShip}
                     onChange={(e) => setFormData({ ...formData, readyToShip: e.target.checked })}
-                    className="w-4 h-4 rounded text-[#D4AF37] focus:ring-[#D4AF37]"
+                    className="w-4 h-4 rounded text-[#D39EAA] focus:ring-[#D39EAA]"
                   />
                   <span>Mark as Ready to Ship in 24–48 Hours</span>
                 </label>
@@ -3581,7 +3581,7 @@ export default function AdminBurgerPage() {
               <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-white/10 gap-3">
                 <div>
                   <h3 className="font-serif text-base font-bold text-white flex items-center gap-2">
-                    <Sliders className="w-4 h-4 text-[#D4AF37]" />
+                    <Sliders className="w-4 h-4 text-[#D39EAA]" />
                     <span>Precious Metal Variation Pricing & Swatches</span>
                   </h3>
                   <p className="text-xs text-gray-400 mt-1">
@@ -3609,7 +3609,7 @@ export default function AdminBurgerPage() {
                   <button
                     type="button"
                     onClick={handleResetToEtsyDefaults}
-                    className="px-3.5 py-1.5 bg-[#D4AF37] hover:bg-white text-[#022C22] rounded-lg text-xs font-bold transition-all shadow flex items-center gap-1.5 cursor-pointer"
+                    className="px-3.5 py-1.5 bg-[#D39EAA] hover:bg-white text-[#592D37] rounded-lg text-xs font-bold transition-all shadow flex items-center gap-1.5 cursor-pointer"
                     title="Reset to verified live Etsy shop pricing"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
@@ -3630,7 +3630,7 @@ export default function AdminBurgerPage() {
                 </div>
                 <div className="flex items-center gap-2 text-xs">
                   <span className="text-gray-400">Preview Currency:</span>
-                  <span className="font-bold text-[#D4AF37] font-mono px-2 py-0.5 bg-black/50 border border-[#D4AF37]/30 rounded">
+                  <span className="font-bold text-[#D39EAA] font-mono px-2 py-0.5 bg-black/50 border border-[#D39EAA]/30 rounded">
                     {adminCurrency}
                   </span>
                 </div>
@@ -3644,7 +3644,7 @@ export default function AdminBurgerPage() {
                     description: 'Cast in certified 925 sterling silver; yellow/rose/white overlays are 18k thick plated.',
                     metals: [
                       { metal: '925 Sterling Silver', colorCode: '#C0C5CE', defaultOffset: 0 },
-                      { metal: 'Yellow Gold Overlay', colorCode: '#D4AF37', defaultOffset: 0 },
+                      { metal: 'Yellow Gold Overlay', colorCode: '#D39EAA', defaultOffset: 0 },
                       { metal: 'Rose Gold Overlay', colorCode: '#E8927C', defaultOffset: 0 },
                       { metal: 'White Gold Overlay', colorCode: '#E5E7EB', defaultOffset: 0 },
                     ],
@@ -3737,10 +3737,10 @@ export default function AdminBurgerPage() {
                                     type="number"
                                     value={currentPrice}
                                     onChange={(e) => handleUpdateMetalPrice(mItem.metal, Number(e.target.value))}
-                                    className="w-24 bg-black/60 border border-white/20 rounded-lg px-2 py-1 text-xs font-bold text-emerald-400 text-right focus:outline-none focus:border-[#D4AF37]"
+                                    className="w-24 bg-black/60 border border-white/20 rounded-lg px-2 py-1 text-xs font-bold text-emerald-400 text-right focus:outline-none focus:border-[#D39EAA]"
                                   />
                                 </div>
-                                <span className="text-[10px] text-[#D4AF37] font-semibold mt-0.5">
+                                <span className="text-[10px] text-[#D39EAA] font-semibold mt-0.5">
                                   ≈ {formatAdminPrice(currentPrice)}
                                 </span>
                               </div>
@@ -3770,7 +3770,7 @@ export default function AdminBurgerPage() {
               <div className="pt-4 border-t border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-bold text-white flex items-center gap-2">
-                    <ImageIcon className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <ImageIcon className="w-3.5 h-3.5 text-[#D39EAA]" />
                     <span>Visual Swatch Photo & Hex Code Mapping</span>
                   </h4>
                   <button
@@ -3813,7 +3813,7 @@ export default function AdminBurgerPage() {
                             updated[idx].metal = e.target.value;
                             setFormData({ ...formData, variants: updated });
                           }}
-                          className="bg-transparent border-b border-white/20 p-1 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                          className="bg-transparent border-b border-white/20 p-1 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                         />
                       </div>
 
@@ -3827,7 +3827,7 @@ export default function AdminBurgerPage() {
                             updated[idx].colorCode = e.target.value;
                             setFormData({ ...formData, variants: updated });
                           }}
-                          className="w-24 bg-transparent border-b border-white/20 p-1 text-xs font-mono text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                          className="w-24 bg-transparent border-b border-white/20 p-1 text-xs font-mono text-gray-300 focus:outline-none focus:border-[#D39EAA]"
                         />
                         <input
                           type="text"
@@ -3838,7 +3838,7 @@ export default function AdminBurgerPage() {
                             updated[idx].image = e.target.value;
                             setFormData({ ...formData, variants: updated });
                           }}
-                          className="flex-1 bg-transparent border-b border-white/20 p-1 text-xs text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                          className="flex-1 bg-transparent border-b border-white/20 p-1 text-xs text-gray-300 focus:outline-none focus:border-[#D39EAA]"
                         />
                       </div>
 
@@ -3870,7 +3870,7 @@ export default function AdminBurgerPage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-white/10 gap-3">
                 <div>
                   <h3 className="font-serif text-base font-bold text-white flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-[#D4AF37]" />
+                    <FileText className="w-4 h-4 text-[#D39EAA]" />
                     Design Story & Description Polish
                   </h3>
                   <p className="text-xs text-gray-400 mt-0.5">
@@ -3882,7 +3882,7 @@ export default function AdminBurgerPage() {
                   <button
                     type="button"
                     onClick={handleAutoCleanDescription}
-                    className="px-3 py-1.5 bg-[#D4AF37] hover:bg-white text-[#022C22] text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
+                    className="px-3 py-1.5 bg-[#D39EAA] hover:bg-white text-[#592D37] text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
                     title="Automatically clean raw Etsy copy-paste, asterisks, and format into luxury paragraphs"
                   >
                     <Wand2 className="w-3.5 h-3.5" />
@@ -3938,7 +3938,7 @@ export default function AdminBurgerPage() {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Enter a captivating story about this piece. Supports line breaks and multiple paragraphs."
-                  className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37] leading-relaxed font-sans"
+                  className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA] leading-relaxed font-sans"
                 />
               </div>
 
@@ -3947,7 +3947,7 @@ export default function AdminBurgerPage() {
                 <div className="bg-[#FAF8F5] p-5 rounded-2xl border border-[#E8E5DF] text-gray-900 space-y-3">
                   <div className="flex items-center justify-between pb-2 border-b border-gray-200">
                     <span className="font-serif text-xs font-bold text-gray-900 flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      <Sparkles className="w-3.5 h-3.5 text-[#D39EAA]" />
                       Customer Reading Experience (Live Preview):
                     </span>
                     <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
@@ -3967,19 +3967,19 @@ export default function AdminBurgerPage() {
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-gray-200">
                     <div className="p-2 bg-white rounded-lg border border-gray-200 text-[10px] text-gray-700 flex items-center gap-1.5">
-                      <Package className="w-3.5 h-3.5 text-[#064E3B] flex-shrink-0" />
+                      <Package className="w-3.5 h-3.5 text-[#B76E79] flex-shrink-0" />
                       <span>Velvet Gift Box</span>
                     </div>
                     <div className="p-2 bg-white rounded-lg border border-gray-200 text-[10px] text-gray-700 flex items-center gap-1.5">
-                      <Ruler className="w-3.5 h-3.5 text-[#064E3B] flex-shrink-0" />
+                      <Ruler className="w-3.5 h-3.5 text-[#B76E79] flex-shrink-0" />
                       <span>Custom Sizing</span>
                     </div>
                     <div className="p-2 bg-white rounded-lg border border-gray-200 text-[10px] text-gray-700 flex items-center gap-1.5">
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#064E3B] flex-shrink-0" />
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#B76E79] flex-shrink-0" />
                       <span>Authenticity Report</span>
                     </div>
                     <div className="p-2 bg-white rounded-lg border border-gray-200 text-[10px] text-gray-700 flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] flex-shrink-0" />
+                      <Sparkles className="w-3.5 h-3.5 text-[#D39EAA] flex-shrink-0" />
                       <span>Lifetime Polish</span>
                     </div>
                   </div>
@@ -4023,12 +4023,12 @@ export default function AdminBurgerPage() {
                     placeholder="e.g. 100% Conflict-Free Lab Grown Gemstone"
                     value={newFeatureText}
                     onChange={(e) => setNewFeatureText(e.target.value)}
-                    className="flex-1 bg-black/40 border border-white/20 rounded-xl p-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                    className="flex-1 bg-black/40 border border-white/20 rounded-xl p-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA]"
                   />
                   <button
                     type="button"
                     onClick={handleAddFeature}
-                    className="px-4 py-2.5 bg-white/10 hover:bg-[#D4AF37] hover:text-[#022C22] text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
+                    className="px-4 py-2.5 bg-white/10 hover:bg-[#D39EAA] hover:text-[#592D37] text-white font-bold text-xs rounded-xl transition-colors cursor-pointer"
                   >
                     Add Highlight
                   </button>
@@ -4043,7 +4043,7 @@ export default function AdminBurgerPage() {
           {(activeTab === 'seo' || viewMode === 'all') && (
             <div className="bg-[#032019] p-5 sm:p-7 rounded-2xl border border-white/15 space-y-6 mb-6 shadow-md">
               <h3 className="font-serif text-base font-bold text-white flex items-center gap-2 pb-3 border-b border-white/10">
-                <Globe className="w-4 h-4 text-[#D4AF37]" />
+                <Globe className="w-4 h-4 text-[#D39EAA]" />
                 Marketing Badges & Search Engine Optimization (SEO)
               </h3>
 
@@ -4060,7 +4060,7 @@ export default function AdminBurgerPage() {
                       onClick={() => setFormData({ ...formData, badge })}
                       className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                         formData.badge === badge
-                          ? 'bg-[#D4AF37] text-[#022C22]'
+                          ? 'bg-[#D39EAA] text-[#592D37]'
                           : 'bg-black/40 text-gray-300 hover:text-white border border-white/10'
                       }`}
                     >
@@ -4086,7 +4086,7 @@ export default function AdminBurgerPage() {
                       type="checkbox"
                       checked={formData.isFeatured ?? false}
                       onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-                      className="w-4 h-4 rounded text-[#D4AF37] focus:ring-[#D4AF37]"
+                      className="w-4 h-4 rounded text-[#D39EAA] focus:ring-[#D39EAA]"
                     />
                     <span>🌟 Feature on Homepage Spotlight Carousel</span>
                   </label>
@@ -4109,7 +4109,7 @@ export default function AdminBurgerPage() {
                     placeholder="e.g. Oval Rose Quartz Engagement Ring | ForeverJewellStudio"
                     value={formData.metaTitle || ''}
                     onChange={(e) => setFormData({ ...formData, metaTitle: e.target.value })}
-                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                   />
                 </div>
 
@@ -4127,14 +4127,14 @@ export default function AdminBurgerPage() {
                     placeholder="Brief description that entices shoppers clicking from Google Search..."
                     value={formData.metaDescription || ''}
                     onChange={(e) => setFormData({ ...formData, metaDescription: e.target.value })}
-                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full bg-black/40 border border-white/20 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-[#D39EAA]"
                   />
                 </div>
 
                 {/* Google Search Card Preview */}
                 <div className="bg-[#202124] p-4 rounded-xl border border-white/10 text-left space-y-1">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-[#D4AF37] font-bold">
+                    <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-[#D39EAA] font-bold">
                       F
                     </div>
                     <div>
@@ -4160,7 +4160,7 @@ export default function AdminBurgerPage() {
           {/* ================================================================= */}
           <div className="mt-6 pt-6 border-t border-white/15 space-y-6">
             <div className="flex items-center justify-between">
-              <span className="font-serif text-sm font-bold text-[#D4AF37] flex items-center gap-1.5">
+              <span className="font-serif text-sm font-bold text-[#D39EAA] flex items-center gap-1.5">
                 <Eye className="w-4 h-4" />
                 Live Customer Preview (How your uploaded photos appear on store)
               </span>
@@ -4175,7 +4175,7 @@ export default function AdminBurgerPage() {
                 <ProductCard product={formData} />
               </div>
 
-              <div className="lg:col-span-8 bg-[#FDFBF7] p-4 rounded-2xl border border-gray-300">
+              <div className="lg:col-span-8 bg-[#FFF0F5] p-4 rounded-2xl border border-gray-300">
                 <span className="text-xs font-bold text-gray-800 block mb-2 font-sans">
                   2. Product Detail Page Multi-Photo Gallery Preview ({formData.images.length} photos):
                 </span>
@@ -4200,11 +4200,11 @@ export default function AdminBurgerPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-lg bg-[#042820] border border-[#D4AF37]/40 rounded-2xl p-6 shadow-2xl space-y-5 text-gray-200"
+              className="w-full max-w-lg bg-[#042820] border border-[#D39EAA]/40 rounded-2xl p-6 shadow-2xl space-y-5 text-gray-200"
             >
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-[#D4AF37] text-[#022C22] flex items-center justify-center font-bold">
+                  <div className="w-8 h-8 rounded-lg bg-[#D39EAA] text-[#592D37] flex items-center justify-center font-bold">
                     <ShieldCheck className="w-5 h-5" />
                   </div>
                   <div>
@@ -4253,7 +4253,7 @@ export default function AdminBurgerPage() {
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-bold text-white">{admin.name}</span>
                           <span className={`text-[10px] font-bold px-1.5 py-0.2 rounded font-mono ${
-                            admin.role === 'SUPER_ADMIN' ? 'bg-[#D4AF37]/20 text-[#D4AF37]' : 'bg-blue-500/20 text-blue-300'
+                            admin.role === 'SUPER_ADMIN' ? 'bg-[#D39EAA]/20 text-[#D39EAA]' : 'bg-blue-500/20 text-blue-300'
                           }`}>
                             {admin.role}
                           </span>
@@ -4277,7 +4277,7 @@ export default function AdminBurgerPage() {
 
               {/* Add New Admin Form */}
               <form onSubmit={handleAddAdmin} className="border-t border-white/10 pt-4 space-y-3">
-                <p className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider">
+                <p className="text-xs font-bold text-[#D39EAA] uppercase tracking-wider">
                   + Add New Admin Member
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -4286,28 +4286,28 @@ export default function AdminBurgerPage() {
                     placeholder="Admin Email (e.g. partner@gmail.com)"
                     value={newAdminEmail}
                     onChange={(e) => setNewAdminEmail(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-[#021A14] border border-white/15 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full px-3 py-2 text-xs bg-[#021A14] border border-white/15 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA]"
                   />
                   <input
                     type="text"
                     placeholder="Full Name"
                     value={newAdminName}
                     onChange={(e) => setNewAdminName(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-[#021A14] border border-white/15 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full px-3 py-2 text-xs bg-[#021A14] border border-white/15 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA]"
                   />
                 </div>
                 <div className="flex items-center justify-between gap-3">
                   <select
                     value={newAdminRole}
                     onChange={(e) => setNewAdminRole(e.target.value as any)}
-                    className="px-3 py-2 text-xs bg-[#021A14] border border-white/15 rounded-lg text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                    className="px-3 py-2 text-xs bg-[#021A14] border border-white/15 rounded-lg text-gray-300 focus:outline-none focus:border-[#D39EAA]"
                   >
                     <option value="MANAGER">Role: Manager (Orders & Catalog)</option>
                     <option value="SUPER_ADMIN">Role: Super Admin (Full Access)</option>
                   </select>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-[#D4AF37] hover:bg-white text-[#022C22] font-bold text-xs rounded-lg transition-all shadow cursor-pointer shrink-0"
+                    className="px-4 py-2 bg-[#D39EAA] hover:bg-white text-[#592D37] font-bold text-xs rounded-lg transition-all shadow cursor-pointer shrink-0"
                   >
                     Authorize Admin
                   </button>

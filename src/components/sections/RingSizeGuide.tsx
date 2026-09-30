@@ -58,7 +58,7 @@ export default function RingSizeGuide() {
   const currentCarat = caratScales[activeCaratIdx];
 
   return (
-    <section id="size-guide" className="py-20 bg-[#FDFBF7] border-t border-[#E8E5DF]">
+    <section id="size-guide" className="py-20 bg-[#FFF0F5] border-t border-[#E8E5DF]">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <p className="font-sans text-xs font-bold tracking-[0.25em] text-[#8C6A1F] uppercase mb-2">
@@ -67,7 +67,7 @@ export default function RingSizeGuide() {
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#18181B] mb-4">
             Carat Visualizer & Ring Sizing Guide
           </h2>
-          <div className="w-20 h-[1.5px] bg-[#B89035] mx-auto mb-6" />
+          <div className="w-20 h-[1.5px] bg-[#C88E91] mx-auto mb-6" />
           <p className="font-sans text-sm sm:text-base text-gray-600">
             Never guess how a ring will look or fit on your finger. Switch between our live carat scale simulator and Indian ring size conversion chart.
           </p>
@@ -78,7 +78,7 @@ export default function RingSizeGuide() {
               onClick={() => setActiveTab('carat')}
               className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-sans text-xs font-bold tracking-wider uppercase transition-all ${
                 activeTab === 'carat'
-                  ? 'bg-[#18181B] text-[#D4AF37] shadow-sm'
+                  ? 'bg-[#18181B] text-[#D39EAA] shadow-sm'
                   : 'text-gray-600 hover:text-black'
               }`}
             >
@@ -89,7 +89,7 @@ export default function RingSizeGuide() {
               onClick={() => setActiveTab('sizer')}
               className={`flex items-center gap-2 px-6 py-2.5 rounded-lg font-sans text-xs font-bold tracking-wider uppercase transition-all ${
                 activeTab === 'sizer'
-                  ? 'bg-[#18181B] text-[#D4AF37] shadow-sm'
+                  ? 'bg-[#18181B] text-[#D39EAA] shadow-sm'
                   : 'text-gray-600 hover:text-black'
               }`}
             >
@@ -109,8 +109,8 @@ export default function RingSizeGuide() {
                   onClick={() => setActiveCaratIdx(idx)}
                   className={`p-4 rounded-xl border text-center transition-all ${
                     activeCaratIdx === idx
-                      ? 'border-[#B89035] bg-[#F4E8C1]/30 ring-2 ring-[#B89035]/50'
-                      : 'border-[#E8E5DF] hover:border-gray-300 bg-[#FDFBF7]'
+                      ? 'border-[#C88E91] bg-[#F4E8C1]/30 ring-2 ring-[#C88E91]/50'
+                      : 'border-[#E8E5DF] hover:border-gray-300 bg-[#FFF0F5]'
                   }`}
                 >
                   <span className="block font-serif text-lg font-bold text-[#18181B]">
@@ -126,7 +126,7 @@ export default function RingSizeGuide() {
             {/* Visualizer Hand Simulator */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-[#F7F5F0] rounded-xl p-8 border border-[#E8E5DF]">
               {/* Left: Graphic representation */}
-              <div className="relative aspect-square max-w-[320px] mx-auto w-full flex items-center justify-center bg-radial from-amber-50 to-transparent rounded-full border border-dashed border-[#D4AF37]/40">
+              <div className="relative aspect-square max-w-[320px] mx-auto w-full flex items-center justify-center bg-radial from-amber-50 to-transparent rounded-full border border-dashed border-[#D39EAA]/40">
                 {/* Finger silhouette outline */}
                 <div className="w-28 h-64 bg-amber-100/60 rounded-t-full border border-amber-200 shadow-inner flex items-center justify-center relative">
                   {/* Ring Band */}
@@ -139,14 +139,14 @@ export default function RingSizeGuide() {
                       transform: `scale(${currentCarat.diameterScale})`,
                     }}
                   >
-                    <div className="w-14 h-14 bg-gradient-to-br from-white via-amber-50 to-emerald-50 rounded-full shadow-2xl border-2 border-white flex items-center justify-center ring-2 ring-[#D4AF37] relative overflow-hidden">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#064E3B" strokeWidth="1.2">
-                        <polygon points="6,3 18,3 22,9 12,21 2,9" fill="rgba(212, 175, 55, 0.15)" stroke="#064E3B" />
-                        <line x1="2" y1="9" x2="22" y2="9" stroke="#064E3B" strokeWidth="1" />
-                        <line x1="12" y1="21" x2="6" y2="9" stroke="#064E3B" strokeWidth="0.8" />
-                        <line x1="12" y1="21" x2="18" y2="9" stroke="#064E3B" strokeWidth="0.8" />
-                        <line x1="6" y1="3" x2="12" y2="9" stroke="#064E3B" strokeWidth="0.8" />
-                        <line x1="18" y1="3" x2="12" y2="9" stroke="#064E3B" strokeWidth="0.8" />
+                    <div className="w-14 h-14 bg-gradient-to-br from-white via-amber-50 to-emerald-50 rounded-full shadow-2xl border-2 border-white flex items-center justify-center ring-2 ring-[#D39EAA] relative overflow-hidden">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B76E79" strokeWidth="1.2">
+                        <polygon points="6,3 18,3 22,9 12,21 2,9" fill="rgba(212, 175, 55, 0.15)" stroke="#B76E79" />
+                        <line x1="2" y1="9" x2="22" y2="9" stroke="#B76E79" strokeWidth="1" />
+                        <line x1="12" y1="21" x2="6" y2="9" stroke="#B76E79" strokeWidth="0.8" />
+                        <line x1="12" y1="21" x2="18" y2="9" stroke="#B76E79" strokeWidth="0.8" />
+                        <line x1="6" y1="3" x2="12" y2="9" stroke="#B76E79" strokeWidth="0.8" />
+                        <line x1="18" y1="3" x2="12" y2="9" stroke="#B76E79" strokeWidth="0.8" />
                       </svg>
                       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent pointer-events-none" />
                     </div>
@@ -157,7 +157,7 @@ export default function RingSizeGuide() {
               {/* Right: Info */}
               <div className="space-y-4">
                 <div>
-                  <span className="inline-block px-3 py-1 bg-[#064E3B] text-[#D4AF37] font-sans text-xs font-bold rounded-md uppercase tracking-wider mb-2">
+                  <span className="inline-block px-3 py-1 bg-[#B76E79] text-[#D39EAA] font-sans text-xs font-bold rounded-md uppercase tracking-wider mb-2">
                     {currentCarat.look}
                   </span>
                   <h3 className="font-serif text-3xl font-bold text-[#18181B]">
@@ -199,7 +199,7 @@ export default function RingSizeGuide() {
                 <thead>
                   <tr className="bg-[#F7F5F0] border-b border-[#E8E5DF]">
                     <th className="p-3 font-bold text-[#18181B]">US Size</th>
-                    <th className="p-3 font-bold text-[#064E3B] bg-[#F4E8C1]/30">Indian Size (Standard)</th>
+                    <th className="p-3 font-bold text-[#B76E79] bg-[#F4E8C1]/30">Indian Size (Standard)</th>
                     <th className="p-3 text-gray-600">Inside Diameter (mm)</th>
                     <th className="p-3 text-gray-600">Circumference (mm)</th>
                   </tr>
@@ -208,7 +208,7 @@ export default function RingSizeGuide() {
                   {sizeChart.map((row) => (
                     <tr key={row.us} className="hover:bg-gray-50">
                       <td className="p-3 font-bold text-[#18181B]">Size {row.us}</td>
-                      <td className="p-3 font-bold text-[#064E3B] bg-[#F4E8C1]/10">{row.india}</td>
+                      <td className="p-3 font-bold text-[#B76E79] bg-[#F4E8C1]/10">{row.india}</td>
                       <td className="p-3 text-gray-600">{row.insideMm}</td>
                       <td className="p-3 text-gray-600">{row.circumMm}</td>
                     </tr>
@@ -217,7 +217,7 @@ export default function RingSizeGuide() {
               </table>
             </div>
 
-            <div className="mt-6 p-4 bg-[#FDFBF7] rounded-xl border border-[#E8E5DF] flex items-center justify-between gap-4">
+            <div className="mt-6 p-4 bg-[#FFF0F5] rounded-xl border border-[#E8E5DF] flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <HelpCircle className="w-6 h-6 text-[#8C6A1F] flex-shrink-0" />
                 <p className="font-sans text-xs text-gray-600">

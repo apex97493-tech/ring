@@ -48,16 +48,16 @@ export default function WishlistPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] pt-24 sm:pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FFF0F5] pt-24 sm:pt-32 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header Breadcrumb & Title */}
         <div className="mb-8">
           <nav className="flex items-center gap-2 text-xs text-gray-500 font-sans mb-3">
-            <Link href="/" className="hover:text-[#022C22] transition-colors">
+            <Link href="/" className="hover:text-[#592D37] transition-colors">
               Home
             </Link>
             <span>/</span>
-            <span className="text-[#022C22] font-semibold">Wishlist</span>
+            <span className="text-[#592D37] font-semibold">Wishlist</span>
           </nav>
 
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E8E5DF] pb-6">
@@ -66,7 +66,7 @@ export default function WishlistPage() {
                 <div className="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center">
                   <Heart className="w-4 h-4 text-rose-500 fill-rose-500" />
                 </div>
-                <h1 className="font-serif text-3xl sm:text-4xl text-[#022C22] font-bold">
+                <h1 className="font-serif text-3xl sm:text-4xl text-[#592D37] font-bold">
                   My Saved Jewelry
                 </h1>
               </div>
@@ -80,7 +80,7 @@ export default function WishlistPage() {
                 <button
                   type="button"
                   onClick={handleShareWishlistWhatsApp}
-                  className="px-4 py-2.5 bg-[#064E3B] hover:bg-[#043327] active:scale-95 text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2.5 bg-[#B76E79] hover:bg-[#043327] active:scale-95 text-[#D39EAA] font-sans text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5" />
                   Share Wishlist on WhatsApp
@@ -89,7 +89,7 @@ export default function WishlistPage() {
                 <button
                   type="button"
                   onClick={handleAddAllToCart}
-                  className="px-4 py-2.5 bg-[#022C22] hover:bg-[#D4AF37] hover:text-[#022C22] active:scale-95 text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm flex items-center gap-1.5 cursor-pointer border border-[#D4AF37]/30"
+                  className="px-4 py-2.5 bg-[#592D37] hover:bg-[#D39EAA] hover:text-[#592D37] active:scale-95 text-[#D39EAA] font-sans text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-sm flex items-center gap-1.5 cursor-pointer border border-[#D39EAA]/30"
                 >
                   <ShoppingBag className="w-3.5 h-3.5" />
                   Move All to Bag ({wishlistedProducts.length})
@@ -102,10 +102,10 @@ export default function WishlistPage() {
         {/* Content */}
         {wishlistedProducts.length === 0 ? (
           <div className="py-20 text-center bg-white rounded-2xl border border-[#E8E5DF] p-8 max-w-xl mx-auto shadow-sm">
-            <div className="w-16 h-16 bg-[#FDFBF7] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#E8E5DF]">
+            <div className="w-16 h-16 bg-[#FFF0F5] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#E8E5DF]">
               <Heart className="w-8 h-8 text-gray-300" />
             </div>
-            <h2 className="font-serif text-2xl text-[#022C22] font-bold mb-2">
+            <h2 className="font-serif text-2xl text-[#592D37] font-bold mb-2">
               Your Wishlist is Empty
             </h2>
             <p className="font-sans text-xs sm:text-sm text-gray-500 mb-6 max-w-md mx-auto">
@@ -113,7 +113,7 @@ export default function WishlistPage() {
             </p>
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#022C22] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-widest hover:bg-[#D4AF37] hover:text-[#022C22] active:scale-95 transition-all rounded-xl shadow-md"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#592D37] text-[#D39EAA] font-sans text-xs font-bold uppercase tracking-widest hover:bg-[#D39EAA] hover:text-[#592D37] active:scale-95 transition-all rounded-xl shadow-md"
             >
               Explore Solitaire Rings <ArrowRight className="w-4 h-4" />
             </Link>

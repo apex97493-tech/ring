@@ -101,7 +101,7 @@ export const STANDARD_METAL_TIERS: {
   // ── 925 Sterling Silver ────────────────────────────────────────────────────
   { metal: '925 Sterling Silver',  colorCode: '#C0C5CE', priceAddon: 0,      group: 'Silver'       },
   // ── Gold Overlay — same price as silver (gold-plated, not solid) ──────────
-  { metal: 'Yellow Gold Overlay',  colorCode: '#D4AF37', priceAddon: 0,      group: 'Gold Overlay' },
+  { metal: 'Yellow Gold Overlay',  colorCode: '#D39EAA', priceAddon: 0,      group: 'Gold Overlay' },
   { metal: 'Rose Gold Overlay',    colorCode: '#E8927C', priceAddon: 0,      group: 'Gold Overlay' },
   { metal: 'White Gold Overlay',   colorCode: '#E5E7EB', priceAddon: 0,      group: 'Gold Overlay' },
   // ── 9k Solid Gold (Verified directly from live Etsy shop) ───────────────────

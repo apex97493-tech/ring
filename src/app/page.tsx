@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -66,7 +67,7 @@ const slides = [
     id: 1,
     type: 'promo',
     image:
-      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?q=80&w=2000&auto=format&fit=crop',
+      'https://i.etsystatic.com/40882668/r/il/003823/8343343079/il_fullxfull.8343343079_agny.jpg',
     titleTop: 'New',
     titleMain: 'Arrivals',
     subtitle: 'Discover The',
@@ -78,7 +79,7 @@ const slides = [
     id: 2,
     type: 'promo',
     image:
-      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2000&auto=format&fit=crop',
+      'https://i.etsystatic.com/40882668/r/il/ef3b53/8339199783/il_fullxfull.8339199783_lv2w.jpg',
     titleTop: 'Custom',
     titleMain: 'Design',
     subtitle: 'Create Your',
@@ -224,11 +225,11 @@ export default function Home() {
   const endIndex = Math.min(currentPage * PRODUCTS_PER_PAGE, filteredProducts.length);
 
   return (
-    <div className="w-full min-h-screen bg-[#FDFBF7]">
+    <div className="w-full min-h-screen bg-[#FFF0F5]">
       {/* ============================================================ */}
       {/* 1. ROYAL EMERALD ANIMATED HERO CAROUSEL                      */}
       {/* ============================================================ */}
-      <section className="relative h-[45vh] sm:h-[60vh] lg:h-[90vh] w-full overflow-hidden bg-[#FDFBF7]">
+      <section className="relative h-[45vh] sm:h-[60vh] lg:h-[90vh] w-full overflow-hidden bg-[#FFF0F5]">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -240,34 +241,34 @@ export default function Home() {
           >
             {slides[currentSlide].type === 'hero' ? (
               // SLIDE 1: Royal Emerald Shape with 3D Levitating & Rotating Ring
-              <div className="relative w-full h-full flex items-center justify-center lg:pt-0 lg:pb-0 bg-[#FDFBF7]">
+              <div className="relative w-full h-full flex items-center justify-center lg:pt-0 lg:pb-0 bg-[#FFF0F5]">
                 <div className="relative z-10 w-full max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 flex flex-row items-center justify-between gap-2 sm:gap-6">
                   {/* Left: Editorial Text Content */}
                   <div className="w-1/2 flex flex-col justify-center text-left">
-                    <div className="inline-flex items-center gap-1 sm:gap-2 self-start px-2 sm:px-3 py-0.5 sm:py-1 bg-[#064E3B]/10 border border-[#064E3B]/30 text-[#064E3B] rounded-full text-[8px] sm:text-xs font-sans font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase mb-2 sm:mb-6 whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
-                      <Sparkles className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-[#D4AF37] flex-shrink-0" />
+                    <div className="inline-flex items-center gap-1 sm:gap-2 self-start px-2 sm:px-3 py-0.5 sm:py-1 bg-[#B76E79]/10 border border-[#B76E79]/30 text-[#B76E79] rounded-full text-[8px] sm:text-xs font-sans font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase mb-2 sm:mb-6 whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
+                      <Sparkles className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-[#D39EAA] flex-shrink-0" />
                       <span className="truncate">Royal Heritage</span>
                     </div>
 
-                    <h1 className="font-serif text-lg sm:text-5xl md:text-7xl lg:text-8xl text-[#022C22] mb-2 sm:mb-6 leading-[1.1] sm:leading-[1.05] tracking-tight">
+                    <h1 className="font-serif text-lg sm:text-5xl md:text-7xl lg:text-8xl text-[#592D37] mb-2 sm:mb-6 leading-[1.1] sm:leading-[1.05] tracking-tight">
                       A Legacy in <br />
-                      <span className="text-[#D4AF37] italic font-light">Every Carat.</span>
+                      <span className="text-[#D39EAA] italic font-light">Every Carat.</span>
                     </h1>
 
-                    <p className="font-serif text-[9px] sm:text-xl text-[#022C22]/80 mb-4 sm:mb-10 font-medium max-w-md leading-snug sm:leading-relaxed">
+                    <p className="font-serif text-[9px] sm:text-xl text-[#592D37]/80 mb-4 sm:mb-10 font-medium max-w-md leading-snug sm:leading-relaxed">
                       Discover ethical VVS1 D-Color Moissanite that outshines natural diamonds with 2.4x more fire. Handcrafted in BIS Hallmarked Gold & 925 Sterling Silver.
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-start gap-1.5 sm:gap-4">
                       <a
                         href="#collection"
-                        className="inline-block bg-[#022C22] text-[#D4AF37] px-3 sm:px-12 py-1.5 sm:py-5 font-sans text-[8px] sm:text-[11px] font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase hover:bg-[#D4AF37] hover:text-[#022C22] transition-colors shadow-royal border border-[#D4AF37]/40 text-center whitespace-nowrap"
+                        className="inline-block bg-[#592D37] text-[#D39EAA] px-3 sm:px-12 py-1.5 sm:py-5 font-sans text-[8px] sm:text-[11px] font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase hover:bg-[#D39EAA] hover:text-[#592D37] transition-colors shadow-royal border border-[#D39EAA]/40 text-center whitespace-nowrap"
                       >
                         Explore Solitaires
                       </a>
                       <a
                         href="#comparison"
-                        className="inline-block bg-transparent text-[#022C22] border border-[#022C22]/30 px-3 sm:px-8 py-1.5 sm:py-5 font-sans text-[8px] sm:text-[11px] font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors text-center whitespace-nowrap"
+                        className="inline-block bg-transparent text-[#592D37] border border-[#592D37]/30 px-3 sm:px-8 py-1.5 sm:py-5 font-sans text-[8px] sm:text-[11px] font-bold tracking-[0.1em] sm:tracking-[0.25em] uppercase hover:border-[#D39EAA] hover:text-[#D39EAA] transition-colors text-center whitespace-nowrap"
                       >
                         Moissanite Guide
                       </a>
@@ -286,9 +287,14 @@ export default function Home() {
                       transition={{ repeat: Infinity, duration: 8, ease: 'easeInOut' }}
                       className="relative w-full max-w-[160px] sm:max-w-[480px] aspect-square flex items-center justify-center"
                     >
-                      <img
-                        src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1200&auto=format&fit=crop"
+                      <Image
+                        src="https://i.etsystatic.com/40882668/r/il/c5d69c/8083961552/il_fullxfull.8083961552_n07y.jpg"
                         alt="Floating Royal Solitaire Ring"
+                        width={800}
+                        height={800}
+                        quality={100}
+                        unoptimized
+                        priority
                         className="w-[85%] md:w-[92%] max-w-none object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.45)]"
                       />
                     </motion.div>
@@ -297,30 +303,40 @@ export default function Home() {
               </div>
             ) : slides[currentSlide].type === 'full-image' ? (
               // SLIDE 4: Full Image Banner
-              <div className="relative w-full h-full flex items-center justify-center cursor-pointer overflow-hidden bg-[#FDFBF7]">
-                <img
-                  src={slides[currentSlide].image}
-                  alt="Banner"
-                  className="w-full h-full object-contain object-center"
-                />
+              <div className="relative w-full h-full flex items-center justify-center cursor-pointer overflow-hidden bg-[#FFF0F5]">
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src={slides[currentSlide].image || '/images/ai_ring1_front.jpg'}
+                    alt="Banner"
+                    fill
+                    quality={100}
+                    unoptimized
+                    priority
+                    className="object-contain object-center grayscale contrast-125 brightness-105 mix-blend-darken"
+                  />
+                </div>
               </div>
             ) : (
-              // SLIDE 2, 3: Promotional Emerald-Themed Slides
-              <div className="relative w-full h-full bg-[#022C22]">
+              // SLIDE 2, 3: Promotional Slides
+              <div className="relative w-full h-full bg-[#FFF0F5]">
                 <div className="absolute inset-0 z-0">
-                  <img
-                    src={slides[currentSlide].image}
+                  <Image
+                    src={slides[currentSlide].image || '/images/ai_ring1_front.jpg'}
                     alt="Banner"
-                    className="w-full h-full object-cover object-center opacity-65 mix-blend-luminosity"
+                    fill
+                    quality={100}
+                    unoptimized
+                    priority
+                    className="object-cover object-center"
                   />
-                  {/* Dark Emerald Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#022C22] via-[#022C22]/80 to-transparent" />
+                  {/* Subtle dark gradient just behind text for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent" />
                 </div>
 
                 <div className="absolute inset-0 z-10 flex flex-col justify-center px-4 sm:px-16 md:px-24 lg:px-32">
-                  <div className="max-w-2xl text-[#FDFBF7]">
+                  <div className="max-w-2xl text-[#FFF0F5]">
                     <div className="flex items-baseline gap-2 sm:gap-4 mb-1 sm:mb-2">
-                      <h2 className="font-serif text-2xl sm:text-5xl md:text-7xl italic font-light tracking-wider text-[#D4AF37]">
+                      <h2 className="font-serif text-2xl sm:text-5xl md:text-7xl italic font-light tracking-wider text-[#D39EAA]">
                         {slides[currentSlide].titleTop}
                       </h2>
                       <h1 className="font-serif text-3xl sm:text-6xl md:text-8xl tracking-tight text-white">
@@ -328,8 +344,8 @@ export default function Home() {
                       </h1>
                     </div>
 
-                    <div className="border border-[#D4AF37]/50 backdrop-blur-sm px-3 py-1 sm:px-6 sm:py-2 inline-block mb-2 sm:mb-3 min-w-[140px] sm:min-w-[280px]">
-                      <p className="font-sans text-[10px] sm:text-base sm:text-lg tracking-widest text-[#FDFBF7] uppercase font-semibold">
+                    <div className="border border-[#D39EAA]/50 backdrop-blur-sm px-3 py-1 sm:px-6 sm:py-2 inline-block mb-2 sm:mb-3 min-w-[140px] sm:min-w-[280px]">
+                      <p className="font-sans text-[10px] sm:text-base sm:text-lg tracking-widest text-[#FFF0F5] uppercase font-semibold">
                         {slides[currentSlide].subtitle}
                       </p>
                     </div>
@@ -338,19 +354,19 @@ export default function Home() {
                       <span className="font-serif text-3xl sm:text-6xl md:text-8xl tracking-tighter text-white">
                         {slides[currentSlide].highlightPrefix}
                       </span>
-                      <span className="font-serif text-xl sm:text-4xl md:text-6xl italic font-light text-[#D4AF37]">
+                      <span className="font-serif text-xl sm:text-4xl md:text-6xl italic font-light text-[#D39EAA]">
                         {slides[currentSlide].highlightSuffix}
                       </span>
                     </div>
 
-                    <p className="font-serif text-xs sm:text-lg sm:text-xl italic text-[#FDFBF7]/85 tracking-wider mb-4 sm:mb-8">
+                    <p className="font-serif text-xs sm:text-lg sm:text-xl italic text-[#FFF0F5]/85 tracking-wider mb-4 sm:mb-8">
                       {slides[currentSlide].description}
                     </p>
 
                     <div>
                       <a
                         href="#collection"
-                        className="inline-block bg-[#D4AF37] text-[#022C22] px-4 py-2 sm:px-8 sm:py-3.5 font-sans text-[9px] sm:text-xs font-bold tracking-widest uppercase hover:bg-white transition-colors shadow-lg"
+                        className="inline-block bg-[#D39EAA] text-[#592D37] px-4 py-2 sm:px-8 sm:py-3.5 font-sans text-[9px] sm:text-xs font-bold tracking-widest uppercase hover:bg-white transition-colors shadow-lg"
                       >
                         Claim Offer Now
                       </a>
@@ -365,14 +381,14 @@ export default function Home() {
         {/* Carousel Arrow Controls */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 md:left-8 top-[65%] sm:top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-12 lg:h-12 border border-[#D4AF37]/60 rounded-full flex items-center justify-center text-[#D4AF37] bg-[#022C22]/60 backdrop-blur-xs hover:bg-[#D4AF37] hover:text-[#022C22] transition-all cursor-pointer shadow-md"
+          className="absolute left-4 md:left-8 top-[65%] sm:top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-12 lg:h-12 border border-[#D39EAA]/60 rounded-full flex items-center justify-center text-[#D39EAA] bg-[#592D37]/60 backdrop-blur-xs hover:bg-[#D39EAA] hover:text-[#592D37] transition-all cursor-pointer shadow-md"
           aria-label="Previous Slide"
         >
           <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 md:right-8 top-[65%] sm:top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-12 lg:h-12 border border-[#D4AF37]/60 rounded-full flex items-center justify-center text-[#D4AF37] bg-[#022C22]/60 backdrop-blur-xs hover:bg-[#D4AF37] hover:text-[#022C22] transition-all cursor-pointer shadow-md"
+          className="absolute right-4 md:right-8 top-[65%] sm:top-1/2 -translate-y-1/2 z-20 w-10 h-10 lg:w-12 lg:h-12 border border-[#D39EAA]/60 rounded-full flex items-center justify-center text-[#D39EAA] bg-[#592D37]/60 backdrop-blur-xs hover:bg-[#D39EAA] hover:text-[#592D37] transition-all cursor-pointer shadow-md"
           aria-label="Next Slide"
         >
           <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -384,9 +400,9 @@ export default function Home() {
             <button
               key={idx}
               onClick={() => setCurrentSlide(idx)}
-              className={`w-3 h-3 rounded-full transition-all border border-[#D4AF37] cursor-pointer ${
+              className={`w-3 h-3 rounded-full transition-all border border-[#D39EAA] cursor-pointer ${
                 currentSlide === idx
-                  ? 'bg-[#D4AF37] scale-125 shadow-gold'
+                  ? 'bg-[#D39EAA] scale-125 shadow-gold'
                   : 'bg-transparent'
               }`}
               aria-label={`Slide ${idx + 1}`}
@@ -398,15 +414,15 @@ export default function Home() {
       {/* ============================================================ */}
       {/* 2. CURATED COLLECTIONS SHOWCASE (PREVIOUS POPULAR SECTION)   */}
       {/* ============================================================ */}
-      <section className="py-10 sm:py-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 bg-[#FDFBF7]">
+      <section className="py-10 sm:py-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 bg-[#FFF0F5]">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-14">
-          <p className="font-sans text-[11px] sm:text-xs font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#064E3B] uppercase mb-1.5 sm:mb-2">
+          <p className="font-sans text-[11px] sm:text-xs font-bold tracking-[0.2em] sm:tracking-[0.25em] text-[#B76E79] uppercase mb-1.5 sm:mb-2">
             Signature Collections
           </p>
-          <h2 className="font-serif text-2xl sm:text-5xl text-[#022C22] mb-2 sm:mb-3 italic">
+          <h2 className="font-serif text-2xl sm:text-5xl text-[#592D37] mb-2 sm:mb-3 italic">
             Curated Collections
           </h2>
-          <div className="w-12 sm:w-16 h-[1.5px] bg-[#D4AF37] mx-auto mb-3 sm:mb-4" />
+          <div className="w-12 sm:w-16 h-[1.5px] bg-[#D39EAA] mx-auto mb-3 sm:mb-4" />
           <p className="font-sans text-xs sm:text-sm text-gray-600">
             Explore bespoke categories engineered to capture light with mathematical perfection.
           </p>
@@ -419,18 +435,18 @@ export default function Home() {
               key={cat.name}
               className="group cursor-pointer block"
             >
-              <div className="relative aspect-[3/4] overflow-hidden bg-[#022C22] mb-4 rounded-xl border border-[#D4AF37]/30 shadow-royal">
+              <div className="relative aspect-[3/4] overflow-hidden bg-[#592D37] mb-4 rounded-xl border border-[#D39EAA]/30 shadow-royal">
                 <img
                   src={cat.img}
                   alt={cat.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#022C22]/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-                <span className="absolute bottom-3 inset-x-3 text-center font-sans text-[10px] tracking-widest text-[#D4AF37] uppercase font-bold">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#592D37]/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                <span className="absolute bottom-3 inset-x-3 text-center font-sans text-[10px] tracking-widest text-[#D39EAA] uppercase font-bold">
                   View Collection →
                 </span>
               </div>
-              <h3 className="text-center font-serif text-xl tracking-wider text-[#022C22] group-hover:text-[#B89035] transition-colors italic">
+              <h3 className="text-center font-serif text-xl tracking-wider text-[#592D37] group-hover:text-[#C88E91] transition-colors italic">
                 {cat.name}
               </h3>
             </Link>
@@ -454,11 +470,11 @@ export default function Home() {
         {/* Title & Filter Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-[#E8E5DF] gap-3 sm:gap-4">
           <div>
-            <div className="flex items-center gap-1.5 mb-1 text-[#064E3B] font-sans text-[11px] sm:text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+            <div className="flex items-center gap-1.5 mb-1 text-[#B76E79] font-sans text-[11px] sm:text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-[#D39EAA]" />
               <span>GRA Certified VVS1 D-Color Jewels</span>
             </div>
-            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#022C22] tracking-tight">
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#592D37] tracking-tight">
               {selectedShape === 'all'
                 ? 'Featured Solitaire Rings'
                 : `${selectedShape} Cut Moissanite Solitaires`}
@@ -478,7 +494,7 @@ export default function Home() {
                 value={searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder="Search rings & styles..."
-                className="w-full bg-white border border-[#E8E5DF] rounded-xl pl-8 pr-7 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] shadow-xs placeholder:text-gray-400"
+                className="w-full bg-white border border-[#E8E5DF] rounded-xl pl-8 pr-7 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#592D37] focus:outline-none focus:border-[#D39EAA] shadow-xs placeholder:text-gray-400"
               />
               {searchQuery && (
                 <button
@@ -496,7 +512,7 @@ export default function Home() {
             <select
               value={sortBy}
               onChange={(e) => handleSortChange(e.target.value)}
-              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] cursor-pointer shadow-xs"
+              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#592D37] focus:outline-none focus:border-[#D39EAA] cursor-pointer shadow-xs"
             >
               <option value="featured">Featured</option>
               <option value="price-low">Price: Low to High</option>
@@ -519,8 +535,8 @@ export default function Home() {
             {totalPages > 1 && (
               <div className="mt-10 pt-6 border-t border-[#E8E5DF] flex flex-col sm:flex-row items-center justify-between gap-4">
                 <span className="text-xs text-gray-500 font-sans">
-                  Page <strong className="text-[#022C22] font-semibold">{currentPage}</strong> of{' '}
-                  <strong className="text-[#022C22] font-semibold">{totalPages}</strong> ({filteredProducts.length} total designs)
+                  Page <strong className="text-[#592D37] font-semibold">{currentPage}</strong> of{' '}
+                  <strong className="text-[#592D37] font-semibold">{totalPages}</strong> ({filteredProducts.length} total designs)
                 </span>
 
                 <div className="flex items-center gap-1.5">
@@ -528,7 +544,7 @@ export default function Home() {
                     type="button"
                     disabled={currentPage <= 1}
                     onClick={() => handlePageChange(currentPage - 1)}
-                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs select-none active:scale-95"
+                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#592D37] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D39EAA] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs select-none active:scale-95"
                   >
                     <ChevronLeft className="w-3.5 h-3.5" />
                     <span>Previous</span>
@@ -550,8 +566,8 @@ export default function Home() {
                           onClick={() => handlePageChange(item)}
                           className={`min-w-[34px] h-[34px] px-2 rounded-xl text-xs font-bold transition-all cursor-pointer select-none active:scale-95 ${
                             currentPage === item
-                              ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
-                              : 'bg-white text-gray-700 hover:text-[#022C22] hover:border-[#D4AF37] border border-[#E8E5DF]'
+                              ? 'bg-[#592D37] text-[#D39EAA] shadow-md border border-[#592D37]'
+                              : 'bg-white text-gray-700 hover:text-[#592D37] hover:border-[#D39EAA] border border-[#E8E5DF]'
                           }`}
                         >
                           {item}
@@ -564,7 +580,7 @@ export default function Home() {
                     type="button"
                     disabled={currentPage >= totalPages}
                     onClick={() => handlePageChange(currentPage + 1)}
-                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs select-none active:scale-95"
+                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#592D37] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D39EAA] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs select-none active:scale-95"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -587,7 +603,7 @@ export default function Home() {
                 setSelectedMetal('all');
                 setSearchQuery('');
               }}
-              className="px-6 py-2.5 bg-[#022C22] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-[#B89035] hover:text-white transition-all shadow-md cursor-pointer"
+              className="px-6 py-2.5 bg-[#592D37] text-[#D39EAA] font-sans text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-[#C88E91] hover:text-white transition-all shadow-md cursor-pointer"
             >
               Reset Filters
             </button>

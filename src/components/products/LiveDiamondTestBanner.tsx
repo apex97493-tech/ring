@@ -22,8 +22,8 @@ export default function LiveDiamondTestBanner({ productName }: LiveDiamondTestBa
         <div className="absolute top-0 right-0 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-2xl text-center sm:text-left space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-xs text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[#D4AF37]">
-            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-xs text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[#D39EAA]">
+            <Sparkles className="w-3.5 h-3.5 text-[#D39EAA]" />
             <span>Virtual VIP Atelier Experience</span>
           </div>
 

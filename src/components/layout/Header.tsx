@@ -104,7 +104,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 inset-x-0 z-40 bg-[#022C22] text-[#FDFBF7] border-b border-[#D4AF37]/25 shadow-royal transition-all">
+      <header className="fixed top-0 inset-x-0 z-40 bg-[#592D37] text-[#FFF0F5] border-b border-[#D39EAA]/25 shadow-royal transition-all">
         {/* Top Gold Announcement Bar */}
         <AnnouncementBar />
 
@@ -118,7 +118,7 @@ export default function Header() {
               {/* Brand Logo (Left) */}
               <div className="flex items-center justify-start shrink-0 lg:order-1 py-1 lg:py-0">
                 <Link href="/" className="group flex items-center">
-                  <span className="font-serif italic text-[18px] sm:text-[30px] lg:text-[36px] font-bold text-[#D4AF37] group-hover:text-white transition-colors tracking-wide flex flex-col sm:block leading-[1.1] sm:leading-normal">
+                  <span className="font-serif italic text-[18px] sm:text-[30px] lg:text-[36px] font-bold text-[#D39EAA] group-hover:text-white transition-colors tracking-wide flex flex-col sm:block leading-[1.1] sm:leading-normal">
                     <span>Forever</span>
                     <span className="-mt-0.5 sm:mt-0">JewellStudio</span>
                   </span>
@@ -131,7 +131,7 @@ export default function Header() {
                 <button
                   type="button"
                   onClick={() => setIsSettingsModalOpen(true)}
-                  className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-sans text-[#FDFBF7] hover:text-[#D4AF37] bg-white/10 hover:bg-white/20 rounded-full transition-all border border-[#D4AF37]/35 hover:border-[#D4AF37] cursor-pointer shadow-xs"
+                  className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-sans text-[#FFF0F5] hover:text-[#D39EAA] bg-white/10 hover:bg-white/20 rounded-full transition-all border border-[#D39EAA]/35 hover:border-[#D39EAA] cursor-pointer shadow-xs"
                   title="Change country/region, language or currency"
                   aria-label="Change region and currency"
                 >
@@ -142,7 +142,7 @@ export default function Header() {
                   <span className="font-semibold tracking-wide sm:hidden">
                     {selectedCurrency.code}
                   </span>
-                  <ChevronDown className="w-3 h-3 text-[#D4AF37]" />
+                  <ChevronDown className="w-3 h-3 text-[#D39EAA]" />
                 </button>
 
 
@@ -151,7 +151,7 @@ export default function Header() {
                   href="https://www.etsy.com/shop/foreverjewellstudio?section_id=59060242"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex text-[#FDFBF7] hover:text-[#D4AF37] transition-colors p-1 items-center justify-center group"
+                  className="flex text-[#FFF0F5] hover:text-[#D39EAA] transition-colors p-1 items-center justify-center group"
                   title="Visit our Etsy Shop"
                 >
                   <div className="bg-[#F1641E] text-white px-2 sm:px-2.5 h-6 flex items-center justify-center rounded shadow-sm group-hover:scale-105 transition-all">
@@ -164,7 +164,7 @@ export default function Header() {
                 {/* Search Button */}
                 <button
                   onClick={() => setIsSearchOpen(true)}
-                  className="text-[#FDFBF7] hover:text-[#D4AF37] transition-colors p-1.5 cursor-pointer rounded-full hover:bg-white/10"
+                  className="text-[#FFF0F5] hover:text-[#D39EAA] transition-colors p-1.5 cursor-pointer rounded-full hover:bg-white/10"
                   title="Search"
                 >
                   <Search className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.8} />
@@ -173,11 +173,11 @@ export default function Header() {
                 {/* Wishlist */}
                 <Link
                   href="/wishlist"
-                  className="text-[#FDFBF7] hover:text-[#D4AF37] active:scale-95 transition-all relative p-1.5 block rounded-full hover:bg-white/10"
+                  className="text-[#FFF0F5] hover:text-[#D39EAA] active:scale-95 transition-all relative p-1.5 block rounded-full hover:bg-white/10"
                 >
                   <Heart className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.8} />
                   {wishlist.length > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#022C22] font-sans text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    <span className="absolute -top-0.5 -right-0.5 bg-[#D39EAA] text-[#592D37] font-sans text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                       {wishlist.length}
                     </span>
                   )}
@@ -185,12 +185,13 @@ export default function Header() {
 
                 {/* Cart */}
                 <button
+                  id="header-cart-icon"
                   onClick={() => setIsCartOpen(true)}
-                  className="text-[#FDFBF7] hover:text-[#D4AF37] transition-colors relative p-1.5 flex items-center rounded-full hover:bg-white/10 cursor-pointer"
+                  className="text-[#FFF0F5] hover:text-[#D39EAA] transition-colors relative p-1.5 flex items-center rounded-full hover:bg-white/10 cursor-pointer"
                 >
                   <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={1.8} />
                   {totalItems > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 bg-[#D4AF37] text-[#022C22] font-sans text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-md">
+                    <span className="absolute -top-0.5 -right-0.5 bg-[#D39EAA] text-[#592D37] font-sans text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-md">
                       {totalItems}
                     </span>
                   )}
@@ -209,10 +210,10 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="font-serif italic text-[13px] sm:text-[15px] xl:text-[18px] font-medium tracking-[0.05em] text-[#FDFBF7] hover:text-[#D4AF37] transition-colors relative group whitespace-nowrap"
+                  className="font-serif italic text-[13px] sm:text-[15px] xl:text-[18px] font-medium tracking-[0.05em] text-[#FFF0F5] hover:text-[#D39EAA] transition-colors relative group whitespace-nowrap"
                 >
                   {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#D4AF37] transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#D39EAA] transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               ))}
             </nav>
@@ -236,14 +237,14 @@ export default function Header() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className="relative z-10 bg-[#FDFBF7] w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-[#D4AF37]/50"
+              className="relative z-10 bg-[#FFF0F5] w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-[#D39EAA]/50"
             >
               {/* Search Bar Input Form */}
               <form
                 onSubmit={handleSearchSubmit}
-                className="p-3.5 sm:p-4 border-b border-[#E8E5DF] flex items-center gap-3 bg-[#022C22] text-[#FDFBF7]"
+                className="p-3.5 sm:p-4 border-b border-[#E8E5DF] flex items-center gap-3 bg-[#592D37] text-[#FFF0F5]"
               >
-                <Search className="w-5 h-5 text-[#D4AF37] shrink-0" />
+                <Search className="w-5 h-5 text-[#D39EAA] shrink-0" />
                 <input
                   ref={searchInputRef}
                   type="text"
@@ -265,7 +266,7 @@ export default function Header() {
                 )}
                 <button
                   type="submit"
-                  className="hidden sm:inline-block px-3.5 py-1.5 bg-[#D4AF37] hover:bg-[#F3E5AB] text-[#022C22] rounded-lg font-sans text-xs font-bold uppercase tracking-wider shrink-0 transition-colors cursor-pointer"
+                  className="hidden sm:inline-block px-3.5 py-1.5 bg-[#D39EAA] hover:bg-[#FADBD8] text-[#592D37] rounded-lg font-sans text-xs font-bold uppercase tracking-wider shrink-0 transition-colors cursor-pointer"
                 >
                   Search
                 </button>
@@ -284,7 +285,7 @@ export default function Header() {
                 {searchQuery.trim() === '' ? (
                   <div className="py-3">
                     <div className="flex items-center gap-1.5 mb-2.5 text-xs font-semibold tracking-wider text-gray-400 uppercase font-sans">
-                      <Sparkles className="w-3.5 h-3.5 text-[#B89035]" />
+                      <Sparkles className="w-3.5 h-3.5 text-[#C88E91]" />
                       Popular Jewelry Searches
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -304,7 +305,7 @@ export default function Header() {
                           key={tag}
                           type="button"
                           onClick={() => handleChipClick(tag)}
-                          className="px-3.5 py-1.5 bg-[#F5F2EC] hover:bg-[#D4AF37]/25 text-xs font-sans rounded-full text-[#022C22] transition-colors border border-[#E8E5DF] cursor-pointer"
+                          className="px-3.5 py-1.5 bg-[#F5F2EC] hover:bg-[#D39EAA]/25 text-xs font-sans rounded-full text-[#592D37] transition-colors border border-[#E8E5DF] cursor-pointer"
                         >
                           {tag}
                         </button>
@@ -354,7 +355,7 @@ export default function Header() {
                             className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-lg border border-gray-200 shrink-0"
                           />
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-serif text-xs sm:text-sm font-semibold text-[#022C22] group-hover:text-[#B89035] truncate">
+                            <h4 className="font-serif text-xs sm:text-sm font-semibold text-[#592D37] group-hover:text-[#C88E91] truncate">
                               {prod.name}
                             </h4>
                             <p className="font-sans text-[11px] text-gray-500 flex items-center gap-1 mt-0.5">
@@ -370,7 +371,7 @@ export default function Header() {
                             </p>
                           </div>
                           <div className="text-right shrink-0">
-                            <span className="font-sans text-xs sm:text-sm font-bold text-[#064E3B] block">
+                            <span className="font-sans text-xs sm:text-sm font-bold text-[#B76E79] block">
                               {formatPrice(prod.price)}
                             </span>
                             <span className="font-sans text-[10px] text-gray-400 line-through">
@@ -389,7 +390,7 @@ export default function Header() {
                             setIsSearchOpen(false);
                             router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
                           }}
-                          className="w-full py-2 bg-[#F5F2EC] hover:bg-[#D4AF37]/20 text-[#022C22] font-sans text-xs font-semibold rounded-lg transition-colors cursor-pointer border border-[#E8E5DF]"
+                          className="w-full py-2 bg-[#F5F2EC] hover:bg-[#D39EAA]/20 text-[#592D37] font-sans text-xs font-semibold rounded-lg transition-colors cursor-pointer border border-[#E8E5DF]"
                         >
                           View all {searchResults.length} results on Search Page →
                         </button>
@@ -411,7 +412,7 @@ export default function Header() {
                           setIsSearchOpen(false);
                           router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
                         }}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#022C22] text-[#D4AF37] rounded-xl text-xs font-semibold cursor-pointer hover:bg-[#D4AF37] hover:text-[#022C22] transition-colors"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#592D37] text-[#D39EAA] rounded-xl text-xs font-semibold cursor-pointer hover:bg-[#D39EAA] hover:text-[#592D37] transition-colors"
                       >
                         Explore Advanced Search Page <ArrowRight className="w-3.5 h-3.5" />
                       </button>
@@ -437,15 +438,15 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'tween', duration: 0.28 }}
-              className="fixed inset-y-0 left-0 w-[84%] max-w-sm bg-[#022C22] text-[#FDFBF7] border-r border-[#D4AF37]/30 shadow-2xl flex flex-col justify-between"
+              className="fixed inset-y-0 left-0 w-[84%] max-w-sm bg-[#592D37] text-[#FFF0F5] border-r border-[#D39EAA]/30 shadow-2xl flex flex-col justify-between"
             >
               <div className="overflow-y-auto">
-                <div className="flex items-center justify-between p-4 border-b border-[#D4AF37]/20">
+                <div className="flex items-center justify-between p-4 border-b border-[#D39EAA]/20">
                   <div>
-                    <span className="font-serif text-xl font-bold tracking-widest text-[#D4AF37] uppercase">
+                    <span className="font-serif text-xl font-bold tracking-widest text-[#D39EAA] uppercase">
                       ForeverJewellStudio
                     </span>
-                    <p className="font-sans text-[8.5px] tracking-widest text-[#F3E5AB] uppercase font-semibold">
+                    <p className="font-sans text-[8.5px] tracking-widest text-[#FADBD8] uppercase font-semibold">
                       Royal Moissanite & Fine Jewelry
                     </p>
                   </div>
@@ -459,11 +460,11 @@ export default function Header() {
                 </div>
 
                 {/* Region & Currency in Mobile Drawer */}
-                <div className="p-3 border-b border-[#D4AF37]/20 flex items-center justify-between">
+                <div className="p-3 border-b border-[#D39EAA]/20 flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs">
                     <span className="text-base">{selectedRegion.flag}</span>
-                    <span className="font-medium text-[#FDFBF7]">{selectedRegion.name}</span>
-                    <span className="text-[#D4AF37] font-bold">({selectedCurrency.code} {selectedCurrency.symbol})</span>
+                    <span className="font-medium text-[#FFF0F5]">{selectedRegion.name}</span>
+                    <span className="text-[#D39EAA] font-bold">({selectedCurrency.code} {selectedCurrency.symbol})</span>
                   </div>
                   <button
                     type="button"
@@ -471,7 +472,7 @@ export default function Header() {
                       setIsMobileMenuOpen(false);
                       setIsSettingsModalOpen(true);
                     }}
-                    className="text-xs text-[#D4AF37] hover:underline font-semibold cursor-pointer"
+                    className="text-xs text-[#D39EAA] hover:underline font-semibold cursor-pointer"
                   >
                     Change
                   </button>
@@ -501,10 +502,10 @@ export default function Header() {
                       key={item.name}
                       href={item.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center justify-between py-1.5 border-b border-[#D4AF37]/15 text-[#FDFBF7] hover:text-[#D4AF37] transition-colors"
+                      className="flex items-center justify-between py-1.5 border-b border-[#D39EAA]/15 text-[#FFF0F5] hover:text-[#D39EAA] transition-colors"
                     >
                       <span className="font-serif text-sm sm:text-base">{item.name}</span>
-                      <span className="font-sans text-[9px] text-[#D4AF37]/80 uppercase tracking-wider">
+                      <span className="font-sans text-[9px] text-[#D39EAA]/80 uppercase tracking-wider">
                         {item.count}
                       </span>
                     </Link>
@@ -513,12 +514,12 @@ export default function Header() {
               </div>
 
               {/* Bottom Drawer Actions */}
-              <div className="p-4 bg-[#011C15] border-t border-[#D4AF37]/20 space-y-2">
+              <div className="p-4 bg-[#011C15] border-t border-[#D39EAA]/20 space-y-2">
                 <a
                   href="https://wa.me/919828930454"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#D4AF37] text-[#022C22] rounded-xl font-sans text-xs font-bold tracking-wider uppercase shadow-md hover:bg-[#F3E5AB] transition-colors"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#D39EAA] text-[#592D37] rounded-xl font-sans text-xs font-bold tracking-wider uppercase shadow-md hover:bg-[#FADBD8] transition-colors"
                 >
                   <PhoneCall className="w-4 h-4" />
                   Chat on WhatsApp

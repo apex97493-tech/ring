@@ -47,7 +47,7 @@ export default function WhyChooseUs() {
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#18181B] mb-4">
             Why Discerning Clients Choose Us
           </h2>
-          <div className="w-20 h-[1.5px] bg-[#B89035] mx-auto mb-6" />
+          <div className="w-20 h-[1.5px] bg-[#C88E91] mx-auto mb-6" />
           <p className="font-sans text-sm sm:text-base text-gray-600">
             We bridge the gap between unattainable mined diamond prices and disposable fast-fashion jewelry by crafting heirloom-grade Moissanite masterworks.
           </p>
@@ -61,8 +61,8 @@ export default function WhyChooseUs() {
                 key={idx}
                 className="bg-white p-8 rounded-2xl border border-[#E8E5DF] shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
               >
-                <div className="w-14 h-14 rounded-2xl bg-[#FDFBF7] border border-[#E8E5DF] flex items-center justify-center mb-6 group-hover:bg-[#18181B] transition-colors">
-                  <Icon className="w-7 h-7 text-[#B89035] group-hover:text-[#D4AF37] transition-colors" />
+                <div className="w-14 h-14 rounded-2xl bg-[#FFF0F5] border border-[#E8E5DF] flex items-center justify-center mb-6 group-hover:bg-[#18181B] transition-colors">
+                  <Icon className="w-7 h-7 text-[#C88E91] group-hover:text-[#D39EAA] transition-colors" />
                 </div>
                 <h3 className="font-serif text-xl font-bold text-[#18181B] mb-3 group-hover:text-[#8C6A1F] transition-colors">
                   {item.title}

@@ -48,7 +48,7 @@ export default function ProductImageGallery({
             onClick={() => setActiveIdx(idx)}
             className={`relative aspect-square w-16 sm:w-18 md:w-full rounded-xl overflow-hidden bg-white border-2 flex-shrink-0 transition-all cursor-pointer ${
               activeIdx === idx
-                ? 'border-[#064E3B] ring-2 ring-[#D4AF37]/50 shadow-md scale-102'
+                ? 'border-[#B76E79] ring-2 ring-[#D39EAA]/50 shadow-md scale-102'
                 : 'border-[#E8E5DF] opacity-70 hover:opacity-100 hover:border-gray-400'
             }`}
             aria-label={`Thumbnail ${idx + 1}`}
@@ -62,7 +62,7 @@ export default function ProductImageGallery({
               }}
             />
             {activeIdx === idx && (
-              <div className="absolute inset-0 bg-[#064E3B]/10 pointer-events-none" />
+              <div className="absolute inset-0 bg-[#B76E79]/10 pointer-events-none" />
             )}
           </button>
         ))}
@@ -86,8 +86,8 @@ export default function ProductImageGallery({
         {/* Badge in top left (e.g. RARE FIND, BESTSELLER) */}
         {badge && (
           <div className="absolute top-4 left-4 z-10">
-            <span className="bg-[#022C22] text-[#D4AF37] font-sans text-[10px] sm:text-xs font-bold tracking-widest px-3 py-1 rounded-full shadow-md uppercase border border-[#D4AF37]/40 flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-[#D4AF37]" />
+            <span className="bg-[#592D37] text-[#D39EAA] font-sans text-[10px] sm:text-xs font-bold tracking-widest px-3 py-1 rounded-full shadow-md uppercase border border-[#D39EAA]/40 flex items-center gap-1">
+              <Sparkles className="w-3 h-3 text-[#D39EAA]" />
               {badge}
             </span>
           </div>

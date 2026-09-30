@@ -242,14 +242,14 @@ function SearchContent() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#FDFBF7] text-[#18181B] font-sans antialiased pt-20 sm:pt-28 pb-20">
+    <div className="w-full min-h-screen bg-[#FFF0F5] text-[#18181B] font-sans antialiased pt-20 sm:pt-28 pb-20">
       {/* ── Search Hero & Input Header ────────────────────────────────────────── */}
-      <section className="bg-[#022C22] text-[#FDFBF7] py-10 sm:py-16 border-b border-[#D4AF37]/30 shadow-royal relative overflow-hidden">
+      <section className="bg-[#592D37] text-[#FFF0F5] py-10 sm:py-16 border-b border-[#D39EAA]/30 shadow-royal relative overflow-hidden">
         {/* Subtle decorative glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#064E3B]/50 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#B76E79]/50 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] rounded-full text-[11px] font-sans font-bold tracking-widest uppercase mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#D39EAA]/20 border border-[#D39EAA]/40 text-[#D39EAA] rounded-full text-[11px] font-sans font-bold tracking-widest uppercase mb-4">
             <Sparkles className="w-3.5 h-3.5" />
             Studio Gemstone & Ring Vault
           </div>
@@ -257,17 +257,17 @@ function SearchContent() {
           <h1 className="font-serif text-3xl sm:text-5xl font-bold mb-3 text-white">
             Find Your Dream Ring
           </h1>
-          <p className="font-sans text-xs sm:text-sm text-[#FDFBF7]/80 max-w-xl mx-auto mb-6">
+          <p className="font-sans text-xs sm:text-sm text-[#FFF0F5]/80 max-w-xl mx-auto mb-6">
             Search our complete collection of 280+ handcrafted rings, VVS1 D-Color moissanites, gemstones, and custom bespoke designs.
           </p>
 
           {/* Primary Search Bar Input */}
           <form
             onSubmit={handleSearchSubmit}
-            className="max-w-2xl mx-auto relative flex items-center bg-[#FDFBF7] rounded-full shadow-2xl p-1.5 sm:p-2 border border-[#D4AF37]/60"
+            className="max-w-2xl mx-auto relative flex items-center bg-[#FFF0F5] rounded-full shadow-2xl p-1.5 sm:p-2 border border-[#D39EAA]/60"
           >
-            <div className="pl-3 sm:pl-4 text-[#022C22]">
-              <Search className="w-5 h-5 text-[#B89035]" />
+            <div className="pl-3 sm:pl-4 text-[#592D37]">
+              <Search className="w-5 h-5 text-[#C88E91]" />
             </div>
 
             <input
@@ -291,7 +291,7 @@ function SearchContent() {
 
             <button
               type="submit"
-              className="px-5 sm:px-7 py-2 sm:py-2.5 bg-[#022C22] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-[#022C22] font-sans text-xs font-bold tracking-wider uppercase rounded-full transition-all shrink-0 cursor-pointer shadow-md"
+              className="px-5 sm:px-7 py-2 sm:py-2.5 bg-[#592D37] hover:bg-[#D39EAA] text-[#D39EAA] hover:text-[#592D37] font-sans text-xs font-bold tracking-wider uppercase rounded-full transition-all shrink-0 cursor-pointer shadow-md"
             >
               Search
             </button>
@@ -299,7 +299,7 @@ function SearchContent() {
 
           {/* Popular Search Chips */}
           <div className="mt-5 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
-            <span className="text-[11px] font-sans text-[#F3E5AB]/80 mr-1">Trending:</span>
+            <span className="text-[11px] font-sans text-[#FADBD8]/80 mr-1">Trending:</span>
             {popularKeywords.map((kw) => (
               <button
                 key={kw}
@@ -310,8 +310,8 @@ function SearchContent() {
                 }}
                 className={`text-[11px] font-sans px-3 py-1 rounded-full transition-all cursor-pointer border ${
                   searchTerm.toLowerCase() === kw.toLowerCase()
-                    ? 'bg-[#D4AF37] text-[#022C22] font-bold border-[#D4AF37]'
-                    : 'bg-white/10 hover:bg-white/20 text-[#FDFBF7] border-white/20'
+                    ? 'bg-[#D39EAA] text-[#592D37] font-bold border-[#D39EAA]'
+                    : 'bg-white/10 hover:bg-white/20 text-[#FFF0F5] border-white/20'
                 }`}
               >
                 {kw}
@@ -326,7 +326,7 @@ function SearchContent() {
         {/* Results Info & Filter Controls Bar */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 mb-6 border-b border-[#E8E5DF]">
           <div>
-            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#022C22]">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#592D37]">
               {searchTerm.trim() ? (
                 <>
                   Results for &ldquo;<span className="text-[#8C6A1F]">{searchTerm}</span>&rdquo;
@@ -346,7 +346,7 @@ function SearchContent() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] cursor-pointer shadow-2xs"
+              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#592D37] focus:outline-none focus:border-[#D39EAA] cursor-pointer shadow-2xs"
             >
               <option value="all">All Categories</option>
               <option value="rings">Rings</option>
@@ -359,7 +359,7 @@ function SearchContent() {
             <select
               value={selectedShape}
               onChange={(e) => setSelectedShape(e.target.value)}
-              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] cursor-pointer shadow-2xs"
+              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#592D37] focus:outline-none focus:border-[#D39EAA] cursor-pointer shadow-2xs"
             >
               <option value="all">All Shapes</option>
               <option value="Oval">Oval Cut</option>
@@ -376,7 +376,7 @@ function SearchContent() {
             <select
               value={selectedMetal}
               onChange={(e) => setSelectedMetal(e.target.value)}
-              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] cursor-pointer shadow-2xs"
+              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#592D37] focus:outline-none focus:border-[#D39EAA] cursor-pointer shadow-2xs"
             >
               <option value="all">All Metals</option>
               <option value="Silver">925 Sterling Silver</option>
@@ -389,7 +389,7 @@ function SearchContent() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] cursor-pointer shadow-2xs"
+              className="bg-white border border-[#E8E5DF] rounded-xl px-3 py-2 text-xs font-sans text-[#592D37] focus:outline-none focus:border-[#D39EAA] cursor-pointer shadow-2xs"
             >
               <option value="relevance">Sort: Featured</option>
               <option value="price-low">Price: Low to High</option>
@@ -425,8 +425,8 @@ function SearchContent() {
             {totalPages > 1 && (
               <div className="mt-12 pt-6 border-t border-[#E8E5DF] flex flex-col sm:flex-row items-center justify-between gap-4">
                 <span className="text-xs text-gray-500 font-sans">
-                  Page <strong className="text-[#022C22] font-semibold">{currentPage}</strong> of{' '}
-                  <strong className="text-[#022C22] font-semibold">{totalPages}</strong> ({filteredProducts.length} total results)
+                  Page <strong className="text-[#592D37] font-semibold">{currentPage}</strong> of{' '}
+                  <strong className="text-[#592D37] font-semibold">{totalPages}</strong> ({filteredProducts.length} total results)
                 </span>
 
                 <div className="flex items-center gap-1.5">
@@ -434,7 +434,7 @@ function SearchContent() {
                     type="button"
                     disabled={currentPage <= 1}
                     onClick={() => handlePageChange(currentPage - 1)}
-                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#592D37] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D39EAA] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
                   >
                     <ChevronLeft className="w-3.5 h-3.5" />
                     <span>Previous</span>
@@ -449,8 +449,8 @@ function SearchContent() {
                           onClick={() => handlePageChange(pageNum)}
                           className={`w-8 h-8 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer ${
                             currentPage === pageNum
-                              ? 'bg-[#022C22] text-[#D4AF37] shadow-sm'
-                              : 'bg-white border border-[#E8E5DF] text-gray-700 hover:border-[#D4AF37]'
+                              ? 'bg-[#592D37] text-[#D39EAA] shadow-sm'
+                              : 'bg-white border border-[#E8E5DF] text-gray-700 hover:border-[#D39EAA]'
                           }`}
                         >
                           {pageNum}
@@ -465,8 +465,8 @@ function SearchContent() {
                             onClick={() => handlePageChange(pageNum)}
                             className={`w-8 h-8 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer ${
                               currentPage === pageNum
-                                ? 'bg-[#022C22] text-[#D4AF37] shadow-sm'
-                                : 'bg-white border border-[#E8E5DF] text-gray-700 hover:border-[#D4AF37]'
+                                ? 'bg-[#592D37] text-[#D39EAA] shadow-sm'
+                                : 'bg-white border border-[#E8E5DF] text-gray-700 hover:border-[#D39EAA]'
                             }`}
                           >
                             {pageNum}
@@ -478,7 +478,7 @@ function SearchContent() {
                         {currentPage > 2 && currentPage < totalPages - 1 && (
                           <button
                             type="button"
-                            className="w-8 h-8 rounded-lg text-xs font-sans font-bold bg-[#022C22] text-[#D4AF37] shadow-sm"
+                            className="w-8 h-8 rounded-lg text-xs font-sans font-bold bg-[#592D37] text-[#D39EAA] shadow-sm"
                           >
                             {currentPage}
                           </button>
@@ -493,8 +493,8 @@ function SearchContent() {
                             onClick={() => handlePageChange(pageNum)}
                             className={`w-8 h-8 rounded-lg text-xs font-sans font-bold transition-all cursor-pointer ${
                               currentPage === pageNum
-                                ? 'bg-[#022C22] text-[#D4AF37] shadow-sm'
-                                : 'bg-white border border-[#E8E5DF] text-gray-700 hover:border-[#D4AF37]'
+                                ? 'bg-[#592D37] text-[#D39EAA] shadow-sm'
+                                : 'bg-white border border-[#E8E5DF] text-gray-700 hover:border-[#D39EAA]'
                             }`}
                           >
                             {pageNum}
@@ -508,7 +508,7 @@ function SearchContent() {
                     type="button"
                     disabled={currentPage >= totalPages}
                     onClick={() => handlePageChange(currentPage + 1)}
-                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                    className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#592D37] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D39EAA] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -524,7 +524,7 @@ function SearchContent() {
               <Search className="w-8 h-8 opacity-60" />
             </div>
 
-            <h3 className="font-serif text-2xl font-bold text-[#022C22] mb-2">
+            <h3 className="font-serif text-2xl font-bold text-[#592D37] mb-2">
               No Rings Found Matching &ldquo;{searchTerm}&rdquo;
             </h3>
             <p className="font-sans text-xs sm:text-sm text-gray-600 mb-6 leading-relaxed">
@@ -540,7 +540,7 @@ function SearchContent() {
                     setSearchTerm(tag);
                     router.push(`/search?q=${encodeURIComponent(tag)}`);
                   }}
-                  className="px-3.5 py-1.5 bg-white border border-[#D4AF37]/50 hover:bg-[#022C22] hover:text-[#D4AF37] text-xs font-sans rounded-full text-[#022C22] transition-colors cursor-pointer shadow-xs"
+                  className="px-3.5 py-1.5 bg-white border border-[#D39EAA]/50 hover:bg-[#592D37] hover:text-[#D39EAA] text-xs font-sans rounded-full text-[#592D37] transition-colors cursor-pointer shadow-xs"
                 >
                   {tag}
                 </button>
@@ -549,7 +549,7 @@ function SearchContent() {
 
             {/* WhatsApp Custom Inquiry */}
             <div className="p-6 bg-white rounded-2xl border border-[#E8E5DF] shadow-xs text-center">
-              <h4 className="font-serif text-base font-bold text-[#022C22] mb-1">
+              <h4 className="font-serif text-base font-bold text-[#592D37] mb-1">
                 Looking for a Custom Ring Design?
               </h4>
               <p className="font-sans text-xs text-gray-500 mb-4">
@@ -561,7 +561,7 @@ function SearchContent() {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#022C22] hover:bg-[#D4AF37] text-[#D4AF37] hover:text-[#022C22] rounded-xl font-sans text-xs font-bold tracking-wider uppercase transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#592D37] hover:bg-[#D39EAA] text-[#D39EAA] hover:text-[#592D37] rounded-xl font-sans text-xs font-bold tracking-wider uppercase transition-colors"
               >
                 Inquire on WhatsApp <ArrowRight className="w-3.5 h-3.5" />
               </a>
@@ -577,9 +577,9 @@ export default function SearchPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#FDFBF7] pt-32 pb-20 flex items-center justify-center font-sans">
+        <div className="min-h-screen bg-[#FFF0F5] pt-32 pb-20 flex items-center justify-center font-sans">
           <div className="text-center space-y-4">
-            <div className="w-12 h-12 rounded-full border-2 border-[#D4AF37] border-t-transparent animate-spin mx-auto" />
+            <div className="w-12 h-12 rounded-full border-2 border-[#D39EAA] border-t-transparent animate-spin mx-auto" />
             <h2 className="font-serif text-xl text-[#18181B] font-bold">
               Searching Studio Gemstone Vault...
             </h2>

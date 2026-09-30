@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FDFBF7; /* Pearl / Cream */
-  --foreground: #022C22; /* Very Dark Royal Emerald */
-  --color-brand-emerald: #064E3B;
-  --color-brand-emerald-dark: #022C22;
-  --color-brand-gold: #D4AF37;
-  --color-brand-gold-light: #F3E5AB;
-  --color-brand-cream: #FDFBF7;
+  --background: #FFF0F5; /* Pearl / Cream */
+  --foreground: #592D37; /* Very Dark Royal Emerald */
+  --color-brand-emerald: #B76E79;
+  --color-brand-emerald-dark: #592D37;
+  --color-brand-gold: #D39EAA;
+  --color-brand-gold-light: #FADBD8;
+  --color-brand-cream: #FFF0F5;
   --color-brand-stone: #F5F2EC;
 }
 
 @theme inline {
-  --color-brand-cream: #FDFBF7;
+  --color-brand-cream: #FFF0F5;
   --color-brand-stone: #F5F2EC;
-  --color-brand-emerald: #064E3B;
-  --color-brand-emerald-dark: #022C22;
-  --color-brand-gold: #D4AF37;
-  --color-brand-gold-light: #F3E5AB;
+  --color-brand-emerald: #B76E79;
+  --color-brand-emerald-dark: #592D37;
+  --color-brand-gold: #D39EAA;
+  --color-brand-gold-light: #FADBD8;
   --color-brand-gold-dark: #8C6A1F;
   --color-brand-border: #E8E5DF;
 
@@ -57,15 +57,15 @@ h1, h2, h3, h4, .font-serif {
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #FDFBF7;
+  background: #FFF0F5;
 }
 ::-webkit-scrollbar-thumb {
-  background: #064E3B;
+  background: #B76E79;
   border-radius: 9999px;
-  border: 1px solid #D4AF37;
+  border: 1px solid #D39EAA;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #022C22;
+  background: #592D37;
 }
 
 /* Gold Shimmer Animation */

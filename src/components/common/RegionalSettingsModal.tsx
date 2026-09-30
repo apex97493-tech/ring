@@ -170,7 +170,7 @@ export default function RegionalSettingsModal() {
             <button
               type="button"
               onClick={handleSave}
-              className="px-8 py-2.5 rounded-full bg-[#18181B] hover:bg-[#D4AF37] hover:text-[#022C22] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+              className="px-8 py-2.5 rounded-full bg-[#18181B] hover:bg-[#D39EAA] hover:text-[#592D37] text-white text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
             >
               {isSavedToast ? (
                 <>

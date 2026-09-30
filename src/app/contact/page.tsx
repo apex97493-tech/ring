@@ -36,7 +36,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#FDFBF7]">
+    <div className="w-full min-h-screen bg-[#FFF0F5]">
       {/* Breadcrumb */}
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-4 text-xs font-sans text-gray-500 flex items-center gap-2">
         <Link href="/" className="hover:text-black">
@@ -47,17 +47,17 @@ export default function ContactPage() {
       </div>
 
       {/* Hero Header */}
-      <section className="bg-[#022C22] text-[#FDFBF7] py-14 sm:py-20 border-b border-[#D4AF37]/30 text-center relative overflow-hidden">
+      <section className="bg-[#592D37] text-[#FFF0F5] py-14 sm:py-20 border-b border-[#D39EAA]/30 text-center relative overflow-hidden">
         <div className="max-w-3xl mx-auto px-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] rounded-full text-xs font-sans font-bold tracking-widest uppercase mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-[#D39EAA]/20 border border-[#D39EAA]/40 text-[#D39EAA] rounded-full text-xs font-sans font-bold tracking-widest uppercase mb-4">
             <Sparkles className="w-3.5 h-3.5" />
             Customer Support & Store Location
           </div>
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold mb-4 text-white">
             We Are Here to Assist You
           </h1>
-          <div className="w-16 h-[1.5px] bg-[#D4AF37] mx-auto mb-5" />
-          <p className="font-sans text-sm sm:text-base text-[#FDFBF7]/85 max-w-xl mx-auto leading-relaxed">
+          <div className="w-16 h-[1.5px] bg-[#D39EAA] mx-auto mb-5" />
+          <p className="font-sans text-sm sm:text-base text-[#FFF0F5]/85 max-w-xl mx-auto leading-relaxed">
             Have questions about diamond testing, ring sizing, or custom engagement rings?
             Speak directly with our fine jewelry specialists.
           </p>
@@ -69,9 +69,9 @@ export default function ContactPage() {
         {/* 4 Direct Contact Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16">
           {/* Card 1: WhatsApp */}
-          <div className="bg-white rounded-2xl border border-[#E8E5DF] p-6 shadow-xs flex flex-col justify-between hover:border-[#064E3B] transition-all">
+          <div className="bg-white rounded-2xl border border-[#E8E5DF] p-6 shadow-xs flex flex-col justify-between hover:border-[#B76E79] transition-all">
             <div>
-              <div className="w-12 h-12 bg-[#ECFDF5] text-[#064E3B] rounded-xl flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-[#ECFDF5] text-[#B76E79] rounded-xl flex items-center justify-center mb-4">
                 <MessageCircle className="w-6 h-6 text-[#059669]" />
               </div>
               <h3 className="font-serif text-lg font-bold text-[#18181B] mb-1">
@@ -89,14 +89,14 @@ export default function ContactPage() {
               href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-2.5 bg-[#064E3B] hover:bg-[#043327] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-wider rounded-xl text-center transition-colors block"
+              className="w-full py-2.5 bg-[#B76E79] hover:bg-[#043327] text-[#D39EAA] font-sans text-xs font-bold uppercase tracking-wider rounded-xl text-center transition-colors block"
             >
               Start Chat
             </a>
           </div>
 
           {/* Card 2: Phone Call */}
-          <div className="bg-white rounded-2xl border border-[#E8E5DF] p-6 shadow-xs flex flex-col justify-between hover:border-[#D4AF37] transition-all">
+          <div className="bg-white rounded-2xl border border-[#E8E5DF] p-6 shadow-xs flex flex-col justify-between hover:border-[#D39EAA] transition-all">
             <div>
               <div className="w-12 h-12 bg-[#F4E8C1]/50 text-[#8C6A1F] rounded-xl flex items-center justify-center mb-4">
                 <Phone className="w-6 h-6 text-[#8C6A1F]" />
@@ -120,7 +120,7 @@ export default function ContactPage() {
           </div>
 
           {/* Card 3: Email */}
-          <div className="bg-white rounded-2xl border border-[#E8E5DF] p-6 shadow-xs flex flex-col justify-between hover:border-[#D4AF37] transition-all">
+          <div className="bg-white rounded-2xl border border-[#E8E5DF] p-6 shadow-xs flex flex-col justify-between hover:border-[#D39EAA] transition-all">
             <div>
               <div className="w-12 h-12 bg-[#F5F2EC] text-gray-700 rounded-xl flex items-center justify-center mb-4">
                 <Mail className="w-6 h-6 text-[#18181B]" />
@@ -144,10 +144,10 @@ export default function ContactPage() {
           </div>
 
           {/* Card 4: Store Location */}
-          <div className="bg-white rounded-2xl border border-[#E8E5DF] p-6 shadow-xs flex flex-col justify-between hover:border-[#064E3B] transition-all">
+          <div className="bg-white rounded-2xl border border-[#E8E5DF] p-6 shadow-xs flex flex-col justify-between hover:border-[#B76E79] transition-all">
             <div>
-              <div className="w-12 h-12 bg-[#ECFDF5] text-[#064E3B] rounded-xl flex items-center justify-center mb-4">
-                <MapPin className="w-6 h-6 text-[#064E3B]" />
+              <div className="w-12 h-12 bg-[#ECFDF5] text-[#B76E79] rounded-xl flex items-center justify-center mb-4">
+                <MapPin className="w-6 h-6 text-[#B76E79]" />
               </div>
               <h3 className="font-serif text-lg font-bold text-[#18181B] mb-1">
                 Flagship Studio & Store
@@ -164,7 +164,7 @@ export default function ContactPage() {
               href="https://maps.google.com/?q=Kanakpura+Station+Road+Jaipur"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-2.5 bg-[#F7F5F0] hover:bg-[#E8E5DF] text-[#064E3B] font-sans text-xs font-bold uppercase tracking-wider rounded-xl text-center transition-colors block border border-[#E8E5DF]"
+              className="w-full py-2.5 bg-[#F7F5F0] hover:bg-[#E8E5DF] text-[#B76E79] font-sans text-xs font-bold uppercase tracking-wider rounded-xl text-center transition-colors block border border-[#E8E5DF]"
             >
               Get Directions
             </a>
@@ -185,7 +185,7 @@ export default function ContactPage() {
             {isSubmitted ? (
               <div className="p-8 bg-[#ECFDF5] border border-[#059669]/30 rounded-2xl text-center">
                 <CheckCircle2 className="w-12 h-12 text-[#059669] mx-auto mb-3" />
-                <h3 className="font-serif text-xl font-bold text-[#064E3B] mb-2">
+                <h3 className="font-serif text-xl font-bold text-[#B76E79] mb-2">
                   Thank You for Reaching Out!
                 </h3>
                 <p className="font-sans text-xs text-gray-600 mb-4 max-w-md mx-auto">
@@ -196,7 +196,7 @@ export default function ContactPage() {
                     setIsSubmitted(false);
                     setFormData({ name: '', phone: '', email: '', inquiryType: 'Custom Ring Design', message: '' });
                   }}
-                  className="px-6 py-2.5 bg-[#064E3B] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-wider rounded-xl"
+                  className="px-6 py-2.5 bg-[#B76E79] text-[#D39EAA] font-sans text-xs font-bold uppercase tracking-wider rounded-xl"
                 >
                   Send Another Message
                 </button>
@@ -214,7 +214,7 @@ export default function ContactPage() {
                       placeholder="e.g. Pooja Sharma"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-[#FDFBF7] border border-[#E8E5DF] rounded-xl px-4 py-3 text-xs text-[#18181B] focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-[#FFF0F5] border border-[#E8E5DF] rounded-xl px-4 py-3 text-xs text-[#18181B] focus:outline-none focus:border-[#D39EAA]"
                     />
                   </div>
                   <div>
@@ -227,7 +227,7 @@ export default function ContactPage() {
                       placeholder="e.g. +91 98765 43210"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full bg-[#FDFBF7] border border-[#E8E5DF] rounded-xl px-4 py-3 text-xs text-[#18181B] focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-[#FFF0F5] border border-[#E8E5DF] rounded-xl px-4 py-3 text-xs text-[#18181B] focus:outline-none focus:border-[#D39EAA]"
                     />
                   </div>
                 </div>
@@ -242,7 +242,7 @@ export default function ContactPage() {
                       placeholder="e.g. name@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-[#FDFBF7] border border-[#E8E5DF] rounded-xl px-4 py-3 text-xs text-[#18181B] focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-[#FFF0F5] border border-[#E8E5DF] rounded-xl px-4 py-3 text-xs text-[#18181B] focus:outline-none focus:border-[#D39EAA]"
                     />
                   </div>
                   <div>
@@ -252,7 +252,7 @@ export default function ContactPage() {
                     <select
                       value={formData.inquiryType}
                       onChange={(e) => setFormData({ ...formData, inquiryType: e.target.value })}
-                      className="w-full bg-[#FDFBF7] border border-[#E8E5DF] rounded-xl px-4 py-3 text-xs text-[#18181B] focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-[#FFF0F5] border border-[#E8E5DF] rounded-xl px-4 py-3 text-xs text-[#18181B] focus:outline-none focus:border-[#D39EAA]"
                     >
                       <option value="Custom Ring Design">Custom Engagement Ring Design</option>
                       <option value="Order Tracking">Existing Order & Shipping Status</option>
@@ -272,13 +272,13 @@ export default function ContactPage() {
                     placeholder="Tell us about the ring style, carat preference, metal type, or any questions you have..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-[#FDFBF7] border border-[#E8E5DF] rounded-xl p-4 text-xs text-[#18181B] focus:outline-none focus:border-[#D4AF37]"
+                    className="w-full bg-[#FFF0F5] border border-[#E8E5DF] rounded-xl p-4 text-xs text-[#18181B] focus:outline-none focus:border-[#D39EAA]"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-4 bg-[#064E3B] hover:bg-[#022C22] text-[#D4AF37] font-sans text-xs font-bold tracking-widest uppercase rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-4 bg-[#B76E79] hover:bg-[#592D37] text-[#D39EAA] font-sans text-xs font-bold tracking-widest uppercase rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                   Submit Inquiry via WhatsApp
@@ -289,17 +289,17 @@ export default function ContactPage() {
 
           {/* Right Trust & FAQ snippet */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-[#022C22] text-[#FDFBF7] p-8 rounded-3xl border border-[#D4AF37]/30 shadow-xl">
-              <span className="font-serif text-2xl font-bold text-[#D4AF37] block mb-1">
+            <div className="bg-[#592D37] text-[#FFF0F5] p-8 rounded-3xl border border-[#D39EAA]/30 shadow-xl">
+              <span className="font-serif text-2xl font-bold text-[#D39EAA] block mb-1">
                 ForeverJewellStudio
               </span>
-              <p className="font-sans text-[10px] tracking-widest text-[#F3E5AB] uppercase font-semibold mb-6">
+              <p className="font-sans text-[10px] tracking-widest text-[#FADBD8] uppercase font-semibold mb-6">
                 Jaipur Moissanite & Fine Jewelry
               </p>
 
               <div className="space-y-4 text-xs font-sans text-gray-300">
                 <div className="flex items-start gap-3">
-                  <ShieldCheck className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+                  <ShieldCheck className="w-5 h-5 text-[#D39EAA] flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white block font-serif text-sm">
                       100% Lifetime Buyback Guarantee
@@ -311,7 +311,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Award className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+                  <Award className="w-5 h-5 text-[#D39EAA] flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white block font-serif text-sm">
                       Individual GRA Lab Reports
@@ -323,7 +323,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+                  <Clock className="w-5 h-5 text-[#D39EAA] flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white block font-serif text-sm">
                       Store Hours & Appointments
@@ -348,7 +348,7 @@ export default function ContactPage() {
                 href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#F7F5F0] hover:bg-[#E8E5DF] text-[#064E3B] font-sans text-xs font-bold uppercase tracking-wider rounded-xl border border-[#E8E5DF] transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#F7F5F0] hover:bg-[#E8E5DF] text-[#B76E79] font-sans text-xs font-bold uppercase tracking-wider rounded-xl border border-[#E8E5DF] transition-colors"
               >
                 <MessageCircle className="w-4 h-4" />
                 Book Video Appointment

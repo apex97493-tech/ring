@@ -20,7 +20,7 @@ export default function QuickViewModal({
   onClose: () => void;
 }) {
   const router = useRouter();
-  const { addToCart, setIsCartOpen } = useCart();
+  const { addToCart, buyNow, setIsCartOpen, triggerFlyAnimation } = useCart();
   const { formatPrice } = useCurrency();
 
   // ── DYNAMIC METAL OFFERINGS & ACCURATE LIVE ETSY PRICING ──────────
@@ -146,7 +146,7 @@ export default function QuickViewModal({
     product.carat.toLowerCase() !== 'n/a' &&
     product.carat.trim() !== '';
 
-  const handleAdd = () => {
+  const handleAdd = (e: React.MouseEvent) => {
     addToCart({
       product,
       quantity: 1,
@@ -157,14 +157,15 @@ export default function QuickViewModal({
       price: currentPrice,
       image: activeVariantImage,
     });
+    triggerFlyAnimation(activeVariantImage, e);
     setIsAdded(true);
     setTimeout(() => {
       onClose();
     }, 900);
   };
 
-  const handleBuyNow = () => {
-    addToCart({
+  const handleBuyNow = (e: React.MouseEvent) => {
+    buyNow({
       product,
       quantity: 1,
       selectedMetal: activeTier.metal,
@@ -174,9 +175,12 @@ export default function QuickViewModal({
       price: currentPrice,
       image: activeVariantImage,
     });
-    onClose();
+    triggerFlyAnimation(activeVariantImage, e, 'drop');
     setIsCartOpen(false);
-    router.push('/checkout');
+    setTimeout(() => {
+      onClose();
+      router.push('/checkout');
+    }, 1500);
   };
 
   return (
@@ -185,7 +189,7 @@ export default function QuickViewModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="relative bg-[#FDFBF7] w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden border border-[#D4AF37]/30 my-6 max-h-[92vh] flex flex-col"
+        className="relative bg-[#FFF0F5] w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden border border-[#D39EAA]/30 my-6 max-h-[92vh] flex flex-col"
       >
         {/* Close Button */}
         <button
@@ -206,7 +210,7 @@ export default function QuickViewModal({
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
-              <span className="absolute top-3 left-3 bg-[#022C22] text-[#D4AF37] font-sans text-[9px] font-bold tracking-widest px-2.5 py-1 rounded-sm uppercase shadow-sm">
+              <span className="absolute top-3 left-3 bg-[#592D37] text-[#D39EAA] font-sans text-[9px] font-bold tracking-widest px-2.5 py-1 rounded-sm uppercase shadow-sm">
                 {product.certification || 'GRA CERTIFIED'}
               </span>
             </div>
@@ -220,7 +224,7 @@ export default function QuickViewModal({
                   onClick={() => setActiveImgIdx(idx)}
                   className={`w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden border-2 transition-all bg-white shrink-0 cursor-pointer select-none active:scale-95 ${
                     activeImgIdx === idx
-                      ? 'border-[#B89035] scale-105 shadow-sm'
+                      ? 'border-[#C88E91] scale-105 shadow-sm'
                       : 'border-transparent opacity-60 hover:opacity-100'
                   }`}
                 >
@@ -231,7 +235,7 @@ export default function QuickViewModal({
           </div>
 
           {/* Right Product Details & Customizer */}
-          <div className="p-5 sm:p-7 flex flex-col justify-between bg-[#FDFBF7]">
+          <div className="p-5 sm:p-7 flex flex-col justify-between bg-[#FFF0F5]">
             <div>
               {/* Rating & Shape */}
               <div className="flex items-center justify-between mb-2">
@@ -240,19 +244,19 @@ export default function QuickViewModal({
                   <span className="font-bold text-gray-800">{product.rating}</span>
                   <span className="text-gray-500">({product.reviewsCount} verified reviews)</span>
                 </div>
-                <span className="text-[10px] font-sans font-bold tracking-widest uppercase text-[#8C6A1F] bg-[#F4E8C1]/60 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/30">
+                <span className="text-[10px] font-sans font-bold tracking-widest uppercase text-[#8C6A1F] bg-[#F4E8C1]/60 px-2.5 py-0.5 rounded-full border border-[#D39EAA]/30">
                   {product.shape} Cut
                 </span>
               </div>
 
               {/* Title */}
-              <h2 className="font-serif text-lg sm:text-2xl font-bold text-[#022C22] mb-2 leading-snug">
+              <h2 className="font-serif text-lg sm:text-2xl font-bold text-[#592D37] mb-2 leading-snug">
                 {product.name}
               </h2>
 
               {/* Dynamic Live Price */}
               <div className="flex items-baseline flex-wrap gap-2.5 mb-5 p-3 rounded-xl bg-white border border-[#E8E5DF]">
-                <span className="font-sans text-2xl sm:text-3xl font-bold text-[#064E3B]">
+                <span className="font-sans text-2xl sm:text-3xl font-bold text-[#B76E79]">
                   {formatPrice(currentPrice)}
                 </span>
                 <span className="font-sans text-sm text-gray-400 line-through">
@@ -266,7 +270,7 @@ export default function QuickViewModal({
               {/* Metal Selection Dropdown with Live Prices */}
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="block font-sans text-xs font-bold text-[#022C22] tracking-wider uppercase">
+                  <label className="block font-sans text-xs font-bold text-[#592D37] tracking-wider uppercase">
                     Band Colour / Metal:
                   </label>
                   <span className="text-xs font-medium text-[#8C6A1F]">
@@ -281,7 +285,7 @@ export default function QuickViewModal({
                       setSelectedMetal(e.target.value);
                       setActiveImgIdx(0);
                     }}
-                    className="w-full bg-white border border-gray-300 hover:border-[#D4AF37] rounded-lg px-3 py-2.5 text-xs font-sans font-semibold text-[#18181B] appearance-none cursor-pointer focus:outline-none focus:border-[#022C22] transition-colors shadow-2xs pr-9"
+                    className="w-full bg-white border border-gray-300 hover:border-[#D39EAA] rounded-lg px-3 py-2.5 text-xs font-sans font-semibold text-[#18181B] appearance-none cursor-pointer focus:outline-none focus:border-[#592D37] transition-colors shadow-2xs pr-9"
                   >
                     {metalBandOptions.map((opt) => (
                       <option key={opt.metal} value={opt.metal}>
@@ -304,7 +308,7 @@ export default function QuickViewModal({
                       }}
                       className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-sans transition-all cursor-pointer border ${
                         selectedMetal === opt.metal
-                          ? 'border-[#022C22] bg-[#022C22] text-[#FDFBF7] font-semibold'
+                          ? 'border-[#592D37] bg-[#592D37] text-[#FFF0F5] font-semibold'
                           : 'border-gray-200 bg-white text-gray-700 hover:border-gray-400'
                       }`}
                     >
@@ -324,13 +328,13 @@ export default function QuickViewModal({
               <div className={`grid ${hasCenterStone ? 'grid-cols-2' : 'grid-cols-1'} gap-3 mb-4`}>
                 {hasCenterStone && (
                   <div>
-                    <label className="block font-sans text-xs font-bold text-[#022C22] tracking-wider uppercase mb-1.5">
+                    <label className="block font-sans text-xs font-bold text-[#592D37] tracking-wider uppercase mb-1.5">
                       Center Stone:
                     </label>
                     <select
                       value={selectedCarat}
                       onChange={(e) => setSelectedCarat(e.target.value)}
-                      className="w-full bg-white border border-gray-300 rounded-lg p-2.5 text-xs font-sans text-gray-800 focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-white border border-gray-300 rounded-lg p-2.5 text-xs font-sans text-gray-800 focus:outline-none focus:border-[#D39EAA]"
                     >
                       {caratOptions.map((c) => (
                         <option key={c} value={c}>
@@ -360,7 +364,7 @@ export default function QuickViewModal({
                       <select
                         value={selectedSize}
                         onChange={(e) => setSelectedSize(e.target.value)}
-                        className="w-full bg-white border border-gray-300 hover:border-[#D4AF37] rounded-lg px-3 py-2.5 text-xs font-sans text-gray-800 appearance-none focus:outline-none focus:border-[#022C22] pr-8 cursor-pointer shadow-2xs"
+                        className="w-full bg-white border border-gray-300 hover:border-[#D39EAA] rounded-lg px-3 py-2.5 text-xs font-sans text-gray-800 appearance-none focus:outline-none focus:border-[#592D37] pr-8 cursor-pointer shadow-2xs"
                       >
                         {US_RING_SIZES.map((s) => (
                           <option key={s.us} value={`US ${s.us}`}>
@@ -385,7 +389,7 @@ export default function QuickViewModal({
                   placeholder="e.g. Forever & Always"
                   value={engraving}
                   onChange={(e) => setEngraving(e.target.value)}
-                  className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs font-sans focus:outline-none focus:border-[#022C22]"
+                  className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-xs font-sans focus:outline-none focus:border-[#592D37]"
                 />
               </div>
             </div>
@@ -396,7 +400,7 @@ export default function QuickViewModal({
                 <button
                   type="button"
                   onClick={handleAdd}
-                  className="w-full py-3 bg-[#022C22] hover:bg-[#D4AF37] active:scale-95 text-[#D4AF37] hover:text-[#022C22] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer border border-[#D4AF37]/40"
+                  className="w-full py-3 bg-[#592D37] hover:bg-[#D39EAA] active:scale-95 text-[#D39EAA] hover:text-[#592D37] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer border border-[#D39EAA]/40"
                 >
                   {isAdded ? (
                     <span className="flex items-center gap-1 text-white">
@@ -410,7 +414,7 @@ export default function QuickViewModal({
                 <button
                   type="button"
                   onClick={handleBuyNow}
-                  className="w-full py-3 bg-[#D4AF37] hover:bg-[#B89035] active:scale-95 text-[#022C22] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-3 bg-[#D39EAA] hover:bg-[#C88E91] active:scale-95 text-[#592D37] font-sans text-xs font-bold tracking-widest uppercase transition-all rounded-xl shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <Zap className="w-3.5 h-3.5 fill-current" /> Buy It Now
                 </button>
@@ -419,7 +423,7 @@ export default function QuickViewModal({
               <Link
                 href={`/products/${product.slug}`}
                 onClick={onClose}
-                className="w-full py-2.5 bg-transparent border border-gray-300 hover:border-[#022C22] text-[#022C22] font-sans text-xs font-semibold tracking-wider uppercase transition-colors rounded-xl flex items-center justify-center gap-1.5 text-center"
+                className="w-full py-2.5 bg-transparent border border-gray-300 hover:border-[#592D37] text-[#592D37] font-sans text-xs font-semibold tracking-wider uppercase transition-colors rounded-xl flex items-center justify-center gap-1.5 text-center"
               >
                 View Full Product Details <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -427,7 +431,7 @@ export default function QuickViewModal({
               {/* Trust Footer */}
               <div className="flex items-center justify-center gap-4 text-[11px] text-gray-500 font-sans pt-1">
                 <span className="flex items-center gap-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#B89035]" /> GRA Certified
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#C88E91]" /> GRA Certified
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">

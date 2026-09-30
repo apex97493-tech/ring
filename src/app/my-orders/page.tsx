@@ -43,17 +43,17 @@ function OrderProgressBar({ status }: { status: string }) {
       <div className="flex items-start justify-between relative">
         <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-200 mx-10" />
         <div
-          className="absolute top-5 left-0 h-0.5 bg-[#064E3B] mx-10 transition-all duration-500"
+          className="absolute top-5 left-0 h-0.5 bg-[#B76E79] mx-10 transition-all duration-500"
           style={{ width: `${(currentIdx / (STATUS_STEPS.length - 1)) * 100}%` }}
         />
         {STATUS_STEPS.map(({ key, label, icon: Icon, desc }, idx) => {
           const done = idx <= currentIdx;
           return (
             <div key={key} className="flex flex-col items-center z-10 flex-1">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all ${done ? "bg-[#064E3B] border-[#064E3B] text-white shadow-md" : "bg-white border-gray-300 text-gray-400"}`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all ${done ? "bg-[#B76E79] border-[#B76E79] text-white shadow-md" : "bg-white border-gray-300 text-gray-400"}`}>
                 <Icon className="w-4 h-4" />
               </div>
-              <p className={`mt-2 text-[10px] font-semibold text-center leading-tight ${done ? "text-[#064E3B]" : "text-gray-400"}`}>{label}</p>
+              <p className={`mt-2 text-[10px] font-semibold text-center leading-tight ${done ? "text-[#B76E79]" : "text-gray-400"}`}>{label}</p>
               <p className="text-[9px] text-gray-400 text-center">{desc}</p>
             </div>
           );
@@ -81,7 +81,7 @@ function OrderCard({ order }: { order: Order }) {
         <div className="flex items-center gap-4 flex-wrap">
           <div>
             <p className="text-[10px] uppercase text-gray-500 font-semibold tracking-wider">Order ID</p>
-            <p className="font-mono font-bold text-[#064E3B] text-sm">#{order.id}</p>
+            <p className="font-mono font-bold text-[#B76E79] text-sm">#{order.id}</p>
           </div>
           <div className="h-8 w-px bg-gray-300 hidden sm:block" />
           <div>
@@ -107,8 +107,8 @@ function OrderCard({ order }: { order: Order }) {
         <div className="flex flex-col gap-2.5">
           {order.items.slice(0, expanded ? undefined : 2).map((item, idx) => (
             <div key={idx} className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-[#064E3B]/10 flex items-center justify-center shrink-0">
-                <Gem className="w-4 h-4 text-[#064E3B]" />
+              <div className="w-10 h-10 rounded-lg bg-[#B76E79]/10 flex items-center justify-center shrink-0">
+                <Gem className="w-4 h-4 text-[#B76E79]" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-gray-900 truncate">{item.productName}</p>
@@ -118,7 +118,7 @@ function OrderCard({ order }: { order: Order }) {
             </div>
           ))}
           {!expanded && order.items.length > 2 && (
-            <p className="text-xs text-[#064E3B] font-medium">+{order.items.length - 2} more item(s)</p>
+            <p className="text-xs text-[#B76E79] font-medium">+{order.items.length - 2} more item(s)</p>
           )}
           {order.items.length === 0 && (
             <p className="text-xs text-gray-400 italic">Item details loading…</p>
@@ -129,7 +129,7 @@ function OrderCard({ order }: { order: Order }) {
       {/* Expand Toggle */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center justify-center gap-1.5 py-2.5 border-t border-gray-100 text-xs text-[#064E3B] font-semibold hover:bg-gray-50 transition-colors cursor-pointer"
+        className="w-full flex items-center justify-center gap-1.5 py-2.5 border-t border-gray-100 text-xs text-[#B76E79] font-semibold hover:bg-gray-50 transition-colors cursor-pointer"
       >
         {expanded ? <><ChevronUp className="w-3.5 h-3.5" /> Hide Details</> : <><ChevronDown className="w-3.5 h-3.5" /> View Full Order Details</>}
       </button>
@@ -149,7 +149,7 @@ function OrderCard({ order }: { order: Order }) {
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="bg-white rounded-xl border border-gray-200 p-4">
               <div className="flex items-center gap-2 mb-2">
-                <MapPin className="w-3.5 h-3.5 text-[#064E3B]" />
+                <MapPin className="w-3.5 h-3.5 text-[#B76E79]" />
                 <p className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Delivery Address</p>
               </div>
               <p className="text-sm font-semibold text-gray-900">{order.customer.firstName} {order.customer.lastName}</p>
@@ -161,7 +161,7 @@ function OrderCard({ order }: { order: Order }) {
 
             <div className="bg-white rounded-xl border border-gray-200 p-4">
               <div className="flex items-center gap-2 mb-2">
-                <CreditCard className="w-3.5 h-3.5 text-[#064E3B]" />
+                <CreditCard className="w-3.5 h-3.5 text-[#B76E79]" />
                 <p className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">Payment</p>
               </div>
               <p className="text-sm font-semibold text-gray-900">{payLabel[order.payment?.method || ""] || "Unknown"}</p>
@@ -209,7 +209,7 @@ function OrderCard({ order }: { order: Order }) {
             <a
               href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454'}?text=Hi%20ForeverJewell%20Team,%20I%20need%20help%20with%20order%20%23${order.id}`}
               target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#064E3B] text-white text-xs font-semibold rounded-lg hover:bg-[#043327] transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#B76E79] text-white text-xs font-semibold rounded-lg hover:bg-[#043327] transition-colors"
             >
               <Phone className="w-3.5 h-3.5" /> WhatsApp Support
             </a>
@@ -262,11 +262,11 @@ export default function MyOrdersPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#FAFDF8] to-[#F5F5F0]">
       {/* Hero Banner */}
-      <div className="bg-[#064E3B] text-white py-10 px-4">
+      <div className="bg-[#B76E79] text-white py-10 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Package className="w-5 h-5 text-[#D4AF37]" />
-            <span className="text-xs uppercase tracking-[0.3em] text-[#D4AF37] font-semibold">My Orders</span>
+            <Package className="w-5 h-5 text-[#D39EAA]" />
+            <span className="text-xs uppercase tracking-[0.3em] text-[#D39EAA] font-semibold">My Orders</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white">Order History & Tracking</h1>
           <p className="text-sm text-emerald-200 mt-2 max-w-lg mx-auto">
@@ -294,19 +294,19 @@ export default function MyOrdersPage() {
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 placeholder="e.g. FJ-450892  or  your@email.com"
-                className="w-full pl-9 pr-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#064E3B]/30 focus:border-[#064E3B] transition-all"
+                className="w-full pl-9 pr-4 py-3 text-sm border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#B76E79]/30 focus:border-[#B76E79] transition-all"
               />
             </div>
             <button
               onClick={() => handleSearch()} disabled={isLoading}
-              className="px-5 py-3 bg-[#064E3B] hover:bg-[#043327] text-white text-sm font-bold rounded-xl transition-colors flex items-center gap-2 disabled:opacity-60 shrink-0 cursor-pointer"
+              className="px-5 py-3 bg-[#B76E79] hover:bg-[#043327] text-white text-sm font-bold rounded-xl transition-colors flex items-center gap-2 disabled:opacity-60 shrink-0 cursor-pointer"
             >
               {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
               <span className="hidden sm:inline">Find Orders</span>
             </button>
           </div>
           <p className="text-[11px] text-gray-400 mt-2 flex items-center gap-1">
-            <ShieldCheck className="w-3 h-3 text-[#064E3B]" />
+            <ShieldCheck className="w-3 h-3 text-[#B76E79]" />
             Your order details are private. Only accessible by you with your Order ID or email.
           </p>
         </div>
@@ -326,7 +326,7 @@ export default function MyOrdersPage() {
         {/* Loading */}
         {isLoading && (
           <div className="flex flex-col items-center justify-center py-16 text-gray-400">
-            <Loader2 className="w-8 h-8 animate-spin text-[#064E3B] mb-3" />
+            <Loader2 className="w-8 h-8 animate-spin text-[#B76E79] mb-3" />
             <p className="text-sm">Looking up your orders…</p>
           </div>
         )}
@@ -335,8 +335,8 @@ export default function MyOrdersPage() {
         {!isLoading && orders.length > 0 && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-gray-700">Found <span className="text-[#064E3B] font-bold">{orders.length}</span> order{orders.length > 1 ? "s" : ""}</p>
-              <button onClick={() => handleSearch()} className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#064E3B] transition-colors cursor-pointer">
+              <p className="text-sm font-semibold text-gray-700">Found <span className="text-[#B76E79] font-bold">{orders.length}</span> order{orders.length > 1 ? "s" : ""}</p>
+              <button onClick={() => handleSearch()} className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#B76E79] transition-colors cursor-pointer">
                 <RefreshCw className="w-3.5 h-3.5" /> Refresh
               </button>
             </div>
@@ -347,8 +347,8 @@ export default function MyOrdersPage() {
         {/* Empty initial state */}
         {!isLoading && !searched && (
           <div className="text-center py-14">
-            <div className="w-16 h-16 bg-[#064E3B]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Package className="w-8 h-8 text-[#064E3B]" />
+            <div className="w-16 h-16 bg-[#B76E79]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Package className="w-8 h-8 text-[#B76E79]" />
             </div>
             <p className="text-sm font-medium text-gray-600">Enter your Order ID or email above to view your orders</p>
             <p className="text-xs text-gray-400 mt-1">Your Order ID is in the format FJ-XXXXXX and was shown at checkout</p>
@@ -365,8 +365,8 @@ export default function MyOrdersPage() {
               { icon: RefreshCw, title: "30-Day Returns", sub: "Hassle-free policy" },
             ].map(({ icon: Icon, title, sub }) => (
               <div key={title} className="flex flex-col items-center gap-1.5">
-                <div className="w-9 h-9 rounded-full bg-[#064E3B]/10 flex items-center justify-center">
-                  <Icon className="w-4 h-4 text-[#064E3B]" />
+                <div className="w-9 h-9 rounded-full bg-[#B76E79]/10 flex items-center justify-center">
+                  <Icon className="w-4 h-4 text-[#B76E79]" />
                 </div>
                 <p className="text-xs font-bold text-gray-800">{title}</p>
                 <p className="text-[10px] text-gray-500">{sub}</p>
@@ -378,8 +378,8 @@ export default function MyOrdersPage() {
         {/* Footer help */}
         <p className="text-center text-xs text-gray-500">
           Still need help?{" "}
-          <Link href="/contact" className="text-[#064E3B] font-semibold hover:underline">Contact us</Link>{" "}or{" "}
-          <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454'}`} target="_blank" rel="noopener noreferrer" className="text-[#064E3B] font-semibold hover:underline">WhatsApp us</a>
+          <Link href="/contact" className="text-[#B76E79] font-semibold hover:underline">Contact us</Link>{" "}or{" "}
+          <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454'}`} target="_blank" rel="noopener noreferrer" className="text-[#B76E79] font-semibold hover:underline">WhatsApp us</a>
           . We respond within 2 hours.
         </p>
       </div>

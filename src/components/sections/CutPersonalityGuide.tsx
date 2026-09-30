@@ -85,18 +85,18 @@ export default function CutPersonalityGuide() {
   const activeCut = CUTS.find((c) => c.id === activeCutId) || CUTS[0];
 
   return (
-    <section id="stone-personality" className="py-12 sm:py-20 bg-[#FDFBF7] border-t border-[#E8E5DF]">
+    <section id="stone-personality" className="py-12 sm:py-20 bg-[#FFF0F5] border-t border-[#E8E5DF]">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F4E8C1]/60 text-[#8C6A1F] rounded-full text-[11px] sm:text-xs font-sans font-bold tracking-widest uppercase mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-[#B89035]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#C88E91]" />
             Gemstone Storytelling
           </div>
           <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl text-[#18181B] mb-3">
             Find Your Stone Personality
           </h2>
-          <div className="w-16 h-[1.5px] bg-[#D4AF37] mx-auto mb-4" />
+          <div className="w-16 h-[1.5px] bg-[#D39EAA] mx-auto mb-4" />
           <p className="font-sans text-xs sm:text-sm text-gray-600 leading-relaxed max-w-2xl mx-auto">
             Every gemstone cut tells a different love story. Explore the optical character, scintillation personality, and finger coverage of our master cuts.
           </p>
@@ -121,8 +121,8 @@ export default function CutPersonalityGuide() {
                   alt={activeCut.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute top-4 left-4 z-10 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#022C22]/90 backdrop-blur-md text-[#D4AF37] font-sans text-[10px] font-bold tracking-widest uppercase shadow-lg border border-[#D4AF37]/40 pointer-events-none">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
+                <div className="absolute top-4 left-4 z-10 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#592D37]/90 backdrop-blur-md text-[#D39EAA] font-sans text-[10px] font-bold tracking-widest uppercase shadow-lg border border-[#D39EAA]/40 pointer-events-none">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D39EAA] animate-pulse" />
                   {activeCut.name} Cut
                 </div>
               </div>
@@ -145,7 +145,7 @@ export default function CutPersonalityGuide() {
                   <div className="grid grid-cols-2 gap-3 mb-6 p-4 bg-[#F7F5F0] rounded-xl border border-[#E8E5DF] font-sans text-xs">
                     <div>
                       <span className="text-gray-400 block text-[10px] uppercase tracking-wider">Fire & Rainbow Sparkle</span>
-                      <strong className="text-[#064E3B] text-sm">{activeCut.fireScore}</strong>
+                      <strong className="text-[#B76E79] text-sm">{activeCut.fireScore}</strong>
                     </div>
                     <div>
                       <span className="text-gray-400 block text-[10px] uppercase tracking-wider">Finger Elongation</span>
@@ -166,7 +166,7 @@ export default function CutPersonalityGuide() {
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                   <Link
                     href={`/category/rings?shape=${activeCut.id}`}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#022C22] hover:bg-[#B89035] text-[#D4AF37] hover:text-white rounded-xl font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#592D37] hover:bg-[#C88E91] text-[#D39EAA] hover:text-white rounded-xl font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md"
                   >
                     <span>Explore {activeCut.name} Solitaires</span>
                     <ArrowRight className="w-4 h-4" />

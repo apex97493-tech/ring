@@ -17,7 +17,7 @@ const SHAPES = [
 ];
 
 function DiamondShapeIcon({ shapeType }: { shapeType: string }) {
-  const strokeColor = '#022C22';
+  const strokeColor = '#592D37';
   const fillColor = 'rgba(2, 44, 34, 0.05)';
 
   switch (shapeType) {
@@ -104,11 +104,11 @@ export default function ShapeMegaMenu({ isOpen, onMouseEnter, onMouseLeave }: Sh
           transition={{ duration: 0.2 }}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
-          className="absolute top-full left-0 w-max max-w-4xl bg-[#FDFBF7] shadow-royal border border-[#D4AF37]/30 rounded-b-xl z-50 pt-2 pb-6 px-8 mt-[1px]"
+          className="absolute top-full left-0 w-max max-w-4xl bg-[#FFF0F5] shadow-royal border border-[#D39EAA]/30 rounded-b-xl z-50 pt-2 pb-6 px-8 mt-[1px]"
         >
           <div className="text-center mb-6 pt-4">
-            <h3 className="font-serif text-2xl text-[#022C22] font-semibold">Shop By Shape</h3>
-            <div className="w-12 h-[1px] bg-[#D4AF37] mx-auto mt-2"></div>
+            <h3 className="font-serif text-2xl text-[#592D37] font-semibold">Shop By Shape</h3>
+            <div className="w-12 h-[1px] bg-[#D39EAA] mx-auto mt-2"></div>
           </div>
           
           <div className="grid grid-cols-5 gap-x-8 gap-y-8">
@@ -118,10 +118,10 @@ export default function ShapeMegaMenu({ isOpen, onMouseEnter, onMouseLeave }: Sh
                 href={`/shop?shape=${shape.id}`}
                 className="flex flex-col items-center group"
               >
-                <div className="w-16 h-16 rounded-full bg-white border border-[#E8E5DF] flex items-center justify-center group-hover:border-[#D4AF37] group-hover:shadow-md transition-all group-hover:scale-105 mb-3">
+                <div className="w-16 h-16 rounded-full bg-white border border-[#E8E5DF] flex items-center justify-center group-hover:border-[#D39EAA] group-hover:shadow-md transition-all group-hover:scale-105 mb-3">
                   <DiamondShapeIcon shapeType={shape.id} />
                 </div>
-                <span className="font-sans text-[11px] font-semibold text-[#18181B] group-hover:text-[#D4AF37] uppercase tracking-wider transition-colors">
+                <span className="font-sans text-[11px] font-semibold text-[#18181B] group-hover:text-[#D39EAA] uppercase tracking-wider transition-colors">
                   {shape.name}
                 </span>
               </Link>

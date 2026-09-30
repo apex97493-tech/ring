@@ -49,7 +49,7 @@ export default function FaqSection() {
   };
 
   return (
-    <section id="faqs" className="py-20 bg-[#FDFBF7] border-t border-[#E8E5DF]">
+    <section id="faqs" className="py-20 bg-[#FFF0F5] border-t border-[#E8E5DF]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F4E8C1]/60 text-[#8C6A1F] rounded-full text-xs font-sans font-bold tracking-widest uppercase mb-3">
@@ -59,7 +59,7 @@ export default function FaqSection() {
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#18181B] mb-4">
             Frequently Asked Questions
           </h2>
-          <div className="w-20 h-[1.5px] bg-[#B89035] mx-auto mb-6" />
+          <div className="w-20 h-[1.5px] bg-[#C88E91] mx-auto mb-6" />
           <p className="font-sans text-sm sm:text-base text-gray-600">
             Everything you need to know about our certified Moissanite stones, hallmarking, delivery, and lifetime guarantees.
           </p>
@@ -86,7 +86,7 @@ export default function FaqSection() {
                   />
                 </button>
                 {isOpen && (
-                  <div className="px-6 pb-6 pt-1 font-sans text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100 bg-[#FDFBF7]/40">
+                  <div className="px-6 pb-6 pt-1 font-sans text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100 bg-[#FFF0F5]/40">
                     {faq.answer}
                   </div>
                 )}

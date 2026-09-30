@@ -33,6 +33,7 @@ import {
   Smartphone,
   Zap,
 } from 'lucide-react';
+import DeliveryScooterAnimation from '@/components/layout/DeliveryScooterAnimation';
 
 const POPULAR_COUNTRIES = [
   'United States',
@@ -59,8 +60,10 @@ declare global {
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { cart, subtotal, clearCart } = useCart();
+  const { cart: globalCart, subtotal: globalSubtotal, clearCart, directCheckoutItems, setDirectCheckoutItems } = useCart();
   const { formatPrice, selectedCurrency, t } = useCurrency();
+  const cart = directCheckoutItems || globalCart;
+  const subtotal = directCheckoutItems ? directCheckoutItems.reduce((acc, item) => acc + item.price * item.quantity, 0) : globalSubtotal;
 
   // Form State
   const [formData, setFormData] = useState<ShippingAddress>({
@@ -170,7 +173,11 @@ export default function CheckoutPage() {
           if (data.success && data.order) {
             setCompletedOrder(data.order);
             setWhatsAppUrl(data.whatsAppUrl || '');
-            clearCart();
+            if (directCheckoutItems) {
+              setDirectCheckoutItems(null);
+            } else {
+              clearCart();
+            }
             localStorage.removeItem('fj_pending_paypal_order');
             window.history.replaceState({}, document.title, '/checkout');
           } else {
@@ -336,7 +343,11 @@ export default function CheckoutPage() {
       if (data.success && data.order) {
         setCompletedOrder(data.order);
         setWhatsAppUrl(data.whatsAppUrl || '');
-        clearCart();
+        if (directCheckoutItems) {
+          setDirectCheckoutItems(null);
+        } else {
+          clearCart();
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         alert(data.error || 'Failed to place order. Please try again.');
@@ -459,6 +470,7 @@ export default function CheckoutPage() {
 
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#F0FDF8] to-[#FAFAF7] py-8 px-4 sm:px-6">
+        <DeliveryScooterAnimation />
         <div className="max-w-2xl mx-auto space-y-4">
 
           {/* ── TOP CONFIRMATION CARD ── */}
