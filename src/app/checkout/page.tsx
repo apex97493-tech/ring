@@ -29,6 +29,9 @@ import {
   HelpCircle,
   Building2,
   Gem,
+  QrCode,
+  Smartphone,
+  Zap,
 } from 'lucide-react';
 
 const POPULAR_COUNTRIES = [
@@ -101,6 +104,7 @@ export default function CheckoutPage() {
   const [payoneerReference, setPayoneerReference] = useState('');
   const [bankReference, setBankReference] = useState('');
   const [copiedBankField, setCopiedBankField] = useState<string | null>(null);
+  const [upiSubTab, setUpiSubTab] = useState<'qr' | 'manual'>('qr');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [completedOrder, setCompletedOrder] = useState<Order | null>(null);
@@ -200,6 +204,32 @@ export default function CheckoutPage() {
   const paypalAmount = isDirectPayPal
     ? finalTotal
     : Math.max(1, Math.round(finalTotal / 86.5));
+
+  // Indian Shopper Auto-Detection & UPI Configuration
+  const isIndianCustomer = selectedCurrency.code === 'INR' || formData.country === 'India';
+
+  useEffect(() => {
+    if (selectedCurrency.code === 'INR' && formData.country !== 'India' && !hasSavedAddress) {
+      setFormData((prev) => ({ ...prev, country: 'India' }));
+    }
+  }, [selectedCurrency.code, hasSavedAddress]);
+
+  useEffect(() => {
+    if (isIndianCustomer && paymentMethod === 'paypal') {
+      setPaymentMethod('bank_transfer');
+    }
+  }, [isIndianCustomer]);
+
+  // UPI dynamic payment parameters
+  const upiAmount = currencyCode === 'INR' ? finalTotal : Math.round(finalTotal * 86.5);
+  const upiVpa = process.env.NEXT_PUBLIC_UPI_ID || '982893045@kotak';
+  const bankName = process.env.NEXT_PUBLIC_BANK_NAME || 'Kotak Mahindra Bank';
+  const bankAccount = process.env.NEXT_PUBLIC_BANK_ACCOUNT || '9848316724';
+  const bankIfsc = process.env.NEXT_PUBLIC_BANK_IFSC || 'KKBK0000273';
+  const bankBranch = process.env.NEXT_PUBLIC_BANK_BRANCH || 'Jaipur - Vaishali Nagar';
+  const bankCrn = process.env.NEXT_PUBLIC_BANK_CRN || '798804404';
+  const upiUri = `upi://pay?pa=${encodeURIComponent(upiVpa)}&pn=${encodeURIComponent('Forever Jewell Studio')}&am=${upiAmount}&cu=INR&tn=${encodeURIComponent('Fine Jewelry Order')}`;
+  const upiQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=8&data=${encodeURIComponent(upiUri)}`;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -534,9 +564,16 @@ export default function CheckoutPage() {
                 <p className={`text-xs mt-0.5 font-bold ${isPaid ? 'text-green-600' : 'text-amber-600'}`}>
                   {isPaid ? '✓ Payment Confirmed' : '⏳ Pending Verification'}
                 </p>
+                {completedOrder.payment?.bankReference && (
+                  <p className="text-[10px] text-gray-600 font-mono mt-0.5">
+                    Ref / UTR: <strong className="text-gray-900">{completedOrder.payment.bankReference}</strong>
+                  </p>
+                )}
                 {!isPaid && (
                   <p className="text-[10px] text-amber-600 mt-1">
-                    We will confirm your order once payment is verified (usually within 2–4 hrs).
+                    {completedOrder.payment?.method === 'bank_transfer'
+                      ? 'UTR submitted! Our artisans in Jaipur verify deposits within 15–30 mins to begin crafting.'
+                      : 'We will confirm your order once payment is verified (usually within 2–4 hrs).'}
                   </p>
                 )}
               </div>
@@ -549,8 +586,16 @@ export default function CheckoutPage() {
                   <Send className="w-4 h-4" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-[#064E3B]">Send to our Concierge on WhatsApp</p>
-                  <p className="text-[11px] text-gray-600">Confirm ring size, engraving, or get order updates instantly.</p>
+                  <p className="text-sm font-semibold text-[#064E3B]">
+                    {completedOrder.payment?.method === 'bank_transfer'
+                      ? 'Send UPI Payment Receipt Screenshot'
+                      : 'Send to our Concierge on WhatsApp'}
+                  </p>
+                  <p className="text-[11px] text-gray-600">
+                    {completedOrder.payment?.method === 'bank_transfer'
+                      ? 'Share your UPI transaction screenshot with our Jaipur studio for instant order confirmation.'
+                      : 'Confirm ring size, engraving, or get order updates instantly.'}
+                  </p>
                 </div>
               </div>
               {whatsAppUrl && (
@@ -558,10 +603,12 @@ export default function CheckoutPage() {
                   href={whatsAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#064E3B] hover:bg-[#043327] text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow transition-all"
+                  className="mt-3 w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-[#064E3B] hover:bg-[#043327] text-white text-xs font-bold uppercase tracking-wider rounded-lg shadow transition-all cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  Open WhatsApp — Send Order Details
+                  {completedOrder.payment?.method === 'bank_transfer'
+                    ? 'Open WhatsApp — Share UPI Payment Screenshot'
+                    : 'Open WhatsApp — Send Order Details'}
                 </a>
               )}
             </div>
@@ -1010,59 +1057,66 @@ export default function CheckoutPage() {
               </div>
 
               {/* Tabs for Payment Gateways */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-gray-100 rounded-lg mb-6">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('paypal')}
-                  className={`py-2.5 px-2 text-xs font-semibold rounded-md transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 ${
-                    paymentMethod === 'paypal'
-                      ? 'bg-white text-gray-900 shadow-sm border border-gray-200'
-                      : 'text-gray-500 hover:text-gray-900'
-                  }`}
-                >
-                  <CreditCard className="w-4 h-4 text-[#B89035]" />
-                  <span>PayPal / Cards</span>
-                </button>
-
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1.5 bg-gray-100 rounded-xl mb-6">
                 <button
                   type="button"
                   onClick={() => setPaymentMethod('bank_transfer')}
-                  className={`py-2.5 px-2 text-xs font-semibold rounded-md transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 ${
+                  className={`relative py-3 px-2 text-xs font-semibold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 cursor-pointer ${
                     paymentMethod === 'bank_transfer'
-                      ? 'bg-white text-gray-900 shadow-sm border border-gray-200'
-                      : 'text-gray-500 hover:text-gray-900'
+                      ? 'bg-white text-gray-900 shadow-md border border-[#064E3B]/20 font-bold'
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
-                  <Building2 className="w-4 h-4 text-[#064E3B]" />
-                  <span>UPI / Bank</span>
+                  {isIndianCustomer && (
+                    <span className="absolute -top-2.5 right-2 px-1.5 py-0.5 bg-[#064E3B] text-[#D4AF37] text-[9px] font-extrabold rounded-full tracking-wider shadow">
+                      🇮🇳 BEST FOR INDIA
+                    </span>
+                  )}
+                  <Zap className="w-4 h-4 text-[#064E3B]" />
+                  <span>UPI / Bank Transfer</span>
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => setPaymentMethod('payoneer')}
-                  className={`py-2.5 px-2 text-xs font-semibold rounded-md transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 ${
-                    paymentMethod === 'payoneer'
-                      ? 'bg-white text-gray-900 shadow-sm border border-gray-200'
-                      : 'text-gray-500 hover:text-gray-900'
+                  onClick={() => setPaymentMethod('paypal')}
+                  className={`py-3 px-2 text-xs font-semibold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 cursor-pointer ${
+                    paymentMethod === 'paypal'
+                      ? 'bg-white text-gray-900 shadow-md border border-gray-200 font-bold'
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
-                  <span className="w-4 h-4 rounded-full bg-[#FF4800] text-white text-[10px] font-bold flex items-center justify-center">
-                    P
-                  </span>
-                  <span>Payoneer</span>
+                  <CreditCard className="w-4 h-4 text-[#B89035]" />
+                  <span>{isIndianCustomer ? 'Intl. Cards / PayPal' : 'PayPal / Cards'}</span>
                 </button>
+
+                {!isIndianCustomer && (
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('payoneer')}
+                    className={`py-3 px-2 text-xs font-semibold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 cursor-pointer ${
+                      paymentMethod === 'payoneer'
+                        ? 'bg-white text-gray-900 shadow-md border border-gray-200 font-bold'
+                        : 'text-gray-600 hover:text-gray-900'
+                    }`}
+                  >
+                    <span className="w-4 h-4 rounded-full bg-[#FF4800] text-white text-[10px] font-bold flex items-center justify-center">
+                      P
+                    </span>
+                    <span>Payoneer</span>
+                  </button>
+                )}
 
                 <button
                   type="button"
                   onClick={() => setPaymentMethod('whatsapp')}
-                  className={`py-2.5 px-2 text-xs font-semibold rounded-md transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 ${
+                  className={`py-3 px-2 text-xs font-semibold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 cursor-pointer ${
                     paymentMethod === 'whatsapp'
-                      ? 'bg-white text-gray-900 shadow-sm border border-gray-200'
-                      : 'text-gray-500 hover:text-gray-900'
+                      ? 'bg-white text-gray-900 shadow-md border border-gray-200 font-bold'
+                      : 'text-gray-600 hover:text-gray-900'
                   }`}
                 >
                   <Send className="w-4 h-4 text-[#064E3B]" />
-                  <span>WhatsApp</span>
+                  <span>WhatsApp Order</span>
                 </button>
               </div>
 
@@ -1070,6 +1124,19 @@ export default function CheckoutPage() {
               {paymentMethod === 'paypal' && (
                 <div className="space-y-4">
                   <div className="bg-[#F8FAFC] border border-gray-200 rounded-lg p-4">
+                    {/* Notice for Indian visitors selecting PayPal */}
+                    {isIndianCustomer && (
+                      <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 mb-4 text-xs text-amber-900 flex items-start gap-2.5">
+                        <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                        <div>
+                          <p className="font-bold text-amber-950">Notice for Indian Shoppers:</p>
+                          <p className="text-[11px] text-amber-800 mt-0.5 leading-relaxed">
+                            PayPal processes transactions internationally in <strong>USD ($)</strong> for overseas credit cards. For 100% free and instant payments in Indian Rupees (₹), please select the <strong>UPI / Bank Transfer</strong> tab above using Google Pay, PhonePe, Paytm, or NetBanking.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-semibold text-gray-900">
                         Pay with PayPal or Any Debit / Credit Card
@@ -1164,65 +1231,165 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              {/* TAB: BANK / UPI TRANSFER */}
+              {/* TAB: BANK / UPI TRANSFER (COMPREHENSIVE INDIAN PAYMENT FLOW) */}
               {paymentMethod === 'bank_transfer' && (
-                <div className="space-y-4">
-                  <div className="bg-[#F0FDF4] border border-[#BBF7D0] rounded-lg p-5">
-                    <div className="flex items-start justify-between mb-3">
+                <div className="space-y-5">
+                  <div className="bg-gradient-to-b from-[#F0FDF4] to-[#ECFDF5] border border-[#A7F3D0] rounded-2xl p-5 sm:p-6 shadow-xs">
+                    {/* Header */}
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#A7F3D0]/60 pb-4 mb-4">
                       <div>
-                        <h4 className="text-xs font-bold text-[#064E3B] uppercase tracking-wider flex items-center gap-1.5">
-                          <Building2 className="w-4 h-4 text-[#064E3B]" />
-                          {process.env.NEXT_PUBLIC_BANK_NAME ? `${process.env.NEXT_PUBLIC_BANK_NAME} Transfer & Instant UPI` : 'Bank Transfer & Instant UPI'}
+                        <h4 className="text-sm font-bold text-[#064E3B] uppercase tracking-wider flex items-center gap-2">
+                          <Zap className="w-4 h-4 text-emerald-600 fill-emerald-500" />
+                          <span>Instant UPI & Kotak Mahindra Bank Direct Transfer</span>
                         </h4>
-                        <p className="text-xs text-gray-600 mt-1">
-                          Transfer directly using any UPI App (GPay, PhonePe, Paytm, BHIM) or NetBanking (IMPS/NEFT).
+                        <p className="text-xs text-gray-600 mt-0.5">
+                          Pay directly from Google Pay, PhonePe, Paytm, BHIM, CRED or NetBanking with zero gateway surcharges.
                         </p>
                       </div>
-                      <span className="px-2 py-0.5 bg-[#064E3B] text-[#D4AF37] text-[10px] font-bold rounded">
-                        Direct Deposit
-                      </span>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <span className="px-2.5 py-1 bg-[#064E3B] text-[#D4AF37] text-[10px] font-bold rounded-full tracking-wider shadow-xs">
+                          ⚡ 0% FEES • INSTANT
+                        </span>
+                      </div>
                     </div>
 
-                    {/* Account Details Box */}
-                    <div className="bg-white border border-[#BBF7D0] rounded-lg p-4 space-y-3 mb-4 shadow-xs">
-                      {/* UPI ID */}
-                      {process.env.NEXT_PUBLIC_UPI_ID && (
-                        <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
-                          <div>
-                            <span className="text-[10px] uppercase font-semibold text-gray-400 block">UPI ID (GPay / PhonePe / Paytm / BHIM)</span>
-                            <span className="font-mono font-bold text-gray-900 text-sm">{process.env.NEXT_PUBLIC_UPI_ID}</span>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => copyBankField(process.env.NEXT_PUBLIC_UPI_ID || '', 'UPI ID')}
-                            className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
-                          >
-                            {copiedBankField === 'UPI ID' ? (
-                              <>
-                                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                                <span className="text-emerald-600">Copied</span>
-                              </>
-                            ) : (
-                              <>
-                                <Copy className="w-3.5 h-3.5" />
-                                <span>Copy</span>
-                              </>
-                            )}
-                          </button>
-                        </div>
-                      )}
+                    {/* Sub-Tabs: UPI QR Code vs Bank Details */}
+                    <div className="flex items-center gap-2 p-1 bg-white/80 border border-[#A7F3D0] rounded-xl mb-5">
+                      <button
+                        type="button"
+                        onClick={() => setUpiSubTab('qr')}
+                        className={`flex-1 py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                          upiSubTab === 'qr'
+                            ? 'bg-[#064E3B] text-white shadow-sm'
+                            : 'text-gray-600 hover:text-gray-900'
+                        }`}
+                      >
+                        <QrCode className="w-3.5 h-3.5" />
+                        <span>Scan UPI QR Code</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setUpiSubTab('manual')}
+                        className={`flex-1 py-2 px-3 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                          upiSubTab === 'manual'
+                            ? 'bg-[#064E3B] text-white shadow-sm'
+                            : 'text-gray-600 hover:text-gray-900'
+                        }`}
+                      >
+                        <Building2 className="w-3.5 h-3.5" />
+                        <span>NetBanking Details (NEFT/IMPS)</span>
+                      </button>
+                    </div>
 
-                      {/* Account Number */}
-                      {process.env.NEXT_PUBLIC_BANK_ACCOUNT && (
-                        <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
+                    {/* VIEW A: DYNAMIC UPI QR CODE */}
+                    {upiSubTab === 'qr' && (
+                      <div className="space-y-4">
+                        <div className="bg-white border-2 border-emerald-500/20 rounded-2xl p-5 text-center shadow-sm space-y-3.5">
+                          <div>
+                            <span className="text-[11px] uppercase tracking-wider font-extrabold text-[#064E3B] block">
+                              Scan with Any UPI App
+                            </span>
+                            <div className="text-2xl font-serif font-black text-gray-900 mt-1">
+                              ₹{upiAmount.toLocaleString('en-IN')}
+                            </div>
+                            <p className="text-[11px] text-gray-500">
+                              Amount pre-configured • Beneficiary: Forever Jewell Studio
+                            </p>
+                          </div>
+
+                          {/* Dynamic QR Code */}
+                          <div className="relative inline-block mx-auto bg-white p-3 rounded-2xl border-2 border-[#D4AF37]/50 shadow-md">
+                            <img
+                              src={upiQrUrl}
+                              alt="Forever Jewell Studio UPI Payment QR"
+                              className="w-48 h-48 sm:w-56 sm:h-56 mx-auto object-contain rounded-xl"
+                            />
+                            <div className="absolute inset-x-0 bottom-1 flex justify-center">
+                              <span className="text-[9px] bg-[#064E3B] text-white px-2 py-0.5 rounded-full font-mono font-bold tracking-wider shadow">
+                                NPCI • BHIM UPI
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Supported Apps Pills */}
+                          <div>
+                            <p className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mb-2">
+                              Supported UPI Apps
+                            </p>
+                            <div className="flex flex-wrap items-center justify-center gap-1.5 text-[10px] font-bold text-gray-700">
+                              {['Google Pay', 'PhonePe', 'Paytm', 'BHIM', 'CRED', 'Amazon Pay', 'Any Bank App'].map((app) => (
+                                <span key={app} className="px-2 py-1 bg-gray-50 border border-gray-200 rounded-md">
+                                  {app}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Mobile 1-Click Tap to Pay Button */}
+                          <div className="pt-1 sm:hidden">
+                            <a
+                              href={upiUri}
+                              className="w-full py-3.5 px-4 bg-gradient-to-r from-[#064E3B] to-[#043327] hover:from-[#043327] hover:to-[#064E3B] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer border border-emerald-600"
+                            >
+                              <Smartphone className="w-4 h-4 text-[#D4AF37]" />
+                              <span>Tap to Pay ₹{upiAmount.toLocaleString('en-IN')} in Any UPI App</span>
+                            </a>
+                            <p className="text-[10px] text-gray-400 mt-1.5">
+                              Tapping opens your installed UPI app with the exact amount filled.
+                            </p>
+                          </div>
+
+                          {/* Copyable UPI ID Box */}
+                          <div className="pt-2 border-t border-gray-100 flex items-center justify-between bg-gray-50/80 px-3 py-2 rounded-xl text-xs">
+                            <div className="text-left">
+                              <span className="text-[10px] text-gray-400 block font-semibold uppercase">Or Pay to UPI ID / VPA</span>
+                              <span className="font-mono font-bold text-gray-900 text-xs sm:text-sm">{upiVpa}</span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => copyBankField(upiVpa, 'UPI ID')}
+                              className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold bg-white border border-gray-300 rounded-lg hover:bg-gray-100 text-gray-800 cursor-pointer shadow-xs transition-colors"
+                            >
+                              {copiedBankField === 'UPI ID' ? (
+                                <>
+                                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                  <span className="text-emerald-600">Copied</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-3.5 h-3.5" />
+                                  <span>Copy UPI ID</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* VIEW B: KOTAK MAHINDRA BANK NETBANKING DETAILS */}
+                    {upiSubTab === 'manual' && (
+                      <div className="bg-white border border-[#A7F3D0] rounded-xl p-4 sm:p-5 space-y-3 shadow-xs">
+                        <div className="flex items-center justify-between pb-2 border-b border-gray-100">
+                          <div>
+                            <span className="text-[10px] uppercase font-semibold text-gray-400 block">Beneficiary Name</span>
+                            <span className="font-bold text-gray-900 text-xs sm:text-sm">Forever Jewell Studio</span>
+                          </div>
+                          <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">
+                            Current Account
+                          </span>
+                        </div>
+
+                        {/* Account Number */}
+                        <div className="flex items-center justify-between py-2 border-b border-gray-100 text-xs">
                           <div>
                             <span className="text-[10px] uppercase font-semibold text-gray-400 block">Bank Account Number</span>
-                            <span className="font-mono font-bold text-gray-900 text-sm">{process.env.NEXT_PUBLIC_BANK_ACCOUNT}</span>
+                            <span className="font-mono font-bold text-gray-900 text-sm sm:text-base tracking-wider">{bankAccount}</span>
                           </div>
                           <button
                             type="button"
-                            onClick={() => copyBankField(process.env.NEXT_PUBLIC_BANK_ACCOUNT || '', 'Account Number')}
-                            className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
+                            onClick={() => copyBankField(bankAccount, 'Account Number')}
+                            className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold bg-white border border-gray-300 rounded-lg hover:bg-gray-100 text-gray-800 cursor-pointer shadow-xs transition-colors"
                           >
                             {copiedBankField === 'Account Number' ? (
                               <>
@@ -1237,19 +1404,17 @@ export default function CheckoutPage() {
                             )}
                           </button>
                         </div>
-                      )}
 
-                      {/* IFSC Code */}
-                      {process.env.NEXT_PUBLIC_BANK_IFSC && (
-                        <div className="flex items-center justify-between py-1.5 border-b border-gray-100 text-xs">
+                        {/* IFSC Code */}
+                        <div className="flex items-center justify-between py-2 border-b border-gray-100 text-xs">
                           <div>
                             <span className="text-[10px] uppercase font-semibold text-gray-400 block">Branch IFSC Code</span>
-                            <span className="font-mono font-bold text-gray-900 text-sm">{process.env.NEXT_PUBLIC_BANK_IFSC}</span>
+                            <span className="font-mono font-bold text-gray-900 text-sm tracking-wider">{bankIfsc}</span>
                           </div>
                           <button
                             type="button"
-                            onClick={() => copyBankField(process.env.NEXT_PUBLIC_BANK_IFSC || '', 'IFSC')}
-                            className="flex items-center gap-1 px-2.5 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 text-gray-700 cursor-pointer"
+                            onClick={() => copyBankField(bankIfsc, 'IFSC')}
+                            className="flex items-center gap-1 px-3 py-1.5 text-xs font-semibold bg-white border border-gray-300 rounded-lg hover:bg-gray-100 text-gray-800 cursor-pointer shadow-xs transition-colors"
                           >
                             {copiedBankField === 'IFSC' ? (
                               <>
@@ -1264,53 +1429,72 @@ export default function CheckoutPage() {
                             )}
                           </button>
                         </div>
-                      )}
 
-                      {/* Bank & Branch Details */}
-                      {(process.env.NEXT_PUBLIC_BANK_NAME || process.env.NEXT_PUBLIC_BANK_BRANCH) && (
-                        <div className="text-xs text-gray-600 pt-1 space-y-0.5">
+                        {/* Bank & Branch Info */}
+                        <div className="text-xs text-gray-600 pt-1 space-y-1">
                           <p>
-                            {process.env.NEXT_PUBLIC_BANK_NAME && <span><strong>Beneficiary Bank:</strong> {process.env.NEXT_PUBLIC_BANK_NAME}</span>}
-                            {process.env.NEXT_PUBLIC_BANK_CRN && <span> | <strong>CRN:</strong> {process.env.NEXT_PUBLIC_BANK_CRN}</span>}
+                            <strong>Beneficiary Bank:</strong> {bankName} {bankCrn && <span>| <strong>CRN:</strong> {bankCrn}</span>}
                           </p>
-                          {process.env.NEXT_PUBLIC_BANK_BRANCH && (
-                            <p><strong>Branch:</strong> {process.env.NEXT_PUBLIC_BANK_BRANCH}</p>
-                          )}
+                          <p>
+                            <strong>Branch:</strong> {bankBranch}
+                          </p>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
 
-                    {/* UTR Input */}
-                    <div>
-                      <label className="block text-xs font-medium text-gray-700 mb-1">
-                        Enter UPI Reference ID / UTR / Remitter Account Name *
+                    {/* Step 2: Enter Transaction ID / UTR */}
+                    <div className="pt-2">
+                      <label className="block text-xs font-bold text-gray-900 mb-1.5">
+                        Enter 12-Digit UPI Reference ID / UTR Number *
                       </label>
                       <input
                         type="text"
                         value={bankReference}
                         onChange={(e) => setBankReference(e.target.value)}
-                        placeholder="e.g. UTR 4281928472 or GPay Txn Ref"
-                        className={`w-full px-3.5 py-2.5 text-xs bg-white border ${
-                          errors.bankReference ? 'border-red-500' : 'border-gray-300'
-                        } rounded focus:outline-none focus:border-[#064E3B]`}
+                        placeholder="e.g. 428192847291 or UTR from payment receipt"
+                        className={`w-full px-4 py-3 text-xs bg-white border ${
+                          errors.bankReference ? 'border-red-500 ring-2 ring-red-200' : 'border-gray-300'
+                        } rounded-xl font-mono text-gray-900 focus:outline-none focus:border-[#064E3B] focus:ring-2 focus:ring-[#064E3B]/20 shadow-xs`}
                       />
-                      {errors.bankReference && (
-                        <p className="text-[11px] text-red-600 mt-1">{errors.bankReference}</p>
+                      {errors.bankReference ? (
+                        <p className="text-[11px] text-red-600 mt-1 font-semibold">{errors.bankReference}</p>
+                      ) : (
+                        <p className="text-[11px] text-gray-500 mt-1">
+                          💡 You will find the 12-digit UTR in your payment details in Google Pay, PhonePe, or Paytm once completed.
+                        </p>
                       )}
                     </div>
 
-                    <div className="mt-4">
+                    {/* Confirm Button */}
+                    <div className="mt-4 pt-1">
                       <button
                         type="button"
                         disabled={isSubmitting}
                         onClick={() => handlePlaceOrder()}
-                        className="w-full py-3.5 bg-[#064E3B] hover:bg-[#043327] active:scale-95 text-[#D4AF37] font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md rounded-lg flex items-center justify-center gap-2 cursor-pointer"
+                        className="w-full py-4 bg-gradient-to-r from-[#064E3B] to-[#022C22] hover:from-[#022C22] hover:to-[#064E3B] active:scale-95 text-[#D4AF37] font-sans text-xs font-extrabold tracking-widest uppercase transition-all shadow-lg rounded-xl flex items-center justify-center gap-2 cursor-pointer border border-[#D4AF37]/30"
                       >
-                        <CheckCircle2 className="w-4 h-4" />
+                        <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
                         {isSubmitting
-                          ? 'Submitting Order...'
-                          : `Confirm Bank / UPI Order (${currencySymbol}${finalTotal.toLocaleString()})`}
+                          ? 'Registering Order...'
+                          : `Confirm UPI / Bank Order (${currencySymbol}${finalTotal.toLocaleString()})`}
                       </button>
+                    </div>
+
+                    {/* Jaipur Artisan Concierge Support */}
+                    <div className="pt-3 border-t border-[#A7F3D0]/60 flex items-center justify-between text-[11px] text-gray-600">
+                      <span className="flex items-center gap-1.5">
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#064E3B]" />
+                        <span>Direct Studio Confirmation • Jaipur, Rajasthan</span>
+                      </span>
+                      <a
+                        href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919828930454'}?text=Hi%20ForeverJewell%20Team,%20I%20have%20a%20question%20regarding%20UPI%20payment%20for%20my%20order.`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#064E3B] font-bold hover:underline flex items-center gap-1"
+                      >
+                        <Send className="w-3 h-3" />
+                        <span>WhatsApp Help</span>
+                      </a>
                     </div>
                   </div>
                 </div>
