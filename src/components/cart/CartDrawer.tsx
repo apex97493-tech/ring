@@ -88,7 +88,7 @@ export default function CartDrawer() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.35, ease: 'easeInOut' }}
-              className="w-screen max-w-md bg-[#FDFBF7] shadow-2xl flex flex-col justify-between border-l border-[#E8E5DF]"
+              className="w-screen max-w-md bg-[#FFF0F5] shadow-2xl flex flex-col justify-between border-l border-[#E8E5DF]"
             >
               {/* Header */}
               <div className="p-4 sm:p-6 border-b border-[#E8E5DF] flex items-center justify-between bg-white">
@@ -112,10 +112,10 @@ export default function CartDrawer() {
                 <div className="flex items-center justify-between text-xs font-sans mb-1.5">
                   {remainingForFreeShipping > 0 ? (
                     <span className="text-[#18181B] text-[11px] sm:text-xs">
-                      Add <strong className="text-[#B89035]">₹{remainingForFreeShipping.toLocaleString('en-IN')}</strong> more for <span className="font-bold text-[#064E3B]">FREE Shipping</span>
+                      Add <strong className="text-[#C88E91]">₹{remainingForFreeShipping.toLocaleString('en-IN')}</strong> more for <span className="font-bold text-[#B76E79]">FREE Shipping</span>
                     </span>
                   ) : (
-                    <span className="text-[#064E3B] font-semibold flex items-center gap-1 text-[11px] sm:text-xs">
+                    <span className="text-[#B76E79] font-semibold flex items-center gap-1 text-[11px] sm:text-xs">
                       <Sparkles className="w-3.5 h-3.5 text-[#059669]" />
                       You qualify for Free Express Delivery!
                     </span>
@@ -123,7 +123,7 @@ export default function CartDrawer() {
                 </div>
                 <div className="w-full h-1.5 bg-[#E8E5DF] rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-[#B89035] to-[#064E3B] transition-all duration-500 rounded-full"
+                    className="h-full bg-gradient-to-r from-[#C88E91] to-[#B76E79] transition-all duration-500 rounded-full"
                     style={{ width: `${progressPercent}%` }}
                   />
                 </div>
@@ -145,7 +145,7 @@ export default function CartDrawer() {
                     <button
                       type="button"
                       onClick={() => setIsCartOpen(false)}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#18181B] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-widest hover:bg-[#8C6A1F] hover:text-white active:scale-95 transition-all rounded-xl cursor-pointer"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-[#18181B] text-[#D39EAA] font-sans text-xs font-bold uppercase tracking-widest hover:bg-[#8C6A1F] hover:text-white active:scale-95 transition-all rounded-xl cursor-pointer"
                     >
                       Browse Solitaires <ArrowRight className="w-4 h-4" />
                     </button>
@@ -187,7 +187,7 @@ export default function CartDrawer() {
                         </div>
 
                         <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100">
-                          <div className="flex items-center border border-gray-200 rounded-md bg-[#FDFBF7]">
+                          <div className="flex items-center border border-gray-200 rounded-md bg-[#FFF0F5]">
                             <button
                               type="button"
                               onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -208,7 +208,7 @@ export default function CartDrawer() {
                               <Plus className="w-3 h-3" />
                             </button>
                           </div>
-                          <span className="font-sans text-sm font-bold text-[#064E3B]">
+                          <span className="font-sans text-sm font-bold text-[#B76E79]">
                             {formatPrice(item.price * item.quantity)}
                           </span>
                         </div>
@@ -227,7 +227,7 @@ export default function CartDrawer() {
                       type="checkbox"
                       checked={isGiftWrap}
                       onChange={(e) => setIsGiftWrap(e.target.checked)}
-                      className="rounded border-gray-300 text-[#B89035] focus:ring-[#B89035]"
+                      className="rounded border-gray-300 text-[#C88E91] focus:ring-[#C88E91]"
                     />
                     <span>Add Premium Velvet Gift Packaging & Ribbon (+₹149)</span>
                   </label>
@@ -284,7 +284,7 @@ export default function CartDrawer() {
                       }}
                       className="flex-1 py-2.5 sm:py-3 bg-[#222222] text-white hover:bg-black active:scale-95 font-sans text-[10px] sm:text-xs font-bold tracking-wider uppercase transition-all rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shadow-md"
                     >
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#D39EAA]" />
                       Checkout
                     </button>
                   </div>
@@ -292,7 +292,7 @@ export default function CartDrawer() {
                   {/* Trust footer */}
                   <div className="flex items-center justify-center gap-4 text-[10px] text-gray-400 font-sans pt-1">
                     <span className="flex items-center gap-1">
-                      <ShieldCheck className="w-3 h-3 text-[#B89035]" /> 100% Secure
+                      <ShieldCheck className="w-3 h-3 text-[#C88E91]" /> 100% Secure
                     </span>
                     <span>•</span>
                     <span>GRA Verified</span>

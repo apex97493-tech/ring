@@ -4,9 +4,9 @@ import { Sparkles, ArrowLeft, Home, ShoppingBag } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <div className="min-h-[75vh] flex items-center justify-center bg-[#FDFBF7] px-4 py-16">
+    <div className="min-h-[75vh] flex items-center justify-center bg-[#FFF0F5] px-4 py-16">
       <div className="max-w-md w-full text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#064E3B] text-[#D4AF37] mb-6 shadow-royal border border-[#D4AF37]/40">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#B76E79] text-[#D39EAA] mb-6 shadow-royal border border-[#D39EAA]/40">
           <Sparkles className="w-8 h-8" />
         </div>
 
@@ -25,7 +25,7 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#022C22] hover:bg-[#B89035] text-[#D4AF37] hover:text-white rounded-xl font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#592D37] hover:bg-[#C88E91] text-[#D39EAA] hover:text-white rounded-xl font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-md"
           >
             <Home className="w-4 h-4" />
             <span>Return to Boutique</span>
@@ -33,7 +33,7 @@ export default function NotFound() {
 
           <Link
             href="/shop"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white border border-[#E8E5DF] hover:border-[#D4AF37] text-gray-800 rounded-xl font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-xs"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white border border-[#E8E5DF] hover:border-[#D39EAA] text-gray-800 rounded-xl font-sans text-xs font-bold tracking-widest uppercase transition-all shadow-xs"
           >
             <ShoppingBag className="w-4 h-4 text-[#8C6A1F]" />
             <span>Browse Collection</span>

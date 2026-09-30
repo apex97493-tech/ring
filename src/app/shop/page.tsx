@@ -146,31 +146,31 @@ export default function ShopPage() {
   const endIndex = Math.min(currentPage * PRODUCTS_PER_PAGE, filteredProducts.length);
 
   return (
-    <div className="w-full min-h-screen bg-[#FDFBF7]">
+    <div className="w-full min-h-screen bg-[#FFF0F5]">
       {/* Shop Hero */}
-      <section className="bg-[#022C22] text-[#FDFBF7] py-16 md:py-20 border-b border-[#D4AF37]/30 text-center relative overflow-hidden">
+      <section className="bg-[#592D37] text-[#FFF0F5] py-16 md:py-20 border-b border-[#D39EAA]/30 text-center relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#D4AF37] rounded-full text-[11px] font-sans font-bold tracking-widest uppercase mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#D39EAA]/20 border border-[#D39EAA]/40 text-[#D39EAA] rounded-full text-[11px] font-sans font-bold tracking-widest uppercase mb-4">
             <Sparkles className="w-3.5 h-3.5" />
             Complete Fine Jewelry Collection
           </div>
-          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-white">
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-[#FFF0F5]">
             The Royal Moissanite Collection
           </h1>
-          <div className="w-20 h-[1.5px] bg-[#D4AF37] mx-auto mb-6" />
-          <p className="font-sans text-sm sm:text-base text-[#FDFBF7]/80 max-w-2xl mx-auto leading-relaxed mb-6">
+          <div className="w-20 h-[1.5px] bg-[#D39EAA] mx-auto mb-6" />
+          <p className="font-sans text-sm sm:text-base text-[#FFF0F5]/80 max-w-2xl mx-auto leading-relaxed mb-6">
             Handcrafted with individual GRA lab certification, ethical VVS1 D-Color center stones, and 100% lifetime buyback assurance.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-sans text-[#F3E5AB]">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-sans text-[#FADBD8]">
             <span className="flex items-center gap-1">
-              <Award className="w-4 h-4 text-[#D4AF37]" /> GRA Lab Certified
+              <Award className="w-4 h-4 text-[#D39EAA]" /> GRA Lab Certified
             </span>
             <span className="flex items-center gap-1">
-              <ShieldCheck className="w-4 h-4 text-[#D4AF37]" /> 100% Lifetime Buyback
+              <ShieldCheck className="w-4 h-4 text-[#D39EAA]" /> 100% Lifetime Buyback
             </span>
             <span className="flex items-center gap-1">
-              <Truck className="w-4 h-4 text-[#34D399]" /> Free Insured Delivery
+              <Truck className="w-4 h-4 text-[#D39EAA]" /> Free Insured Delivery
             </span>
           </div>
         </div>
@@ -183,7 +183,7 @@ export default function ShopPage() {
       <section className="py-6 sm:py-10 max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-[#E8E5DF] gap-3 sm:gap-4">
           <div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#022C22]">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#592D37]">
               {selectedShape === 'all' ? 'All Jewelry Designs' : `${selectedShape} Cut Jewels`}
             </h2>
             <p className="font-sans text-xs text-gray-500 mt-0.5">
@@ -200,7 +200,7 @@ export default function ShopPage() {
                 value={searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder="Search rings & styles..."
-                className="w-full bg-white border border-[#E8E5DF] rounded-xl pl-8 pr-7 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37] shadow-xs placeholder:text-gray-400"
+                className="w-full bg-white border border-[#E8E5DF] rounded-xl pl-8 pr-7 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#592D37] focus:outline-none focus:border-[#D39EAA] shadow-xs placeholder:text-gray-400"
               />
               {searchQuery && (
                 <button
@@ -217,7 +217,7 @@ export default function ShopPage() {
             <select
               value={selectedMetal}
               onChange={(e) => handleMetalChange(e.target.value)}
-              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37]"
+              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#592D37] focus:outline-none focus:border-[#D39EAA]"
             >
               <option value="all">All Metals</option>
               <option value="Silver">925 Sterling Silver</option>
@@ -228,7 +228,7 @@ export default function ShopPage() {
             <select
               value={sortBy}
               onChange={(e) => handleSortChange(e.target.value)}
-              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#022C22] focus:outline-none focus:border-[#D4AF37]"
+              className="flex-1 sm:flex-initial bg-white border border-[#E8E5DF] rounded-xl px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-sans text-[#592D37] focus:outline-none focus:border-[#D39EAA]"
             >
               <option value="featured">Featured</option>
               <option value="price-low">Price: Low to High</option>
@@ -248,8 +248,8 @@ export default function ShopPage() {
         {totalPages > 1 && (
           <div className="mt-10 pt-6 border-t border-[#E8E5DF] flex flex-col sm:flex-row items-center justify-between gap-4">
             <span className="text-xs text-gray-500 font-sans">
-              Showing page <strong className="text-[#022C22] font-semibold">{currentPage}</strong> of{' '}
-              <strong className="text-[#022C22] font-semibold">{totalPages}</strong> ({filteredProducts.length} designs)
+              Showing page <strong className="text-[#592D37] font-semibold">{currentPage}</strong> of{' '}
+              <strong className="text-[#592D37] font-semibold">{totalPages}</strong> ({filteredProducts.length} designs)
             </span>
 
             <div className="flex items-center gap-1.5">
@@ -257,7 +257,7 @@ export default function ShopPage() {
                 type="button"
                 disabled={currentPage <= 1}
                 onClick={() => handlePageChange(currentPage - 1)}
-                className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs select-none active:scale-95"
+                className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#592D37] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D39EAA] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs select-none active:scale-95"
               >
                 <ChevronLeft className="w-3.5 h-3.5" />
                 <span>Previous</span>
@@ -279,8 +279,8 @@ export default function ShopPage() {
                       onClick={() => handlePageChange(item)}
                       className={`min-w-[34px] h-[34px] px-2 rounded-xl text-xs font-bold transition-all cursor-pointer select-none active:scale-95 ${
                         currentPage === item
-                          ? 'bg-[#022C22] text-[#D4AF37] shadow-md border border-[#022C22]'
-                          : 'bg-white text-gray-700 hover:text-[#022C22] hover:border-[#D4AF37] border border-[#E8E5DF]'
+                          ? 'bg-[#592D37] text-[#D39EAA] shadow-md border border-[#592D37]'
+                          : 'bg-white text-gray-700 hover:text-[#592D37] hover:border-[#D39EAA] border border-[#E8E5DF]'
                       }`}
                     >
                       {item}
@@ -293,7 +293,7 @@ export default function ShopPage() {
                 type="button"
                 disabled={currentPage >= totalPages}
                 onClick={() => handlePageChange(currentPage + 1)}
-                className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#022C22] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D4AF37] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs select-none active:scale-95"
+                className="px-3.5 py-2 bg-white border border-[#E8E5DF] text-[#592D37] disabled:opacity-30 rounded-xl text-xs font-semibold hover:border-[#D39EAA] transition-all flex items-center gap-1.5 cursor-pointer disabled:cursor-not-allowed shadow-xs select-none active:scale-95"
               >
                 <span>Next</span>
                 <ChevronRight className="w-3.5 h-3.5" />

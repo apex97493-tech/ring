@@ -39,7 +39,7 @@ export function generateCustomerEmailHtml(order: Order, siteUrl: string): string
       <meta charset="utf-8">
       <title>Order Confirmation - #${order.id}</title>
     </head>
-    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #fdfbf7; margin: 0; padding: 30px 15px;">
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #FFF0F5; margin: 0; padding: 30px 15px;">
       <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border: 1px solid #e5e0d8; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
         
         <!-- Header -->
@@ -51,7 +51,7 @@ export function generateCustomerEmailHtml(order: Order, siteUrl: string): string
         <!-- Body -->
         <div style="padding: 30px 24px;">
           <div style="text-align: center; margin-bottom: 24px;">
-            <div style="display: inline-block; background-color: #ecfdf5; color: #064e3b; padding: 6px 16px; border-radius: 9999px; font-size: 13px; font-weight: 600;">
+            <div style="display: inline-block; background-color: #ecfdf5; color: #B76E79; padding: 6px 16px; border-radius: 9999px; font-size: 13px; font-weight: 600;">
               ✓ Payment Confirmed & Order Placed
             </div>
             <h2 style="color: #111827; font-size: 22px; margin: 16px 0 6px 0;">Thank you, ${order.customer.firstName}!</h2>
@@ -74,7 +74,7 @@ export function generateCustomerEmailHtml(order: Order, siteUrl: string): string
               <tfoot>
                 <tr>
                   <td colspan="2" style="padding: 12px; text-align: right; font-size: 14px; color: #4b5563;">Shipping (Express Insured):</td>
-                  <td style="padding: 12px; text-align: right; font-size: 14px; color: #064e3b; font-weight: bold;">FREE</td>
+                  <td style="padding: 12px; text-align: right; font-size: 14px; color: #B76E79; font-weight: bold;">FREE</td>
                 </tr>
                 <tr style="background-color: #faf8f5; border-top: 1px solid #e5e0d8;">
                   <td colspan="2" style="padding: 12px; text-align: right; font-size: 16px; font-weight: bold; color: #111827;">Total Paid:</td>
@@ -132,7 +132,7 @@ export function generateAdminEmailHtml(order: Order, siteUrl: string): string {
     <head><meta charset="utf-8"></head>
     <body style="font-family: Arial, sans-serif; background: #f3f4f6; padding: 20px;">
       <div style="max-width: 600px; margin: 0 auto; background: #fff; padding: 24px; border-radius: 8px; border: 1px solid #e5e7eb;">
-        <h2 style="color: #064e3b; margin-top: 0;">🎉 New Order Received: #${order.id}</h2>
+        <h2 style="color: #B76E79; margin-top: 0;">🎉 New Order Received: #${order.id}</h2>
         <p style="font-size: 16px; font-weight: bold; color: #111827;">Amount: ${order.currencySymbol}${Number(order.total || 0).toLocaleString()} ${order.currency}</p>
         <p><strong>Payment Method:</strong> ${order.payment.method.toUpperCase()} (${order.payment.status})<br/>
            <strong>Transaction ID:</strong> ${order.payment.transactionId || 'N/A'}</p>

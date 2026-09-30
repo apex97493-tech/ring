@@ -112,7 +112,7 @@ export default function OrdersManager({
         <div className="bg-[#032019] border border-white/10 rounded-xl p-4 shadow-lg">
           <div className="flex items-center justify-between">
             <span className="text-xs text-gray-400 font-medium uppercase tracking-wider">Total Orders</span>
-            <Package className="w-4 h-4 text-[#D4AF37]" />
+            <Package className="w-4 h-4 text-[#D39EAA]" />
           </div>
           <p className="text-2xl font-serif font-bold text-white mt-2">{totalOrders}</p>
           <span className="text-[10px] text-gray-400">All customer bookings</span>
@@ -156,7 +156,7 @@ export default function OrdersManager({
             placeholder="Search by Order #, Customer Name, Phone, Email, City..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-black/40 border border-white/20 rounded-xl pl-9 pr-8 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+            className="w-full bg-black/40 border border-white/20 rounded-xl pl-9 pr-8 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA]"
           />
           {searchQuery && (
             <button
@@ -184,7 +184,7 @@ export default function OrdersManager({
               onClick={() => setStatusFilter(st.id)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
                 statusFilter === st.id
-                  ? 'bg-[#D4AF37] text-[#022C22] shadow'
+                  ? 'bg-[#D39EAA] text-[#592D37] shadow'
                   : 'bg-white/5 hover:bg-white/10 text-gray-300'
               }`}
             >
@@ -198,7 +198,7 @@ export default function OrdersManager({
             className="ml-2 p-2 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white rounded-lg border border-white/10 transition-colors cursor-pointer"
             title="Refresh Orders"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-[#D4AF37]' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-[#D39EAA]' : ''}`} />
           </button>
         </div>
       </div>
@@ -227,12 +227,12 @@ export default function OrdersManager({
             return (
               <div
                 key={order.id}
-                className="bg-[#032019] border border-white/15 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4 transition-all hover:border-[#D4AF37]/50"
+                className="bg-[#032019] border border-white/15 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4 transition-all hover:border-[#D39EAA]/50"
               >
                 {/* Top Row: Order ID, Date, Status, Total */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-sm font-bold text-[#D4AF37] bg-[#D4AF37]/15 px-2.5 py-1 rounded-lg border border-[#D4AF37]/30">
+                    <span className="font-mono text-sm font-bold text-[#D39EAA] bg-[#D39EAA]/15 px-2.5 py-1 rounded-lg border border-[#D39EAA]/30">
                       #{order.id}
                     </span>
                     <span className="text-xs text-gray-400 flex items-center gap-1">
@@ -284,7 +284,7 @@ export default function OrdersManager({
                   {/* Customer & Shipping Details (5 Cols) */}
                   <div className="md:col-span-5 bg-black/40 border border-white/10 rounded-xl p-4 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#D4AF37] flex items-center gap-1.5">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#D39EAA] flex items-center gap-1.5">
                         <MapPin className="w-3.5 h-3.5" />
                         Customer & Shipping Address
                       </span>
@@ -324,23 +324,23 @@ export default function OrdersManager({
                     <div className="pt-2 border-t border-white/10 flex flex-wrap items-center gap-2 text-xs">
                       <a
                         href={`tel:${order.customer.phone}`}
-                        className="flex items-center gap-1 text-gray-300 hover:text-[#D4AF37]"
+                        className="flex items-center gap-1 text-gray-300 hover:text-[#D39EAA]"
                       >
-                        <Phone className="w-3 h-3 text-[#D4AF37]" />
+                        <Phone className="w-3 h-3 text-[#D39EAA]" />
                         <span>{order.customer.phone}</span>
                       </a>
                       <span className="text-gray-600">•</span>
                       <a
                         href={`mailto:${order.customer.email}`}
-                        className="flex items-center gap-1 text-gray-300 hover:text-[#D4AF37] truncate max-w-[180px]"
+                        className="flex items-center gap-1 text-gray-300 hover:text-[#D39EAA] truncate max-w-[180px]"
                       >
-                        <Mail className="w-3 h-3 text-[#D4AF37]" />
+                        <Mail className="w-3 h-3 text-[#D39EAA]" />
                         <span className="truncate">{order.customer.email}</span>
                       </a>
 
                       <button
                         onClick={() => openCustomerWhatsApp(order)}
-                        className="ml-auto flex items-center gap-1 px-2.5 py-1 bg-[#064E3B] hover:bg-[#043327] text-[#D4AF37] text-[11px] font-bold rounded transition-colors cursor-pointer"
+                        className="ml-auto flex items-center gap-1 px-2.5 py-1 bg-[#B76E79] hover:bg-[#043327] text-[#D39EAA] text-[11px] font-bold rounded transition-colors cursor-pointer"
                         title="Message customer on WhatsApp"
                       >
                         <Send className="w-3 h-3" />
@@ -376,7 +376,7 @@ export default function OrdersManager({
 
                   {/* Ordered Items List (7 Cols) */}
                   <div className="md:col-span-7 bg-black/40 border border-white/10 rounded-xl p-4 space-y-3">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#D4AF37] flex items-center gap-1.5">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#D39EAA] flex items-center gap-1.5">
                       <Package className="w-3.5 h-3.5" />
                       Ordered Jewelry Items ({order.items.length})
                     </span>
@@ -400,11 +400,11 @@ export default function OrdersManager({
                             <p className="font-semibold text-white truncate">{it.productName}</p>
                             <p className="text-[11px] text-gray-400">
                               Metal: <strong className="text-gray-200">{it.metal}</strong> | Size:{' '}
-                              <strong className="text-[#D4AF37]">{it.size}</strong>
+                              <strong className="text-[#D39EAA]">{it.size}</strong>
                               {it.carat ? ` | Carat: ${it.carat}` : ''}
                             </p>
                             {it.engraving && (
-                              <p className="text-[10px] text-[#D4AF37] italic">
+                              <p className="text-[10px] text-[#D39EAA] italic">
                                 Engraving: &ldquo;{it.engraving}&rdquo;
                               </p>
                             )}
@@ -437,7 +437,7 @@ export default function OrdersManager({
                             },
                           }))
                         }
-                        className="bg-black/50 border border-white/20 rounded-lg px-2.5 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-[#D4AF37]"
+                        className="bg-black/50 border border-white/20 rounded-lg px-2.5 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-[#D39EAA]"
                       >
                         {CARRIERS.map((c) => (
                           <option key={c} value={c} className="bg-[#032019]">
@@ -459,14 +459,14 @@ export default function OrdersManager({
                             },
                           }))
                         }
-                        className="flex-1 bg-black/50 border border-white/20 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D4AF37]"
+                        className="flex-1 bg-black/50 border border-white/20 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#D39EAA]"
                       />
 
                       <button
                         type="button"
                         onClick={() => handleSaveTracking(order.id, order.orderStatus)}
                         disabled={isUpdating}
-                        className="px-3 py-1.5 bg-[#D4AF37] hover:bg-[#B89035] text-[#022C22] text-xs font-bold rounded-lg transition-colors cursor-pointer shrink-0"
+                        className="px-3 py-1.5 bg-[#D39EAA] hover:bg-[#C88E91] text-[#592D37] text-xs font-bold rounded-lg transition-colors cursor-pointer shrink-0"
                       >
                         Save Tracking
                       </button>

@@ -4,7 +4,7 @@ import React from 'react';
 import { SHAPES } from '@/lib/data';
 
 function DiamondShapeIcon({ shapeType, isSelected }: { shapeType: string; isSelected: boolean }) {
-  const strokeColor = isSelected ? '#022C22' : '#8C6A1F';
+  const strokeColor = isSelected ? '#592D37' : '#8C6A1F';
   const fillColor = isSelected ? 'rgba(2, 44, 34, 0.15)' : 'none';
 
   switch (shapeType) {
@@ -122,8 +122,8 @@ export default function ShapeFilterBar({
               }}
               className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-sans text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-all select-none cursor-pointer active:scale-95 ${
                 isSelected
-                  ? 'bg-[#D4AF37] text-[#022C22] shadow-md scale-105 border border-[#B89035]'
-                  : 'bg-white text-[#27272A] border border-[#E8E5DF] hover:border-[#D4AF37] hover:text-[#022C22]'
+                  ? 'bg-[#D39EAA] text-[#592D37] shadow-md scale-105 border border-[#C88E91]'
+                  : 'bg-white text-[#27272A] border border-[#E8E5DF] hover:border-[#D39EAA] hover:text-[#592D37]'
               }`}
             >
               <DiamondShapeIcon shapeType={shape.shapeType} isSelected={isSelected} />

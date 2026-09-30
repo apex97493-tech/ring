@@ -51,7 +51,7 @@ export default function UnboxingExperience() {
           <h2 className="font-serif text-3xl sm:text-5xl text-[#18181B] mb-4">
             An Unforgettable Heirloom Experience
           </h2>
-          <div className="w-16 h-[1.5px] bg-[#D4AF37] mx-auto mb-4" />
+          <div className="w-16 h-[1.5px] bg-[#D39EAA] mx-auto mb-4" />
           <p className="font-sans text-xs sm:text-sm text-gray-600 leading-relaxed max-w-2xl mx-auto">
             While generic marketplace sellers ship jewelry in plain plastic envelopes, every ForeverJewellStudio creation arrives in our signature museum-grade presentation suite.
           </p>
@@ -64,7 +64,7 @@ export default function UnboxingExperience() {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-2xl border border-[#E8E5DF] p-5 sm:p-6 shadow-luxury flex flex-col justify-between hover:border-[#D4AF37] hover:shadow-xl transition-all duration-300"
+                className="bg-white rounded-2xl border border-[#E8E5DF] p-5 sm:p-6 shadow-luxury flex flex-col justify-between hover:border-[#D39EAA] hover:shadow-xl transition-all duration-300"
               >
                 <div>
                   {/* Photo Thumbnail */}
@@ -74,7 +74,7 @@ export default function UnboxingExperience() {
                       alt={item.title}
                       className="w-full h-full object-cover"
                     />
-                    <span className="absolute top-2.5 left-2.5 bg-[#022C22] text-[#D4AF37] font-sans text-[9px] font-bold tracking-wider px-2 py-0.5 rounded shadow-xs uppercase">
+                    <span className="absolute top-2.5 left-2.5 bg-[#592D37] text-[#D39EAA] font-sans text-[9px] font-bold tracking-wider px-2 py-0.5 rounded shadow-xs uppercase">
                       {item.highlight}
                     </span>
                     <span className="absolute bottom-2.5 right-2.5 font-serif text-lg font-bold text-white/90 drop-shadow-md">
@@ -84,7 +84,7 @@ export default function UnboxingExperience() {
 
                   {/* Icon & Title */}
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-[#F4E8C1]/40 border border-[#D4AF37]/30 flex items-center justify-center text-[#8C6A1F] flex-shrink-0">
+                    <div className="w-8 h-8 rounded-lg bg-[#F4E8C1]/40 border border-[#D39EAA]/30 flex items-center justify-center text-[#8C6A1F] flex-shrink-0">
                       <Icon className="w-4 h-4" />
                     </div>
                     <h3 className="font-serif text-base sm:text-lg font-bold text-[#18181B] leading-snug">
@@ -99,7 +99,7 @@ export default function UnboxingExperience() {
                 </div>
 
                 {/* Footer Checkmark */}
-                <div className="pt-4 mt-4 border-t border-gray-100 flex items-center gap-1.5 text-[11px] font-sans font-semibold text-[#064E3B]">
+                <div className="pt-4 mt-4 border-t border-gray-100 flex items-center gap-1.5 text-[11px] font-sans font-semibold text-[#B76E79]">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                   <span>Complimentary with Every Order</span>
                 </div>

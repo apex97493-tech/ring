@@ -145,14 +145,14 @@ export async function createTwoFactorChallenge(email?: string): Promise<{
         subject: `${otpCode} is your verification code`,
         text: `Your Forever Jewell verification code is: ${otpCode}\n\nThis code will expire in 5 minutes.\nIf you did not request this, please disregard.`,
         html: `
-          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 28px; background: #05130F; color: #ffffff; border-radius: 12px; border: 1px solid #D4AF37;">
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 28px; background: #05130F; color: #ffffff; border-radius: 12px; border: 1px solid #D39EAA;">
             <div style="text-align: center; margin-bottom: 24px;">
-              <h2 style="color: #D4AF37; margin: 0; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase;">Forever Jewell Studio</h2>
+              <h2 style="color: #D39EAA; margin: 0; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase;">Forever Jewell Studio</h2>
               <p style="color: #9ca3af; font-size: 12px; margin-top: 4px;">Sign-in Verification</p>
             </div>
             <div style="background: rgba(255,255,255,0.06); padding: 24px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
               <p style="color: #e5e7eb; font-size: 13px; margin: 0 0 12px 0;">Your one-time sign-in code is:</p>
-              <div style="font-size: 38px; font-weight: 700; letter-spacing: 10px; color: #D4AF37; font-family: monospace; padding: 6px 0;">
+              <div style="font-size: 38px; font-weight: 700; letter-spacing: 10px; color: #D39EAA; font-family: monospace; padding: 6px 0;">
                 ${otpCode}
               </div>
               <p style="color: #9ca3af; font-size: 11px; margin: 10px 0 0 0;">⏱️ Valid for 5 minutes</p>

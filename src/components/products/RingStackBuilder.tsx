@@ -60,11 +60,11 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#FDFBF7] to-[#F7F5F0] rounded-2xl border-2 border-[#D4AF37]/40 p-4 sm:p-6 my-6 shadow-luxury">
+    <div className="bg-gradient-to-br from-[#FFF0F5] to-[#F7F5F0] rounded-2xl border-2 border-[#D39EAA]/40 p-4 sm:p-6 my-6 shadow-luxury">
       {/* Header */}
       <div className="flex items-center justify-between gap-2 mb-3">
         <div className="flex items-center gap-1.5">
-          <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+          <Sparkles className="w-4 h-4 text-[#D39EAA]" />
           <h3 className="font-serif text-base sm:text-lg font-bold text-[#18181B]">
             Complete The Royal Stack
           </h3>
@@ -96,7 +96,7 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
             <p className="font-serif text-xs font-bold text-[#18181B] truncate">
               {product.name}
             </p>
-            <p className="font-sans text-xs font-semibold text-[#064E3B]">
+            <p className="font-sans text-xs font-semibold text-[#B76E79]">
               ₹{product.price.toLocaleString('en-IN')}
             </p>
           </div>
@@ -107,7 +107,7 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
           onClick={() => setIncludeBand(!includeBand)}
           className={`flex items-center gap-3 p-2.5 rounded-xl border cursor-pointer transition-all ${
             includeBand
-              ? 'bg-[#F4E8C1]/30 border-[#B89035] ring-2 ring-[#B89035]/30'
+              ? 'bg-[#F4E8C1]/30 border-[#C88E91] ring-2 ring-[#C88E91]/30'
               : 'bg-white border-[#E8E5DF] opacity-75 hover:opacity-100'
           }`}
         >
@@ -119,20 +119,20 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
             />
             <div
               className={`absolute top-1 right-1 w-4 h-4 rounded-full flex items-center justify-center text-white ${
-                includeBand ? 'bg-[#064E3B]' : 'bg-gray-300'
+                includeBand ? 'bg-[#B76E79]' : 'bg-gray-300'
               }`}
             >
               <Check className="w-2.5 h-2.5" />
             </div>
           </div>
           <div className="min-w-0">
-            <span className="font-sans text-[9px] uppercase tracking-wider text-[#064E3B] font-bold block">
+            <span className="font-sans text-[9px] uppercase tracking-wider text-[#B76E79] font-bold block">
               Item 2: Matching Band
             </span>
             <p className="font-serif text-xs font-bold text-[#18181B] truncate">
               Curved Chevron Tiara Band
             </p>
-            <p className="font-sans text-xs font-semibold text-[#064E3B]">
+            <p className="font-sans text-xs font-semibold text-[#B76E79]">
               +₹{bandPrice.toLocaleString('en-IN')}{' '}
               <span className="text-[10px] text-gray-400 line-through">₹10,999</span>
             </p>
@@ -144,7 +144,7 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
       <div className="pt-3 border-t border-[#E8E5DF] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <div className="flex items-baseline gap-2">
-            <span className="font-sans text-lg font-bold text-[#064E3B]">
+            <span className="font-sans text-lg font-bold text-[#B76E79]">
               ₹{(includeBand ? discountedTotalPrice : product.price).toLocaleString('en-IN')}
             </span>
             {includeBand && (
@@ -167,7 +167,7 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
 
         <button
           onClick={handleAddStack}
-          className="px-5 py-2.5 bg-[#022C22] hover:bg-[#B89035] text-[#D4AF37] hover:text-white rounded-xl font-sans text-xs font-bold tracking-wider uppercase transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+          className="px-5 py-2.5 bg-[#592D37] hover:bg-[#C88E91] text-[#D39EAA] hover:text-white rounded-xl font-sans text-xs font-bold tracking-wider uppercase transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
         >
           {isAdded ? (
             <span className="text-emerald-400 flex items-center gap-1">

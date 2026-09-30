@@ -112,7 +112,7 @@ export default function CartPage() {
   // EMPTY CART SCREEN
   if (cart.length === 0) {
     return (
-      <div className="min-h-[75vh] bg-[#FDFBF7] flex items-center justify-center px-4 py-12">
+      <div className="min-h-[75vh] bg-[#FFF0F5] flex items-center justify-center px-4 py-12">
         <div className="max-w-md w-full bg-white border border-[#E5E0D8] rounded-2xl p-8 sm:p-10 text-center shadow-sm">
           <div className="w-16 h-16 bg-[#F4F1EA] rounded-full flex items-center justify-center mx-auto mb-5 text-[#8C6A1F]">
             <ShoppingBag className="w-8 h-8" strokeWidth={1.5} />
@@ -133,7 +133,7 @@ export default function CartPage() {
               href="/wishlist"
               className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 hover:bg-gray-50 text-gray-800 text-xs font-semibold rounded-full transition-colors"
             >
-              <Heart className="w-4 h-4 text-[#D4AF37]" />
+              <Heart className="w-4 h-4 text-[#D39EAA]" />
               View Saved Favorites
             </Link>
           </div>
@@ -143,7 +143,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-[#222222] pb-16">
+    <div className="min-h-screen bg-[#FFF0F5] text-[#222222] pb-16">
       {/* Toast Notification */}
       {toastMsg && (
         <div className="fixed bottom-6 right-6 z-50 bg-[#18181B] text-white text-xs font-medium px-4 py-3 rounded-xl shadow-xl flex items-center gap-2 border border-white/10 animate-fade-in">
@@ -168,7 +168,7 @@ export default function CartPage() {
               {/* Shop Header Bar (Exact Etsy Layout) */}
               <div className="px-5 py-3.5 border-b border-gray-150 flex items-center justify-between bg-white">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#064E3B] flex items-center justify-center text-[#D4AF37] font-serif font-bold text-sm shadow-xs border border-[#043327]">
+                  <div className="w-9 h-9 rounded-full bg-[#B76E79] flex items-center justify-center text-[#D39EAA] font-serif font-bold text-sm shadow-xs border border-[#043327]">
                     FJ
                   </div>
                   <div>
@@ -237,7 +237,7 @@ export default function CartPage() {
                             <div className="flex-1 pr-2">
                               <Link
                                 href={`/products/${item.product.slug}`}
-                                className="text-sm font-semibold text-[#222222] hover:text-[#064E3B] hover:underline line-clamp-2 leading-snug"
+                                className="text-sm font-semibold text-[#222222] hover:text-[#B76E79] hover:underline line-clamp-2 leading-snug"
                               >
                                 {item.product.name}
                               </Link>
@@ -298,7 +298,7 @@ export default function CartPage() {
                                 id={`qty-${item.id}`}
                                 value={item.quantity}
                                 onChange={(e) => updateQuantity(item.id, Number(e.target.value))}
-                                className="text-xs bg-white border border-gray-300 rounded-md px-2.5 py-1 font-semibold text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#064E3B] focus:border-[#064E3B] cursor-pointer"
+                                className="text-xs bg-white border border-gray-300 rounded-md px-2.5 py-1 font-semibold text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#B76E79] focus:border-[#B76E79] cursor-pointer"
                               >
                                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((q) => (
                                   <option key={q} value={q}>
@@ -353,7 +353,7 @@ export default function CartPage() {
                   className="flex items-center justify-between text-xs text-gray-800 cursor-pointer font-medium select-none"
                 >
                   <div className="flex items-center gap-2">
-                    <Truck className="w-4 h-4 text-[#064E3B]" />
+                    <Truck className="w-4 h-4 text-[#B76E79]" />
                     <span>
                       <strong>Dispatch: FREE</strong> (Get it by {deliveryRangeStr})
                     </span>
@@ -541,10 +541,10 @@ export default function CartPage() {
                 <button
                   type="button"
                   onClick={() => setCouponOpen(!couponOpen)}
-                  className="w-full flex items-center justify-between text-xs font-semibold text-[#222222] hover:text-[#064E3B] transition-colors cursor-pointer select-none"
+                  className="w-full flex items-center justify-between text-xs font-semibold text-[#222222] hover:text-[#B76E79] transition-colors cursor-pointer select-none"
                 >
                   <span className="flex items-center gap-1.5">
-                    <Tag className="w-3.5 h-3.5 text-[#064E3B]" />
+                    <Tag className="w-3.5 h-3.5 text-[#B76E79]" />
                     Apply coupon code
                   </span>
                   {couponOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -595,7 +595,7 @@ export default function CartPage() {
 
             {/* Trust reassurance badge */}
             <div className="bg-[#FAF8F5] border border-[#E5E0D8] rounded-xl p-4 text-center text-xs text-gray-600 space-y-1">
-              <div className="flex items-center justify-center gap-1.5 font-bold text-[#064E3B]">
+              <div className="flex items-center justify-center gap-1.5 font-bold text-[#B76E79]">
                 <ShieldCheck className="w-4 h-4" />
                 <span>ForeverJewellStudio Purchase Protection</span>
               </div>

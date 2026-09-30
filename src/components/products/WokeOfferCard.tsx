@@ -80,7 +80,7 @@ export default function WokeOfferCard() {
       <div className="bg-[#F8F5EE] border border-[#E9E3D6] rounded-xl p-4 sm:p-5 relative overflow-hidden shadow-2xs">
         <div className="flex items-start gap-3">
           <div className="w-8 h-8 rounded-full bg-[#18181B] text-white flex items-center justify-center flex-shrink-0 mt-0.5">
-            <MapPin className="w-4 h-4 text-[#D4AF37]" />
+            <MapPin className="w-4 h-4 text-[#D39EAA]" />
           </div>
 
           <div className="flex-1 min-w-0">

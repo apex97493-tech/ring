@@ -154,7 +154,7 @@ export default function FindYourSizeDrawer({
                   {/* Ring Circle representation */}
                   <div
                     style={{ width: `${ringScale}px`, height: `${ringScale}px` }}
-                    className="relative rounded-full border-4 border-[#D4AF37] bg-white/80 shadow-md flex items-center justify-center transition-all duration-150"
+                    className="relative rounded-full border-4 border-[#D39EAA] bg-white/80 shadow-md flex items-center justify-center transition-all duration-150"
                   >
                     {/* Gemstone crown marker */}
                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#8C6A1F] rotate-45 rounded-xs shadow-xs" />

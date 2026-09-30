@@ -4,13 +4,13 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import SecurityTrustBar from "@/components/sections/SecurityTrustBar";
 import CartDrawer from "@/components/cart/CartDrawer";
 import { CartProvider } from "@/context/CartContext";
 import { ProductProvider } from "@/context/ProductContext";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import RegionalSettingsModal from "@/components/common/RegionalSettingsModal";
 import { MessageCircle } from "lucide-react";
+import FlyToCartAnimation from "@/components/layout/FlyToCartAnimation";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -35,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable} overflow-x-hidden max-w-full`}>
-      <body className="min-h-screen flex flex-col font-sans bg-[#FDFBF7] text-[#18181B] selection:bg-[#D4AF37] selection:text-white antialiased overflow-x-hidden max-w-full w-full">
+      <body className="min-h-screen flex flex-col font-sans bg-[#FFF0F5] text-[#18181B] selection:bg-[#D39EAA] selection:text-white antialiased overflow-x-hidden max-w-full w-full">
         <div id="google_translate_element" style={{ display: 'none' }}></div>
         <Script
           src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
@@ -54,10 +54,10 @@ export default function RootLayout({
               <Header />
               <RegionalSettingsModal />
               <CartDrawer />
+              <FlyToCartAnimation />
               <main className="flex-grow pt-[84px] md:pt-[112px] overflow-x-hidden w-full max-w-full">
                 {children}
               </main>
-              <SecurityTrustBar />
               <Footer />
 
               {/* Floating WhatsApp Support Widget - responsive sizing */}
@@ -65,7 +65,7 @@ export default function RootLayout({
                 href="https://wa.me/919828930454?text=Hello%20ForeverJewellStudio%20Team!%20I%20have%20an%20inquiry%20regarding%20a%20product."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 bg-[#064E3B] hover:bg-[#043327] text-[#D4AF37] hover:text-white p-3 sm:p-3.5 rounded-full shadow-2xl border border-[#D4AF37]/50 flex items-center justify-center transition-all duration-300 hover:scale-110 group cursor-pointer"
+                className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 bg-[#B76E79] hover:bg-[#043327] text-[#D39EAA] hover:text-white p-3 sm:p-3.5 rounded-full shadow-2xl border border-[#D39EAA]/50 flex items-center justify-center transition-all duration-300 hover:scale-110 group cursor-pointer"
                 aria-label="Chat on WhatsApp"
               >
                 <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6 fill-current" />

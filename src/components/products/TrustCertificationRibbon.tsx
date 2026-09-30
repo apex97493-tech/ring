@@ -45,7 +45,7 @@ export default function TrustCertificationRibbon() {
 
           {/* GRA Certified */}
           <div className="flex items-center gap-2 px-4 py-2.5 bg-white border border-[#E8E2D7] rounded-xl shadow-2xs w-full max-w-[190px] justify-center">
-            <div className="w-7 h-7 rounded-full bg-[#064E3B] text-[#D4AF37] flex items-center justify-center font-serif font-black text-xs">
+            <div className="w-7 h-7 rounded-full bg-[#B76E79] text-[#D39EAA] flex items-center justify-center font-serif font-black text-xs">
               ★
             </div>
             <div className="text-left">

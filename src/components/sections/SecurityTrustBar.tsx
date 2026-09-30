@@ -9,12 +9,12 @@ export default function SecurityTrustBar() {
 
   return (
     <>
-      <section className="bg-[#011C15] text-[#FDFBF7] py-6 sm:py-8 border-t border-b border-[#D4AF37]/30">
+      <section className="bg-[#011C15] text-[#FFF0F5] py-6 sm:py-8 border-t border-b border-[#D39EAA]/30">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
             {/* 1. SSL Encryption */}
             <div className="flex flex-col items-center">
-              <div className="w-9 h-9 rounded-full bg-[#064E3B] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] mb-2 shadow-xs">
+              <div className="w-9 h-9 rounded-full bg-[#B76E79] border border-[#D39EAA]/40 flex items-center justify-center text-[#D39EAA] mb-2 shadow-xs">
                 <Lock className="w-4 h-4" />
               </div>
               <span className="font-serif text-xs sm:text-sm font-bold text-white block">
@@ -27,7 +27,7 @@ export default function SecurityTrustBar() {
 
             {/* 2. PCI-DSS Payments */}
             <div className="flex flex-col items-center">
-              <div className="w-9 h-9 rounded-full bg-[#064E3B] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] mb-2 shadow-xs">
+              <div className="w-9 h-9 rounded-full bg-[#B76E79] border border-[#D39EAA]/40 flex items-center justify-center text-[#D39EAA] mb-2 shadow-xs">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
               </div>
               <span className="font-serif text-xs sm:text-sm font-bold text-white block">
@@ -40,8 +40,8 @@ export default function SecurityTrustBar() {
 
             {/* 3. Insured Transit */}
             <div className="flex flex-col items-center">
-              <div className="w-9 h-9 rounded-full bg-[#064E3B] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] mb-2 shadow-xs">
-                <Truck className="w-4 h-4 text-[#D4AF37]" />
+              <div className="w-9 h-9 rounded-full bg-[#B76E79] border border-[#D39EAA]/40 flex items-center justify-center text-[#D39EAA] mb-2 shadow-xs">
+                <Truck className="w-4 h-4 text-[#D39EAA]" />
               </div>
               <span className="font-serif text-xs sm:text-sm font-bold text-white block">
                 100% Insured Delivery
@@ -53,7 +53,7 @@ export default function SecurityTrustBar() {
 
             {/* 4. GRA Verification */}
             <div className="flex flex-col items-center">
-              <div className="w-9 h-9 rounded-full bg-[#064E3B] border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] mb-2 shadow-xs">
+              <div className="w-9 h-9 rounded-full bg-[#B76E79] border border-[#D39EAA]/40 flex items-center justify-center text-[#D39EAA] mb-2 shadow-xs">
                 <Award className="w-4 h-4 text-amber-400" />
               </div>
               <span className="font-serif text-xs sm:text-sm font-bold text-white block">
@@ -69,7 +69,7 @@ export default function SecurityTrustBar() {
           <div className="text-center mt-5 pt-4 border-t border-white/10">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center gap-1.5 font-sans text-xs text-[#D4AF37] hover:text-white transition-colors underline underline-offset-4 cursor-pointer"
+              className="inline-flex items-center gap-1.5 font-sans text-xs text-[#D39EAA] hover:text-white transition-colors underline underline-offset-4 cursor-pointer"
             >
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Read Our 5-Point Bank-Grade Buyer Security & Privacy Protocol →</span>
@@ -164,7 +164,7 @@ export default function SecurityTrustBar() {
               <div className="mt-6 pt-4 border-t border-gray-100 flex justify-end">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="px-6 py-2.5 bg-[#022C22] text-[#D4AF37] font-sans text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-black transition-colors"
+                  className="px-6 py-2.5 bg-[#592D37] text-[#D39EAA] font-sans text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-black transition-colors"
                 >
                   I Understand & Feel Confident
                 </button>

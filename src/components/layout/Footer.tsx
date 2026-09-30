@@ -17,13 +17,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#18181B] text-[#FDFBF7] pt-16 pb-12 border-t border-[#D4AF37]/20">
+    <footer className="bg-[#18181B] text-[#FFF0F5] pt-16 pb-12 border-t border-[#D39EAA]/20">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Newsletter & Brand Spotlight */}
         <div className="pb-12 border-b border-[#27272A] grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div>
             <div className="flex flex-col items-start leading-[0.9] mb-4">
-              <span className="font-serif italic text-[36px] sm:text-[44px] tracking-wide font-bold text-[#D4AF37]">
+              <span className="font-serif italic text-[36px] sm:text-[44px] tracking-wide font-bold text-[#D39EAA]">
                 ForeverJewellStudio
               </span>
             </div>
@@ -35,9 +35,9 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="bg-[#27272A]/60 p-6 rounded-2xl border border-[#D4AF37]/20">
+          <div className="bg-[#27272A]/60 p-6 rounded-2xl border border-[#D39EAA]/20">
             <h4 className="font-serif text-lg font-bold text-white mb-2 flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+              <Sparkles className="w-4 h-4 text-[#D39EAA]" />
               Join the ForeverJewellStudio Circle & Get 10% Off
             </h4>
             <p className="font-sans text-xs text-gray-400 mb-4">
@@ -45,7 +45,7 @@ export default function Footer() {
             </p>
 
             {subscribed ? (
-              <div className="p-3 bg-[#064E3B] text-[#D4AF37] text-xs font-sans rounded-xl font-bold">
+              <div className="p-3 bg-[#B76E79] text-[#D39EAA] text-xs font-sans rounded-xl font-bold">
                 Welcome to the ForeverJewellStudio Circle. Use code <strong>FOREVER10</strong> at checkout for 10% off.
               </div>
             ) : (
@@ -56,11 +56,11 @@ export default function Footer() {
                   placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="flex-1 bg-[#18181B] border border-[#3F3F46] rounded-xl px-4 py-2.5 text-xs font-sans text-white focus:outline-none focus:border-[#D4AF37]"
+                  className="flex-1 bg-[#18181B] border border-[#3F3F46] rounded-xl px-4 py-2.5 text-xs font-sans text-white focus:outline-none focus:border-[#D39EAA]"
                 />
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-[#D4AF37] hover:bg-[#B89035] text-[#18181B] font-sans text-xs font-bold uppercase tracking-wider rounded-xl transition-colors cursor-pointer"
+                  className="px-6 py-2.5 bg-[#D39EAA] hover:bg-[#C88E91] text-[#18181B] font-sans text-xs font-bold uppercase tracking-wider rounded-xl transition-colors cursor-pointer"
                 >
                   Subscribe
                 </button>
@@ -73,7 +73,7 @@ export default function Footer() {
         <div className="py-12 border-b border-[#27272A] grid grid-cols-2 md:grid-cols-4 gap-8 font-sans text-xs">
           {/* Col 1: Shop Collections */}
           <div>
-            <h5 className="font-serif text-base font-bold text-[#D4AF37] uppercase tracking-wider mb-4">
+            <h5 className="font-serif text-base font-bold text-[#D39EAA] uppercase tracking-wider mb-4">
               Collections
             </h5>
             <ul className="space-y-2.5 text-gray-400">
@@ -107,7 +107,7 @@ export default function Footer() {
 
           {/* Col 2: Educational & Guides */}
           <div>
-            <h5 className="font-serif text-base font-bold text-[#D4AF37] uppercase tracking-wider mb-4">
+            <h5 className="font-serif text-base font-bold text-[#D39EAA] uppercase tracking-wider mb-4">
               Knowledge & Care
             </h5>
             <ul className="space-y-2.5 text-gray-400">
@@ -141,7 +141,7 @@ export default function Footer() {
 
           {/* Col 3: Customer Care & Policies */}
           <div>
-            <h5 className="font-serif text-base font-bold text-[#D4AF37] uppercase tracking-wider mb-4">
+            <h5 className="font-serif text-base font-bold text-[#D39EAA] uppercase tracking-wider mb-4">
               Client Support
             </h5>
             <ul className="space-y-2.5 text-gray-400">
@@ -156,7 +156,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/track-order" className="hover:text-[#D4AF37] font-semibold text-white transition-colors">
+                <Link href="/track-order" className="hover:text-[#D39EAA] font-semibold text-white transition-colors">
                   Track Your Jewelry Order
                 </Link>
               </li>
@@ -175,22 +175,22 @@ export default function Footer() {
 
           {/* Col 4: Store & Contact */}
           <div>
-            <h5 className="font-serif text-base font-bold text-[#D4AF37] uppercase tracking-wider mb-4">
+            <h5 className="font-serif text-base font-bold text-[#D39EAA] uppercase tracking-wider mb-4">
               Contact & Store
             </h5>
             <ul className="space-y-3 text-gray-400">
               <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[#D39EAA] flex-shrink-0 mt-0.5" />
                 <span>143 Railway Office Colony, Kanakpura Station Road, Near Elwood International School, Jaipur, Rajasthan 302012</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#D4AF37] flex-shrink-0" />
+                <Phone className="w-4 h-4 text-[#D39EAA] flex-shrink-0" />
                 <a href="tel:+919828930454" className="hover:text-white transition-colors">
                   +91 98289 30454 (Call & WhatsApp)
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#D4AF37] flex-shrink-0" />
+                <Mail className="w-4 h-4 text-[#D39EAA] flex-shrink-0" />
                 <a href="mailto:Foreverjewels98@gmail.com" className="hover:text-white transition-colors">
                   Foreverjewels98@gmail.com
                 </a>
@@ -198,13 +198,13 @@ export default function Footer() {
               <li className="pt-1">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#D4AF37] hover:text-[#F3E5AB] transition-colors uppercase tracking-wider"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#D39EAA] hover:text-[#FADBD8] transition-colors uppercase tracking-wider"
                 >
                   Get In Touch & Visit Store →
                 </Link>
               </li>
               <li className="pt-2 flex gap-4 text-gray-400 text-xs">
-                <a href="https://www.instagram.com/foreverjewellstudio/" target="_blank" rel="noopener noreferrer" className="hover:text-[#D4AF37] flex items-center gap-1 transition-colors group" title="Visit our Instagram">
+                <a href="https://www.instagram.com/foreverjewellstudio/" target="_blank" rel="noopener noreferrer" className="hover:text-[#D39EAA] flex items-center gap-1 transition-colors group" title="Visit our Instagram">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                     <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>

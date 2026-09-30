@@ -9,7 +9,7 @@ import { useCurrency } from '@/context/CurrencyContext';
 import QuickViewModal from './QuickViewModal';
 
 export default function ProductCard({ product }: { product: Product }) {
-  const { isWishlisted, toggleWishlist, addToCart } = useCart();
+  const { isWishlisted, toggleWishlist, addToCart, triggerFlyAnimation } = useCart();
   const { formatPrice } = useCurrency();
   const [selectedVariantIdx, setSelectedVariantIdx] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -47,6 +47,7 @@ export default function ProductCard({ product }: { product: Product }) {
       price: product.price,
       image: primaryImage,
     });
+    triggerFlyAnimation(primaryImage, e);
     setIsAddedToast(true);
     setTimeout(() => setIsAddedToast(false), 2000);
   };
@@ -54,7 +55,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <>
       <div
-        className="group relative flex flex-col bg-white rounded-xl sm:rounded-2xl border border-[#E8E5DF] p-2 sm:p-3 hover:shadow-xl transition-all duration-300 hover:border-[#D4AF37]/50 overflow-hidden w-full min-w-0 box-border"
+        className="group relative flex flex-col bg-white rounded-xl sm:rounded-2xl border border-[#E8E5DF] p-2 sm:p-3 hover:shadow-xl transition-all duration-300 hover:border-[#D39EAA]/50 overflow-hidden w-full min-w-0 box-border"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -63,11 +64,11 @@ export default function ProductCard({ product }: { product: Product }) {
           {/* Badge & Shipping Guarantee */}
           <div className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 z-10 flex flex-col gap-1 items-start">
             {product.badge ? (
-              <span className="bg-[#022C22] text-[#D4AF37] font-sans text-[8px] sm:text-[9px] font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded shadow-xs uppercase">
+              <span className="bg-[#592D37] text-[#D39EAA] font-sans text-[8px] sm:text-[9px] font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded shadow-xs uppercase">
                 {product.badge}
               </span>
             ) : (
-              <span className="bg-white/90 backdrop-blur-xs text-[#064E3B] font-sans text-[8px] sm:text-[9px] font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded shadow-xs uppercase border border-[#E8E5DF]">
+              <span className="bg-white/90 backdrop-blur-xs text-[#B76E79] font-sans text-[8px] sm:text-[9px] font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded shadow-xs uppercase border border-[#E8E5DF]">
                 ✨ Ready to Ship
               </span>
             )}
@@ -84,7 +85,7 @@ export default function ProductCard({ product }: { product: Product }) {
             className={`absolute top-1.5 right-1.5 sm:top-2 sm:right-2 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all cursor-pointer active:scale-95 ${
               isWishlisted(product.id)
                 ? 'bg-rose-50 text-rose-500 shadow-sm'
-                : 'bg-white/85 text-gray-600 hover:bg-white hover:text-[#B89035]'
+                : 'bg-white/85 text-gray-600 hover:bg-white hover:text-[#C88E91]'
             }`}
             aria-label="Save to Wishlist"
           >
@@ -118,7 +119,7 @@ export default function ProductCard({ product }: { product: Product }) {
               e.stopPropagation();
               setIsQuickViewOpen(true);
             }}
-            className="hidden sm:flex absolute bottom-2.5 inset-x-2.5 bg-white/95 text-[#18181B] hover:bg-[#022C22] hover:text-[#D4AF37] font-sans text-[10px] sm:text-[11px] font-bold tracking-widest uppercase py-2 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 items-center justify-center gap-1.5 backdrop-blur-xs cursor-pointer active:scale-95"
+            className="hidden sm:flex absolute bottom-2.5 inset-x-2.5 bg-white/95 text-[#18181B] hover:bg-[#592D37] hover:text-[#D39EAA] font-sans text-[10px] sm:text-[11px] font-bold tracking-widest uppercase py-2 rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 items-center justify-center gap-1.5 backdrop-blur-xs cursor-pointer active:scale-95"
           >
             <Eye className="w-3.5 h-3.5" />
             Quick View
@@ -140,7 +141,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 title={v.metal}
                 className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full border transition-all cursor-pointer ${
                   (selectedVariantIdx === idx || (selectedVariantIdx === null && idx === 0))
-                    ? 'ring-1.5 ring-[#D4AF37] ring-offset-1 border-black/30 scale-105'
+                    ? 'ring-1.5 ring-[#D39EAA] ring-offset-1 border-black/30 scale-105'
                     : 'border-black/20 hover:scale-110'
                 }`}
                 style={{ backgroundColor: v.colorCode }}
@@ -154,7 +155,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Product Title */}
         <Link href={`/products/${product.slug}`} className="group/title block min-w-0 w-full">
-          <h3 className="font-serif text-xs sm:text-sm md:text-[15px] font-medium text-[#18181B] group-hover/title:text-[#B89035] line-clamp-1 mb-0.5 transition-colors leading-snug truncate">
+          <h3 className="font-serif text-xs sm:text-sm md:text-[15px] font-medium text-[#18181B] group-hover/title:text-[#C88E91] line-clamp-1 mb-0.5 transition-colors leading-snug truncate">
             {product.name}
           </h3>
         </Link>
@@ -166,7 +167,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {/* Pricing Row: Cleanly wrapped for small phone screens */}
         <div className="flex items-baseline gap-1 sm:gap-1.5 flex-wrap mb-1.5 min-w-0 w-full">
-          <span className="font-sans text-xs sm:text-sm md:text-base font-bold text-[#064E3B]">
+          <span className="font-sans text-xs sm:text-sm md:text-base font-bold text-[#B76E79]">
             {formatPrice(product.price)}
           </span>
           <span className="font-sans text-[10px] sm:text-xs text-gray-400 line-through">
@@ -194,7 +195,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <button
           type="button"
           onClick={handleQuickAdd}
-          className="mt-2 w-full py-1.5 sm:py-2 bg-[#F7F5F0] hover:bg-[#022C22] text-[#022C22] hover:text-[#D4AF37] font-sans text-[10px] sm:text-[11px] font-bold tracking-wider uppercase rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer border border-[#E8E5DF] hover:border-[#022C22] active:scale-95 select-none"
+          className="mt-2 w-full py-1.5 sm:py-2 bg-[#F7F5F0] hover:bg-[#592D37] text-[#592D37] hover:text-[#D39EAA] font-sans text-[10px] sm:text-[11px] font-bold tracking-wider uppercase rounded-lg transition-all flex items-center justify-center gap-1 cursor-pointer border border-[#E8E5DF] hover:border-[#592D37] active:scale-95 select-none"
         >
           {isAddedToast ? (
             <span className="text-[#059669] flex items-center gap-1">

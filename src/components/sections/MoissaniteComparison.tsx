@@ -63,7 +63,7 @@ const comparisonData = [
 
 export default function MoissaniteComparison() {
   return (
-    <section id="comparison" className="py-20 bg-[#FDFBF7] border-t border-[#E8E5DF]">
+    <section id="comparison" className="py-20 bg-[#FFF0F5] border-t border-[#E8E5DF]">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
@@ -74,7 +74,7 @@ export default function MoissaniteComparison() {
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#18181B] mb-4">
             Moissanite vs. Mined Diamond vs. Cubic Zirconia
           </h2>
-          <div className="w-20 h-[1.5px] bg-[#B89035] mx-auto mb-6" />
+          <div className="w-20 h-[1.5px] bg-[#C88E91] mx-auto mb-6" />
           <p className="font-sans text-sm sm:text-base text-gray-600 leading-relaxed">
             Moissanite was originally discovered in a meteorite crater by Nobel Prize-winning scientist Dr. Henri Moissan. Today, our lab master jewelers cut it with higher fire, greater brilliance, and identical diamond thermal-tester performance at a fraction of the cost.
           </p>
@@ -88,9 +88,9 @@ export default function MoissaniteComparison() {
                 <th className="p-5 font-serif text-base font-bold text-[#18181B] w-1/4">
                   Feature / Property
                 </th>
-                <th className="p-5 font-serif text-lg font-bold text-[#8C6A1F] bg-[#F4E8C1]/30 border-x border-[#D4AF37]/30 w-1/3 text-center">
+                <th className="p-5 font-serif text-lg font-bold text-[#8C6A1F] bg-[#F4E8C1]/30 border-x border-[#D39EAA]/30 w-1/3 text-center">
                   <div className="flex items-center justify-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-[#B89035]" />
+                    <Sparkles className="w-4 h-4 text-[#C88E91]" />
                     <span>ForeverJewell Studio Moissanite</span>
                   </div>
                   <span className="block font-sans text-[10px] font-normal text-gray-600 uppercase tracking-widest mt-0.5">
@@ -109,14 +109,14 @@ export default function MoissaniteComparison() {
               {comparisonData.map((row, idx) => (
                 <tr
                   key={idx}
-                  className={`hover:bg-[#FDFBF7] transition-colors ${
+                  className={`hover:bg-[#FFF0F5] transition-colors ${
                     row.highlight ? 'bg-amber-50/20' : ''
                   }`}
                 >
                   <td className="p-4 sm:p-5 font-medium text-[#18181B]">
                     {row.property}
                   </td>
-                  <td className="p-4 sm:p-5 font-bold text-[#064E3B] bg-[#F4E8C1]/20 border-x border-[#D4AF37]/20 text-center">
+                  <td className="p-4 sm:p-5 font-bold text-[#B76E79] bg-[#F4E8C1]/20 border-x border-[#D39EAA]/20 text-center">
                     {row.moissanite}
                   </td>
                   <td className="p-4 sm:p-5 text-gray-600 text-center">
@@ -134,7 +134,7 @@ export default function MoissaniteComparison() {
         {/* Value Callout Banner */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="p-6 bg-white rounded-xl border border-[#E8E5DF] flex items-start gap-4">
-            <Award className="w-8 h-8 text-[#B89035] flex-shrink-0 mt-1" />
+            <Award className="w-8 h-8 text-[#C88E91] flex-shrink-0 mt-1" />
             <div>
               <h4 className="font-serif text-lg font-bold text-[#18181B] mb-1">
                 Passes Diamond Testers
@@ -146,7 +146,7 @@ export default function MoissaniteComparison() {
           </div>
 
           <div className="p-6 bg-white rounded-xl border border-[#E8E5DF] flex items-start gap-4">
-            <Sparkles className="w-8 h-8 text-[#B89035] flex-shrink-0 mt-1" />
+            <Sparkles className="w-8 h-8 text-[#C88E91] flex-shrink-0 mt-1" />
             <div>
               <h4 className="font-serif text-lg font-bold text-[#18181B] mb-1">
                 2.4x More Sparkle & Fire
@@ -158,7 +158,7 @@ export default function MoissaniteComparison() {
           </div>
 
           <div className="p-6 bg-white rounded-xl border border-[#E8E5DF] flex items-start gap-4">
-            <Shield className="w-8 h-8 text-[#064E3B] flex-shrink-0 mt-1" />
+            <Shield className="w-8 h-8 text-[#B76E79] flex-shrink-0 mt-1" />
             <div>
               <h4 className="font-serif text-lg font-bold text-[#18181B] mb-1">
                 Lifetime Forever Warranty

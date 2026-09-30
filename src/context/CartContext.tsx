@@ -15,6 +15,14 @@ export type CartItem = {
   image: string;
 };
 
+export type FlyingItem = {
+  id: string;
+  image: string;
+  startX: number;
+  startY: number;
+  type: 'cart' | 'drop';
+};
+
 type CartContextType = {
   cart: CartItem[];
   isCartOpen: boolean;
@@ -23,12 +31,18 @@ type CartContextType = {
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, qty: number) => void;
   clearCart: () => void;
+  buyNow: (item: Omit<CartItem, 'id'>) => void;
+  directCheckoutItems: CartItem[] | null;
+  setDirectCheckoutItems: (items: CartItem[] | null) => void;
   totalItems: number;
   subtotal: number;
   freeShippingThreshold: number;
   wishlist: string[];
   toggleWishlist: (productId: string) => void;
   isWishlisted: (productId: string) => boolean;
+  flyingItems: FlyingItem[];
+  triggerFlyAnimation: (image: string, event: React.MouseEvent<Element>, type?: 'cart' | 'drop') => void;
+  removeFlyingItem: (id: string) => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -37,6 +51,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [wishlist, setWishlist] = useState<string[]>([]);
+  const [flyingItems, setFlyingItems] = useState<FlyingItem[]>([]);
+  const [directCheckoutItems, setDirectCheckoutItems] = useState<CartItem[] | null>(null);
 
   // Load from localStorage on mount with strict schema validation
   useEffect(() => {
@@ -115,8 +131,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { ...item, quantity: safeQty, engravingText: cleanEngraving, id: uniqueId }];
     });
-
-    setIsCartOpen(true);
   };
 
   const removeFromCart = (id: string) => {
@@ -136,6 +150,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = () => setCart([]);
 
+  const buyNow = (item: Omit<CartItem, 'id'>) => {
+    const cleanEngraving = item.engravingText
+      ? item.engravingText.replace(/<[^>]*>?/gm, '').slice(0, 30)
+      : undefined;
+    const safeQty = Math.min(Math.max(1, Math.floor(item.quantity || 1)), 20);
+    const uniqueId = `${item.product.id}-${item.selectedMetal}-${item.selectedSize}-${item.selectedCarat}-${cleanEngraving || ''}`;
+    
+    setDirectCheckoutItems([{ ...item, quantity: safeQty, engravingText: cleanEngraving, id: uniqueId }]);
+  };
+
   const toggleWishlist = (productId: string) => {
     setWishlist((prev) =>
       prev.includes(productId)
@@ -145,6 +169,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const isWishlisted = (productId: string) => wishlist.includes(productId);
+
+  const triggerFlyAnimation = (image: string, event: React.MouseEvent<Element>, type: 'cart' | 'drop' = 'cart') => {
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const id = Math.random().toString(36).substring(7);
+    setFlyingItems((prev) => [...prev, { id, image, startX: rect.left + rect.width / 2, startY: rect.top + rect.height / 2, type }]);
+  };
+
+  const removeFlyingItem = (id: string) => {
+    setFlyingItems((prev) => prev.filter((item) => item.id !== id));
+  };
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -160,12 +194,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         removeFromCart,
         updateQuantity,
         clearCart,
+        buyNow,
+        directCheckoutItems,
+        setDirectCheckoutItems,
         totalItems,
         subtotal,
         freeShippingThreshold,
         wishlist,
         toggleWishlist,
         isWishlisted,
+        flyingItems,
+        triggerFlyAnimation,
+        removeFlyingItem,
       }}
     >
       {children}
