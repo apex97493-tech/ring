@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 import fs from 'fs';
 import path from 'path';
 import { products as defaultProducts, Product } from '@/lib/data';
+import { verifyAdminRequest } from '@/lib/adminAuth';
 
 const dataFilePath = path.join(process.cwd(), 'src', 'lib', 'products-store.json');
 
@@ -104,8 +108,16 @@ export async function GET() {
   return NextResponse.json({ success: true, products: currentProducts, source: 'file-store' });
 }
 
-// POST /api/products (Add or Update)
+// POST /api/products (Add or Update - Admin Only)
 export async function POST(request: Request) {
+  const auth = verifyAdminRequest(request);
+  if (!auth.authorized) {
+    return NextResponse.json(
+      { success: false, error: auth.error || 'Unauthorized: Admin access required' },
+      { status: 401 }
+    );
+  }
+
   try {
     const body = await request.json();
     const { product, resetToDefault } = body;
@@ -145,8 +157,16 @@ export async function POST(request: Request) {
   }
 }
 
-// DELETE /api/products (Delete a product by id)
+// DELETE /api/products (Delete a product by id - Admin Only)
 export async function DELETE(request: Request) {
+  const auth = verifyAdminRequest(request);
+  if (!auth.authorized) {
+    return NextResponse.json(
+      { success: false, error: auth.error || 'Unauthorized: Admin access required' },
+      { status: 401 }
+    );
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

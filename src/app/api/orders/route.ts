@@ -1,7 +1,16 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 import fs from 'fs';
 import path from 'path';
 import { Order } from '@/lib/types/order';
+import { verifyAdminRequest } from '@/lib/adminAuth';
+
+function sanitizeString(str: any, maxLen = 300): string {
+  if (typeof str !== 'string') return '';
+  return str.replace(/[<>]/g, '').trim().slice(0, maxLen);
+}
 
 const ordersFilePath = path.join(process.cwd(), 'src', 'lib', 'orders-store.json');
 
@@ -78,8 +87,16 @@ export function formatWhatsAppOrderMessage(order: Order): string {
   );
 }
 
-// GET /api/orders — Fetch orders list (latest first from Supabase, fallback to JSON)
-export async function GET() {
+// GET /api/orders — Fetch orders list (Admin Only: Requires authenticated session)
+export async function GET(request: Request) {
+  const auth = verifyAdminRequest(request);
+  if (!auth.authorized) {
+    return NextResponse.json(
+      { success: false, error: auth.error || 'Unauthorized access' },
+      { status: 401 }
+    );
+  }
+
   try {
     const { prisma } = await import('@/lib/prisma');
     const dbOrders = await prisma.order.findMany({
@@ -97,6 +114,17 @@ export async function GET() {
         // Prefer orderItemsJson from Supabase (persistent), fallback to local JSON backup
         const dbItems = (o as any).orderItemsJson;
         const items = Array.isArray(dbItems) && dbItems.length > 0 ? dbItems : (local?.items || []);
+        
+        const exactStatus = addr._orderStatus || (
+          o.status === 'SHIPPED' ? 'shipped' :
+          o.status === 'DELIVERED' ? 'delivered' :
+          o.status === 'CANCELLED' ? 'cancelled' :
+          o.status === 'PROCESSING' ? 'confirmed' : 'pending'
+        );
+        const trackingNumber = addr._trackingNumber || local?.trackingNumber || undefined;
+        const carrier = addr._carrier || local?.carrier || undefined;
+        const notes = addr._notes || local?.notes || undefined;
+
         return {
           id: o.id,
           createdAt: o.createdAt.toISOString(),
@@ -108,11 +136,15 @@ export async function GET() {
           shippingFee: 0,
           total: Number(o.totalAmount),
           payment: local?.payment || {
-            method: 'paypal',
+            method: (addr as any)?.paymentMethod || 'paypal',
             status: o.paymentStatus === 'SUCCESS' ? 'paid' : 'pending',
             transactionId: o.paymentId || undefined,
+            bankReference: (addr as any)?.bankReference || o.paymentId || undefined,
           },
-          orderStatus: o.status === 'PROCESSING' ? 'confirmed' : (o.status.toLowerCase() as any),
+          orderStatus: exactStatus,
+          trackingNumber,
+          carrier,
+          notes,
         };
       });
 
@@ -137,10 +169,19 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { customer, items, currency, currencySymbol, subtotal, shippingFee, total, payment } = body;
 
-    // Validation
+    // Validation & Sanitization
     if (!customer || !customer.firstName || !customer.email || !customer.phone || !customer.streetAddress) {
       return NextResponse.json(
         { success: false, error: 'Incomplete shipping address or contact info.' },
+        { status: 400 }
+      );
+    }
+
+    // Basic email format check
+    const emailStr = String(customer.email).trim().toLowerCase();
+    if (!emailStr.includes('@') || !emailStr.includes('.')) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid email address provided.' },
         { status: 400 }
       );
     }
@@ -152,6 +193,25 @@ export async function POST(request: Request) {
       );
     }
 
+    // Amount validation (prevent negative values or exploits)
+    const validTotal = Math.max(0, Number(total) || 0);
+    const validSubtotal = Math.max(0, Number(subtotal) || validTotal);
+
+    // Sanitize customer fields to prevent Stored XSS
+    const sanitizedCustomer = {
+      ...customer,
+      firstName: sanitizeString(customer.firstName, 100),
+      lastName: sanitizeString(customer.lastName, 100),
+      email: emailStr.slice(0, 150),
+      phone: sanitizeString(customer.phone, 30),
+      streetAddress: sanitizeString(customer.streetAddress, 200),
+      apartment: sanitizeString(customer.apartment, 100),
+      city: sanitizeString(customer.city, 100),
+      state: sanitizeString(customer.state, 100),
+      postalCode: sanitizeString(customer.postalCode, 30),
+      country: sanitizeString(customer.country, 100),
+    };
+
     // Generate human-friendly ID: FJ-XXXXXX
     const randomSuffix = Math.floor(100000 + Math.random() * 900000);
     const orderId = `FJ-${randomSuffix}`;
@@ -159,13 +219,13 @@ export async function POST(request: Request) {
     const newOrder: Order = {
       id: orderId,
       createdAt: new Date().toISOString(),
-      customer,
+      customer: sanitizedCustomer,
       items,
       currency: currency || 'USD',
       currencySymbol: currencySymbol || '$',
-      subtotal: subtotal || total,
-      shippingFee: shippingFee || 0,
-      total: total,
+      subtotal: validSubtotal,
+      shippingFee: Math.max(0, Number(shippingFee) || 0),
+      total: validTotal,
       payment: payment || {
         method: 'whatsapp',
         status: 'pending',
@@ -272,8 +332,16 @@ export async function POST(request: Request) {
   }
 }
 
-// PATCH /api/orders — Update order status / tracking info (Admin)
+// PATCH /api/orders — Update order status / tracking info (Admin Only)
 export async function PATCH(request: Request) {
+  const auth = verifyAdminRequest(request);
+  if (!auth.authorized) {
+    return NextResponse.json(
+      { success: false, error: auth.error || 'Unauthorized: Admin access required' },
+      { status: 401 }
+    );
+  }
+
   try {
     const body = await request.json();
     const { id, orderStatus, trackingNumber, carrier, notes, paymentStatus } = body;
@@ -285,31 +353,119 @@ export async function PATCH(request: Request) {
       );
     }
 
+    const dbStatus =
+      orderStatus === 'shipped' ? 'SHIPPED' :
+      orderStatus === 'delivered' ? 'DELIVERED' :
+      orderStatus === 'cancelled' ? 'CANCELLED' :
+      (orderStatus === 'confirmed' || orderStatus === 'processing') ? 'PROCESSING' :
+      orderStatus === 'pending' ? 'PENDING' : undefined;
+
+    const dbPaymentStatus =
+      paymentStatus === 'paid' ? 'SUCCESS' :
+      paymentStatus === 'failed' ? 'FAILED' :
+      (orderStatus === 'confirmed' || orderStatus === 'processing' || orderStatus === 'shipped' || orderStatus === 'delivered') ? 'SUCCESS' : undefined;
+
+    let dbUpdatedOrder: any = null;
+
+    // 1. Update in Supabase Cloud Database (Prisma)
+    try {
+      const { prisma } = await import('@/lib/prisma');
+      const existingDb = await prisma.order.findUnique({ where: { id } });
+
+      if (existingDb) {
+        const existingAddr = (existingDb.shippingAddress as any) || {};
+        const updatedAddr = {
+          ...existingAddr,
+          _orderStatus: orderStatus || existingAddr._orderStatus,
+          _trackingNumber: trackingNumber !== undefined ? trackingNumber : existingAddr._trackingNumber,
+          _carrier: carrier !== undefined ? carrier : existingAddr._carrier,
+          _notes: notes !== undefined ? notes : existingAddr._notes,
+        };
+
+        dbUpdatedOrder = await prisma.order.update({
+          where: { id },
+          data: {
+            ...(dbStatus ? { status: dbStatus as any } : {}),
+            ...(dbPaymentStatus ? { paymentStatus: dbPaymentStatus as any } : {}),
+            shippingAddress: updatedAddr,
+          },
+        });
+        console.log(`[Supabase ✓]: Order #${id} updated: status=${orderStatus}, tracking=${trackingNumber}`);
+      }
+    } catch (dbErr) {
+      console.warn('[Supabase PATCH Warning]:', dbErr);
+    }
+
+    // 2. Update in Local File Store (orders-store.json)
     const currentOrders = readOrdersFromFile();
     const orderIdx = currentOrders.findIndex((o) => o.id === id);
 
-    if (orderIdx === -1) {
+    let finalOrder: Order | null = null;
+
+    if (orderIdx !== -1) {
+      const targetOrder = { ...currentOrders[orderIdx] };
+      if (orderStatus) targetOrder.orderStatus = orderStatus;
+      if (trackingNumber !== undefined) targetOrder.trackingNumber = trackingNumber;
+      if (carrier !== undefined) targetOrder.carrier = carrier;
+      if (notes !== undefined) targetOrder.notes = notes;
+      if (paymentStatus && targetOrder.payment) {
+        targetOrder.payment.status = paymentStatus;
+      } else if (orderStatus === 'confirmed' || orderStatus === 'processing' || orderStatus === 'shipped') {
+        if (targetOrder.payment) targetOrder.payment.status = 'paid';
+      }
+
+      currentOrders[orderIdx] = targetOrder;
+      writeOrdersToFile(currentOrders);
+      finalOrder = targetOrder;
+    } else if (dbUpdatedOrder) {
+      // Build order from DB update
+      const addr = (dbUpdatedOrder.shippingAddress as any) || {};
+      finalOrder = {
+        id: dbUpdatedOrder.id,
+        createdAt: dbUpdatedOrder.createdAt.toISOString(),
+        customer: addr,
+        items: (dbUpdatedOrder as any).orderItemsJson || [],
+        currency: (dbUpdatedOrder as any).currency || 'USD',
+        currencySymbol: (dbUpdatedOrder as any).currencySymbol || '$',
+        subtotal: Number(dbUpdatedOrder.totalAmount),
+        shippingFee: 0,
+        total: Number(dbUpdatedOrder.totalAmount),
+        payment: {
+          method: addr?.paymentMethod || 'paypal',
+          status: dbUpdatedOrder.paymentStatus === 'SUCCESS' ? 'paid' : 'pending',
+          transactionId: dbUpdatedOrder.paymentId || undefined,
+        },
+        orderStatus: orderStatus || 'confirmed',
+        trackingNumber: trackingNumber || addr._trackingNumber,
+        carrier: carrier || addr._carrier,
+        notes: notes || addr._notes,
+      };
+      currentOrders.unshift(finalOrder);
+      writeOrdersToFile(currentOrders);
+    }
+
+    if (!finalOrder) {
       return NextResponse.json(
-        { success: false, error: 'Order not found' },
+        { success: false, error: 'Order not found in database or local store' },
         { status: 404 }
       );
     }
 
-    const targetOrder = { ...currentOrders[orderIdx] };
-    if (orderStatus) targetOrder.orderStatus = orderStatus;
-    if (trackingNumber !== undefined) targetOrder.trackingNumber = trackingNumber;
-    if (carrier !== undefined) targetOrder.carrier = carrier;
-    if (notes !== undefined) targetOrder.notes = notes;
-    if (paymentStatus && targetOrder.payment) {
-      targetOrder.payment.status = paymentStatus;
+    // 3. Dispatch customer status update email asynchronously
+    if (finalOrder && (orderStatus === 'confirmed' || orderStatus === 'processing' || orderStatus === 'shipped' || orderStatus === 'delivered')) {
+      try {
+        const { sendOrderStatusUpdateNotification } = await import('@/lib/notifications');
+        const forwardedHost = request.headers.get('x-forwarded-host');
+        const host = forwardedHost || request.headers.get('host');
+        const proto = request.headers.get('x-forwarded-proto') || (host?.includes('localhost') ? 'http' : 'https');
+        const origin = host ? `${proto}://${host}` : 'https://ring-pearl.vercel.app';
+        sendOrderStatusUpdateNotification({ order: finalOrder, siteUrl: origin }).catch(() => {});
+      } catch (_) {}
     }
-
-    currentOrders[orderIdx] = targetOrder;
-    writeOrdersToFile(currentOrders);
 
     return NextResponse.json({
       success: true,
-      order: targetOrder,
+      order: finalOrder,
     });
   } catch (error: any) {
     console.error('Error updating order:', error);
@@ -317,5 +473,38 @@ export async function PATCH(request: Request) {
       { success: false, error: error.message || 'Failed to update order' },
       { status: 500 }
     );
+  }
+}
+
+// DELETE /api/orders — Delete order (Admin Only)
+export async function DELETE(request: Request) {
+  const auth = verifyAdminRequest(request);
+  if (!auth.authorized) {
+    return NextResponse.json(
+      { success: false, error: auth.error || 'Unauthorized: Admin access required' },
+      { status: 401 }
+    );
+  }
+
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ success: false, error: 'Order ID is required' }, { status: 400 });
+    }
+
+    try {
+      const { prisma } = await import('@/lib/prisma');
+      await prisma.order.delete({ where: { id } }).catch(() => {});
+    } catch (_) {}
+
+    const currentOrders = readOrdersFromFile();
+    const filtered = currentOrders.filter((o) => o.id !== id);
+    writeOrdersToFile(filtered);
+
+    return NextResponse.json({ success: true, message: `Order #${id} deleted` });
+  } catch (err: any) {
+    return NextResponse.json({ success: false, error: err.message || 'Failed to delete order' }, { status: 500 });
   }
 }

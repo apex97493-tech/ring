@@ -1,21 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Allowed admin tokens — comma-separated list from env var ADMIN_TOKENS
-// Falls back to the hardcoded passcodes if env var is not set.
-// In production on Hostinger, set ADMIN_TOKENS=forever2026,aura2026,admin in your .env
-function getAdminTokens(): Set<string> {
-  const envTokens = process.env.ADMIN_TOKENS;
-  if (envTokens) {
-    return new Set(envTokens.split(',').map((t) => t.trim().toLowerCase()).filter(Boolean));
-  }
-  // Default fallback (same as PASSCODES in the admin panel)
-  return new Set(['forever2026', 'aura2026', 'admin']);
-}
-
 // Rate limiting store (in-memory, resets on server restart)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 60; // max 60 admin API calls per minute per IP
+const RATE_LIMIT_MAX_REQUESTS = 60; // max 60 calls per minute per IP
+const RATE_LIMIT_TRACK_MAX = 20; // max 20 order track queries per minute
+const RATE_LIMIT_ORDER_POST = 10; // max 10 order placements per minute
 
 function getRealIp(req: NextRequest): string {
   return (
@@ -25,24 +15,57 @@ function getRealIp(req: NextRequest): string {
   );
 }
 
-function isRateLimited(ip: string): boolean {
+function checkRateLimit(key: string, maxRequests: number, windowMs = RATE_LIMIT_WINDOW_MS): boolean {
   const now = Date.now();
-  const entry = rateLimitMap.get(ip);
+  const entry = rateLimitMap.get(key);
   if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    rateLimitMap.set(key, { count: 1, resetAt: now + windowMs });
     return false;
   }
   entry.count++;
-  return entry.count > RATE_LIMIT_MAX_REQUESTS;
+  return entry.count > maxRequests;
+}
+
+/**
+ * Fast Edge-safe token structure verification.
+ * Deep cryptographic verification is performed by route handlers in Node runtime.
+ */
+function isRecognizedTokenFormat(token?: string | null): boolean {
+  if (!token) return false;
+  const clean = token.trim();
+
+  // 1. Signed Cryptographic Token format: fjs_v2.<payloadB64>.<hexSignature64>
+  if (clean.startsWith('fjs_v2.')) {
+    const parts = clean.split('.');
+    if (parts.length === 3 && parts[1].length > 10 && parts[2].length === 64) {
+      return true;
+    }
+    return false;
+  }
+
+  // 2. Active 2FA session token format: fjs_sec_<64 hex chars>
+  if (clean.startsWith('fjs_sec_') && clean.length === 72) {
+    return true;
+  }
+
+  // 3. Explicit owner token configured in environment (if any)
+  const envTokens = process.env.ADMIN_TOKENS;
+  if (envTokens) {
+    const valid = envTokens.split(',').map((t) => t.trim());
+    if (valid.includes(clean)) return true;
+  }
+
+  // Reject all legacy, weak, or unrecognized tokens
+  return false;
 }
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const ip = getRealIp(req);
 
-  // ── Public order tracking: allow customer lookup without admin token ──
+  // ── 1. Public order tracking rate limit ────────────────
   if (pathname.startsWith('/api/orders/track')) {
-    const ip = getRealIp(req);
-    if (isRateLimited(ip)) {
+    if (checkRateLimit(`track:${ip}`, RATE_LIMIT_TRACK_MAX)) {
       return NextResponse.json(
         { success: false, error: 'Too many search requests. Please slow down.' },
         { status: 429 }
@@ -51,7 +74,19 @@ export function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // ── Protect admin API routes ────────────────
+  // ── 2. Rate limit customer order placements ──────────────
+  const isPublicOrderPost = pathname.startsWith('/api/orders') && req.method === 'POST';
+  if (isPublicOrderPost) {
+    if (checkRateLimit(`order_post:${ip}`, RATE_LIMIT_ORDER_POST)) {
+      return NextResponse.json(
+        { success: false, error: 'Too many order attempts. Please wait a moment.' },
+        { status: 429 }
+      );
+    }
+    return NextResponse.next();
+  }
+
+  // ── 3. Protect Admin API Routes ──────────────────────────
   const isOrdersAdminRoute =
     pathname.startsWith('/api/orders') && ['GET', 'PATCH', 'DELETE'].includes(req.method);
 
@@ -60,45 +95,29 @@ export function proxy(req: NextRequest) {
     (pathname.startsWith('/api/upload') && req.method === 'POST') ||
     isOrdersAdminRoute;
 
-  // ── Rate limit public order placements ────────────────
-  const isPublicOrderPost = pathname.startsWith('/api/orders') && req.method === 'POST';
-  if (isPublicOrderPost) {
-    const ip = getRealIp(req);
-    if (isRateLimited(ip)) {
-      return NextResponse.json(
-        { success: false, error: 'Too many order attempts. Please wait a moment.' },
-        { status: 429 }
-      );
-    }
-  }
-
   if (isAdminApiWrite) {
-    const ip = getRealIp(req);
-
-    // Rate limiting
-    if (isRateLimited(ip)) {
+    // Admin rate limiting (defense against automated brute-force)
+    if (checkRateLimit(`admin_api:${ip}`, RATE_LIMIT_MAX_REQUESTS)) {
       return NextResponse.json(
         { success: false, error: 'Too many requests. Please slow down.' },
         { status: 429 }
       );
     }
 
-    // Token authentication
-    const authHeader = req.headers.get('Authorization');
+    // Token extraction (Case-preserving for cryptographic tokens)
+    const authHeader = req.headers.get('Authorization') || req.headers.get('authorization');
     const tokenFromHeader = authHeader?.startsWith('Bearer ')
-      ? authHeader.slice(7).trim().toLowerCase()
+      ? authHeader.slice(7).trim()
       : null;
 
-    // Also accept token as query param (backup for upload calls)
-    const tokenFromQuery = req.nextUrl.searchParams.get('token')?.toLowerCase();
-    const token = tokenFromHeader || tokenFromQuery;
+    const tokenFromCustomHeader = req.headers.get('x-admin-token')?.trim() || null;
+    const tokenFromQuery = req.nextUrl.searchParams.get('token')?.trim() || null;
+    const token = tokenFromHeader || tokenFromCustomHeader || tokenFromQuery;
 
-    const validTokens = getAdminTokens();
-    const isDynamic2FaToken = token && token.startsWith('fjs_sec_');
-
-    if (!token || (!validTokens.has(token) && !isDynamic2FaToken)) {
+    // Structural token verification at proxy gateway
+    if (!token || !isRecognizedTokenFormat(token)) {
       return NextResponse.json(
-        { success: false, error: 'Unauthorized. Admin access required.' },
+        { success: false, error: 'Unauthorized. Valid admin authentication token required.' },
         { status: 401 }
       );
     }

@@ -1,6 +1,7 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { verifyAdminRequest } from '@/lib/adminAuth';
 
 // Allowed image MIME types and extensions
 const ALLOWED_TYPES = new Set([
@@ -11,6 +12,14 @@ const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB per file
 const MAX_FILES_PER_REQUEST = 10;
 
 export async function POST(request: Request) {
+  const auth = verifyAdminRequest(request);
+  if (!auth.authorized) {
+    return NextResponse.json(
+      { success: false, error: auth.error || 'Unauthorized: Admin access required for file upload' },
+      { status: 401 }
+    );
+  }
+
   try {
     const formData = await request.formData();
     let files = formData.getAll('files') as File[];

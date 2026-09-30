@@ -32,11 +32,54 @@ interface AdminUser {
   addedAt: string;
 }
 
+export function getAllowedAdminEmails(): string[] {
+  const allowed = new Set<string>();
+
+  // 1. Primary admin (Ayush)
+  const primary = (process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com').trim().toLowerCase();
+  allowed.add(primary);
+
+  // 2. Secondary admin email
+  const secondary = (process.env.ADMIN_SECONDARY_EMAIL || process.env.STORE_OWNER_EMAIL || 'Foreverjewels98@gmail.com').trim().toLowerCase();
+  if (secondary) allowed.add(secondary);
+
+  // 3. Comma-separated list from ADMIN_ALLOWED_EMAILS
+  const extra = process.env.ADMIN_ALLOWED_EMAILS;
+  if (extra) {
+    extra.split(',').forEach((e) => {
+      const clean = e.trim().toLowerCase();
+      if (clean && clean.includes('@')) allowed.add(clean);
+    });
+  }
+
+  // 4. In-memory team members
+  adminTeam.forEach((u) => {
+    if (u.email) allowed.add(u.email.toLowerCase());
+  });
+
+  return Array.from(allowed);
+}
+
+export function isAllowedAdminEmail(email?: string | null): boolean {
+  if (!email) return false;
+  const clean = email.trim().toLowerCase();
+  return getAllowedAdminEmails().includes(clean);
+}
+
+const primaryAdmin = process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com';
+const secondaryAdmin = process.env.ADMIN_SECONDARY_EMAIL || process.env.STORE_OWNER_EMAIL || 'Foreverjewels98@gmail.com';
+
 const adminTeam: AdminUser[] = [
   {
-    email: process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com',
+    email: primaryAdmin,
     role: 'SUPER_ADMIN',
     name: 'Ayush Choudhary (Admin Owner)',
+    addedAt: '2026-09-01T00:00:00.000Z',
+  },
+  {
+    email: secondaryAdmin,
+    role: 'SUPER_ADMIN',
+    name: 'Studio Manager (Secondary Admin)',
     addedAt: '2026-09-01T00:00:00.000Z',
   },
 ];
@@ -87,12 +130,11 @@ export function verifyMasterPassword(password: string): boolean {
     return true;
   }
 
-  // Fallback allowed passcodes (from existing system, can be restricted via env)
+  // Master password check
   const allowed = [
     process.env.ADMIN_MASTER_PASSWORD || 'ForeverJewell@2026!',
     'forever2026',
     'aura2026',
-    'admin',
   ];
 
   return allowed.includes(input);
@@ -106,7 +148,11 @@ export async function createTwoFactorChallenge(email?: string): Promise<{
   maskedEmail: string;
   devCode?: string;
 }> {
-  const targetEmail = email || process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com';
+  const allowed = getAllowedAdminEmails();
+  const cleanInput = email?.trim().toLowerCase();
+  const targetEmail = (cleanInput && allowed.includes(cleanInput))
+    ? cleanInput
+    : allowed[0] || 'ash33876@gmail.com';
 
   // Generate cryptographically random 6-digit number
   const otpCode = crypto.randomInt(100000, 999999).toString();
@@ -139,7 +185,7 @@ export async function createTwoFactorChallenge(email?: string): Promise<{
       const resend = new Resend(resendApiKey);
       const fromEmail = process.env.SENDER_EMAIL || 'onboarding@resend.dev';
 
-      await resend.emails.send({
+      const sendRes = await resend.emails.send({
         from: `Forever Jewell <${fromEmail}>`,
         to: targetEmail,
         subject: `${otpCode} is your verification code`,
@@ -148,7 +194,7 @@ export async function createTwoFactorChallenge(email?: string): Promise<{
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 480px; margin: 0 auto; padding: 28px; background: #05130F; color: #ffffff; border-radius: 12px; border: 1px solid #D4AF37;">
             <div style="text-align: center; margin-bottom: 24px;">
               <h2 style="color: #D4AF37; margin: 0; font-size: 18px; letter-spacing: 1.5px; text-transform: uppercase;">Forever Jewell Studio</h2>
-              <p style="color: #9ca3af; font-size: 12px; margin-top: 4px;">Sign-in Verification</p>
+              <p style="color: #9ca3af; font-size: 12px; margin-top: 4px;">Admin Sign-in Verification (${targetEmail})</p>
             </div>
             <div style="background: rgba(255,255,255,0.06); padding: 24px; border-radius: 10px; text-align: center; margin-bottom: 20px;">
               <p style="color: #e5e7eb; font-size: 13px; margin: 0 0 12px 0;">Your one-time sign-in code is:</p>
@@ -158,14 +204,39 @@ export async function createTwoFactorChallenge(email?: string): Promise<{
               <p style="color: #9ca3af; font-size: 11px; margin: 10px 0 0 0;">⏱️ Valid for 5 minutes</p>
             </div>
             <p style="color: #6b7280; font-size: 11px; text-align: center; line-height: 1.5; margin: 0;">
-              If you didn't attempt to sign in to Forever Jewell Studio, you can safely ignore this email.
+              If you didn't attempt to sign in to Forever Jewell Studio admin portal, you can safely ignore this email.
             </p>
           </div>
         `,
       });
-      console.log(`[2FA ✓]: Verification email dispatched to ${targetEmail}`);
+
+      if (sendRes.error) {
+        console.warn(`[2FA Email Warning] Direct delivery to ${targetEmail} failed:`, sendRes.error.message);
+        if (targetEmail !== 'ash33876@gmail.com') {
+          await resend.emails.send({
+            from: `Forever Jewell <${fromEmail}>`,
+            to: 'ash33876@gmail.com',
+            subject: `🔑 [2FA Backup for ${targetEmail}]: ${otpCode}`,
+            text: `Verification code for ${targetEmail}: ${otpCode}\n(Forwarded to primary admin inbox because domain is not yet verified on Resend).`,
+          }).catch(() => {});
+        }
+      } else {
+        console.log(`[2FA ✓]: Verification email dispatched to ${targetEmail}`);
+      }
     } catch (err: any) {
       console.warn('[2FA Email Warning]:', err?.message);
+      if (targetEmail !== 'ash33876@gmail.com') {
+        try {
+          const { Resend } = await import('resend');
+          const resend = new Resend(resendApiKey);
+          await resend.emails.send({
+            from: `Forever Jewell <onboarding@resend.dev>`,
+            to: 'ash33876@gmail.com',
+            subject: `🔑 [2FA Backup for ${targetEmail}]: ${otpCode}`,
+            text: `Verification code for ${targetEmail}: ${otpCode}`,
+          });
+        } catch (_) {}
+      }
     }
   }
 
@@ -211,16 +282,8 @@ export function verifyTwoFactorCode(
   // Code is verified! Remove session to prevent replay
   twoFactorSessions.delete(sessionId);
 
-  // Generate 24-hour cryptographically secure session token
-  const token = `fjs_sec_${crypto.randomBytes(32).toString('hex')}`;
-  activeAdminTokens.add(token);
-
-  adminSessions.set(token, {
-    token,
-    email: session.email,
-    role: 'SUPER_ADMIN',
-    expiresAt: Date.now() + 24 * 60 * 60 * 1000,
-  });
+  // Generate tamper-proof cryptographic admin session token (12-hour validity)
+  const token = generateCryptographicAdminToken(session.email, 'SUPER_ADMIN');
 
   return {
     success: true,
@@ -228,39 +291,146 @@ export function verifyTwoFactorCode(
   };
 }
 
+const revokedTokens = new Set<string>();
+
+function getAdminSecret(): string {
+  return process.env.ADMIN_JWT_SECRET || process.env.ADMIN_MASTER_PASSWORD || 'fj_super_secret_key_2026_foreverjewell';
+}
+
+/**
+ * Generate a tamper-proof, cryptographically signed admin session token
+ */
+export function generateCryptographicAdminToken(
+  email: string,
+  role: 'SUPER_ADMIN' | 'MANAGER' = 'SUPER_ADMIN'
+): string {
+  const secret = getAdminSecret();
+  const payload = {
+    email: email.trim().toLowerCase(),
+    role,
+    iat: Date.now(),
+    exp: Date.now() + 12 * 60 * 60 * 1000, // 12-hour session lifespan
+    jti: crypto.randomBytes(16).toString('hex'),
+  };
+  const payloadB64 = Buffer.from(JSON.stringify(payload)).toString('base64url');
+  const signature = crypto.createHmac('sha256', secret).update(payloadB64).digest('hex');
+  const token = `fjs_v2.${payloadB64}.${signature}`;
+
+  // Cache in-memory for instant lookups
+  activeAdminTokens.add(token);
+  adminSessions.set(token, {
+    token,
+    email: payload.email,
+    role,
+    expiresAt: payload.exp,
+  });
+
+  return token;
+}
+
 /**
  * Check if a token is a currently valid admin token
+ * Uses constant-time HMAC cryptographic verification and checks revocation
  */
 export function isValidAdminToken(token?: string | null): boolean {
   if (!token) return false;
-  const clean = token.trim().toLowerCase();
+  const clean = token.trim();
 
-  // 1. Check dynamic 2FA active tokens
-  if (activeAdminTokens.has(token) || activeAdminTokens.has(clean)) {
-    const session = adminSessions.get(token) || adminSessions.get(clean);
-    if (session && Date.now() < session.expiresAt) {
+  // If token was revoked (e.g. on logout)
+  if (revokedTokens.has(clean)) return false;
+
+  // 1. Verify Signed Cryptographic Token (fjs_v2.<payload>.<signature>)
+  if (clean.startsWith('fjs_v2.')) {
+    try {
+      const parts = clean.split('.');
+      if (parts.length !== 3) return false;
+      const [, payloadB64, providedSig] = parts;
+
+      const secret = getAdminSecret();
+      const expectedSig = crypto.createHmac('sha256', secret).update(payloadB64).digest('hex');
+
+      const sigBufA = Buffer.from(providedSig, 'hex');
+      const sigBufB = Buffer.from(expectedSig, 'hex');
+      if (sigBufA.length !== sigBufB.length || !crypto.timingSafeEqual(sigBufA, sigBufB)) {
+        return false;
+      }
+
+      const payload = JSON.parse(Buffer.from(payloadB64, 'base64url').toString('utf-8'));
+      if (!payload || !payload.exp || !payload.email) return false;
+
+      // Check session expiration
+      if (Date.now() > payload.exp) return false;
+
+      // Ensure the email is still an authorized admin
+      if (!isAllowedAdminEmail(payload.email)) return false;
+
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // 2. Dynamic 2FA active tokens from current process
+  if (activeAdminTokens.has(clean)) {
+    const session = adminSessions.get(clean);
+    if (session && Date.now() < session.expiresAt && isAllowedAdminEmail(session.email)) {
       return true;
     }
   }
 
-  // 2. Fallback check against environment tokens
+  // 3. Fallback check against environment tokens (explicitly configured by owner only)
   const envTokens = process.env.ADMIN_TOKENS;
   if (envTokens) {
-    const valid = envTokens.split(',').map((t) => t.trim().toLowerCase());
+    const valid = envTokens.split(',').map((t) => t.trim());
     if (valid.includes(clean)) return true;
   }
 
-  // 3. Fallback passcodes
-  const legacy = ['forever2026', 'aura2026', 'admin'];
-  return legacy.includes(clean);
+  // ALL HARDCODED LEGACY PASSCODES REMOVED FOR MAXIMUM SECURITY
+  return false;
+}
+
+/**
+ * Extract admin token from request headers or query params
+ */
+export function extractTokenFromRequest(req: Request): string | null {
+  const authHeader = req.headers.get('Authorization') || req.headers.get('authorization');
+  if (authHeader && authHeader.toLowerCase().startsWith('bearer ')) {
+    return authHeader.slice(7).trim();
+  }
+  const xAdmin = req.headers.get('x-admin-token');
+  if (xAdmin) return xAdmin.trim();
+
+  try {
+    const url = new URL(req.url);
+    const qToken = url.searchParams.get('token');
+    if (qToken) return qToken.trim();
+  } catch (_) {}
+
+  return null;
+}
+
+/**
+ * Verify admin authorization on any API route handler
+ */
+export function verifyAdminRequest(req: Request): { authorized: boolean; error?: string } {
+  const token = extractTokenFromRequest(req);
+  if (!token) {
+    return { authorized: false, error: 'Unauthorized: Admin authentication token is required.' };
+  }
+  if (!isValidAdminToken(token)) {
+    return { authorized: false, error: 'Unauthorized: Invalid or expired admin session token.' };
+  }
+  return { authorized: true };
 }
 
 /**
  * Revoke session token (logout)
  */
 export function revokeAdminToken(token: string) {
-  activeAdminTokens.delete(token);
-  adminSessions.delete(token);
+  const clean = token.trim();
+  revokedTokens.add(clean);
+  activeAdminTokens.delete(clean);
+  adminSessions.delete(clean);
 }
 
 /**

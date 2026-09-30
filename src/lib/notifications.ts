@@ -256,3 +256,105 @@ export async function sendOrderNotifications({ order, siteUrl = 'https://ring-pe
     return { success: false, error: error?.message };
   }
 }
+
+/**
+ * Dispatches status update notification (e.g. Crafting, Shipped, Delivered) to customer
+ */
+export async function sendOrderStatusUpdateNotification({
+  order,
+  siteUrl = 'https://ring-pearl.vercel.app',
+}: SendOrderNotificationOptions) {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  const adminEmail = process.env.ADMIN_2FA_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'ash33876@gmail.com';
+  const fromEmail = process.env.SENDER_EMAIL || 'onboarding@resend.dev';
+
+  if (!resendApiKey) return { success: false };
+
+  const trackingLink = `${siteUrl}/my-orders?id=${order.id}`;
+  const statusLabel =
+    order.orderStatus === 'shipped'
+      ? '📦 Your Order Has Been Dispatched!'
+      : order.orderStatus === 'delivered'
+      ? '🎉 Your Order Has Been Delivered!'
+      : order.orderStatus === 'processing'
+      ? '💎 Master Artisans are Crafting Your Jewelry'
+      : order.orderStatus === 'confirmed'
+      ? '✓ Order Confirmed & In Production'
+      : `Order Status: ${order.orderStatus.toUpperCase()}`;
+
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #fdfbf7; margin: 0; padding: 30px 15px;">
+      <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border: 1px solid #e5e0d8; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+        <div style="background-color: #064e3b; padding: 24px; text-align: center;">
+          <h1 style="color: #c5a059; font-size: 20px; font-weight: 400; letter-spacing: 3px; margin: 0; text-transform: uppercase;">Forever Jewell Studio</h1>
+          <p style="color: #a7f3d0; font-size: 11px; letter-spacing: 2px; margin: 6px 0 0 0; text-transform: uppercase;">Order Status Update</p>
+        </div>
+        <div style="padding: 28px 24px;">
+          <h2 style="color: #111827; font-size: 20px; margin: 0 0 12px 0;">${statusLabel}</h2>
+          <p style="color: #4b5563; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">
+            Hello <strong>${order.customer.firstName}</strong>, your order <strong>#${order.id}</strong> has been updated.
+          </p>
+
+          ${
+            order.trackingNumber
+              ? `
+            <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 18px; margin-bottom: 20px;">
+              <p style="margin: 0 0 6px 0; font-size: 12px; color: #1e40af; text-transform: uppercase; font-weight: bold;">Courier Tracking Details</p>
+              <p style="margin: 0; font-size: 15px; color: #1e3a8a; font-family: monospace;">
+                <strong>${order.carrier || 'Express Courier'}:</strong> ${order.trackingNumber}
+              </p>
+            </div>
+            `
+              : ''
+          }
+
+          <div style="text-align: center; margin: 28px 0;">
+            <a href="${trackingLink}" style="background-color: #064e3b; color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px; display: inline-block;">
+              Track Order Live
+            </a>
+          </div>
+
+          <p style="color: #9ca3af; font-size: 12px; text-align: center; margin: 0;">
+            Questions? Contact us on WhatsApp (+91 98289 30454) or reply to this email.
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    const { Resend } = await import('resend');
+    const resend = new Resend(resendApiKey);
+
+    // Try customer first
+    if (order.customer.email && order.customer.email.includes('@')) {
+      const custRes = await resend.emails.send({
+        from: `Forever Jewell Studio <${fromEmail}>`,
+        replyTo: adminEmail,
+        to: order.customer.email,
+        subject: `Update on Order #${order.id} - ${statusLabel}`,
+        html,
+      });
+
+      if (custRes.error && adminEmail) {
+        // Forward to admin if domain restriction blocks customer delivery
+        await resend.emails.send({
+          from: `Forever Jewell Studio <${fromEmail}>`,
+          to: adminEmail,
+          subject: `📋 Status Update for #${order.id} (${order.customer.email})`,
+          html,
+        }).catch(() => {});
+      }
+    }
+
+    return { success: true };
+  } catch (err: any) {
+    console.warn('[Status Notification Warning]:', err?.message);
+    return { success: false, error: err?.message };
+  }
+}
+

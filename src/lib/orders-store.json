@@ -1,1 +1,57 @@
-[]
+[
+  {
+    "id": "FJ-995824",
+    "createdAt": "2026-09-30T04:35:46.167Z",
+    "customer": {
+      "firstName": "Ayush",
+      "lastName": "Choudhary",
+      "email": "Ayushchoudhary@jklu.edu.in",
+      "phone": "+918387072406",
+      "streetAddress": "urja vihar colony sanganer jaipur",
+      "apartment": "jaipur",
+      "city": "Jaipur",
+      "state": "Rajasthan",
+      "postalCode": "302022",
+      "country": "India"
+    },
+    "items": [
+      {
+        "productId": "fjws-4516815588",
+        "productName": "18k Lesbian ring for Pride Month, Lesbian Gift, Gay Pride Jewelry Gift to Girlfriend, Lesbian pride, Breast Cancer, Pride ring, Lgbt jewelry",
+        "productSlug": "18k-lesbian-ring-for-pride-month-lesbian-gift-gay-pride-jewe-815588",
+        "metal": "18k Yellow Gold",
+        "size": "US 9.5",
+        "carat": "2.00 CT",
+        "quantity": 1,
+        "unitPrice": 70078,
+        "totalPrice": 70078,
+        "image": "https://qphfuzfsjggfskwszdco.supabase.co/storage/v1/object/public/product-images/etsy_4516815588_img1.jpg"
+      },
+      {
+        "productId": "fjws-4516815588",
+        "productName": "18k Lesbian ring for Pride Month, Lesbian Gift, Gay Pride Jewelry Gift to Girlfriend, Lesbian pride, Breast Cancer, Pride ring, Lgbt jewelry",
+        "productSlug": "18k-lesbian-ring-for-pride-month-lesbian-gift-gay-pride-jewe-815588",
+        "metal": "925 Sterling Silver",
+        "size": "US 7",
+        "carat": "2.00 CT",
+        "quantity": 1,
+        "unitPrice": 4258,
+        "totalPrice": 4258,
+        "image": "https://qphfuzfsjggfskwszdco.supabase.co/storage/v1/object/public/product-images/etsy_4516815588_img3.jpg"
+      }
+    ],
+    "currency": "INR",
+    "currencySymbol": "₹",
+    "subtotal": 74336,
+    "shippingFee": 0,
+    "total": 74336,
+    "payment": {
+      "method": "whatsapp",
+      "status": "paid"
+    },
+    "orderStatus": "shipped",
+    "trackingNumber": "FDX9828374",
+    "carrier": "FedEx",
+    "notes": "Master artisans currently handcrafting setting in Jaipur studio"
+  }
+]

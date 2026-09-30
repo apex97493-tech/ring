@@ -1,4 +1,8 @@
 import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 import {
   verifyMasterPassword,
   createTwoFactorChallenge,
@@ -11,6 +15,8 @@ import {
   getAdminTeam,
   addAdminMember,
   removeAdminMember,
+  getAllowedAdminEmails,
+  isAllowedAdminEmail,
 } from '@/lib/adminAuth';
 
 function getClientIp(req: Request): string {
@@ -40,36 +46,50 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { action } = body;
 
-    // ── ACTION 1: Step 1 Password Login & Send 2FA OTP ───────────────────
+    // ── ACTION 1: Step 1 Manual Email + Password Login & Send 2FA OTP ───
     if (action === 'login') {
-      const { password } = body;
+      const { email, password } = body;
 
-      if (!password) {
+      const cleanEmail = String(email || '').trim().toLowerCase();
+      const cleanPassword = String(password || '').trim();
+
+      if (!cleanEmail || !cleanEmail.includes('@')) {
         return NextResponse.json(
-          { success: false, error: 'Password is required.' },
+          { success: false, error: 'A valid administrator email address is required.' },
           { status: 400 }
         );
       }
 
-      const isValidPassword = verifyMasterPassword(password);
-      if (!isValidPassword) {
+      if (!cleanPassword) {
+        return NextResponse.json(
+          { success: false, error: 'Master Admin Passcode is required.' },
+          { status: 400 }
+        );
+      }
+
+      const isEmailAuthorized = isAllowedAdminEmail(cleanEmail);
+      const isPasswordValid = verifyMasterPassword(cleanPassword);
+
+      // Zero-knowledge rejection: do not reveal whether email or password was wrong
+      if (!isEmailAuthorized || !isPasswordValid) {
         const { attemptsLeft } = recordFailedAttempt(ip);
         return NextResponse.json(
           {
             success: false,
-            error: attemptsLeft > 0
-              ? `Incorrect Master Password. ${attemptsLeft} attempts remaining before temporary lockout.`
-              : `Too many incorrect attempts. This IP has been locked out for 15 minutes.`,
+            error:
+              attemptsLeft > 0
+                ? `Invalid administrator email or master passcode. ${attemptsLeft} attempts remaining before temporary IP lockout.`
+                : `Too many incorrect attempts. This IP has been locked out for 15 minutes for security.`,
           },
           { status: 401 }
         );
       }
 
-      // Password is correct! Reset failed attempts
+      // Credentials verified! Reset IP attempt counters
       resetFailedAttempts(ip);
 
-      // Create 2FA challenge and send OTP
-      const challenge = await createTwoFactorChallenge();
+      // Create 2FA challenge and send OTP to this admin's email
+      const challenge = await createTwoFactorChallenge(cleanEmail);
 
       return NextResponse.json({
         success: true,
@@ -78,7 +98,7 @@ export async function POST(req: Request) {
         maskedEmail: challenge.maskedEmail,
         // In local development, also provide the code so you don't have to check email during quick tests
         devCode: challenge.devCode,
-        message: `Security code sent to ${challenge.maskedEmail}`,
+        message: `Security code dispatched to ${challenge.maskedEmail}`,
       });
     }
 
@@ -177,9 +197,14 @@ export async function GET(req: Request) {
     const authHeader = req.headers.get('Authorization');
     const token = authHeader?.replace('Bearer ', '').trim();
 
+    // Security: Never reveal admin team / emails to unauthenticated requests
     if (!token || !isValidAdminToken(token)) {
       return NextResponse.json(
-        { success: false, authenticated: false, error: 'Session invalid or expired.' },
+        {
+          success: false,
+          authenticated: false,
+          error: 'Session invalid or expired.',
+        },
         { status: 401 }
       );
     }
@@ -189,6 +214,7 @@ export async function GET(req: Request) {
       authenticated: true,
       role: 'SUPER_ADMIN',
       team: getAdminTeam(),
+      allowedEmails: getAllowedAdminEmails(),
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error?.message }, { status: 500 });

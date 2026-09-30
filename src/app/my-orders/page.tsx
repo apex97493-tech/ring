@@ -168,8 +168,10 @@ function OrderCard({ order }: { order: Order }) {
               <p className={`text-xs mt-0.5 font-semibold ${isPaid ? "text-green-600" : "text-amber-600"}`}>
                 {isPaid ? "✓ Payment Confirmed" : "⏳ Awaiting Verification"}
               </p>
-              {order.payment?.transactionId && (
-                <p className="text-[10px] text-gray-500 mt-1 font-mono">Ref: {order.payment.transactionId}</p>
+              {(order.payment?.transactionId || order.payment?.bankReference) && (
+                <p className="text-[10px] text-gray-500 mt-1 font-mono">
+                  Ref / UTR: {order.payment.bankReference || order.payment.transactionId}
+                </p>
               )}
               <div className="border-t border-gray-100 mt-3 pt-2 flex justify-between">
                 <span className="text-xs text-gray-500">Total</span>
@@ -179,14 +181,26 @@ function OrderCard({ order }: { order: Order }) {
           </div>
 
           {/* Courier tracking */}
-          {(order as any).trackingNumber && (
+          {(order.trackingNumber || (order as any).trackingNumber) && (
             <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-              <div className="flex items-center gap-2 mb-1">
-                <Truck className="w-4 h-4 text-blue-700" />
-                <p className="text-xs font-bold text-blue-800 uppercase tracking-wider">Courier Tracking</p>
+              <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-2">
+                  <Truck className="w-4 h-4 text-blue-700" />
+                  <p className="text-xs font-bold text-blue-800 uppercase tracking-wider">Courier Tracking</p>
+                </div>
+                <span className="text-[10px] px-2 py-0.5 bg-blue-100 text-blue-700 font-semibold rounded-full">
+                  Dispatched
+                </span>
               </div>
-              <p className="text-sm font-mono font-bold text-blue-900">{(order as any).courier}: {(order as any).trackingNumber}</p>
-              <p className="text-[11px] text-blue-600 mt-0.5">Visit the courier website and enter this tracking number.</p>
+              <p className="text-sm font-mono font-bold text-blue-900 mt-1">
+                <span className="text-gray-700 font-sans font-medium">{order.carrier || (order as any).courier || 'Carrier'}:</span> {order.trackingNumber || (order as any).trackingNumber}
+              </p>
+              {order.notes && (
+                <p className="text-xs text-blue-800 mt-1 italic">Note: {order.notes}</p>
+              )}
+              <p className="text-[11px] text-blue-600 mt-1">
+                You can use this tracking number on the official carrier tracking portal to view real-time location.
+              </p>
             </div>
           )}
 
