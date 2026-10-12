@@ -906,75 +906,100 @@ export default function AdminBurgerPage() {
   };
 
   // =========================================================================
-  // DEVICE FILE UPLOAD HANDLER (Real computer / phone files)
+  // SUPABASE CLOUD FILE UPLOAD HANDLER (Zero Lag & Direct Cloud CDN)
   // =========================================================================
+  const compressImageForCloud = async (file: File): Promise<File> => {
+    if (!file.type.startsWith('image/') || file.size < 400 * 1024) return file;
+    return new Promise((resolve) => {
+      const img = new window.Image();
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        img.src = e.target?.result as string;
+      };
+      img.onload = () => {
+        const maxDim = 1800;
+        let width = img.width;
+        let height = img.height;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                const cleanName = file.name.replace(/\.[^.]+$/, '') + '.webp';
+                resolve(new File([blob], cleanName, { type: 'image/webp' }));
+              } else {
+                resolve(file);
+              }
+            },
+            'image/webp',
+            0.88
+          );
+        } else {
+          resolve(file);
+        }
+      };
+      img.onerror = () => resolve(file);
+      reader.readAsDataURL(file);
+    });
+  };
+
   const processFiles = async (files: FileList | File[]) => {
     if (!files || files.length === 0) return;
 
     setIsUploading(true);
-    showToast(`Uploading ${files.length} photo${files.length > 1 ? 's' : ''} from your device...`);
-
-    const uploadFormData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      uploadFormData.append('files', files[i]);
-    }
+    showToast(`☁️ Optimizing & uploading ${files.length} photo${files.length > 1 ? 's' : ''} to Supabase Cloud...`);
 
     try {
+      const uploadFormData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        const rawFile = files[i];
+        const optimizedFile = await compressImageForCloud(rawFile);
+        uploadFormData.append('files', optimizedFile);
+      }
+
       const uploadTok = sessionStorage.getItem('fj_admin_token') || '';
       const uploadHeaders: Record<string, string> = uploadTok
         ? { Authorization: `Bearer ${uploadTok}` }
         : {};
+
       const res = await fetch('/api/upload', {
         method: 'POST',
         headers: uploadHeaders,
         body: uploadFormData,
       });
 
-
       const data = await res.json();
-      if (data.success && data.urls && data.urls.length > 0) {
+      if (data.success && Array.isArray(data.urls) && data.urls.length > 0) {
         setFormData((prev) => {
           const currentImages = prev.images || [];
           return {
             ...prev,
             images: [...currentImages, ...data.urls],
-            variants: prev.variants.map((v, i) => i === 0 && !v.image ? { ...v, image: data.urls[0] } : v),
+            variants: prev.variants.map((v, i) =>
+              i === 0 && !v.image ? { ...v, image: data.urls[0] } : v
+            ),
           };
         });
-        showToast(`✓ Added ${data.urls.length} photo${data.urls.length > 1 ? 's' : ''} from your device!`);
+        showToast(`✓ Stored ${data.urls.length} photo${data.urls.length > 1 ? 's' : ''} in Supabase Cloud Storage!`);
       } else {
-        // Fallback: local FileReader Base64
-        const dataUrls: string[] = [];
-        for (let i = 0; i < files.length; i++) {
-          const reader = new FileReader();
-          const p = new Promise<string>((resolve) => {
-            reader.onload = () => resolve(reader.result as string);
-            reader.readAsDataURL(files[i]);
-          });
-          dataUrls.push(await p);
-        }
-        setFormData((prev) => ({
-          ...prev,
-          images: [...(prev.images || []), ...dataUrls],
-        }));
-        showToast(`✓ Loaded ${dataUrls.length} photo${dataUrls.length > 1 ? 's' : ''} from your device!`);
+        showToast(`⚠️ Upload failed: ${data.error || 'Server error uploading to Supabase'}`);
       }
-    } catch (err) {
-      console.error('Upload error, using local FileReader fallback:', err);
-      const dataUrls: string[] = [];
-      for (let i = 0; i < files.length; i++) {
-        const reader = new FileReader();
-        const p = new Promise<string>((resolve) => {
-          reader.onload = () => resolve(reader.result as string);
-          reader.readAsDataURL(files[i]);
-        });
-        dataUrls.push(await p);
-      }
-      setFormData((prev) => ({
-        ...prev,
-        images: [...(prev.images || []), ...dataUrls],
-      }));
-      showToast(`✓ Loaded ${dataUrls.length} photo${dataUrls.length > 1 ? 's' : ''} from your device!`);
+    } catch (err: any) {
+      console.error('Cloud upload error:', err);
+      showToast(`⚠️ Cloud connection error: ${err?.message || 'Could not reach Supabase upload service'}`);
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) {

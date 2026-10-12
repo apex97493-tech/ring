@@ -108,6 +108,100 @@ export async function GET() {
   return NextResponse.json({ success: true, products: currentProducts, source: 'file-store' });
 }
 
+async function syncProductToCloudDb(product: Product) {
+  try {
+    const { prisma } = await import('@/lib/prisma');
+
+    // 1. Ensure Category exists in Cloud DB
+    const catSlug = (product.category || 'rings').toLowerCase().trim();
+    const catName = catSlug.charAt(0).toUpperCase() + catSlug.slice(1);
+
+    const category = await prisma.category.upsert({
+      where: { slug: catSlug },
+      update: {},
+      create: {
+        slug: catSlug,
+        name: catName,
+        description: `Fine jewelry collection in ${catName}`,
+      },
+    });
+
+    // 2. Upsert Product in Cloud DB
+    const slug = product.slug || product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const pId = String(product.id);
+
+    const saved = await prisma.product.upsert({
+      where: { id: pId },
+      update: {
+        name: product.name,
+        slug: slug,
+        description: product.description || `${product.name} handcrafted fine moissanite jewelry.`,
+        categoryId: category.id,
+      },
+      create: {
+        id: pId,
+        name: product.name,
+        slug: slug,
+        description: product.description || `${product.name} handcrafted fine moissanite jewelry.`,
+        categoryId: category.id,
+      },
+    });
+
+    // 3. Sync Product Images in Cloud DB
+    await prisma.productImage.deleteMany({
+      where: { productId: saved.id },
+    }).catch(() => {});
+
+    if (Array.isArray(product.images) && product.images.length > 0) {
+      await prisma.productImage.createMany({
+        data: product.images.map((imgUrl, idx) => ({
+          url: imgUrl,
+          altText: product.name,
+          isPrimary: idx === 0,
+          productId: saved.id,
+        })),
+      });
+    }
+
+    // 4. Sync Base Variant in Cloud DB
+    const basePrice = Number(product.price || 4999);
+    const sku = `SKU-${saved.id}`.slice(0, 50);
+
+    await prisma.productVariant.upsert({
+      where: { sku },
+      update: {
+        price: basePrice,
+        metal: product.metal || '925 Sterling Silver',
+        stone: product.carat || '2.00 CT Moissanite',
+      },
+      create: {
+        productId: saved.id,
+        sku,
+        metal: product.metal || '925 Sterling Silver',
+        stone: product.carat || '2.00 CT Moissanite',
+        price: basePrice,
+        stockQuantity: 50,
+      },
+    });
+
+    console.log(`[Supabase Cloud DB ✓]: Product "${product.name}" (#${pId}) saved successfully.`);
+  } catch (err) {
+    console.warn('[Supabase Cloud DB Save Warning]:', err);
+  }
+}
+
+async function deleteProductFromCloudDb(id: string) {
+  try {
+    const { prisma } = await import('@/lib/prisma');
+    await prisma.product.delete({
+      where: { id: String(id) },
+    }).catch(() => {});
+    console.log(`[Supabase Cloud DB ✓]: Product #${id} deleted.`);
+  } catch (err) {
+    console.warn('[Supabase Cloud DB Delete Warning]:', err);
+  }
+}
+
 // POST /api/products (Add or Update - Admin Only)
 export async function POST(request: Request) {
   const auth = verifyAdminRequest(request);
@@ -147,8 +241,18 @@ export async function POST(request: Request) {
       updatedProducts = [product, ...currentProducts];
     }
 
+    // Persist to Supabase PostgreSQL Cloud Database
+    await syncProductToCloudDb(product);
+
+    // Save to local cache store
     writeProductsToFile(updatedProducts);
-    return NextResponse.json({ success: true, products: updatedProducts });
+
+    return NextResponse.json({
+      success: true,
+      product,
+      products: updatedProducts,
+      cloudSaved: true,
+    });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message || 'Internal Server Error' },
@@ -178,11 +282,14 @@ export async function DELETE(request: Request) {
       );
     }
 
+    // Delete from Supabase PostgreSQL Cloud Database
+    await deleteProductFromCloudDb(id);
+
     const currentProducts = readProductsFromFile();
     const updatedProducts = currentProducts.filter((p) => p.id !== id);
 
     writeProductsToFile(updatedProducts);
-    return NextResponse.json({ success: true, products: updatedProducts });
+    return NextResponse.json({ success: true, products: updatedProducts, cloudDeleted: true });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message || 'Internal Server Error' },

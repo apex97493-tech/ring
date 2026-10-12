@@ -1,15 +1,29 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
 import path from 'path';
 import { verifyAdminRequest } from '@/lib/adminAuth';
+import { createClient } from '@supabase/supabase-js';
 
 // Allowed image MIME types and extensions
 const ALLOWED_TYPES = new Set([
   'image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif', 'image/avif',
 ]);
 const ALLOWED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif']);
-const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB per file
-const MAX_FILES_PER_REQUEST = 10;
+const MAX_FILE_SIZE_BYTES = 15 * 1024 * 1024; // 15 MB per file
+const MAX_FILES_PER_REQUEST = 12;
+
+function getSupabaseClient() {
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qphfuzfsjggfskwszdco.supabase.co';
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!serviceKey) {
+    throw new Error('SUPABASE_SERVICE_ROLE_KEY is not configured in environment variables.');
+  }
+
+  return createClient(supabaseUrl, serviceKey, {
+    auth: { persistSession: false },
+  });
+}
 
 export async function POST(request: Request) {
   const auth = verifyAdminRequest(request);
@@ -41,12 +55,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-
     const uploadedUrls: string[] = [];
+    const supabase = getSupabaseClient();
 
     for (const file of files) {
       if (typeof file === 'string' || !file.name) continue;
@@ -54,7 +64,7 @@ export async function POST(request: Request) {
       // ── File size validation ────────────────────────────────────
       if (file.size > MAX_FILE_SIZE_BYTES) {
         return NextResponse.json(
-          { success: false, error: `File "${file.name}" exceeds the 10 MB size limit.` },
+          { success: false, error: `File "${file.name}" exceeds the 15 MB size limit.` },
           { status: 400 }
         );
       }
@@ -67,7 +77,7 @@ export async function POST(request: Request) {
         );
       }
 
-      // ── Extension validation (double-check) ────────────────────
+      // ── Extension validation ────────────────────────────────────
       const ext = path.extname(file.name).toLowerCase();
       if (!ALLOWED_EXTENSIONS.has(ext)) {
         return NextResponse.json(
@@ -80,7 +90,6 @@ export async function POST(request: Request) {
       const buffer = Buffer.from(bytes);
 
       // ── Magic bytes check for JPEG/PNG/WebP ────────────────────
-      // Verify first bytes match expected image signature
       const isJpeg = buffer[0] === 0xFF && buffer[1] === 0xD8;
       const isPng = buffer[0] === 0x89 && buffer[1] === 0x50;
       const isWebP = buffer.slice(8, 12).toString('ascii') === 'WEBP';
@@ -99,13 +108,40 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: false, error: 'Invalid GIF file.' }, { status: 400 });
       }
 
-      // ── Safe filename ───────────────────────────────────────────
+      // ── Safe clean unique filename ─────────────────────────────
       const cleanName = path.basename(file.name).replace(/[^a-zA-Z0-9.-]/g, '_').toLowerCase();
       const uniqueName = `${Date.now()}-${Math.random().toString(36).substring(2, 7)}-${cleanName}`;
-      const filePath = path.join(uploadsDir, uniqueName);
 
-      fs.writeFileSync(filePath, buffer);
-      uploadedUrls.push(`/uploads/${uniqueName}`);
+      // ── Direct Cloud Upload to Supabase Storage Bucket ────────
+      const { error: uploadErr } = await supabase.storage
+        .from('product-images')
+        .upload(uniqueName, buffer, {
+          contentType: file.type || 'image/jpeg',
+          cacheControl: '31536000',
+          upsert: true,
+        });
+
+      if (uploadErr) {
+        console.error('[Supabase Storage Upload Error]:', uploadErr);
+        return NextResponse.json(
+          { success: false, error: `Supabase Storage upload failed: ${uploadErr.message}` },
+          { status: 502 }
+        );
+      }
+
+      const { data: pubData } = supabase.storage
+        .from('product-images')
+        .getPublicUrl(uniqueName);
+
+      if (!pubData?.publicUrl) {
+        return NextResponse.json(
+          { success: false, error: 'Could not generate public URL for uploaded photo.' },
+          { status: 500 }
+        );
+      }
+
+      console.log(`[Supabase Storage ✓]: Uploaded ${uniqueName} -> ${pubData.publicUrl}`);
+      uploadedUrls.push(pubData.publicUrl);
     }
 
     if (uploadedUrls.length === 0) {
@@ -116,6 +152,7 @@ export async function POST(request: Request) {
       success: true,
       urls: uploadedUrls,
       url: uploadedUrls[0] || '',
+      storage: 'supabase-cloud',
     });
   } catch (error: any) {
     console.error('File upload error:', error);
