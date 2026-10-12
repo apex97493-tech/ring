@@ -2,6 +2,11 @@
   "name": "ring",
   "version": "0.1.0",
   "private": true,
+  "author": "Aman Singh & Ayush Choudhary",
+  "contributors": [
+    "Aman Singh",
+    "Ayush Choudhary"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",

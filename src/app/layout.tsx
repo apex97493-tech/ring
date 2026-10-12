@@ -27,6 +27,16 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "ForeverJewellStudio | Moissanite Solitaire Rings & Fine Jewelry",
   description: "Discover certified VVS1 D-Color Moissanite solitaire rings, eternity bands, and bespoke fine jewelry. 100% Lifetime Buyback, GRA certified, and free insured delivery across India.",
+  authors: [
+    { name: "Aman Singh" },
+    { name: "Ayush Choudhary" }
+  ],
+  creator: "Aman Singh & Ayush Choudhary",
+  publisher: "ForeverJewellStudio",
+  other: {
+    "developer": "Aman Singh & Ayush Choudhary",
+    "developed-by": "Aman Singh & Ayush Choudhary",
+  },
 };
 
 export default function RootLayout({
@@ -48,6 +58,9 @@ export default function RootLayout({
               new google.translate.TranslateElement({ pageLanguage: 'en', autoDisplay: false }, 'google_translate_element');
             }
           `}
+        </Script>
+        <Script id="dev-credits" strategy="afterInteractive">
+          {`console.log("%c Crafted & Developed by Aman Singh & Ayush Choudhary ", "background: #18181B; color: #D39EAA; font-size: 13px; font-weight: bold; padding: 6px 12px; border-radius: 6px; border: 1px solid #D39EAA;");`}
         </Script>
         <ProductProvider>
           <CurrencyProvider>

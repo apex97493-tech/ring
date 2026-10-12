@@ -220,15 +220,26 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar with Payment Gateways */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-gray-500">
-          <p>© 2026 ForeverJewellStudio Royal Moissanite Jewelry. All Rights Reserved. Crafted for eternal sparkle.</p>
+        {/* Bottom Bar with Developer Credits & Payment Gateways */}
+        <div className="pt-8 flex flex-col lg:flex-row items-center justify-between gap-4 text-xs font-sans text-gray-400">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-center sm:text-left">
+            <p className="text-gray-500">
+              © 2026 ForeverJewellStudio Royal Moissanite Jewelry. All Rights Reserved.
+            </p>
+            <span className="hidden sm:inline text-gray-600">•</span>
+            <p className="text-gray-400 flex items-center gap-1.5 flex-wrap justify-center">
+              <span>Designed & Developed by</span>
+              <span className="text-[#D39EAA] font-semibold tracking-wide">Aman Singh</span>
+              <span className="text-gray-500">&</span>
+              <span className="text-[#D39EAA] font-semibold tracking-wide">Ayush Choudhary</span>
+            </p>
+          </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap justify-center">
             <span className="text-[10px] uppercase tracking-wider text-gray-400">
               Accepted Payments:
             </span>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap justify-center">
               {['UPI / GPay', 'Visa', 'Mastercard', 'RuPay', 'NetBanking', 'PayPal'].map((method) => (
                 <span
                   key={method}
