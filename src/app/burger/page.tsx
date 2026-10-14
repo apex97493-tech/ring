@@ -2490,10 +2490,10 @@ export default function AdminBurgerPage() {
                         handleSelectProduct(p);
                         setIsMobileCatalogOpen(false);
                       }}
-                      className={`p-3 flex items-start gap-3 cursor-pointer transition-all group ${
+                      className={`p-3 flex items-start gap-3 cursor-pointer transition-all group rounded-xl ${
                         isSelected
-                          ? 'bg-[#06382C] border-l-4 border-[#D39EAA] shadow-inner'
-                          : 'hover:bg-white/5 border-l-4 border-transparent'
+                          ? 'bg-[#06382C] ring-1 ring-[#D39EAA]/60 shadow-md'
+                          : 'hover:bg-white/5'
                       }`}
                     >
                       {/* Product Thumbnail */}

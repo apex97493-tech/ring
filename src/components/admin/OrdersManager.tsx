@@ -500,16 +500,16 @@ export default function OrdersManager({
         {/* In Production */}
         <div
           onClick={() => setStatusFilter('processing')}
-          className="bg-[#032019] border border-white/10 rounded-2xl p-4 shadow-lg hover:border-purple-500/40 transition-all cursor-pointer"
+          className="bg-[#032019] border border-white/10 rounded-2xl p-4 shadow-lg hover:border-[#D39EAA]/40 transition-all cursor-pointer"
         >
           <div className="flex items-center justify-between">
-            <span className="text-[11px] text-purple-400 font-semibold uppercase tracking-wider">
+            <span className="text-[11px] text-[#D39EAA] font-semibold uppercase tracking-wider">
               In Crafting
             </span>
-            <Gem className="w-4 h-4 text-purple-400" />
+            <Gem className="w-4 h-4 text-[#D39EAA]" />
           </div>
-          <p className="text-2xl sm:text-3xl font-serif font-bold text-purple-300 mt-1.5">{metrics.crafting}</p>
-          <span className="text-[10px] text-purple-400/80">Active master artisans</span>
+          <p className="text-2xl sm:text-3xl font-serif font-bold text-[#F3E8EA] mt-1.5">{metrics.crafting}</p>
+          <span className="text-[10px] text-[#D39EAA]/80">Active master artisans</span>
         </div>
 
         {/* Dispatched & Shipped */}

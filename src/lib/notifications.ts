@@ -39,7 +39,7 @@ export function generateCustomerEmailHtml(order: Order, siteUrl: string): string
       <meta charset="utf-8">
       <title>Order Confirmation - #${order.id}</title>
     </head>
-    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #FFF0F5; margin: 0; padding: 30px 15px;">
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background-color: #FFF0F5; margin: 0; padding: 30px 15px;">
       <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border: 1px solid #e5e0d8; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
         
         <!-- Header -->
@@ -130,7 +130,7 @@ export function generateAdminEmailHtml(order: Order, siteUrl: string): string {
     <!DOCTYPE html>
     <html>
     <head><meta charset="utf-8"></head>
-    <body style="font-family: Arial, sans-serif; background: #f3f4f6; padding: 20px;">
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f3f4f6; padding: 20px;">
       <div style="max-width: 600px; margin: 0 auto; background: #fff; padding: 24px; border-radius: 8px; border: 1px solid #e5e7eb;">
         <h2 style="color: #B76E79; margin-top: 0;">🎉 New Order Received: #${order.id}</h2>
         <p style="font-size: 16px; font-weight: bold; color: #111827;">Amount: ${order.currencySymbol}${Number(order.total || 0).toLocaleString()} ${order.currency}</p>
@@ -262,7 +262,7 @@ export async function sendOrderNotifications({ order, siteUrl = 'https://ring-pe
             to: primaryAdmin,
             subject: `📋 [For Admin: ${secondaryAdmin}] NEW ORDER #${order.id} (${order.currencySymbol}${Number(order.total || 0).toLocaleString()})`,
             html: `
-              <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:14px;margin-bottom:20px;font-family:Arial,sans-serif;color:#92400e;">
+              <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:14px;margin-bottom:20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;color:#92400e;">
                 <strong>⚠️ Store Owner Notification (${secondaryAdmin}):</strong><br/>
                 This order alert is for store admin <strong>${secondaryAdmin}</strong>.<br/>
                 Because your Resend account is currently in test mode with sender <code>${fromEmail}</code>, direct delivery to external emails is restricted to <code>${primaryAdmin}</code>.<br/>
@@ -297,7 +297,7 @@ export async function sendOrderNotifications({ order, siteUrl = 'https://ring-pe
           to: primaryAdmin,
           subject: `📋 Customer Receipt (FWD) #${order.id} → Please forward to ${order.customer.email}`,
           html: `
-            <div style="background:#fff3cd;padding:16px;border-radius:6px;margin-bottom:20px;font-family:Arial,sans-serif;">
+            <div style="background:#fff3cd;padding:16px;border-radius:6px;margin-bottom:20px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;">
               <strong>⚠️ ACTION REQUIRED:</strong> Please forward this receipt to your customer at 
               <a href="mailto:${order.customer.email}">${order.customer.email}</a> or 
               send it via WhatsApp to ${order.customer.phone}.<br/>
