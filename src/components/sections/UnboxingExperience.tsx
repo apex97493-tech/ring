@@ -1,7 +1,9 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Package, Award, Sparkles, Shield, Gift, EyeOff, CheckCircle2 } from 'lucide-react';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 
 const UNBOXING_ITEMS = [
   {
@@ -69,12 +71,15 @@ export default function UnboxingExperience() {
                 <div>
                   {/* Photo Thumbnail */}
                   <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-[#F7F5F0] mb-5 border border-[#E8E5DF]">
-                    <img
-                      src={item.image}
+                    <Image
+                      src={getCdnImageUrl(item.image, { width: 640, quality: 85 })}
                       alt={item.title}
-                      className="w-full h-full object-cover"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 300px"
+                      quality={85}
+                      className="object-cover"
                     />
-                    <span className="absolute top-2.5 left-2.5 bg-[#592D37] text-[#D39EAA] font-sans text-[9px] font-bold tracking-wider px-2 py-0.5 rounded shadow-xs uppercase">
+                    <span className="absolute top-2.5 left-2.5 bg-[#592D37] text-[#D39EAA] font-sans text-[9px] font-bold tracking-wider px-2 py-0.5 rounded shadow-xs uppercase z-10">
                       {item.highlight}
                     </span>
                     <span className="absolute bottom-2.5 right-2.5 font-serif text-lg font-bold text-white/90 drop-shadow-md">

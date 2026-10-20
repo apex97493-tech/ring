@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Heart, ZoomIn, Sparkles } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -53,13 +55,12 @@ export default function ProductImageGallery({
             }`}
             aria-label={`Thumbnail ${idx + 1}`}
           >
-            <img
-              src={img}
+            <Image
+              src={getCdnImageUrl(img, { width: 160, quality: 80 })}
               alt={`${productName} thumbnail ${idx + 1}`}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.src = '/images/ai_ring1_front.jpg';
-              }}
+              fill
+              sizes="96px"
+              className="object-cover"
             />
             {activeIdx === idx && (
               <div className="absolute inset-0 bg-[#B76E79]/10 pointer-events-none" />
@@ -70,17 +71,18 @@ export default function ProductImageGallery({
 
       {/* 2. LARGE MAIN STAGE PHOTO WITH PREV / NEXT CONTROLS (Etsy Style) */}
       <div className="relative aspect-square w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-[#F7F5F0] border border-[#E8E5DF] shadow-luxury flex-1 group select-none">
-        <img
+        <Image
           key={activeIdx}
-          src={displayImages[activeIdx]}
+          src={getCdnImageUrl(displayImages[activeIdx], { width: 1200, quality: 90 })}
           alt={`${productName} photo ${activeIdx + 1}`}
-          className={`w-full h-full object-cover transition-transform duration-300 ${
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 55vw, 650px"
+          priority={activeIdx === 0}
+          quality={90}
+          className={`object-cover transition-transform duration-300 ${
             isZoomed ? 'scale-125 cursor-zoom-out' : 'cursor-zoom-in'
           }`}
           onClick={() => setIsZoomed(!isZoomed)}
-          onError={(e) => {
-            e.currentTarget.src = '/images/ai_ring1_front.jpg';
-          }}
         />
 
         {/* Badge in top left (e.g. RARE FIND, BESTSELLER) */}

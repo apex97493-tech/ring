@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { Order } from '@/lib/types/order';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 import {
   Package,
   Search,
@@ -1018,7 +1019,7 @@ export default function OrdersManager({
                         <div key={idx} className="flex items-center gap-2.5 text-xs">
                           <div className="w-10 h-10 relative rounded bg-white/5 border border-white/10 overflow-hidden shrink-0">
                             {it.image && (
-                              <Image src={it.image} alt={it.productName} fill className="object-cover" sizes="40px" />
+                              <Image src={getCdnImageUrl(it.image, { width: 120, quality: 80 })} alt={it.productName} fill className="object-cover" sizes="40px" />
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
@@ -1221,7 +1222,7 @@ export default function OrdersManager({
                     <div key={idx} className="pt-2.5 first:pt-0 flex items-start gap-3 text-xs">
                       <div className="w-14 h-14 relative rounded-xl bg-white/5 border border-white/10 overflow-hidden shrink-0">
                         {it.image && (
-                          <Image src={it.image} alt={it.productName} fill className="object-cover" sizes="56px" />
+                          <Image src={getCdnImageUrl(it.image, { width: 140, quality: 80 })} alt={it.productName} fill className="object-cover" sizes="56px" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">

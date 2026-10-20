@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Sparkles, Plus, Check, ShieldCheck, Heart } from 'lucide-react';
 import { Product } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 
 interface RingStackBuilderProps {
   product: Product;
@@ -82,11 +84,13 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
         {/* Item 1: Main Ring */}
         <div className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-[#E8E5DF]">
-          <div className="w-14 h-14 rounded-lg overflow-hidden bg-[#F7F5F0] flex-shrink-0">
-            <img
-              src={product.images[0]}
+          <div className="relative w-14 h-14 rounded-lg overflow-hidden bg-[#F7F5F0] flex-shrink-0">
+            <Image
+              src={getCdnImageUrl(product.images[0], { width: 140, quality: 80 })}
               alt={product.name}
-              className="w-full h-full object-cover"
+              fill
+              sizes="56px"
+              className="object-cover"
             />
           </div>
           <div className="min-w-0">
@@ -112,13 +116,15 @@ export default function RingStackBuilder({ product, selectedMetal }: RingStackBu
           }`}
         >
           <div className="relative w-14 h-14 rounded-lg overflow-hidden bg-[#F7F5F0] flex-shrink-0">
-            <img
-              src="https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop"
+            <Image
+              src={getCdnImageUrl("https://images.unsplash.com/photo-1605100804763-247f67b2548e?q=80&w=800&auto=format&fit=crop", { width: 140, quality: 80 })}
               alt="Curved Chevron Tiara Band"
-              className="w-full h-full object-cover"
+              fill
+              sizes="56px"
+              className="object-cover"
             />
             <div
-              className={`absolute top-1 right-1 w-4 h-4 rounded-full flex items-center justify-center text-white ${
+              className={`absolute top-1 right-1 w-4 h-4 rounded-full flex items-center justify-center text-white z-10 ${
                 includeBand ? 'bg-[#B76E79]' : 'bg-gray-300'
               }`}
             >

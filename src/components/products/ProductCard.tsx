@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Heart, Eye, Star, Check } from 'lucide-react';
 import { Product } from '@/lib/data';
 import { useCart } from '@/context/CartContext';
 import { useCurrency } from '@/context/CurrencyContext';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 import QuickViewModal from './QuickViewModal';
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -95,19 +97,16 @@ export default function ProductCard({ product }: { product: Product }) {
             />
           </button>
 
-          {/* Product Image */}
-          <Link href={`/products/${product.slug}`} className="block w-full h-full">
-            <img
-              src={isHovered ? hoverImage : primaryImage}
+          {/* Product Image with Responsive CDN Optimization */}
+          <Link href={`/products/${product.slug}`} className="block relative w-full h-full">
+            <Image
+              src={getCdnImageUrl(isHovered ? hoverImage : primaryImage, { width: 640, quality: 85 })}
               alt={product.name}
+              fill
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               loading="lazy"
-              onError={(e) => {
-                // Safeguard: fallback to clean local ring image if remote CDN fails, preventing loops
-                if (!e.currentTarget.src.includes('ai_ring1_front.jpg')) {
-                  e.currentTarget.src = '/images/ai_ring1_front.jpg';
-                }
-              }}
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              quality={85}
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
           </Link>
 

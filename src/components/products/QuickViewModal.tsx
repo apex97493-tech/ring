@@ -9,6 +9,8 @@ import { useCart } from '@/context/CartContext';
 import { useCurrency } from '@/context/CurrencyContext';
 import FindYourSizeDrawer, { US_RING_SIZES } from '@/components/products/FindYourSizeDrawer';
 import Link from 'next/link';
+import Image from 'next/image';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 
 export default function QuickViewModal({
   product,
@@ -205,10 +207,13 @@ export default function QuickViewModal({
           {/* Left Gallery */}
           <div className="p-4 sm:p-6 bg-[#F7F5F0] flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#E8E5DF]">
             <div className="relative aspect-square rounded-xl overflow-hidden bg-white border border-[#E8E5DF] mb-3 shadow-xs">
-              <img
-                src={allImages[activeImgIdx] || allImages[0]}
+              <Image
+                src={getCdnImageUrl(allImages[activeImgIdx] || allImages[0], { width: 800, quality: 85 })}
                 alt={product.name}
-                className="w-full h-full object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 450px"
+                quality={85}
+                className="object-cover"
               />
               <span className="absolute top-3 left-3 bg-[#592D37] text-[#D39EAA] font-sans text-[9px] font-bold tracking-widest px-2.5 py-1 rounded-sm uppercase shadow-sm">
                 {product.certification || 'GRA CERTIFIED'}
@@ -222,13 +227,19 @@ export default function QuickViewModal({
                   type="button"
                   key={idx}
                   onClick={() => setActiveImgIdx(idx)}
-                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden border-2 transition-all bg-white shrink-0 cursor-pointer select-none active:scale-95 ${
+                  className={`relative w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden border-2 transition-all bg-white shrink-0 cursor-pointer select-none active:scale-95 ${
                     activeImgIdx === idx
                       ? 'border-[#C88E91] scale-105 shadow-sm'
                       : 'border-transparent opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
+                  <Image
+                    src={getCdnImageUrl(img, { width: 140, quality: 80 })}
+                    alt="Thumbnail"
+                    fill
+                    sizes="56px"
+                    className="object-cover"
+                  />
                 </button>
               ))}
             </div>

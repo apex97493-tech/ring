@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 
 export default function FlyToCartAnimation() {
   const { flyingItems, removeFlyingItem } = useCart();
@@ -91,11 +92,11 @@ export default function FlyToCartAnimation() {
             style={{ width: '120px', height: '120px', transformOrigin: 'center' }}
           >
             <Image 
-              src={item.image} 
+              src={getCdnImageUrl(item.image, { width: 240, quality: 80 })} 
               alt="Flying Product" 
               fill 
+              sizes="120px"
               className="object-cover"
-              unoptimized
             />
           </motion.div>
           );

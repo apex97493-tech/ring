@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 import {
   ChevronLeft,
   ChevronRight,
@@ -289,10 +290,10 @@ export default function Home() {
                       <Image
                         src="https://i.etsystatic.com/40882668/r/il/c5d69c/8083961552/il_fullxfull.8083961552_n07y.jpg"
                         alt="Floating Royal Solitaire Ring"
-                        width={800}
-                        height={800}
-                        quality={100}
-                        unoptimized
+                        width={600}
+                        height={600}
+                        sizes="(max-width: 640px) 160px, (max-width: 1024px) 380px, 480px"
+                        quality={90}
                         priority
                         className="w-[85%] md:w-[92%] max-w-none object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.45)]"
                       />
@@ -308,9 +309,8 @@ export default function Home() {
                     src={slides[currentSlide].image || '/images/ai_ring1_front.jpg'}
                     alt="Banner"
                     fill
-                    quality={100}
-                    unoptimized
-                    priority
+                    sizes="100vw"
+                    quality={90}
                     className="object-contain object-center grayscale contrast-125 brightness-105 mix-blend-darken"
                   />
                 </div>
@@ -323,9 +323,8 @@ export default function Home() {
                     src={slides[currentSlide].image || '/images/ai_ring1_front.jpg'}
                     alt="Banner"
                     fill
-                    quality={100}
-                    unoptimized
-                    priority
+                    sizes="100vw"
+                    quality={90}
                     className="object-cover object-center"
                   />
                   {/* Subtle dark gradient just behind text for readability */}
@@ -435,10 +434,13 @@ export default function Home() {
               className="group cursor-pointer block"
             >
               <div className="relative aspect-[3/4] overflow-hidden bg-[#592D37] mb-4 rounded-xl border border-[#D39EAA]/30 shadow-royal">
-                <img
-                  src={cat.img}
+                <Image
+                  src={getCdnImageUrl(cat.img, { width: 500, quality: 85 })}
                   alt={cat.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  quality={85}
+                  className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#592D37]/80 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
                 <span className="absolute bottom-3 inset-x-3 text-center font-sans text-[10px] tracking-widest text-[#D39EAA] uppercase font-bold">

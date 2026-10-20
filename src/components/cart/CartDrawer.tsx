@@ -7,6 +7,8 @@ import { X, Trash2, Plus, Minus, ShieldCheck, Sparkles, Send, ShoppingBag, Arrow
 import { useCart } from '@/context/CartContext';
 import { useCurrency } from '@/context/CurrencyContext';
 import Link from 'next/link';
+import Image from 'next/image';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 
 export default function CartDrawer() {
   const router = useRouter();
@@ -156,11 +158,15 @@ export default function CartDrawer() {
                       key={item.id}
                       className="flex gap-4 p-3 bg-white rounded-xl border border-[#E8E5DF] shadow-xs"
                     >
-                      <img
-                        src={item.image}
-                        alt={item.product.name}
-                        className="w-20 h-20 object-cover rounded-lg border border-gray-100 bg-[#F7F5F0]"
-                      />
+                      <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-gray-100 bg-[#F7F5F0] shrink-0">
+                        <Image
+                          src={getCdnImageUrl(item.image, { width: 160, quality: 80 })}
+                          alt={item.product.name}
+                          fill
+                          sizes="80px"
+                          className="object-cover"
+                        />
+                      </div>
                       <div className="flex-1 min-w-0 flex flex-col justify-between">
                         <div>
                           <div className="flex items-start justify-between gap-2">

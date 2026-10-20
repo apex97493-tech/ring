@@ -2,8 +2,10 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 import {
   Search,
   ShoppingBag,
@@ -349,11 +351,15 @@ export default function Header() {
                           onClick={() => setIsSearchOpen(false)}
                           className="flex items-center gap-3 py-2.5 px-2 hover:bg-[#F5F2EC] rounded-xl transition-colors group"
                         >
-                          <img
-                            src={prod.images[0]}
-                            alt={prod.name}
-                            className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-lg border border-gray-200 shrink-0"
-                          />
+                          <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden border border-gray-200 shrink-0">
+                            <Image
+                              src={getCdnImageUrl(prod.images[0], { width: 140, quality: 80 })}
+                              alt={prod.name}
+                              fill
+                              sizes="56px"
+                              className="object-cover"
+                            />
+                          </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="font-serif text-xs sm:text-sm font-semibold text-[#592D37] group-hover:text-[#C88E91] truncate">
                               {prod.name}

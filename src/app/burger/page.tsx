@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 import {
   Lock,
   Unlock,
@@ -2052,7 +2053,7 @@ export default function AdminBurgerPage() {
                             <div className="flex items-center gap-3">
                               <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-black/40 border border-white/15 flex-shrink-0 group-hover:scale-105 transition-transform">
                                 <img
-                                  src={primaryImg}
+                                  src={getCdnImageUrl(primaryImg, { width: 140, quality: 80 })}
                                   alt={p.name}
                                   className="w-full h-full object-cover"
                                   onError={(e) => {
@@ -2499,7 +2500,7 @@ export default function AdminBurgerPage() {
                       {/* Product Thumbnail */}
                       <div className="relative flex-shrink-0">
                         <img
-                          src={primaryImg}
+                          src={getCdnImageUrl(primaryImg, { width: 140, quality: 80 })}
                           alt={p.name}
                           className="w-14 h-14 rounded-xl object-cover bg-black/40 border border-white/15 shadow-sm"
                           onError={(e) => {

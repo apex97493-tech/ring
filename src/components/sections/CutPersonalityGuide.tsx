@@ -2,8 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 
 const CUTS = [
   {
@@ -116,10 +118,13 @@ export default function CutPersonalityGuide() {
             >
               {/* Left Photo Showcase */}
               <div className="md:col-span-5 relative aspect-[4/3] md:aspect-square w-full bg-[#F7F5F0] overflow-hidden group">
-                <img
-                  src={activeCut.image}
+                <Image
+                  src={getCdnImageUrl(activeCut.image, { width: 800, quality: 85 })}
                   alt={activeCut.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 420px"
+                  quality={85}
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute top-4 left-4 z-10 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#592D37]/90 backdrop-blur-md text-[#D39EAA] font-sans text-[10px] font-bold tracking-widest uppercase shadow-lg border border-[#D39EAA]/40 pointer-events-none">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#D39EAA] animate-pulse" />

@@ -3,7 +3,9 @@
 import React, { useState, use, useEffect } from 'react';
 import { notFound, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 import {
   Sparkles,
   ShieldCheck,
@@ -592,11 +594,15 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
           >
             <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-4">
               <div className="flex items-center gap-3 min-w-0">
-                <img
-                  src={allImages[0]}
-                  alt={product.name}
-                  className="w-12 h-12 rounded-lg object-cover border border-gray-200 flex-shrink-0"
-                />
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-gray-200 shrink-0">
+                  <Image
+                    src={getCdnImageUrl(allImages[0], { width: 140, quality: 80 })}
+                    alt={product.name}
+                    fill
+                    sizes="48px"
+                    className="object-cover"
+                  />
+                </div>
                 <div className="min-w-0 hidden sm:block">
                   <span className="font-serif text-xs font-bold text-[#18181B] truncate block">
                     {product.name}

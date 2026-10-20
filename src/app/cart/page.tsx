@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 import {
   Lock,
   ShieldCheck,
@@ -218,7 +219,7 @@ export default function CartPage() {
                         >
                           {item.image ? (
                             <Image
-                              src={item.image}
+                              src={getCdnImageUrl(item.image, { width: 240, quality: 80 })}
                               alt={item.product.name}
                               fill
                               className="object-cover group-hover:scale-105 transition-transform duration-300"

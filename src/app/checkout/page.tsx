@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 import { useCart } from '@/context/CartContext';
 import { useCurrency } from '@/context/CurrencyContext';
 import { ShippingAddress, Order, OrderItem } from '@/lib/types/order';
@@ -1654,7 +1655,7 @@ export default function CheckoutPage() {
                       <div className="w-14 h-14 relative bg-[#F4F1EA] rounded shrink-0 overflow-hidden border border-gray-200">
                         {item.image && (
                           <Image
-                            src={item.image}
+                            src={getCdnImageUrl(item.image, { width: 140, quality: 80 })}
                             alt={item.product.name}
                             fill
                             className="object-cover"

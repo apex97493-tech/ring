@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, ShoppingBag, Check } from 'lucide-react';
 import { Product } from '@/lib/data';
+import { getCdnImageUrl } from '@/lib/imageCdn';
 
 interface MobileStickyBuyBarProps {
   product: Product;
@@ -55,11 +57,13 @@ export default function MobileStickyBuyBar({
           <div className="flex items-center justify-between gap-2.5 max-w-md mx-auto">
             {/* Left: Thumbnail & Price */}
             <div className="flex items-center gap-2 min-w-0">
-              <div className="w-11 h-11 rounded-lg overflow-hidden border border-[#E8E5DF] bg-[#F7F5F0] flex-shrink-0">
-                <img
-                  src={activeImage}
+              <div className="relative w-11 h-11 rounded-lg overflow-hidden border border-[#E8E5DF] bg-[#F7F5F0] flex-shrink-0">
+                <Image
+                  src={getCdnImageUrl(activeImage, { width: 120, quality: 80 })}
                   alt={product.name}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="44px"
+                  className="object-cover"
                 />
               </div>
               <div className="min-w-0">
