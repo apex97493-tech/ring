@@ -56,7 +56,9 @@ export function formatWhatsAppOrderMessage(order: Order): string {
     .join('\n\n');
 
   const paymentText =
-    order.payment?.method === 'paypal'
+    order.payment?.method === 'razorpay'
+      ? `✅ Paid via Razorpay UPI / Card (Txn: ${order.payment.transactionId || order.payment.razorpayPaymentId || 'Verified'})`
+      : order.payment?.method === 'paypal'
       ? `✅ Paid via PayPal (Txn: ${order.payment.transactionId || 'Verified'})`
       : order.payment?.method === 'card'
       ? `✅ Paid via Card (Txn: ${order.payment.transactionId || 'Verified'})`

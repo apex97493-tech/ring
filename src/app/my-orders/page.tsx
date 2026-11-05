@@ -67,7 +67,7 @@ function OrderCard({ order }: { order: Order }) {
   const [expanded, setExpanded] = useState(false);
   const isPaid = order.payment?.status === "paid";
   const payLabel: Record<string, string> = {
-    paypal: "PayPal", card: "Credit / Debit Card",
+    razorpay: "Razorpay (UPI / Card)", paypal: "PayPal", card: "Credit / Debit Card",
     payoneer: "Payoneer", bank_transfer: "Bank Transfer / UPI", whatsapp: "WhatsApp Order",
   };
   const dateFormatted = new Date(order.createdAt).toLocaleDateString("en-GB", {

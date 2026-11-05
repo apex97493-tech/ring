@@ -26,12 +26,14 @@ export type OrderItem = {
 };
 
 export type PaymentDetails = {
-  method: 'paypal' | 'card' | 'payoneer' | 'whatsapp' | 'bank_transfer';
+  method: 'paypal' | 'card' | 'payoneer' | 'whatsapp' | 'bank_transfer' | 'razorpay';
   status: 'paid' | 'pending' | 'failed' | 'awaiting_confirmation';
   transactionId?: string;
   payerEmail?: string;
   payoneerReference?: string;
   bankReference?: string;
+  razorpayPaymentId?: string;
+  razorpayOrderId?: string;
 };
 
 export type Order = {

@@ -33,6 +33,7 @@ import {
   QrCode,
   Smartphone,
   Zap,
+  Tag,
 } from 'lucide-react';
 import DeliveryScooterAnimation from '@/components/layout/DeliveryScooterAnimation';
 
@@ -104,7 +105,7 @@ export default function CheckoutPage() {
     });
   };
 
-  const [paymentMethod, setPaymentMethod] = useState<'paypal' | 'payoneer' | 'bank_transfer' | 'whatsapp'>('paypal');
+  const [paymentMethod, setPaymentMethod] = useState<'razorpay' | 'paypal' | 'payoneer' | 'bank_transfer' | 'whatsapp'>('razorpay');
   const [payoneerReference, setPayoneerReference] = useState('');
   const [bankReference, setBankReference] = useState('');
   const [copiedBankField, setCopiedBankField] = useState<string | null>(null);
@@ -126,6 +127,10 @@ export default function CheckoutPage() {
   const [paypalError, setPaypalError] = useState<string | null>(null);
   const [isRedirectingToPayPal, setIsRedirectingToPayPal] = useState(false);
   const capturedTokensRef = useRef<Set<string>>(new Set());
+
+  // Razorpay Gateway State
+  const [isRazorpayLoading, setIsRazorpayLoading] = useState(false);
+  const [razorpayError, setRazorpayError] = useState<string | null>(null);
 
   // Load saved address from localStorage on mount (Amazon-style)
   useEffect(() => {
@@ -207,10 +212,47 @@ export default function CheckoutPage() {
 
   // Calculate currency converted prices using selectedCurrency object
   const currencyCode = selectedCurrency.code;
-  const currencySymbol = selectedCurrency.symbol;
+  const baseCurrencySymbol = selectedCurrency.symbol;
   const convertedSubtotal = Math.round(subtotal * selectedCurrency.rate);
   const shippingFee = 0; // Free express worldwide shipping
-  const finalTotal = convertedSubtotal + shippingFee;
+  // Coupon / Promo Code State (supports TEST1 / RAZORPAY1 for live ₹1 testing)
+  const [couponCode, setCouponCode] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [couponError, setCouponError] = useState('');
+
+  // Auto-apply from URL if ?coupon=TEST1 or ?test=1
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const c = params.get('coupon') || (params.get('test') === '1' ? 'TEST1' : null);
+      if (c && (c.toUpperCase() === 'TEST1' || c.toUpperCase() === 'RAZORPAY1')) {
+        setAppliedCoupon(c.toUpperCase());
+      }
+    } catch (_) {}
+  }, []);
+
+  const handleApplyCoupon = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const clean = couponCode.trim().toUpperCase();
+    if (!clean) return;
+    if (clean === 'TEST1' || clean === 'RAZORPAY1') {
+      setAppliedCoupon(clean);
+      setCouponError('');
+    } else {
+      setCouponError('Invalid coupon. Use TEST1 to test ₹1 payment.');
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponCode('');
+    setCouponError('');
+  };
+
+  const isTestCoupon = appliedCoupon === 'TEST1' || appliedCoupon === 'RAZORPAY1';
+  const currencySymbol = isTestCoupon ? '₹' : baseCurrencySymbol;
+  const couponDiscount = isTestCoupon ? Math.max(0, convertedSubtotal - 1) : 0;
+  const finalTotal = isTestCoupon ? 1 : Math.max(1, convertedSubtotal - couponDiscount + shippingFee);
 
   // Supported PayPal direct currencies
   const PAYPAL_DIRECT_CURRENCIES = ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'SGD', 'NZD', 'CHF', 'HKD'];
@@ -231,7 +273,7 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (isIndianCustomer && paymentMethod === 'paypal') {
-      setPaymentMethod('bank_transfer');
+      setPaymentMethod('razorpay');
     }
   }, [isIndianCustomer]);
 
@@ -286,7 +328,7 @@ export default function CheckoutPage() {
   // Submit Order to backend
   const handlePlaceOrder = async (
     overridePayment?: {
-      method: 'paypal' | 'card' | 'payoneer' | 'bank_transfer' | 'whatsapp';
+      method: 'paypal' | 'card' | 'payoneer' | 'bank_transfer' | 'whatsapp' | 'razorpay';
       status: 'paid' | 'pending';
       transactionId?: string;
     },
@@ -461,13 +503,167 @@ export default function CheckoutPage() {
   // Clean up any pending state
   useEffect(() => {
     setIsPayPalLoading(false);
+    setIsRazorpayLoading(false);
   }, [paymentMethod]);
+
+  // Load Razorpay Checkout SDK Script
+  const loadRazorpayScript = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (typeof window !== 'undefined' && (window as any).Razorpay) {
+        resolve(true);
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.async = true;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  // Handle Razorpay Payment flow
+  const handleRazorpayPayment = async () => {
+    if (!validateForm()) {
+      window.scrollTo({ top: 100, behavior: 'smooth' });
+      return;
+    }
+
+    if (saveAddress) {
+      try {
+        localStorage.setItem('fj_saved_shipping_address', JSON.stringify(formData));
+      } catch (_) {}
+    }
+
+    setRazorpayError(null);
+    setIsRazorpayLoading(true);
+
+    try {
+      const scriptLoaded = await loadRazorpayScript();
+      if (!scriptLoaded) {
+        throw new Error('Could not load Razorpay gateway. Please check your internet connection.');
+      }
+
+      // Calculate INR amount
+      const inrAmount = isTestCoupon ? 1 : (selectedCurrency.code === 'INR' ? finalTotal : Math.round(finalTotal * 86.5));
+
+      const normalizedItems: OrderItem[] = cart.map((item) => {
+        const itemPrice = Math.round(item.price * selectedCurrency.rate);
+        return {
+          productId: item.product.id,
+          productName: item.product.name,
+          productSlug: item.product.slug,
+          metal: item.selectedMetal,
+          size: item.selectedSize || 'US 7',
+          carat: item.selectedCarat || item.product.carat,
+          engraving: item.engravingText,
+          quantity: item.quantity,
+          unitPrice: itemPrice,
+          totalPrice: itemPrice * item.quantity,
+          image: item.image || item.product.images?.[0] || '',
+        };
+      });
+
+      // 1. Create order on server
+      const res = await fetch('/api/razorpay/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: inrAmount,
+          currency: 'INR',
+          customer: formData,
+          items: normalizedItems,
+        }),
+      });
+
+      const orderData = await res.json();
+      if (!res.ok || !orderData.orderId) {
+        throw new Error(orderData.error || 'Failed to initialize payment gateway.');
+      }
+
+      // 2. Open official Razorpay modal
+      const options = {
+        key: orderData.keyId || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'rzp_live_TvMWCPHmKI88QQ',
+        amount: orderData.amount,
+        currency: orderData.currency || 'INR',
+        name: 'Forever Jewell Studio',
+        description: 'Royal Moissanite Jewelry Order',
+        image: '/images/logo.jpg',
+        order_id: orderData.orderId,
+        prefill: {
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+          email: formData.email,
+          contact: formData.phone,
+        },
+        notes: {
+          address: `${formData.streetAddress}, ${formData.city}, ${formData.state} ${formData.postalCode}`,
+        },
+        theme: {
+          color: '#18181B',
+        },
+        modal: {
+          ondismiss: () => {
+            setIsRazorpayLoading(false);
+          },
+        },
+        handler: async function (response: any) {
+          try {
+            const verifyRes = await fetch('/api/razorpay/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                customer: formData,
+                items: normalizedItems,
+                currency: 'INR',
+                currencySymbol: '₹',
+                total: inrAmount,
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+            if (verifyData.success && verifyData.order) {
+              setCompletedOrder(verifyData.order);
+              setWhatsAppUrl(verifyData.whatsAppUrl || '');
+              if (directCheckoutItems) {
+                setDirectCheckoutItems(null);
+              } else {
+                clearCart();
+              }
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              setRazorpayError(verifyData.error || 'Payment signature verification failed.');
+            }
+          } catch (e: any) {
+            console.error('Razorpay verification error:', e);
+            setRazorpayError(e?.message || 'Error confirming payment with server.');
+          } finally {
+            setIsRazorpayLoading(false);
+          }
+        },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.on('payment.failed', function (resp: any) {
+        console.error('Razorpay payment failed:', resp.error);
+        setRazorpayError(resp.error?.description || 'Payment was unsuccessful or cancelled.');
+        setIsRazorpayLoading(false);
+      });
+      rzp.open();
+    } catch (err: any) {
+      console.error('Razorpay error:', err);
+      setRazorpayError(err?.message || 'Failed to start payment.');
+      setIsRazorpayLoading(false);
+    }
+  };
 
   // SUCCESS SCREEN — Premium Amazon-Style Order Confirmation
   if (completedOrder) {
     const isPaid = completedOrder.payment?.status === 'paid';
     const payMethodLabel: Record<string, string> = {
-      paypal: 'PayPal', card: 'Credit / Debit Card',
+      razorpay: 'Razorpay UPI / Cards', paypal: 'PayPal', card: 'Credit / Debit Card',
       payoneer: 'Payoneer', bank_transfer: 'Bank Transfer / UPI', whatsapp: 'WhatsApp Order',
     };
     const estDelivery = () => {
@@ -1080,6 +1276,21 @@ export default function CheckoutPage() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1.5 bg-gray-100 rounded-xl mb-6">
                 <button
                   type="button"
+                  onClick={() => setPaymentMethod('razorpay')}
+                  className={`relative py-3 px-2 text-xs font-semibold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 cursor-pointer ${
+                    paymentMethod === 'razorpay'
+                      ? 'bg-white text-gray-900 shadow-md border border-[#064E3B]/20 font-bold'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <span className="absolute -top-2.5 right-2 px-1.5 py-0.5 bg-[#064E3B] text-[#D4AF37] text-[9px] font-extrabold rounded-full tracking-wider shadow">
+                    INSTANT UPI
+                  </span>
+                  <Zap className="w-4 h-4 text-[#064E3B]" />
+                  <span>Razorpay / UPI</span>
+                </button>
+                <button
+                  type="button"
                   onClick={() => setPaymentMethod('bank_transfer')}
                   className={`relative py-3 px-2 text-xs font-semibold rounded-lg transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 cursor-pointer ${
                     paymentMethod === 'bank_transfer'
@@ -1093,7 +1304,7 @@ export default function CheckoutPage() {
                     </span>
                   )}
                   <Zap className="w-4 h-4 text-[#064E3B]" />
-                  <span>UPI / Bank Transfer</span>
+                  <span>Manual Bank / QR</span>
                 </button>
 
                 <button
@@ -1139,6 +1350,79 @@ export default function CheckoutPage() {
                   <span>WhatsApp Order</span>
                 </button>
               </div>
+
+              {/* TAB 0: RAZORPAY (INSTANT UPI, CARDS, NETBANKING) */}
+              {paymentMethod === 'razorpay' && (
+                <div className="space-y-4">
+                  <div className="bg-gradient-to-b from-[#F0FDF8] to-white border border-[#A7F3D0] rounded-2xl p-5 sm:p-6 shadow-xs">
+                    <div className="flex items-center justify-between border-b border-emerald-100 pb-4 mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-[#064E3B] text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                          ₹
+                        </div>
+                        <div>
+                          <h3 className="font-serif text-base font-bold text-gray-900 flex items-center gap-2">
+                            <span>Instant Razorpay Checkout</span>
+                            <span className="text-[10px] font-sans px-2 py-0.5 bg-[#064E3B] text-[#D4AF37] rounded-full font-extrabold uppercase tracking-wider">
+                              Verified Merchant
+                            </span>
+                          </h3>
+                          <p className="text-xs text-gray-600 font-sans mt-0.5">
+                            Pay instantly with Google Pay, PhonePe, Paytm, BHIM, Cards & NetBanking
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Supported Payment Logos & Badges */}
+                    <div className="p-3.5 bg-white rounded-xl border border-emerald-100 mb-5">
+                      <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#064E3B]" /> Accepted Instant Payment Modes:
+                      </p>
+                      <div className="flex flex-wrap gap-2 text-xs font-semibold text-gray-800">
+                        <span className="px-2.5 py-1 bg-gray-50 rounded-md border border-gray-200">Google Pay</span>
+                        <span className="px-2.5 py-1 bg-gray-50 rounded-md border border-gray-200">PhonePe</span>
+                        <span className="px-2.5 py-1 bg-gray-50 rounded-md border border-gray-200">Paytm</span>
+                        <span className="px-2.5 py-1 bg-gray-50 rounded-md border border-gray-200">BHIM UPI</span>
+                        <span className="px-2.5 py-1 bg-gray-50 rounded-md border border-gray-200">Visa / Mastercard / RuPay</span>
+                        <span className="px-2.5 py-1 bg-gray-50 rounded-md border border-gray-200">NetBanking (All Banks)</span>
+                      </div>
+                    </div>
+
+                    {razorpayError && (
+                      <div className="p-3 mb-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                        <span>{razorpayError}</span>
+                      </div>
+                    )}
+
+                    {/* Pay Button */}
+                    <button
+                      type="button"
+                      onClick={handleRazorpayPayment}
+                      disabled={isRazorpayLoading}
+                      className="w-full py-4 px-6 bg-[#064E3B] hover:bg-[#053d2e] text-[#D4AF37] font-sans font-bold text-sm tracking-widest uppercase rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 active:scale-98 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      {isRazorpayLoading ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-[#D4AF37] border-t-transparent rounded-full animate-spin" />
+                          <span>Opening Secure Payment Window...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Lock className="w-4 h-4" />
+                          <span>{isTestCoupon ? 'Pay ₹1 (Live Gateway Test) via Razorpay' : `Pay ${selectedCurrency.code === 'INR' ? `₹${finalTotal.toLocaleString('en-IN')}` : `₹${Math.round(finalTotal * 86.5).toLocaleString('en-IN')}`} via Razorpay`}</span>
+                        </>
+                      )}
+                    </button>
+
+                    <p className="text-[11px] text-gray-500 text-center mt-3 font-sans flex items-center justify-center gap-1.5">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#064E3B]" />
+                      256-Bit SSL Bank-Grade Encryption • Instant Order Confirmation
+                    </p>
+                  </div>
+                </div>
+              )}
 
               {/* TAB 1: PAYPAL & CARDS */}
               {paymentMethod === 'paypal' && (
@@ -1737,6 +2021,59 @@ export default function CheckoutPage() {
                   <span className="text-gray-600">Tax</span>
                   <span className="text-gray-500 text-[11px]">Included in total</span>
                 </div>
+
+                {/* Live Gateway Test / Coupon Discount */}
+                {appliedCoupon && (
+                  <div className="flex justify-between items-center bg-emerald-50 border border-emerald-200 text-emerald-800 px-2.5 py-1.5 rounded-lg">
+                    <div>
+                      <div className="flex items-center gap-1 font-bold text-[11px]">
+                        <Tag className="w-3 h-3 text-emerald-600" />
+                        <span>Coupon Applied ({appliedCoupon})</span>
+                      </div>
+                      <span className="block text-[10px] text-emerald-600 font-medium">Live Gateway ₹1 Test Active</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-emerald-700">
+                        -{currencySymbol}{couponDiscount.toLocaleString()}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={handleRemoveCoupon}
+                        className="text-xs text-red-500 hover:text-red-700 font-bold ml-1 cursor-pointer"
+                        title="Remove coupon"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Promo / Coupon Input */}
+                {!appliedCoupon && (
+                  <div className="pt-1.5 border-t border-gray-150">
+                    <form onSubmit={handleApplyCoupon} className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Coupon (use TEST1 for ₹1)"
+                        value={couponCode}
+                        onChange={(e) => {
+                          setCouponCode(e.target.value);
+                          if (couponError) setCouponError('');
+                        }}
+                        className="flex-1 bg-white border border-gray-200 rounded-lg px-2.5 py-1 text-xs uppercase font-mono tracking-wider focus:outline-none focus:border-[#B76E79]"
+                      />
+                      <button
+                        type="submit"
+                        className="px-3 py-1 bg-gray-900 hover:bg-black text-white rounded-lg text-xs font-semibold cursor-pointer transition"
+                      >
+                        Apply
+                      </button>
+                    </form>
+                    {couponError && (
+                      <p className="text-[10px] text-red-600 mt-1">{couponError}</p>
+                    )}
+                  </div>
+                )}
 
                 <div className="border-t border-gray-200 pt-3 mt-3 flex justify-between items-baseline">
                   <span className="text-sm font-bold text-gray-900">
